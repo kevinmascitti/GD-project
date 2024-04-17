@@ -26,6 +26,10 @@ public class Character : MonoBehaviour
         {
             Debug.Log("Damage " + atk);
             currentHP -= atk - def;
+            if (currentHP < 0)
+            {
+                currentHP = 0;
+            }
         }
 
     }

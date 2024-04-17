@@ -16,8 +16,7 @@ public class PlayerCharacter : Character
     private float currentStamina = 0;
     private float staminaDefault = 5;
     
-    private const int initial_life = 5;
-    private int extraLife = initial_life;
+    private int extraLife;
     
     private Level currentLevel;
 
@@ -26,6 +25,7 @@ public class PlayerCharacter : Character
     {
         sliderHP.maxValue = MAX_HP;
         sliderStamina.maxValue = MAX_STAMINA;
+        extraLife = INITIAL_LIFE;
     }
 
     // Update is called once per frame
@@ -36,10 +36,19 @@ public class PlayerCharacter : Character
         if (Input.GetKeyDown(KeyCode.S))
         {
             Debug.Log("Stamina++ " + staminaDefault);
-            currentStamina += staminaDefault;
+            if (currentStamina + staminaDefault <= MAX_STAMINA)
+            {
+                currentStamina += staminaDefault;
+            }
+            else
+            {
+                currentStamina = MAX_STAMINA;
+            }
         }
         
         sliderHP.value = currentHP;
+        sliderStamina.value = currentStamina;
+        
         if (currentHP <= 0)
         {
             currentHP = MAX_HP;
