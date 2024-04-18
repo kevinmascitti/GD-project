@@ -1,6 +1,8 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Transactions;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -18,14 +20,21 @@ public class PlayerCharacter : Character
     
     private int extraLife;
     
-    private Level currentLevel;
+    [SerializeField] private Camera camera;
+
+    [SerializeField] private RoomManager currentLevel;
+    [SerializeField] private Room currentRoom;
 
     // Start is called before the first frame update
     void Start()
     {
-        sliderHP.maxValue = MAX_HP;
-        sliderStamina.maxValue = MAX_STAMINA;
-        extraLife = INITIAL_LIFE;
+        if (sliderHP && sliderStamina)
+        {
+            sliderHP.maxValue = MAX_HP;
+            sliderStamina.maxValue = MAX_STAMINA;
+            extraLife = INITIAL_LIFE;
+        }
+        LerpAnimation.OnEndAnimation += SetWallsTriggers;
     }
 
     // Update is called once per frame
@@ -45,9 +54,12 @@ public class PlayerCharacter : Character
                 currentStamina = MAX_STAMINA;
             }
         }
-        
-        sliderHP.value = currentHP;
-        sliderStamina.value = currentStamina;
+
+        if (sliderHP && sliderStamina)
+        {
+            sliderHP.value = currentHP;
+            sliderStamina.value = currentStamina;
+        }
         
         if (currentHP <= 0)
         {
@@ -67,8 +79,8 @@ public class PlayerCharacter : Character
 
     public void RespawnPlayer()
     {
-        SceneManager.LoadScene(currentLevel.scene.name);
-        gameObject.transform.position = currentLevel.spawnPosition;
+        SceneManager.LoadScene(currentLevel.rooms[0].scene.name);
+        gameObject.transform.position = currentRoom.spawnPoint.transform.position;
         Debug.Log("DIED");
     }
 
@@ -76,6 +88,34 @@ public class PlayerCharacter : Character
     {
         // UI visibile
         Debug.Log("GAMEOVER");
+    }
+    
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.layer == LayerMask.NameToLayer("Wall") && !currentRoom.isLocked)
+        {
+            // isTrigger del prossimo livello a true
+            currentRoom.exitWall.isTrigger = true;
+            currentRoom.nextRoom.enterWall.isTrigger = true;
+            GetComponent<Rigidbody>().useGravity = false;
+            GetComponent<Rigidbody>().isKinematic = true;
+
+            gameObject.GetComponent<LerpAnimation>().StartAnimation(transform.position, currentRoom.nextRoom.spawnPoint.transform.position);
+            camera.GetComponent<LerpAnimation>().StartAnimation(camera.transform.position, currentRoom.nextRoom.cameraPosition.transform.position);
+
+            currentRoom = currentRoom.nextRoom;
+        }
+    }
+
+    private void SetWallsTriggers(object sender, AnimationArgs args)
+    {
+        if (args.Obj == gameObject)
+        {
+            currentRoom.nextRoom.enterWall.isTrigger = false;
+            currentRoom.exitWall.isTrigger = false;
+            GetComponent<Rigidbody>().useGravity = true;
+            GetComponent<Rigidbody>().isKinematic = false;
+        }
     }
 
 }

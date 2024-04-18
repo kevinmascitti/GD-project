@@ -5,8 +5,8 @@ using UnityEngine.SceneManagement;
 
 public class Levels : MonoBehaviour
 {
-    public Level level1;
-    public Level level2;
-    public Level level3;
-    public Level level4;
+    public Room level1;
+    public Room level2;
+    public Room level3;
+    public Room level4;
 }
