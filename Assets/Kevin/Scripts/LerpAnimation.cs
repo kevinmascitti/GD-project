@@ -12,7 +12,7 @@ public class LerpAnimation : MonoBehaviour
     private float startTime; // Il tempo iniziale dell'animazione
     private Vector3 startPosition; // La posizione iniziale dell'oggetto
     private Vector3 targetPosition; // La posizione finale desiderata
-    public bool isAnimating = false; // Flag per controllare se l'animazione è in corso
+    [NonSerialized] public bool isAnimating = false; // Flag per controllare se l'animazione è in corso
 
     public static EventHandler<AnimationArgs> OnEndAnimation;
 

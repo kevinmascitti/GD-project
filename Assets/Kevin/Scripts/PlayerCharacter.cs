@@ -22,11 +22,19 @@ public class PlayerCharacter : Character
     
     [SerializeField] private Camera camera;
 
-    [SerializeField] private RoomManager currentLevel;
-    [SerializeField] private Room currentRoom;
+    [NonSerialized] public LevelManager levels;
+    [NonSerialized] public RoomManager currentLevel;
+    [NonSerialized] public Room currentRoom;
+
+    public static EventHandler OnDeath;
+    public static EventHandler OnGameOver;
+
+    public static EventHandler<ChangeRoomArgs> OnStartRoom;
+    public static EventHandler<ChangeRoomArgs> OnEndRoom;
+    public static EventHandler OnEndLevel;
 
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
         if (sliderHP && sliderStamina)
         {
@@ -34,7 +42,9 @@ public class PlayerCharacter : Character
             sliderStamina.maxValue = MAX_STAMINA;
             extraLife = INITIAL_LIFE;
         }
-        LerpAnimation.OnEndAnimation += SetWallsTriggers;
+
+        RoomManager.OnInitializedLevel += UseLevelManager;
+        LerpAnimation.OnEndAnimation += EndedRoomAnimation;
     }
 
     // Update is called once per frame
@@ -42,7 +52,7 @@ public class PlayerCharacter : Character
     {
         base.Update();
         
-        if (Input.GetKeyDown(KeyCode.S))
+        if (Input.GetKeyDown(KeyCode.E))
         {
             Debug.Log("Stamina++ " + staminaDefault);
             if (currentStamina + staminaDefault <= MAX_STAMINA)
@@ -54,6 +64,10 @@ public class PlayerCharacter : Character
                 currentStamina = MAX_STAMINA;
             }
         }
+        else if (Input.GetKeyDown(KeyCode.L))
+        {
+            currentRoom.isLocked = false;
+        }
 
         if (sliderHP && sliderStamina)
         {
@@ -63,30 +77,41 @@ public class PlayerCharacter : Character
         
         if (currentHP <= 0)
         {
-            currentHP = MAX_HP;
-            currentStamina = 0;
-            extraLife--;
-            if (extraLife == 0)
-            {
-                GameOver();
-            }
-            else
-            {
-                RespawnPlayer();
-            }
+            Die();
         }
     }
 
-    public void RespawnPlayer()
+    public void Die()
     {
-        SceneManager.LoadScene(currentLevel.rooms[0].scene.name);
-        gameObject.transform.position = currentRoom.spawnPoint.transform.position;
+        currentHP = MAX_HP;
+        currentStamina = 0;
+        extraLife--;
+        
+        // animazione personaggio che muore
+        
+        if (extraLife < 0)
+        {
+            GameOver();
+        }
+        else
+        {
+            // VFX nuvoletta di respawn e transizione con timer
+            Respawn();
+        }
+    }
+
+    public void Respawn()
+    {
+        OnDeath?.Invoke(this, EventArgs.Empty);
+        gameObject.transform.position = currentLevel.rooms[0].spawnPoint;
+        camera.transform.position = currentLevel.rooms[0].cameraPosition;
         Debug.Log("DIED");
     }
 
     public void GameOver()
     {
         // UI visibile
+        OnGameOver?.Invoke(this, EventArgs.Empty);
         Debug.Log("GAMEOVER");
     }
     
@@ -94,28 +119,68 @@ public class PlayerCharacter : Character
     {
         if (collision.gameObject.layer == LayerMask.NameToLayer("Wall") && !currentRoom.isLocked)
         {
-            // isTrigger del prossimo livello a true
-            currentRoom.exitWall.isTrigger = true;
-            currentRoom.nextRoom.enterWall.isTrigger = true;
+            OnEndRoom?.Invoke(this, new ChangeRoomArgs(currentRoom));
+            
             GetComponent<Rigidbody>().useGravity = false;
             GetComponent<Rigidbody>().isKinematic = true;
 
-            gameObject.GetComponent<LerpAnimation>().StartAnimation(transform.position, currentRoom.nextRoom.spawnPoint.transform.position);
-            camera.GetComponent<LerpAnimation>().StartAnimation(camera.transform.position, currentRoom.nextRoom.cameraPosition.transform.position);
-
+            if (currentRoom.nextRoom.level == currentLevel)
+            {
+                gameObject.GetComponent<LerpAnimation>().StartAnimation(transform.position, currentRoom.nextRoom.spawnPoint);
+                camera.GetComponent<LerpAnimation>().StartAnimation(camera.transform.position, currentRoom.nextRoom.cameraPosition);
+            }
+            else
+            {
+                // VFX o animazione cambio livello
+                gameObject.transform.position = currentRoom.nextRoom.spawnPoint;
+                camera.transform.position = currentRoom.nextRoom.cameraPosition;
+                NewRoom();
+            }
+            
             currentRoom = currentRoom.nextRoom;
+            if (currentRoom.level != currentLevel)
+            {
+                currentLevel = currentRoom.level;
+                OnEndLevel?.Invoke(this, EventArgs.Empty);
+            }
+        }
+        else if (collision.gameObject.layer == LayerMask.NameToLayer("DeathGround"))
+        {
+            Die();
         }
     }
+    
+    public void UseLevelManager(object sender, EventArgs args)
+    {
+        levels = GameObject.Find("LevelManager").GetComponent<LevelManager>();
+        currentLevel = levels.levels[0];
+        currentRoom = currentLevel.rooms[0].GetComponent<Room>();
+    }
 
-    private void SetWallsTriggers(object sender, AnimationArgs args)
+    private void EndedRoomAnimation(object sender, AnimationArgs args)
     {
         if (args.Obj == gameObject)
         {
-            currentRoom.nextRoom.enterWall.isTrigger = false;
-            currentRoom.exitWall.isTrigger = false;
-            GetComponent<Rigidbody>().useGravity = true;
-            GetComponent<Rigidbody>().isKinematic = false;
+            NewRoom();
         }
     }
 
+    private void NewRoom()
+    {
+        OnStartRoom?.Invoke(this, new ChangeRoomArgs(currentRoom));
+            
+        GetComponent<Rigidbody>().useGravity = true;
+        GetComponent<Rigidbody>().isKinematic = false;
+    }
+
+}
+
+public class ChangeRoomArgs : EventArgs
+{
+    public ChangeRoomArgs(Room a)
+    {
+        room = a;
+    }
+
+    public Room room;
 }
