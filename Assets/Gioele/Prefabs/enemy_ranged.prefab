@@ -15,7 +15,8 @@ GameObject:
   - component: {fileID: 4709013081580493079}
   - component: {fileID: 6671432346157373700}
   - component: {fileID: 3506020255975999674}
-  m_Layer: 6
+  - component: {fileID: 2673420273973131395}
+  m_Layer: 0
   m_Name: enemy_ranged
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -31,7 +32,7 @@ Transform:
   m_GameObject: {fileID: 639919568979264030}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 6.3523097, y: 1.12, z: -19.433247}
+  m_LocalPosition: {x: 6.3523097, y: 1.12, z: 71.5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -66,7 +67,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 4e8bd2f9f4f0d64459119e224f256f6c, type: 2}
+  - {fileID: 2100000, guid: eb558b55959a73b4caea5f023ae9a9db, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -149,20 +150,21 @@ MonoBehaviour:
   Player: {fileID: 0}
   ground:
     serializedVersion: 2
-    m_Bits: 64
+    m_Bits: 8
   playerLayer:
     serializedVersion: 2
-    m_Bits: 8
+    m_Bits: 64
   walkPoint: {x: 0, y: 0, z: 0}
   walkPointSet: 0
   walkPointRange: 0
   timeBetweenAttacks: 1
   alreadyAttacked: 0
-  projectile: {fileID: 1367908784354803864, guid: ddd353402a4266142a333a2df5b430db, type: 3}
+  projectile: {fileID: 1367908784354803864, guid: ddd353402a4266142a333a2df5b430db,
+    type: 3}
   projectileSpeed: 20
   projectileUPSpeed: 1.5
-  sightRange: 2
-  attackRange: 3.5
+  sightRange: 5
+  attackRange: 8
   playerInSightRange: 0
   playerInAttackRange: 0
   vita: 5
@@ -190,10 +192,34 @@ Rigidbody:
   m_ImplicitCom: 1
   m_ImplicitTensor: 1
   m_UseGravity: 1
-  m_IsKinematic: 1
+  m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &2673420273973131395
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 639919568979264030}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cb46df91292842fbb1cdd61794f576de, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _gunPivot: {fileID: 8263912520486575612}
+  _rayOrigin: {fileID: 8263912520486575612}
+  _rotationSpeed: 5
+  _targetFoundRotationSpeed: 5
+  _maxTargetDistance: 9
+  _visibilityRaLayerMask:
+    serializedVersion: 2
+    m_Bits: 64
+  _viewAngle: 360
+  _bullet: {fileID: 5818121452519407686, guid: ddd353402a4266142a333a2df5b430db, type: 3}
+  _shootFrequency: 5
+  _shootForce: 25
 --- !u!1 &8236875482762506684
 GameObject:
   m_ObjectHideFlags: 0
@@ -203,7 +229,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8263912520486575612}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: GameObject
   m_TagString: Untagged
   m_Icon: {fileID: 0}

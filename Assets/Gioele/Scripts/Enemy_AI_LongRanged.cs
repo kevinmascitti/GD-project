@@ -97,9 +97,10 @@ public class Enemy_AI_LongRanged : MonoBehaviour
             projectileRb.AddForce(directionToPlayer *projectileSpeed,ForceMode.Impulse);
             projectileRb.AddForce(transform.up*projectileUPSpeed,ForceMode.Impulse);
             // setto a true perche sto attaccando 
+            */
             alreadyAttacked = true;
             Invoke(nameof(ResetAttack),timeBetweenAttacks);// cosi do la temporizzazione per gli attacchi
-            */
+            
         }
     }
 
