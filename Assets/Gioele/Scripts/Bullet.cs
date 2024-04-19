@@ -13,6 +13,7 @@ public class Bullet : MonoBehaviour
     
     void OnCollisionEnter(Collision collision)
     {
+        /*
         if (IsBulletPiece)
         {
             DestroyBullet();
@@ -34,7 +35,7 @@ public class Bullet : MonoBehaviour
         {
             bulletPiecesRb[i].AddExplosionForce(_explosionForce, transform.position, _explosionRadius);
         }
-
+        */
         Destroy(gameObject);
     }
 

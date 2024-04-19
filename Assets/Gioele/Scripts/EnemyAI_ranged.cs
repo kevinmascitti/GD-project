@@ -75,7 +75,7 @@ public class EnemyAI : MonoBehaviour
         transform.LookAt(Player.position);
         if (!alreadyAttacked)
         {
-            
+            /*
             // attacco ranged/long ranged
             Rigidbody rb = Instantiate(projectile,transform.position,Quaternion.identity).GetComponent<Rigidbody>();
             // trovo lla direzine del player
@@ -86,6 +86,7 @@ public class EnemyAI : MonoBehaviour
             // parabolico aumento la forza forward e tolgo la up force
             rb.AddForce(transform.up*projectileUPSpeed,ForceMode.Impulse);
             // setto a true perche sto attaccando 
+            */
             alreadyAttacked = true;
             Invoke(nameof(ResetAttack),timeBetweenAttacks);// cosi do la temporizzazione per gli attacchi
             

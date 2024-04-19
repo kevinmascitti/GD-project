@@ -15,7 +15,8 @@ GameObject:
   - component: {fileID: 425799466553657114}
   - component: {fileID: 5525000658623649371}
   - component: {fileID: 5284335654863468256}
-  m_Layer: 6
+  - component: {fileID: 3517610187158387127}
+  m_Layer: 0
   m_Name: enemy_LongRanged
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -30,8 +31,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 845877483370869507}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 6.3523097, y: 1.12, z: 3.14}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 12.704619, y: 1.3, z: 74.64}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -66,7 +67,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: d76c2b1beb168e4448109260dda95709, type: 2}
+  - {fileID: 2100000, guid: 050b7d731f1d6e94a9302a16440fd30c, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -172,20 +173,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5bd765eacd5f5e5468f8ce1d193f81ac, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  agent: {fileID: 0}
+  agent: {fileID: 425799466553657114}
   Player: {fileID: 0}
   ground:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 8
   playerLayer:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 64
   walkPoint: {x: 0, y: 0, z: 0}
   walkPointSet: 0
   walkPointRange: 0
   timeBetweenAttacks: 3
   alreadyAttacked: 0
-  projectile: {fileID: 0}
+  projectile: {fileID: 1367908784354803864, guid: ddd353402a4266142a333a2df5b430db,
+    type: 3}
   projectileSpeed: 25
   projectileUPSpeed: 1.2
   sightRange: 5
@@ -194,6 +196,30 @@ MonoBehaviour:
   playerInAttackRange: 0
   vita: 3
   grounded: 0
+--- !u!114 &3517610187158387127
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 845877483370869507}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cb46df91292842fbb1cdd61794f576de, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _gunPivot: {fileID: 8371048481555028335}
+  _rayOrigin: {fileID: 8371048481555028335}
+  _rotationSpeed: 10
+  _targetFoundRotationSpeed: 8
+  _maxTargetDistance: 12
+  _visibilityRaLayerMask:
+    serializedVersion: 2
+    m_Bits: 64
+  _viewAngle: 360
+  _bullet: {fileID: 5818121452519407686, guid: ddd353402a4266142a333a2df5b430db, type: 3}
+  _shootFrequency: 2
+  _shootForce: 25
 --- !u!1 &1985422976773130142
 GameObject:
   m_ObjectHideFlags: 0
@@ -203,7 +229,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8371048481555028335}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: GameObject
   m_TagString: Untagged
   m_Icon: {fileID: 0}
