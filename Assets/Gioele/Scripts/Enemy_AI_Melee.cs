@@ -31,7 +31,7 @@ public class Enemy_AI_Melee : MonoBehaviour
     public bool playerInSightRange, playerInAttackRange;
     // caratteristiche
     public int vita; // numero di colpi che può subire prima di morire
-    public bool grounded = false;
+    [NonSerialized]public bool grounded = false;
     
     private void Awake()
     {

@@ -21,17 +21,17 @@ public class Enemy_AI_LongRanged : MonoBehaviour
 
     public float walkPointRange;
     // attacco
-    public float timeBetweenAttacks;
-    public bool alreadyAttacked;
+    [NonSerialized]public float timeBetweenAttacks;
+    [NonSerialized]public bool alreadyAttacked;
     public GameObject projectile;
-    public float projectileSpeed=25f;
-    public float projectileUPSpeed=1.2f;
+    //public float projectileSpeed=25f;
+    //public float projectileUPSpeed=1.2f;
     // stati
     public float sightRange, attackRange;
-    public bool playerInSightRange, playerInAttackRange;
+    [NonSerialized]public bool playerInSightRange, playerInAttackRange;
     // caratteristiche
     public int vita; // numero di colpi che può subire prima di morire
-    public bool grounded = false;
+    private bool grounded = false;
     
     private void Awake()
     {
