@@ -20,8 +20,17 @@ public class Room : MonoBehaviour
     public void Awake()
     {
         ID = Int32.Parse(gameObject.name.Substring("Room".Length));
+        PlayerCharacter.OnStartRoom += EnableRoom;
     }
 
+    private void EnableRoom(object sender, RoomArgs args)
+    {
+        if (args.room == this)
+        {
+            Debug.Log("ENABLE ROOM " + ID + " in Level " + level.ID);
+        }
+    }
+    
     public void ClearEnterLayer()
     {
         enterWall.gameObject.layer = 0;

@@ -12,11 +12,10 @@ public class LevelManager : MonoBehaviour
     [SerializeField] private GameObject player;
     [SerializeField] private Camera camera;
     
-
     [NonSerialized] public List<RoomManager> levels = new List<RoomManager>();
     [NonSerialized] public RoomManager firstLevel;
 
-    public static EventHandler OnFirstLevelChosen;
+    public static EventHandler<LevelManagerArgs> OnInitializedLevels; 
 
     public void Start()
     {
@@ -27,12 +26,13 @@ public class LevelManager : MonoBehaviour
             levels.Add(transform.GetChild(i).GetComponent<RoomManager>());
         }
         
+        // TO DO: MISCHIARE LIVELLI con una funzione?
+
         for(int i = 0; i < levels.Count-1; i++)
         {
             if (i == 0)
             {
-                levels[0].isFirstLevel = true;
-                firstLevel = levels[0];
+                firstLevel = levels[0]; 
             }
             levels[i].GetComponent<RoomManager>().nextLevel = levels[i + 1].GetComponent<RoomManager>();
         }
@@ -45,6 +45,7 @@ public class LevelManager : MonoBehaviour
         initializedLevels++;
         if (initializedLevels == levels.Count)
         {
+            OnInitializedLevels?.Invoke(this, new LevelManagerArgs(levels, firstLevel));
             player.transform.position = firstLevel.firstRoom.spawnPoint;
             camera.transform.position = firstLevel.firstRoom.cameraPosition;
             for (int i = 0; i < initializedLevels - 1; i++)

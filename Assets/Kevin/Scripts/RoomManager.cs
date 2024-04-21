@@ -12,7 +12,6 @@ public class RoomManager : MonoBehaviour
     [NonSerialized] public RoomManager nextLevel;
     [NonSerialized] public Room firstRoom;
     [NonSerialized] public Room lastRoom;
-    [NonSerialized] public bool isFirstLevel = false; // da risettare a false tutti al gameover
 
     public static EventHandler OnInitializedLevel;
 
@@ -31,6 +30,7 @@ public class RoomManager : MonoBehaviour
         for(int i = 0; i < rooms.Count; i++)
         {
             rooms[i].enterWall = rooms[i].transform.Find("EnterWall").GetComponent<BoxCollider>();
+            rooms[i].enterWall.gameObject.layer = LayerMask.NameToLayer("Default");
             rooms[i].exitWall = rooms[i].transform.Find("ExitWall").GetComponent<BoxCollider>();
             rooms[i].spawnPoint = rooms[i].transform.Find("SpawnPoint").transform.position;
             rooms[i].cameraPosition = rooms[i].transform.Find("Camera").transform.position;
@@ -46,21 +46,27 @@ public class RoomManager : MonoBehaviour
         lastRoom = rooms[rooms.Count-1];
 
         PlayerCharacter.OnStartRoom += ClosePrevDoors;
-        PlayerCharacter.OnEndRoom += OpenNextDoors;
+        PlayerCharacter.OnNextRoom += OpenNextDoors;
         
         OnInitializedLevel?.Invoke(this, EventArgs.Empty);
     }
 
-    public void OpenNextDoors(object sender, ChangeRoomArgs args)
+    public void OpenNextDoors(object sender, RoomArgs args)
     {
-        args.room.exitWall.isTrigger = true;
-        args.room.nextRoom.enterWall.isTrigger = true;
+        if (args != null)
+        {
+            args.room.exitWall.isTrigger = true;
+            args.room.nextRoom.enterWall.isTrigger = true;
+        }
     }
-    
-    public void ClosePrevDoors(object sender, ChangeRoomArgs args)
+
+    public void ClosePrevDoors(object sender, RoomArgs args)
     {
-        args.room.prevRoom.exitWall.isTrigger = false;
-        args.room.enterWall.isTrigger = false;
+        if (args != null && args.room.prevRoom)
+        {
+            args.room.prevRoom.exitWall.isTrigger = false;
+            args.room.enterWall.isTrigger = false;
+        }
     }
     
     

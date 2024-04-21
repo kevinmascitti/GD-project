@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Transactions;
+using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -10,41 +11,59 @@ using UnityEngine.UI;
 public class PlayerCharacter : Character
 {
     public const float MAX_HP = 100;
+    public const float def_HP = 100;
     public const float MAX_STAMINA = 100;
-    public const int INITIAL_LIFE = 5;
+    public const float def_STAMINA = 5;
+    public const int def_life = 5;
     
     public Slider sliderHP;
     public Slider sliderStamina;
-    private float currentStamina = 0;
-    private float staminaDefault = 5;
+    public TMP_Text UIExtraLife;
+    private float currentStamina;
+    private float staminaUp = 5;
     
-    private int extraLife;
+    private int currentExtraLife;
     
     [SerializeField] private Camera camera;
 
-    [NonSerialized] public LevelManager levels;
     [NonSerialized] public RoomManager currentLevel;
     [NonSerialized] public Room currentRoom;
 
     public static EventHandler OnDeath;
     public static EventHandler OnGameOver;
 
-    public static EventHandler<ChangeRoomArgs> OnStartRoom;
-    public static EventHandler<ChangeRoomArgs> OnEndRoom;
-    public static EventHandler OnEndLevel;
+    public static EventHandler<RoomArgs> OnStartRoom;
+    public static EventHandler<RoomArgs> OnEndRoom;
+    public static EventHandler<RoomArgs> OnNextRoom;
+    public static EventHandler<RoomManagerArgs> OnStartLevel;
+    public static EventHandler<RoomManagerArgs> OnEndLevel;
 
     // Start is called before the first frame update
-    void Awake()
+    public void Awake()
     {
+        isPlayer = true;
+        sliderHP = GameObject.Find("HPBar").GetComponent<Slider>();
+        sliderStamina = GameObject.Find("StaminaBar").GetComponent<Slider>();
+        UIExtraLife = GameObject.Find("ExtraLifeUI").GetComponent<TMP_Text>();
+
         if (sliderHP && sliderStamina)
         {
             sliderHP.maxValue = MAX_HP;
             sliderStamina.maxValue = MAX_STAMINA;
-            extraLife = INITIAL_LIFE;
         }
+    
+        UpdateHP(def_HP);
+        UpdateStamina(def_STAMINA);
+        UpdateExtraLife(def_life);
 
-        RoomManager.OnInitializedLevel += UseLevelManager;
-        LerpAnimation.OnEndAnimation += EndedRoomAnimation;
+        LevelManager.OnInitializedLevels += SetCurrentRoom;
+        LerpAnimation.OnEndAnimation += EndPlayerAnimation;
+    }
+
+    public void Start()
+    {
+        OnStartRoom?.Invoke(this, new RoomArgs(currentRoom));
+        OnStartLevel?.Invoke(this, new RoomManagerArgs(currentLevel));
     }
 
     // Update is called once per frame
@@ -54,42 +73,62 @@ public class PlayerCharacter : Character
         
         if (Input.GetKeyDown(KeyCode.E))
         {
-            Debug.Log("Stamina++ " + staminaDefault);
-            if (currentStamina + staminaDefault <= MAX_STAMINA)
+            Debug.Log("Stamina++ " + staminaUp);
+            if (currentStamina + staminaUp <= MAX_STAMINA)
             {
-                currentStamina += staminaDefault;
+                currentStamina += staminaUp;
             }
             else
             {
                 currentStamina = MAX_STAMINA;
             }
+
+            UpdateStaminaUI(currentStamina);
         }
         else if (Input.GetKeyDown(KeyCode.L))
         {
-            currentRoom.isLocked = false;
+            if (currentRoom.isLocked)
+            {
+                currentRoom.isLocked = false;
+                Debug.Log("NEXT ROOM UNLOCKED");
+            }
         }
 
-        if (sliderHP && sliderStamina)
-        {
-            sliderHP.value = currentHP;
-            sliderStamina.value = currentStamina;
-        }
-        
         if (currentHP <= 0)
         {
             Die();
         }
     }
 
+    public void UpdateHP(float newHP)
+    {
+        currentHP = newHP;
+        UpdateHPUI(currentHP);
+    }
+    
+    public void UpdateStamina(float newStamina)
+    {
+        currentStamina = newStamina;
+        UpdateStaminaUI(currentStamina);
+    }
+    
+    public void UpdateExtraLife(int newExtraLife)
+    {
+        currentExtraLife = newExtraLife;
+        UpdateExtraLifeUI(currentExtraLife);
+    }
+
     public void Die()
     {
-        currentHP = MAX_HP;
-        currentStamina = 0;
-        extraLife--;
+        OnEndRoom?.Invoke(this, new RoomArgs(currentRoom));
+        
+        UpdateHP(MAX_HP);
+        UpdateStamina(0);
+        UpdateExtraLife(currentExtraLife-1);
         
         // animazione personaggio che muore
         
-        if (extraLife < 0)
+        if (currentExtraLife < 0)
         {
             GameOver();
         }
@@ -103,6 +142,8 @@ public class PlayerCharacter : Character
     public void Respawn()
     {
         OnDeath?.Invoke(this, EventArgs.Empty);
+        
+        currentRoom = currentLevel.firstRoom;
         gameObject.transform.position = currentLevel.rooms[0].spawnPoint;
         camera.transform.position = currentLevel.rooms[0].cameraPosition;
         Debug.Log("DIED");
@@ -110,8 +151,10 @@ public class PlayerCharacter : Character
 
     public void GameOver()
     {
-        // UI visibile
+        OnEndLevel?.Invoke(this, new RoomManagerArgs(currentLevel));
         OnGameOver?.Invoke(this, EventArgs.Empty);
+        
+        // UI visibile
         Debug.Log("GAMEOVER");
     }
     
@@ -119,29 +162,31 @@ public class PlayerCharacter : Character
     {
         if (collision.gameObject.layer == LayerMask.NameToLayer("Wall") && !currentRoom.isLocked)
         {
-            OnEndRoom?.Invoke(this, new ChangeRoomArgs(currentRoom));
+            OnEndRoom?.Invoke(this, new RoomArgs(currentRoom));
+            OnNextRoom?.Invoke(this, new RoomArgs(currentRoom));
             
             GetComponent<Rigidbody>().useGravity = false;
             GetComponent<Rigidbody>().isKinematic = true;
 
-            if (currentRoom.nextRoom.level == currentLevel)
+            if (currentRoom.nextRoom.level == currentLevel) // CAMBIO STANZA
             {
                 gameObject.GetComponent<LerpAnimation>().StartAnimation(transform.position, currentRoom.nextRoom.spawnPoint);
                 camera.GetComponent<LerpAnimation>().StartAnimation(camera.transform.position, currentRoom.nextRoom.cameraPosition);
+                currentRoom = currentRoom.nextRoom;
             }
-            else
+            else // CAMBIO LIVELLO
             {
                 // VFX o animazione cambio livello
                 gameObject.transform.position = currentRoom.nextRoom.spawnPoint;
                 camera.transform.position = currentRoom.nextRoom.cameraPosition;
-                NewRoom();
+                currentRoom = currentRoom.nextRoom;
+                NewLevel();
             }
             
-            currentRoom = currentRoom.nextRoom;
             if (currentRoom.level != currentLevel)
             {
                 currentLevel = currentRoom.level;
-                OnEndLevel?.Invoke(this, EventArgs.Empty);
+                OnEndLevel?.Invoke(this, new RoomManagerArgs(currentLevel));
             }
         }
         else if (collision.gameObject.layer == LayerMask.NameToLayer("DeathGround"))
@@ -149,15 +194,32 @@ public class PlayerCharacter : Character
             Die();
         }
     }
-    
-    public void UseLevelManager(object sender, EventArgs args)
+
+    public void UpdateHPUI(float HP)
     {
-        levels = GameObject.Find("LevelManager").GetComponent<LevelManager>();
-        currentLevel = levels.levels[0];
-        currentRoom = currentLevel.rooms[0].GetComponent<Room>();
+        if(sliderHP)
+            sliderHP.value = HP;
     }
 
-    private void EndedRoomAnimation(object sender, AnimationArgs args)
+    public void UpdateStaminaUI(float stamina)
+    {
+        if (sliderStamina)
+            sliderStamina.value = stamina;
+    }
+    
+    public void UpdateExtraLifeUI(int extraLife)
+    {
+        if(UIExtraLife && extraLife >= 0)
+            UIExtraLife.text = "x" + extraLife.ToString("00");
+    }
+
+    public void SetCurrentRoom(object sender, LevelManagerArgs args)
+    {
+        currentLevel = args.firstLevel;
+        currentRoom = currentLevel.firstRoom.GetComponent<Room>();
+    }
+
+    private void EndPlayerAnimation(object sender, AnimationArgs args)
     {
         if (args.Obj == gameObject)
         {
@@ -165,9 +227,18 @@ public class PlayerCharacter : Character
         }
     }
 
+    private void NewLevel()
+    {
+        OnStartLevel?.Invoke(this, new RoomManagerArgs(currentLevel));
+        Debug.Log("NEW LEVEL");
+        
+        NewRoom();
+    }
+
     private void NewRoom()
     {
-        OnStartRoom?.Invoke(this, new ChangeRoomArgs(currentRoom));
+        OnStartRoom?.Invoke(this, new RoomArgs(currentRoom));
+        Debug.Log("NEW ROOM");
             
         GetComponent<Rigidbody>().useGravity = true;
         GetComponent<Rigidbody>().isKinematic = false;
@@ -175,12 +246,34 @@ public class PlayerCharacter : Character
 
 }
 
-public class ChangeRoomArgs : EventArgs
+public class RoomArgs : EventArgs
 {
-    public ChangeRoomArgs(Room a)
+    public RoomArgs(Room a)
     {
         room = a;
     }
 
     public Room room;
+}
+
+public class RoomManagerArgs : EventArgs
+{
+    public RoomManagerArgs(RoomManager a)
+    {
+        level = a;
+    }
+
+    public RoomManager level;
+}
+
+public class LevelManagerArgs : EventArgs
+{
+    public LevelManagerArgs(List<RoomManager> a, RoomManager b)
+    {
+        levels = a;
+        firstLevel = b;
+    }
+
+    public List<RoomManager> levels;
+    public RoomManager firstLevel;
 }
