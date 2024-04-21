@@ -21,8 +21,8 @@ public class EnemyAI : MonoBehaviour
 
     public float walkPointRange;
     // attacco
-    public float timeBetweenAttacks;
-    public bool alreadyAttacked;
+    [NonSerialized]public float timeBetweenAttacks;
+    [NonSerialized]public bool alreadyAttacked;
     public GameObject projectile;
     public float projectileSpeed=20f;
     public float projectileUPSpeed=1.5f;
@@ -31,7 +31,7 @@ public class EnemyAI : MonoBehaviour
     public bool playerInSightRange, playerInAttackRange;
     // caratteristiche
     public int vita; // numero di colpi che può subire prima di morire
-    public bool grounded = false;
+    [NonSerialized]public bool grounded = false;
     
     private void Awake()
     {
