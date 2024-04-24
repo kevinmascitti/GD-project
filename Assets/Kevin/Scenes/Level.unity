@@ -2078,9 +2078,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 1090015458}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ac580442502604a93a35ec0804348e82, type: 3}
+  m_Script: {fileID: 11500000, guid: bf1ee23f6c0e842ca8e49005a428008a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  cameraMovementSpeed: 2
+  distanceFromEndLevel: 50
 --- !u!1 &1111190062
 GameObject:
   m_ObjectHideFlags: 0
@@ -3458,7 +3460,7 @@ MonoBehaviour:
   def: 23
   sliderHP: {fileID: 2107748402}
   sliderStamina: {fileID: 248918608}
-  UIExtraLife: {fileID: 0}
+  UIExtraLife: {fileID: 797171666}
   camera: {fileID: 1090015460}
 --- !u!114 &1958569420
 MonoBehaviour:
