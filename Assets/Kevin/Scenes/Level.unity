@@ -550,6 +550,37 @@ Transform:
   m_Children: []
   m_Father: {fileID: 2091221341}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &192904427
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 192904428}
+  m_Layer: 0
+  m_Name: DepthPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &192904428
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 192904427}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -433.56702, y: -101.051636, z: -427.4}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &248918606
 GameObject:
   m_ObjectHideFlags: 0
@@ -2081,8 +2112,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bf1ee23f6c0e842ca8e49005a428008a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cameraMovementSpeed: 2
-  distanceFromEndLevel: 50
+  cameraMovementSpeed: 0.5
+  distanceFromLevelLimit: 5
+  playerDistanceFromCamera: -15
 --- !u!1 &1111190062
 GameObject:
   m_ObjectHideFlags: 0
@@ -3327,6 +3359,8 @@ MonoBehaviour:
   Camera: {fileID: 1090015460}
   Speed: 5
   RotationSpeed: 3.04
+  minDepthBound: 7
+  maxDepthBound: 7
 --- !u!54 &1958569414
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -3902,4 +3936,5 @@ SceneRoots:
   - {fileID: 1958569418}
   - {fileID: 483025179}
   - {fileID: 1934652296}
+  - {fileID: 192904428}
   - {fileID: 381705383}
