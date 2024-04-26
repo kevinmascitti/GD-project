@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -8,10 +9,19 @@ public class SimpleThirdPersonController : MonoBehaviour
     public float Speed = 5f;
     public float RotationSpeed = 3f;
 
+    private GameObject depthPoint;
+    [SerializeField] private float minDepthBound;
+    [SerializeField] private float maxDepthBound;
+
     private Vector3 _inputVector;
     private float _inputSpeed;
     private Vector3 _targetDirection;
-    
+
+    public void Start()
+    {
+        depthPoint = GameObject.Find("DepthPoint");
+    }
+
     void Update()
     {
         //Handle the Input
@@ -34,7 +44,15 @@ public class SimpleThirdPersonController : MonoBehaviour
         
         //Translate along forward
         transform.Translate(transform.forward * _inputSpeed * Speed * Time.deltaTime, Space.World);
-        
+        if (transform.position.z < depthPoint.transform.position.z - minDepthBound)
+        {
+            transform.position = new Vector3(transform.position.x, transform.position.y, depthPoint.transform.position.z - minDepthBound);
+        }
+        else if(transform.position.z > depthPoint.transform.position.z + maxDepthBound)
+        {
+            transform.position = new Vector3(transform.position.x, transform.position.y, depthPoint.transform.position.z + maxDepthBound);
+        }
+
         Debug.DrawRay(transform.position + transform.up * 3f, _targetDirection * 5f, Color.red);
         Debug.DrawRay(transform.position + transform.up * 3f, newDir * 5f, Color.blue);
     }

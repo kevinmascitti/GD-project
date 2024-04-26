@@ -9,6 +9,7 @@ public class Room : MonoBehaviour
     public bool isLocked = false;
 
     [NonSerialized] public int ID;
+    [NonSerialized] public GameObject plane;
     [NonSerialized] public Vector3 spawnPoint;
     [NonSerialized] public Vector3 cameraPosition;
     [NonSerialized] public Room prevRoom;

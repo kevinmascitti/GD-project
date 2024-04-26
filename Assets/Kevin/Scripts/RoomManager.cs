@@ -8,6 +8,7 @@ public class RoomManager : MonoBehaviour
 {
     [NonSerialized] public GameObject player;
     [NonSerialized] public int ID;
+    [NonSerialized] public GameObject deathGround;
     [NonSerialized] public List<Room> rooms = new List<Room>();
     [NonSerialized] public RoomManager nextLevel;
     [NonSerialized] public Room firstRoom;
@@ -20,6 +21,7 @@ public class RoomManager : MonoBehaviour
     {
         player = GameObject.Find("Player");
         ID = Int32.Parse(gameObject.name.Substring("Level".Length));
+        deathGround = transform.Find("DeathGround").gameObject;
         
         for(int i = 0; i < transform.childCount; i++)
         {
@@ -29,6 +31,7 @@ public class RoomManager : MonoBehaviour
         
         for(int i = 0; i < rooms.Count; i++)
         {
+            rooms[i].plane = rooms[i].transform.Find("Plane").gameObject;
             rooms[i].enterWall = rooms[i].transform.Find("EnterWall").GetComponent<BoxCollider>();
             rooms[i].enterWall.gameObject.layer = LayerMask.NameToLayer("Default");
             rooms[i].exitWall = rooms[i].transform.Find("ExitWall").GetComponent<BoxCollider>();
