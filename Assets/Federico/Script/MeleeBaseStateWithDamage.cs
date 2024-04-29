@@ -1,8 +1,10 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
-public class MeleeBaseState : State
+public class MeleeBaseStateWithDamage : State
 {
     // How long this state should be active for before moving on
     public float duration;
@@ -16,9 +18,9 @@ public class MeleeBaseState : State
 
 
     // The cached hit collider component of this attack
-    protected Collider2D hitCollider;
+  //  protected Collider2D hitCollider;
     // Cached already struck objects of said attack to avoid overlapping attacks on same target
-    private List<Collider2D> collidersDamaged;
+  // private List<Collider2D> collidersDamaged;
     // The Hit Effect to Spawn on the afflicted Enemy
     private GameObject HitEffectPrefab;
 
@@ -29,9 +31,9 @@ public class MeleeBaseState : State
     {
         base.OnEnter(_stateMachine);
         animator = GetComponent<Animator>();
-      //  collidersDamaged = new List<Collider2D>();
-       // hitCollider = GetComponent<ComboCharacter>().hitbox;
-        HitEffectPrefab = GetComponent<ComboCharacterWithDamage>().Hiteffect;
+   //     collidersDamaged = new List<Collider2D>();
+   //     hitCollider = GetComponent<ComboCharacter>().hitbox;
+        HitEffectPrefab = GetComponent<ComboCharacter>().Hiteffect;
     }
 
     public override void OnUpdate()
@@ -41,7 +43,7 @@ public class MeleeBaseState : State
         
         if (animator.GetFloat("Weapon.Active") > 0f)
         {
-           // Attack();
+            Attack();
         }
         if (Input.GetMouseButtonDown(0))
         {
@@ -62,6 +64,21 @@ public class MeleeBaseState : State
 
     protected void Attack()
     {
+        
+    }
+/*
+    private void OnCollisionEnter (Collision collision)
+    {
+        TeamComponent hitTeamComponent = collision.gameObject.GetComponent<TeamComponent>();
+        if (hitTeamComponent != null)
+        {
+            Debug.Log("damage taken bro");
+        }
+    }
+*/
+}
+
+/*
         Collider2D[] collidersToDamage = new Collider2D[10];
         ContactFilter2D filter = new ContactFilter2D();
         filter.useTriggers = true;
@@ -82,6 +99,4 @@ public class MeleeBaseState : State
                 }
             }
         }
-    }
-
-}
+        */
