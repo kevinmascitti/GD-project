@@ -10,11 +10,12 @@ using UnityEngine.UI;
 
 public class PlayerCharacter : Character
 {
-    public const float MAX_HP = 100;
-    public const float def_HP = 100;
-    public const float MAX_STAMINA = 100;
-    public const float def_STAMINA = 5;
-    public const int def_life = 5;
+    public float MAX_HP = 100;
+    public float def_HP = 100;
+    public float MAX_STAMINA = 100;
+    public float def_STAMINA = 5;
+    public int MAX_LIFE = 99;
+    public int def_life = 5;
     
     public Slider sliderHP;
     public Slider sliderStamina;
