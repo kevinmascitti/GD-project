@@ -32,7 +32,7 @@ public class Enemy_AI_Melee : MonoBehaviour
     // caratteristiche
     public int vita; // numero di colpi che può subire prima di morire
     [NonSerialized]public bool grounded = false;
-    
+    [NonSerialized]public bool OnAttack;
     private void Awake()
     {
         Player = GameObject.FindGameObjectWithTag("Player").transform;
@@ -93,6 +93,35 @@ public class Enemy_AI_Melee : MonoBehaviour
 
     }
 
+    private void OnCollisionEnter(Collision collision)
+    {
+
+        if (collision.collider.CompareTag("Player"))
+        {
+            OnAttack = true;
+            Invoke("ChangeState", 1.2f);
+        }
+        
+    }
+   
+    private void ChangeState()
+    {
+        OnAttack = false;
+    }
+    /*
+     private void OnCollisionStay(Collision collision)
+     {
+
+         if (collision.collider.CompareTag("Player"))
+         {
+             OnAttack = true;
+         }
+         else
+         {
+             OnAttack = false;
+         }
+     }
+     */
 
     void Start()
     {
@@ -112,7 +141,7 @@ public class Enemy_AI_Melee : MonoBehaviour
                 Patroling(); // nulla 
             if (playerInSightRange && !playerInAttackRange)
                 ChasePlayer(); // segue il player 
-            if (!playerInSightRange && playerInAttackRange)
+            if (!playerInSightRange && playerInAttackRange && !OnAttack)
                 AttackPlayer(); // lo attacca
         }
     }
