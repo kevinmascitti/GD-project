@@ -426,7 +426,7 @@ GameObject:
   - component: {fileID: 555835140}
   - component: {fileID: 555835141}
   m_Layer: 0
-  m_Name: empty_player
+  m_Name: Player
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1020,6 +1020,33 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 1765920686163179154}
   m_PrefabAsset: {fileID: 0}
+--- !u!54 &1413151461
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1413151455}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 0
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!1 &1465603500
 GameObject:
   m_ObjectHideFlags: 0
@@ -1255,6 +1282,10 @@ PrefabInstance:
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 5729353237577450043, guid: 046be516ca5844d19b46ba198a72f3f2,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1413151461}
     - targetCorrespondingSourceObject: {fileID: 5307930202333937285, guid: 046be516ca5844d19b46ba198a72f3f2,
         type: 3}
       insertIndex: -1
