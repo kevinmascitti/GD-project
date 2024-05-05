@@ -38,6 +38,7 @@ public class moving : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.P))
         {
             punto_esclamativo.SetActive(true);
+            
         }
     }
 }

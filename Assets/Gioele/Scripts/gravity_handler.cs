@@ -12,7 +12,7 @@ public class gravity_handler : MonoBehaviour
         {
             GetComponent<Rigidbody>().isKinematic = true;
             grounded = true;
-            Debug.Log("fermo");
+            //Debug.Log("fermo");
             transform.position = new Vector3(transform.position.x, other.transform.position.y, transform.position.z);
         }
     }
