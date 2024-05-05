@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Transactions;
 using TMPro;
 using Unity.VisualScripting;
+using Unity.VisualScripting.ReorderableList;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -30,6 +31,11 @@ public class PlayerCharacter : Character
     [NonSerialized] public RoomManager currentLevel;
     [NonSerialized] public Room currentRoom;
 
+    [NonSerialized] public Grabbable grabbableItem = null;
+    [NonSerialized] public Grabbable grabbedItem = null;
+    public GameObject grabbingHand;
+    [NonSerialized] private List<Grabbable> nearGrabbables = new List<Grabbable>();
+
     public static EventHandler OnDeath;
     public static EventHandler OnGameOver;
 
@@ -38,14 +44,17 @@ public class PlayerCharacter : Character
     public static EventHandler<RoomArgs> OnNextRoom;
     public static EventHandler<RoomManagerArgs> OnStartLevel;
     public static EventHandler<RoomManagerArgs> OnEndLevel;
+    public static EventHandler<GrabbableArgs> OnGrabbed;
+    public static EventHandler<GrabbableArgs> OnThrown;
+    public static EventHandler<GrabbableArgs> OnComputedNearestGrabbable;
 
     // Start is called before the first frame update
     public void Awake()
     {
         isPlayer = true;
-        sliderHP = GameObject.Find("HPBar").GetComponent<Slider>();
-        sliderStamina = GameObject.Find("StaminaBar").GetComponent<Slider>();
-        UIExtraLife = GameObject.Find("ExtraLifeUI").GetComponent<TMP_Text>();
+        // sliderHP = GameObject.Find("HPBar").GetComponent<Slider>();
+        // sliderStamina = GameObject.Find("StaminaBar").GetComponent<Slider>();
+        // UIExtraLife = GameObject.Find("ExtraLifeUI").GetComponent<TMP_Text>();
 
         if (sliderHP && sliderStamina)
         {
@@ -59,6 +68,9 @@ public class PlayerCharacter : Character
 
         LevelManager.OnInitializedLevels += SetCurrentRoom;
         LerpAnimation.OnEndAnimation += EndPlayerAnimation;
+
+        Grabbable.OnInsideRange += AddGrabbableInRange;
+        Grabbable.OnOutsideRange += RemoveGrabbableInRange;
     }
 
     public void Start()
@@ -72,6 +84,7 @@ public class PlayerCharacter : Character
     {
         base.Update();
         
+        // AUMENTO STAMINA
         if (Input.GetKeyDown(KeyCode.E))
         {
             Debug.Log("Stamina++ " + staminaUp);
@@ -85,7 +98,7 @@ public class PlayerCharacter : Character
             }
 
             UpdateStaminaUI(currentStamina);
-        }
+        } // SBLOCCO LIVELLO SUCCESSIVO
         else if (Input.GetKeyDown(KeyCode.L))
         {
             if (currentRoom.isLocked)
@@ -98,6 +111,21 @@ public class PlayerCharacter : Character
         if (currentHP <= 0)
         {
             Die();
+        }
+        
+        // LANCIO OGGETTO
+        if (Input.GetKeyDown(KeyCode.G) && grabbedItem == null && grabbableItem.GetState() == GrabbableState.GRABBABLE)
+        {
+            grabbedItem = grabbableItem;
+            grabbedItem.Grab();
+            OnGrabbed?.Invoke(this, new GrabbableArgs(grabbedItem));
+            grabbableItem = null;
+        }
+        else if (Input.GetKeyDown(KeyCode.G) && grabbedItem != null && grabbedItem.GetState() == GrabbableState.GRABBED) 
+        {
+            grabbedItem.Throw();
+            OnThrown?.Invoke(this, new GrabbableArgs(grabbedItem));
+            grabbedItem = null;
         }
     }
 
@@ -119,7 +147,7 @@ public class PlayerCharacter : Character
         UpdateExtraLifeUI(currentExtraLife);
     }
 
-    public void Die()
+    public override void Die()
     {
         OnEndRoom?.Invoke(this, new RoomArgs(currentRoom));
         
@@ -245,6 +273,44 @@ public class PlayerCharacter : Character
         GetComponent<Rigidbody>().isKinematic = false;
     }
 
+    private void AddGrabbableInRange(object sender, GrabbableArgs args)
+    {
+        nearGrabbables.Add(args.grabbable);
+        ComputeNearestGrabbable();
+    }
+    
+    private void RemoveGrabbableInRange(object sender, GrabbableArgs args)
+    {
+        nearGrabbables.Remove(args.grabbable);
+        ComputeNearestGrabbable();
+    }
+    
+    private void ComputeNearestGrabbable()
+    {
+        if (nearGrabbables.Count == 0)
+        {
+            grabbableItem = null;
+        }
+        else
+        {
+            nearGrabbables.Sort((a, b) =>
+            {
+                if (Vector3.Distance(a.gameObject.transform.position, transform.position) > Vector3.Distance(b.gameObject.transform.position, transform.position))
+                {
+                    return -1;
+                }
+                else
+                {
+                    return 1;
+                }
+            });
+            // PRENDO L'OGGETTO PIU VICINO
+            grabbableItem = nearGrabbables[0];
+        }
+
+        OnComputedNearestGrabbable?.Invoke(this, new GrabbableArgs(grabbableItem));
+    }
+
 }
 
 public class RoomArgs : EventArgs
@@ -277,4 +343,14 @@ public class LevelManagerArgs : EventArgs
 
     public List<RoomManager> levels;
     public RoomManager firstLevel;
+}
+
+public class GrabbableArgs : EventArgs
+{
+    public GrabbableArgs(Grabbable a)
+    {
+        grabbable = a;
+    }
+
+    public Grabbable grabbable;
 }
