@@ -17,17 +17,18 @@ public enum GrabbableState
 
 public class Grabbable : MonoBehaviour
 {
-    [SerializeField] private const float destroyTimer = 5f;
-    [SerializeField] private const float transitionDuration = 1.0f;
-    
+    [SerializeField] private float destroyTimer;
+    [SerializeField] private float transitionDuration;
+    [SerializeField] private float distanceTrigger;
+
     private bool isInRange = false;
     private GrabbableState state = GrabbableState.UNGRABBABLE;
     private GameObject player;
     private TMP_Text hint;
     
     [SerializeField] private Vector3 grabRotation;
-    [SerializeField] private float throwForce = 10f;
-    [SerializeField] private float rotationSpeed = 180f;
+    [SerializeField] private float throwForce;
+    [SerializeField] private float rotationSpeed;
     private Vector3 throwDirection = new Vector3(1, 0, 0);
     private Vector3 rotationAxis = Vector3.up;
     
@@ -46,12 +47,12 @@ public class Grabbable : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Vector3.Distance(transform.position, player.transform.position) < 5 && !isInRange)
+        if (Vector3.Distance(transform.position, player.transform.position) < distanceTrigger && !isInRange)
         {
             isInRange = true;
             OnInsideRange?.Invoke(this, new GrabbableArgs(this));
         }
-        else if(Vector3.Distance(transform.position, player.transform.position) >= 5 && isInRange)
+        else if(Vector3.Distance(transform.position, player.transform.position) >= distanceTrigger && isInRange)
         {
             isInRange = false;
             OnOutsideRange?.Invoke(this, new GrabbableArgs(this));
@@ -81,6 +82,7 @@ public class Grabbable : MonoBehaviour
     public void Grab()
     {
         state = GrabbableState.GRABBED;
+        hint.gameObject.SetActive(false);
         Vector3 targetPosition = player.GetComponent<PlayerCharacter>().grabbingHand.transform.position;
         Quaternion targetRotation = Quaternion.Euler(grabRotation);
 
@@ -99,23 +101,24 @@ public class Grabbable : MonoBehaviour
         {
             rb.AddForce(throwDirection.normalized * throwForce, ForceMode.Impulse);
         }
-        SpinContinuously();
+        StartCoroutine(SpinContinuously());
         StartCoroutine(StartDestroyTimer());
     }
 
-    private void SpinContinuously()
+    IEnumerator SpinContinuously()
     {
-        if (rotationAxis != Vector3.zero)
+        while (rotationAxis != Vector3.zero)
         {
             Quaternion rotationAmount = Quaternion.AngleAxis(rotationSpeed * Time.deltaTime, rotationAxis);
             transform.rotation *= rotationAmount;
+            yield return null;
         }
     }
 
     IEnumerator StartDestroyTimer()
     {
         yield return new WaitForSeconds(destroyTimer);
-        Destroy(this);
+        Destroy(gameObject);
     }
 
     private void OnTriggerEnter(Collider other)

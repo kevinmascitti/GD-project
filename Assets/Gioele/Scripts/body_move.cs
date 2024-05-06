@@ -6,12 +6,6 @@ using UnityEngine;
 public class moving : MonoBehaviour
 {
     [SerializeField] private GameObject head;
-    [SerializeField] private GameObject punto_esclamativo;
-
-    private void Awake()
-    {
-        punto_esclamativo.SetActive(false);
-    }
 
     public void RotateBy30Degrees(GameObject head)
     {
@@ -34,11 +28,6 @@ public class moving : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.C))
         {
             RotateByNegative30Degrees(head);
-        }
-        if (Input.GetKeyDown(KeyCode.P))
-        {
-            punto_esclamativo.SetActive(true);
-            
         }
     }
 }

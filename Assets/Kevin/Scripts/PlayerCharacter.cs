@@ -52,9 +52,9 @@ public class PlayerCharacter : Character
     public void Awake()
     {
         isPlayer = true;
-        // sliderHP = GameObject.Find("HPBar").GetComponent<Slider>();
-        // sliderStamina = GameObject.Find("StaminaBar").GetComponent<Slider>();
-        // UIExtraLife = GameObject.Find("ExtraLifeUI").GetComponent<TMP_Text>();
+        sliderHP = GameObject.Find("HPBar").GetComponent<Slider>();
+        sliderStamina = GameObject.Find("StaminaBar").GetComponent<Slider>();
+        UIExtraLife = GameObject.Find("ExtraLifeUI").GetComponent<TMP_Text>();
 
         if (sliderHP && sliderStamina)
         {
@@ -114,14 +114,14 @@ public class PlayerCharacter : Character
         }
         
         // LANCIO OGGETTO
-        if (Input.GetKeyDown(KeyCode.G) && grabbedItem == null && grabbableItem.GetState() == GrabbableState.GRABBABLE)
+        if (Input.GetKeyDown(KeyCode.G) && grabbableItem && grabbedItem == null && grabbableItem.GetState() == GrabbableState.GRABBABLE)
         {
             grabbedItem = grabbableItem;
             grabbedItem.Grab();
             OnGrabbed?.Invoke(this, new GrabbableArgs(grabbedItem));
             grabbableItem = null;
         }
-        else if (Input.GetKeyDown(KeyCode.G) && grabbedItem != null && grabbedItem.GetState() == GrabbableState.GRABBED) 
+        else if (Input.GetKeyDown(KeyCode.G) && grabbedItem && grabbedItem.GetState() == GrabbableState.GRABBED) 
         {
             grabbedItem.Throw();
             OnThrown?.Invoke(this, new GrabbableArgs(grabbedItem));
