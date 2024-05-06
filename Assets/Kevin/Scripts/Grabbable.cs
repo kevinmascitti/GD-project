@@ -20,17 +20,17 @@ public class Grabbable : MonoBehaviour
     [SerializeField] private float destroyTimer;
     [SerializeField] private float transitionDuration;
     [SerializeField] private float distanceTrigger;
-
+    [SerializeField] private Vector3 grabEulerRotation;
+    [SerializeField] private float throwForce;
+    [SerializeField] private float rotationSpeed;
+    
     private bool isInRange = false;
     private GrabbableState state = GrabbableState.UNGRABBABLE;
     private GameObject player;
     private TMP_Text hint;
-    
-    [SerializeField] private Vector3 grabRotation;
-    [SerializeField] private float throwForce;
-    [SerializeField] private float rotationSpeed;
     private Vector3 throwDirection = new Vector3(1, 0, 0);
-    private Vector3 rotationAxis = Vector3.up;
+    private Vector3 rotationAxis = Vector3.forward;
+    private GameObject centerOfRotation;
     
     public static EventHandler<GrabbableArgs> OnInsideRange;
     public static EventHandler<GrabbableArgs> OnOutsideRange;
@@ -40,6 +40,7 @@ public class Grabbable : MonoBehaviour
     {
         player = GameObject.Find("Player");
         hint = transform.Find("Hint").GetComponent<TMP_Text>();
+        centerOfRotation = transform.Find("CenterOfRotation").gameObject;
 
         PlayerCharacter.OnComputedNearestGrabbable += SetGrabbable;
     }
@@ -83,10 +84,11 @@ public class Grabbable : MonoBehaviour
     {
         state = GrabbableState.GRABBED;
         hint.gameObject.SetActive(false);
-
-        StartCoroutine(MoveAndRotateToTarget());
         
         transform.SetParent(player.GetComponent<PlayerCharacter>().grabbingHand.transform);
+        
+        StartCoroutine(MoveAndRotateToTarget());
+        
     }
     
     private IEnumerator MoveAndRotateToTarget()
@@ -96,14 +98,14 @@ public class Grabbable : MonoBehaviour
         while (elapsedTime < transitionDuration)
         {
             transform.position = Vector3.Lerp(transform.position, player.GetComponent<PlayerCharacter>().grabbingHand.transform.position, elapsedTime / transitionDuration);
-            transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.Euler(grabRotation), elapsedTime / transitionDuration);
+            transform.localRotation = Quaternion.Lerp(transform.localRotation, Quaternion.Euler(grabEulerRotation), elapsedTime / transitionDuration);
         
             elapsedTime += Time.deltaTime;
             yield return null;
         }
 
         transform.position = player.GetComponent<PlayerCharacter>().grabbingHand.transform.position;
-        transform.rotation = Quaternion.Euler(grabRotation);
+        transform.localRotation = Quaternion.Euler(grabEulerRotation);
     }
 
     public void Throw()
@@ -111,7 +113,7 @@ public class Grabbable : MonoBehaviour
         transform.SetParent(null);
         state = GrabbableState.THROWN;
         Rigidbody rb = GetComponent<Rigidbody>();
-        if (rb != null)
+        if (rb)
         {
             rb.AddForce(throwDirection.normalized * throwForce, ForceMode.Impulse);
         }
@@ -121,10 +123,9 @@ public class Grabbable : MonoBehaviour
 
     private IEnumerator SpinContinuously()
     {
-        while (rotationAxis != Vector3.zero)
+        while(centerOfRotation)
         {
-            Quaternion rotationAmount = Quaternion.AngleAxis(rotationSpeed * Time.deltaTime, rotationAxis);
-            transform.rotation *= rotationAmount;
+            transform.RotateAround(centerOfRotation.transform.position, rotationAxis, rotationSpeed * Time.deltaTime);
             yield return null;
         }
     }
