@@ -316,7 +316,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   destroyTimer: 3
-  transitionDuration: 1
+  transitionDuration: 0.5
   distanceTrigger: 2
   grabRotation: {x: 0, y: 0, z: 0}
   throwForce: 10

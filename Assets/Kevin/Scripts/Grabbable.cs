@@ -83,15 +83,29 @@ public class Grabbable : MonoBehaviour
     {
         state = GrabbableState.GRABBED;
         hint.gameObject.SetActive(false);
-        Vector3 targetPosition = player.GetComponent<PlayerCharacter>().grabbingHand.transform.position;
-        Quaternion targetRotation = Quaternion.Euler(grabRotation);
 
-        transform.position = Vector3.Lerp(transform.position, targetPosition, Time.deltaTime / transitionDuration);
-        transform.rotation = Quaternion.Lerp(transform.rotation, targetRotation, Time.deltaTime / transitionDuration);
+        StartCoroutine(MoveAndRotateToTarget());
         
         transform.SetParent(player.GetComponent<PlayerCharacter>().grabbingHand.transform);
     }
     
+    private IEnumerator MoveAndRotateToTarget()
+    {
+        float elapsedTime = 0f;
+
+        while (elapsedTime < transitionDuration)
+        {
+            transform.position = Vector3.Lerp(transform.position, player.GetComponent<PlayerCharacter>().grabbingHand.transform.position, elapsedTime / transitionDuration);
+            transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.Euler(grabRotation), elapsedTime / transitionDuration);
+        
+            elapsedTime += Time.deltaTime;
+            yield return null;
+        }
+
+        transform.position = player.GetComponent<PlayerCharacter>().grabbingHand.transform.position;
+        transform.rotation = Quaternion.Euler(grabRotation);
+    }
+
     public void Throw()
     {
         transform.SetParent(null);
@@ -105,7 +119,7 @@ public class Grabbable : MonoBehaviour
         StartCoroutine(StartDestroyTimer());
     }
 
-    IEnumerator SpinContinuously()
+    private IEnumerator SpinContinuously()
     {
         while (rotationAxis != Vector3.zero)
         {
@@ -115,7 +129,7 @@ public class Grabbable : MonoBehaviour
         }
     }
 
-    IEnumerator StartDestroyTimer()
+    private IEnumerator StartDestroyTimer()
     {
         yield return new WaitForSeconds(destroyTimer);
         Destroy(gameObject);
