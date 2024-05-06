@@ -4,7 +4,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 using FixedUpdate = UnityEngine.PlayerLoop.FixedUpdate;
 
-public class Character : MonoBehaviour
+public abstract class Character : MonoBehaviour
 {
     public float currentHP;
     public bool isPlayer = false;
@@ -26,4 +26,6 @@ public class Character : MonoBehaviour
             }
         }
     }
+
+    public abstract void Die();
 }
