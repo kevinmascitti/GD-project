@@ -5,6 +5,7 @@ using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Video;
+using Object = UnityEngine.Object;
 using Timer = System.Timers.Timer;
 
 public enum GrabbableState
@@ -40,7 +41,8 @@ public class Grabbable : MonoBehaviour
     
     public static EventHandler<GrabbableArgs> OnInsideRange;
     public static EventHandler<GrabbableArgs> OnOutsideRange;
-    
+    [SerializeField] private Object Enemy;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -117,24 +119,18 @@ public class Grabbable : MonoBehaviour
     private IEnumerator MoveUpArm()
     {
         yield return new WaitForSeconds(0.5f);
-        
-        // while(shoulder.transform.rotation.eulerAngles.x % 360 < 50)
-        // {
-        //     shoulder.transform.RotateAround(shoulder.transform.position, Vector3.up, 500 * Time.deltaTime);
-        //     upperArm.transform.RotateAround(shoulder.transform.position, Vector3.forward, 500 * Time.deltaTime);
-        //     mediumArm.transform.RotateAround(shoulder.transform.position, Vector3.forward, 500 * Time.deltaTime);
-        //     hand.transform.RotateAround(shoulder.transform.position, Vector3.forward, 500 * Time.deltaTime);
-        //     knuckles.transform.RotateAround(shoulder.transform.position, Vector3.forward, 500 * Time.deltaTime);
-        //     
-        //     yield return null;
-        // }
-        
-        
-        shoulder.transform.Rotate(50, 50, 50);
-        upperArm.transform.Rotate(50, 50, 50);
-        mediumArm.transform.Rotate(50, 50, 50);
-        hand.transform.Rotate(50, 50, 50);
-        knuckles.transform.Rotate(50, 50, 50);
+        // salvo le rotazioni iniziali e devo farle tornare come tali altrimenti rimane 
+        while(shoulder.transform.rotation.eulerAngles.x % 360 < 50)
+        { 
+            shoulder.transform.RotateAround(shoulder.transform.position, Vector3.up, 500 * Time.deltaTime);
+            upperArm.transform.RotateAround(shoulder.transform.position, Vector3.forward, 500 * Time.deltaTime);
+            mediumArm.transform.RotateAround(shoulder.transform.position, Vector3.forward, 500 * Time.deltaTime);
+            hand.transform.RotateAround(shoulder.transform.position, Vector3.forward, 500 * Time.deltaTime);
+            knuckles.transform.RotateAround(shoulder.transform.position, Vector3.forward, 500 * Time.deltaTime);
+             
+            yield return null;
+        }
+        Debug.Log("rotazione");
     }
 
     public void Throw()
@@ -165,12 +161,20 @@ public class Grabbable : MonoBehaviour
         Destroy(gameObject);
     }
 
-    private void OnTriggerEnter(Collider other)
+    void OnCollisionEnter(Collision collision)
     {
-        if (state == GrabbableState.THROWN && other.gameObject.layer == LayerMask.NameToLayer("Enemy"))
+        
+        string collidedObjectTag = collision.gameObject.tag;
+        
+        // Stampa il tag dell'oggetto con cui si è avuta la collisione
+        Debug.Log("Collisione con oggetto con tag: " + collidedObjectTag+" stato : "+state);
+        if (collision.gameObject.CompareTag("enemy")) // state == GrabbableState.THROWN && --> tolto perche diventa 
+        // improvvisamente ungrabbable dopo il lancio
         {
-            Destroy(this);
+            Debug.Log("kaboom riko");
+            Destroy(this.gameObject);
             // morte nemico other.Getcomponent<Enemy>()...
+            Destroy(Enemy);
         }
     }
 }
