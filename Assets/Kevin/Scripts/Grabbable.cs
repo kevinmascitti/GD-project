@@ -23,6 +23,12 @@ public class Grabbable : MonoBehaviour
     [SerializeField] private Vector3 grabEulerRotation;
     [SerializeField] private float throwForce;
     [SerializeField] private float rotationSpeed;
+
+    [SerializeField] private GameObject shoulder;
+    [SerializeField] private GameObject upperArm;
+    [SerializeField] private GameObject mediumArm;
+    [SerializeField] private GameObject hand;
+    [SerializeField] private GameObject knuckles;
     
     private bool isInRange = false;
     private GrabbableState state = GrabbableState.UNGRABBABLE;
@@ -88,7 +94,7 @@ public class Grabbable : MonoBehaviour
         transform.SetParent(player.GetComponent<PlayerCharacter>().grabbingHand.transform);
         
         StartCoroutine(MoveAndRotateToTarget());
-        
+        StartCoroutine(MoveUpArm());
     }
     
     private IEnumerator MoveAndRotateToTarget()
@@ -106,6 +112,29 @@ public class Grabbable : MonoBehaviour
 
         transform.position = player.GetComponent<PlayerCharacter>().grabbingHand.transform.position;
         transform.localRotation = Quaternion.Euler(grabEulerRotation);
+    }
+
+    private IEnumerator MoveUpArm()
+    {
+        yield return new WaitForSeconds(0.5f);
+        
+        // while(shoulder.transform.rotation.eulerAngles.x % 360 < 50)
+        // {
+        //     shoulder.transform.RotateAround(shoulder.transform.position, Vector3.up, 500 * Time.deltaTime);
+        //     upperArm.transform.RotateAround(shoulder.transform.position, Vector3.forward, 500 * Time.deltaTime);
+        //     mediumArm.transform.RotateAround(shoulder.transform.position, Vector3.forward, 500 * Time.deltaTime);
+        //     hand.transform.RotateAround(shoulder.transform.position, Vector3.forward, 500 * Time.deltaTime);
+        //     knuckles.transform.RotateAround(shoulder.transform.position, Vector3.forward, 500 * Time.deltaTime);
+        //     
+        //     yield return null;
+        // }
+        
+        
+        shoulder.transform.Rotate(50, 50, 50);
+        upperArm.transform.Rotate(50, 50, 50);
+        mediumArm.transform.Rotate(50, 50, 50);
+        hand.transform.Rotate(50, 50, 50);
+        knuckles.transform.Rotate(50, 50, 50);
     }
 
     public void Throw()
