@@ -353,9 +353,14 @@ MonoBehaviour:
   destroyTimer: 3
   transitionDuration: 0.5
   distanceTrigger: 2
-  grabEulerRotation: {x: 270, y: 70, z: 270}
+  grabEulerRotation: {x: 0, y: -100, z: 90}
   throwForce: 10
   rotationSpeed: 500
+  shoulder: {fileID: 0}
+  upperArm: {fileID: 0}
+  mediumArm: {fileID: 0}
+  hand: {fileID: 0}
+  knuckles: {fileID: 0}
 --- !u!54 &6753128158604427262
 Rigidbody:
   m_ObjectHideFlags: 0

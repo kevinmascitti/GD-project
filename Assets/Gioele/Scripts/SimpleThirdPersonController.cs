@@ -44,11 +44,11 @@ public class SimpleThirdPersonController : MonoBehaviour
         
         //Translate along forward
         transform.Translate(transform.forward * _inputSpeed * Speed * Time.deltaTime, Space.World);
-        if (transform.position.z < depthPoint.transform.position.z - minDepthBound)
+        if (depthPoint && transform.position.z < depthPoint.transform.position.z - minDepthBound)
         {
             transform.position = new Vector3(transform.position.x, transform.position.y, depthPoint.transform.position.z - minDepthBound);
         }
-        else if(transform.position.z > depthPoint.transform.position.z + maxDepthBound)
+        else if(depthPoint && transform.position.z > depthPoint.transform.position.z + maxDepthBound)
         {
             transform.position = new Vector3(transform.position.x, transform.position.y, depthPoint.transform.position.z + maxDepthBound);
         }

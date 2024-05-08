@@ -25,12 +25,6 @@ public class Grabbable : MonoBehaviour
     [SerializeField] private float throwForce;
     [SerializeField] private float rotationSpeed;
 
-    [SerializeField] private GameObject shoulder;
-    [SerializeField] private GameObject upperArm;
-    [SerializeField] private GameObject mediumArm;
-    [SerializeField] private GameObject hand;
-    [SerializeField] private GameObject knuckles;
-    
     private bool isInRange = false;
     private GrabbableState state = GrabbableState.UNGRABBABLE;
     private GameObject player;
@@ -41,6 +35,8 @@ public class Grabbable : MonoBehaviour
     
     public static EventHandler<GrabbableArgs> OnInsideRange;
     public static EventHandler<GrabbableArgs> OnOutsideRange;
+    public static EventHandler<GrabbableArgs> OnGrab;
+    public static EventHandler<GrabbableArgs> OnThrow;
     [SerializeField] private Object Enemy;
 
     // Start is called before the first frame update
@@ -79,7 +75,7 @@ public class Grabbable : MonoBehaviour
         if (args.grabbable == this)
         {
             state = GrabbableState.GRABBABLE;
-            hint.gameObject.SetActive(true);
+            //hint.gameObject.SetActive(true);
         }
         else
         {
@@ -96,7 +92,7 @@ public class Grabbable : MonoBehaviour
         transform.SetParent(player.GetComponent<PlayerCharacter>().grabbingHand.transform);
         
         StartCoroutine(MoveAndRotateToTarget());
-        StartCoroutine(MoveUpArm());
+        OnGrab?.Invoke(this, new GrabbableArgs(this));
     }
     
     private IEnumerator MoveAndRotateToTarget()
@@ -116,23 +112,6 @@ public class Grabbable : MonoBehaviour
         transform.localRotation = Quaternion.Euler(grabEulerRotation);
     }
 
-    private IEnumerator MoveUpArm()
-    {
-        yield return new WaitForSeconds(0.5f);
-        // salvo le rotazioni iniziali e devo farle tornare come tali altrimenti rimane 
-        while(shoulder.transform.rotation.eulerAngles.x % 360 < 50)
-        { 
-            shoulder.transform.RotateAround(shoulder.transform.position, Vector3.up, 500 * Time.deltaTime);
-            upperArm.transform.RotateAround(shoulder.transform.position, Vector3.forward, 500 * Time.deltaTime);
-            mediumArm.transform.RotateAround(shoulder.transform.position, Vector3.forward, 500 * Time.deltaTime);
-            hand.transform.RotateAround(shoulder.transform.position, Vector3.forward, 500 * Time.deltaTime);
-            knuckles.transform.RotateAround(shoulder.transform.position, Vector3.forward, 500 * Time.deltaTime);
-             
-            yield return null;
-        }
-        Debug.Log("rotazione");
-    }
-
     public void Throw()
     {
         transform.SetParent(null);
@@ -144,6 +123,7 @@ public class Grabbable : MonoBehaviour
         }
         StartCoroutine(SpinContinuously());
         StartCoroutine(StartDestroyTimer());
+        OnThrow?.Invoke(this, new GrabbableArgs(this));
     }
 
     private IEnumerator SpinContinuously()
