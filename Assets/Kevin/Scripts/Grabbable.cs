@@ -88,6 +88,7 @@ public class Grabbable : MonoBehaviour
     {
         state = GrabbableState.GRABBED;
         hint.gameObject.SetActive(false);
+        GetComponent<Rigidbody>().useGravity = false;
         
         transform.SetParent(player.GetComponent<PlayerCharacter>().grabbingHand.transform);
         
@@ -130,7 +131,7 @@ public class Grabbable : MonoBehaviour
     {
         while(centerOfRotation)
         {
-            transform.RotateAround(centerOfRotation.transform.position, rotationAxis, rotationSpeed * Time.deltaTime);
+            transform.RotateAround(centerOfRotation.transform.position, -rotationAxis, rotationSpeed * Time.deltaTime);
             yield return null;
         }
     }

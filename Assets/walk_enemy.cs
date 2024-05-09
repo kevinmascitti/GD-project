@@ -20,7 +20,7 @@ public class walk_enemy : MonoBehaviour
         {
             float translation = speed * Time.deltaTime;
             // Sposta l'oggetto lungo l'asse X
-            transform.Translate(-translation, 0, 0);
+            transform.Translate(translation, 0, 0);
         }
         
     }
