@@ -36,24 +36,35 @@ public class SimpleThirdPersonController : MonoBehaviour
         _targetDirection.y = 0f;
 
         if (_inputSpeed <= 0f)
+        {
+            GetComponent<Animator>().SetBool("walking", false);
             return;
-
-        //Calculate the new expected direction (newDir) and rotate
-        Vector3 newDir = Vector3.RotateTowards(transform.forward, _targetDirection, RotationSpeed * Time.deltaTime, 0f);
-        transform.rotation = Quaternion.LookRotation(newDir);
-        
-        //Translate along forward
-        transform.Translate(transform.forward * _inputSpeed * Speed * Time.deltaTime, Space.World);
-        if (depthPoint && transform.position.z < depthPoint.transform.position.z - minDepthBound)
-        {
-            transform.position = new Vector3(transform.position.x, transform.position.y, depthPoint.transform.position.z - minDepthBound);
         }
-        else if(depthPoint && transform.position.z > depthPoint.transform.position.z + maxDepthBound)
+        else
         {
-            transform.position = new Vector3(transform.position.x, transform.position.y, depthPoint.transform.position.z + maxDepthBound);
-        }
 
-        Debug.DrawRay(transform.position + transform.up * 3f, _targetDirection * 5f, Color.red);
-        Debug.DrawRay(transform.position + transform.up * 3f, newDir * 5f, Color.blue);
+            GetComponent<Animator>().SetBool("walking", true);
+            //Calculate the new expected direction (newDir) and rotate
+            Vector3 newDir =
+                Vector3.RotateTowards(transform.forward, _targetDirection, RotationSpeed * Time.deltaTime, 0f);
+            transform.rotation = Quaternion.LookRotation(newDir);
+
+            //Translate along forward
+            transform.Translate(transform.forward * _inputSpeed * Speed * Time.deltaTime, Space.World);
+            if (depthPoint && transform.position.z < depthPoint.transform.position.z - minDepthBound)
+            {
+                transform.position = new Vector3(transform.position.x, transform.position.y,
+                    depthPoint.transform.position.z - minDepthBound);
+            }
+            else if (depthPoint && transform.position.z > depthPoint.transform.position.z + maxDepthBound)
+            {
+                transform.position = new Vector3(transform.position.x, transform.position.y,
+                    depthPoint.transform.position.z + maxDepthBound);
+            }
+
+
+            Debug.DrawRay(transform.position + transform.up * 3f, _targetDirection * 5f, Color.red);
+            Debug.DrawRay(transform.position + transform.up * 3f, newDir * 5f, Color.blue);
+        }
     }
 }
