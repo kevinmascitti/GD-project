@@ -28,6 +28,10 @@ public class SimpleThirdPersonController : MonoBehaviour
         //comment from github
         float h = Input.GetAxis("Horizontal");
         float v = Input.GetAxis("Vertical");
+        if (h>0 || v>0)
+        {
+            GetComponent<Animator>().SetBool("walking", true);
+        }
         _inputVector = new Vector3(h, 0, v);
         _inputSpeed = Mathf.Clamp(_inputVector.magnitude, 0f, 1f);
 
@@ -42,8 +46,7 @@ public class SimpleThirdPersonController : MonoBehaviour
         }
         else
         {
-
-            GetComponent<Animator>().SetBool("walking", true);
+            
             //Calculate the new expected direction (newDir) and rotate
             Vector3 newDir =
                 Vector3.RotateTowards(transform.forward, _targetDirection, RotationSpeed * Time.deltaTime, 0f);
