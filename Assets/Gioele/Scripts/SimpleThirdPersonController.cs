@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -52,8 +52,9 @@ public class SimpleThirdPersonController : MonoBehaviour
         if (_inputSpeed <= 0f)
         {
             GetComponent<Animator>().SetBool("walking", false);
-
-            // COMMENTATO DA FEDE PERCHè DAVA ERRORE 
+        }
+        else
+        {
             //Calculate the new expected direction (newDir) and rotate
             Vector3 newDir =
                 Vector3.RotateTowards(transform.forward, _targetDirection, RotationSpeed * Time.deltaTime, 0f);
