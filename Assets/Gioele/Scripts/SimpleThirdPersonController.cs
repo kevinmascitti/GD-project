@@ -42,7 +42,6 @@ public class SimpleThirdPersonController : MonoBehaviour
         if (_inputSpeed <= 0f)
         {
             GetComponent<Animator>().SetBool("walking", false);
-            return;
         }
         else
         {

@@ -115,7 +115,6 @@ public class Grabbable : MonoBehaviour
 
     public void Throw()
     {
-        transform.SetParent(null);
         state = GrabbableState.THROWN;
         Rigidbody rb = GetComponent<Rigidbody>();
         if (rb)
@@ -123,6 +122,7 @@ public class Grabbable : MonoBehaviour
             rb.AddForce(throwDirection.normalized * throwForce, ForceMode.Impulse);
         }
         StartCoroutine(SpinContinuously());
+        transform.SetParent(null);
         StartCoroutine(StartDestroyTimer());
         OnThrow?.Invoke(this, new GrabbableArgs(this));
     }
