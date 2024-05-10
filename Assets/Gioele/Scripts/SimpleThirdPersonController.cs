@@ -12,7 +12,7 @@ public class SimpleThirdPersonController : MonoBehaviour
     private GameObject depthPoint;
     [SerializeField] private float minDepthBound;
     [SerializeField] private float maxDepthBound;
-    public bool fede = true;
+    public bool fede = false;
     private Vector3 _inputVector;
     private float _inputSpeed;
     private Vector3 _targetDirection;

@@ -965,8 +965,8 @@ MonoBehaviour:
   Speed: 5
   RotationSpeed: 3.04
   PlayerAnim: {fileID: 1974314019}
-  minDepthBound: 7
-  maxDepthBound: 7
+  minDepthBound: 99999
+  maxDepthBound: 99999
   fede: 1
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
