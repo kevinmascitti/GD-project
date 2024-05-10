@@ -645,6 +645,10 @@ PrefabInstance:
         type: 3}
       insertIndex: -1
       addedObject: {fileID: 1974314017}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 5531465e413494583a61734bf8a4c490,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1974314019}
     - targetCorrespondingSourceObject: {fileID: 2715566404302941441, guid: 5531465e413494583a61734bf8a4c490,
         type: 3}
       insertIndex: -1
@@ -654,6 +658,12 @@ PrefabInstance:
       insertIndex: -1
       addedObject: {fileID: 730860610}
   m_SourcePrefab: {fileID: 100100000, guid: 5531465e413494583a61734bf8a4c490, type: 3}
+--- !u!95 &1026581026 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 5866666021909216657, guid: 5531465e413494583a61734bf8a4c490,
+    type: 3}
+  m_PrefabInstance: {fileID: 1026581025}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1090480227
 GameObject:
   m_ObjectHideFlags: 0
@@ -708,10 +718,17 @@ MonoBehaviour:
   isPlayer: 0
   atk: 55
   def: 23
+  MAX_HP: 100
+  def_HP: 100
+  MAX_STAMINA: 100
+  def_STAMINA: 5
+  MAX_LIFE: 99
+  def_life: 5
   sliderHP: {fileID: 0}
   sliderStamina: {fileID: 0}
   UIExtraLife: {fileID: 0}
   camera: {fileID: 825105856}
+  grabbingHand: {fileID: 0}
 --- !u!114 &1090480230
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -727,6 +744,7 @@ MonoBehaviour:
   Camera: {fileID: 825105856}
   Speed: 5
   RotationSpeed: 3.04
+  PlayerAnim: {fileID: 0}
   minDepthBound: 7
   maxDepthBound: 7
 --- !u!54 &1090480231
@@ -1153,6 +1171,24 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Hiteffect: {fileID: 1518655715659774, guid: 699efc7e71b4e4a4c8a96cf7815c9698, type: 3}
+--- !u!114 &1974314019
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1974314013}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7cac8e2ee12e13a488fd64a028f61589, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Camera: {fileID: 825105856}
+  Speed: 5
+  RotationSpeed: 3.04
+  PlayerAnim: {fileID: 1026581026}
+  minDepthBound: 7
+  maxDepthBound: 7
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
