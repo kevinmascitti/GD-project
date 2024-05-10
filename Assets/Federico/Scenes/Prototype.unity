@@ -574,9 +574,9 @@ MonoBehaviour:
   Speed: 5
   RotationSpeed: 3.04
   PlayerAnim: {fileID: 81980835}
-  minDepthBound: 7
-  maxDepthBound: -7
-  fede: 1
+  minDepthBound: 100
+  maxDepthBound: -100
+  fede: 0
 --- !u!114 &81980838
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -664,6 +664,11 @@ MonoBehaviour:
   UIExtraLife: {fileID: 797171666}
   camera: {fileID: 1090015460}
   grabbingHand: {fileID: 0}
+  shoulder: {fileID: 0}
+  upperArm: {fileID: 0}
+  mediumArm: {fileID: 0}
+  hand: {fileID: 0}
+  knuckles: {fileID: 0}
 --- !u!1 &100069284
 GameObject:
   m_ObjectHideFlags: 0
@@ -791,7 +796,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &192904428
 Transform:
   m_ObjectHideFlags: 0
@@ -3763,6 +3768,11 @@ MonoBehaviour:
   UIExtraLife: {fileID: 797171666}
   camera: {fileID: 1090015460}
   grabbingHand: {fileID: 0}
+  shoulder: {fileID: 0}
+  upperArm: {fileID: 0}
+  mediumArm: {fileID: 0}
+  hand: {fileID: 0}
+  knuckles: {fileID: 0}
 --- !u!114 &1958569420
 MonoBehaviour:
   m_ObjectHideFlags: 0
