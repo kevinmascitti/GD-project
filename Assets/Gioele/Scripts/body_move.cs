@@ -110,11 +110,12 @@ public class moving : MonoBehaviour
         {
             punto_esclamativo.SetActive(true);
             nemico.SetActive(true);
-            
+
         }
         if (Input.GetKeyDown(KeyCode.U))
         {
             Shoulders();
         }
     }
+
 }

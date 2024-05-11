@@ -58,9 +58,9 @@ public class PlayerCharacter : Character
     public void Awake()
     {
         isPlayer = true;
-        // sliderHP = GameObject.Find("HPBar").GetComponent<Slider>();
-        // sliderStamina = GameObject.Find("StaminaBar").GetComponent<Slider>();
-        // UIExtraLife = GameObject.Find("ExtraLifeUI").GetComponent<TMP_Text>();
+        sliderHP = GameObject.Find("HPBar").GetComponent<Slider>();
+        sliderStamina = GameObject.Find("StaminaBar").GetComponent<Slider>();
+        UIExtraLife = GameObject.Find("ExtraLifeUI").GetComponent<TMP_Text>();
 
         if (sliderHP && sliderStamina)
         {
