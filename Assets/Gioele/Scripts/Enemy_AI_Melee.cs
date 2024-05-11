@@ -133,7 +133,13 @@ public class Enemy_AI_Melee : MonoBehaviour
     {
         if (grounded)// solo se l'enemy è a terra
         {
+            // reset rotation
+            // il look at in teoria se lo tolgo potrebbe andare 
+            // PROVO A RIMUOVERE 
+            
             transform.LookAt(Player.position);
+            
+            
             // vado a vededere se il player se è in attack range o in sight range
             playerInSightRange = Physics.CheckSphere(transform.position, sightRange, playerLayer);
             playerInAttackRange = Physics.CheckSphere(transform.position, attackRange, playerLayer);
