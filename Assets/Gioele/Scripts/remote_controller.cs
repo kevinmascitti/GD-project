@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Threading;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class remote_controller : MonoBehaviour
 {
@@ -33,7 +34,6 @@ public class remote_controller : MonoBehaviour
     IEnumerator TimerCoroutine(float duration, TimerCallback callback)
     {
         yield return new WaitForSeconds(duration);
-
         // Esegui il metodo specificato
         callback();
     }
@@ -46,7 +46,6 @@ public class remote_controller : MonoBehaviour
     {
         // utilizzo per aprire il menu di pausa
     }
-    
     public void VolumePlus()
     {
         // moltiplicatore di combo
@@ -82,9 +81,41 @@ public class remote_controller : MonoBehaviour
     {
         //rimpicciolisco i nemici (mi fanno pochi danni)
     }
-    public void Pause()
+    public void Pause(string layerName)
     {
-        //nemico bloccato per un tot di tempo (oppure per tutti i nemici???
+        // Ottieni il numero di layer dall'indice o dal nome
+        int layer = LayerMask.NameToLayer(layerName);
+
+        // Trova tutti gli oggetti nel layer specificato
+        GameObject[] objectsInLayer = GameObject.FindGameObjectsWithTag("enemy");
+
+        // Disattiva il componente NavMeshAgent su ciascun oggetto trovato
+        foreach (GameObject obj in objectsInLayer)
+        {
+            NavMeshAgent agent = obj.GetComponent<NavMeshAgent>();
+            if (agent != null)
+            {
+                agent.enabled = false;
+            }
+        }
+    }
+
+    public void StopPause()
+    {
+        int layer = LayerMask.NameToLayer("Enemy");
+
+        // Trova tutti gli oggetti nel layer specificato
+        GameObject[] objectsInLayer = GameObject.FindGameObjectsWithTag("enemy");
+
+        // Disattiva il componente NavMeshAgent su ciascun oggetto trovato
+        foreach (GameObject obj in objectsInLayer)
+        {
+            NavMeshAgent agent = obj.GetComponent<NavMeshAgent>();
+            if (agent != null)
+            {
+                agent.enabled = true;
+            }
+        }
     }
 
     // Update is called once per frame
@@ -95,6 +126,11 @@ public class remote_controller : MonoBehaviour
         {
             StartLaser();
             StartTimer(timerDuration, StopLaser);
+        }
+        if (Input.GetKeyDown(KeyCode.U))
+        {
+            Pause("Enemy");
+            StartTimer(timerDuration,StopPause);
         }
     }
 }
