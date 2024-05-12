@@ -18,7 +18,7 @@ public class EnemyAI : MonoBehaviour
     public Vector3 walkPoint;
 
     public bool walkPointSet;
-
+    private Quaternion initialRotation;
     public float walkPointRange;
     // attacco
     [NonSerialized]public float timeBetweenAttacks;
@@ -36,9 +36,8 @@ public class EnemyAI : MonoBehaviour
     private void Awake()
     {
         Player = GameObject.FindGameObjectWithTag("Player").transform;
+        initialRotation = transform.rotation;
         agent = GetComponent<NavMeshAgent>();
-        
-        
     }
 
     private void Patroling()
@@ -154,6 +153,7 @@ public class EnemyAI : MonoBehaviour
                 ChasePlayer(); // segue il player 
             if (!playerInSightRange && playerInAttackRange && !OnAttack)
                 AttackPlayer(); // lo attacca
+            transform.rotation = initialRotation;
         }
     }
 

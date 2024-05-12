@@ -32,8 +32,8 @@ public class SimpleThirdPersonController : MonoBehaviour
         if (fede)
         {
             
-            PlayerAnim.SetFloat("horizontal", h);
-            PlayerAnim.SetFloat("vertical", v);
+            PlayerAnim.SetFloat("Horizontal", h);
+            PlayerAnim.SetFloat("Vertical", v);
         }
         
         if (h>0 || v>0)
