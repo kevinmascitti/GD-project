@@ -8,7 +8,9 @@ public class remote_controller : MonoBehaviour
 {
     public float timerDuration = 3f;
     public delegate void TimerCallback();
-
+    private Vector3 originalScale;
+    public float moltiplicatoreCombo = 1f;
+    public float moltiplicatoreDanniNemici = 1f;
     public LineRenderer laser;
     public float distance = 5f;
     public Transform laserFirePoint;
@@ -16,6 +18,7 @@ public class remote_controller : MonoBehaviour
     void Awake()
     {
         playerTransform = GetComponent<Transform>();
+        originalScale = transform.localScale;
     }
     void MethodToExecute()
     {
@@ -44,13 +47,25 @@ public class remote_controller : MonoBehaviour
     }
     public void Mute()
     {
-        // utilizzo per aprire il menu di pausa
+        //muto i nemici urlanti
     }
-    public void VolumePlus()
+    public void StartVolumePlus()
     {
         // moltiplicatore di combo
+        moltiplicatoreCombo = 1.3f;
+        StartTimer(timerDuration, StopVolumePlus);
     }
-    public void VolumeMinus()
+    public void StopVolumePlus()
+    {
+        // moltiplicatore di combo
+        moltiplicatoreCombo = 1f;
+    }
+    public void StartVolumeMinus()
+    {
+        // blocco dall’alto che li “schiaccia” o appiattisce
+        StartTimer(timerDuration, StopVolumeMinus);
+    }
+    public void StopVolumeMinus()
     {
         // blocco dall’alto che li “schiaccia” o appiattisce
     }
@@ -65,7 +80,7 @@ public class remote_controller : MonoBehaviour
             laser.SetPosition(0,laserFirePoint.position);
             laser.SetPosition(1,laserFirePoint.forward*distance);
         }
-        
+        StartTimer(timerDuration, StopLaser);
     }
     public void StopLaser()
     {
@@ -73,15 +88,30 @@ public class remote_controller : MonoBehaviour
         GetComponent<LineRenderer>().enabled = false;
     }
 
-    public void ChPLus()
+    public void StartChPLus()
     {
+        transform.localScale *= 1.5f;
+        //mi ingrandisco (posso colpire più nemici contemporaneamente)
+        StartTimer(timerDuration,StopChPLus);
+    }
+    public void StopChPLus()
+    {
+        transform.localScale = originalScale;
         //mi ingrandisco (posso colpire più nemici contemporaneamente)
     }
-    public void ChMinus()
+    public void StartChMinus()
     {
+        moltiplicatoreDanniNemici = 1.5f;
         //rimpicciolisco i nemici (mi fanno pochi danni)
+        StartTimer(timerDuration,StopChMinus);
     }
-    public void Pause(string layerName)
+    public void StopChMinus()
+    {
+        moltiplicatoreDanniNemici = 1f;
+        //rimpicciolisco i nemici (mi fanno pochi danni)
+
+    }
+    public void StartPause(string layerName)
     {
         // Ottieni il numero di layer dall'indice o dal nome
         int layer = LayerMask.NameToLayer(layerName);
@@ -98,6 +128,7 @@ public class remote_controller : MonoBehaviour
                 agent.enabled = false;
             }
         }
+        StartTimer(timerDuration,StopPause);
     }
 
     public void StopPause()
@@ -125,12 +156,26 @@ public class remote_controller : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.I))
         {
             StartLaser();
-            StartTimer(timerDuration, StopLaser);
         }
         if (Input.GetKeyDown(KeyCode.U))
         {
-            Pause("Enemy");
-            StartTimer(timerDuration,StopPause);
+            StartPause("Enemy");
+        }
+        if (Input.GetKeyDown(KeyCode.O))
+        {
+            StartChMinus();
+        }
+        if (Input.GetKeyDown(KeyCode.P))
+        {
+            StartVolumePlus();
+        }
+        if (Input.GetKeyDown(KeyCode.L))
+        {
+            StartChPLus();
+        }
+        if (Input.GetKeyDown(KeyCode.K))
+        {
+            StartVolumeMinus();
         }
     }
 }
