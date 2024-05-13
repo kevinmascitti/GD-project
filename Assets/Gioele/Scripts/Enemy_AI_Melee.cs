@@ -20,6 +20,7 @@ public class Enemy_AI_Melee : MonoBehaviour
     public bool walkPointSet;
 
     public float walkPointRange;
+    private Quaternion initialRotation;
     // attacco
     public float timeBetweenAttacks;
     public bool alreadyAttacked;
@@ -31,11 +32,12 @@ public class Enemy_AI_Melee : MonoBehaviour
     public bool playerInSightRange, playerInAttackRange;
     // caratteristiche
     public int vita; // numero di colpi che può subire prima di morire
-    [NonSerialized]public bool grounded = false;
+    public bool grounded = false;
     [NonSerialized]public bool OnAttack;
     private void Awake()
     {
         Player = GameObject.FindGameObjectWithTag("Player").transform;
+        initialRotation = transform.rotation;
         agent = GetComponent<NavMeshAgent>();
         
     
@@ -72,7 +74,7 @@ public class Enemy_AI_Melee : MonoBehaviour
     {
         // controllo che non sia in movimento 
         agent.SetDestination(transform.position);
-        transform.LookAt(Player);
+        //transform.LookAt(Player);
         if (!alreadyAttacked)
         {
             // attacco ranged/long ranged
@@ -133,7 +135,11 @@ public class Enemy_AI_Melee : MonoBehaviour
     {
         if (grounded)// solo se l'enemy è a terra
         {
-            transform.LookAt(Player.position);
+            // reset rotation
+            
+            //transform.LookAt(Player.position);
+            
+            
             // vado a vededere se il player se è in attack range o in sight range
             playerInSightRange = Physics.CheckSphere(transform.position, sightRange, playerLayer);
             playerInAttackRange = Physics.CheckSphere(transform.position, attackRange, playerLayer);
@@ -143,6 +149,7 @@ public class Enemy_AI_Melee : MonoBehaviour
                 ChasePlayer(); // segue il player 
             if (!playerInSightRange && playerInAttackRange && !OnAttack)
                 AttackPlayer(); // lo attacca
+            transform.rotation = initialRotation;
         }
     }
 

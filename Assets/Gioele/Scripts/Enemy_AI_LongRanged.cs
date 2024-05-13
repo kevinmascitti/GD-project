@@ -18,7 +18,7 @@ public class Enemy_AI_LongRanged : MonoBehaviour
     public Vector3 walkPoint;
 
     public bool walkPointSet;
-
+    private Quaternion initialRotation;
     public float walkPointRange;
     // attacco
     [NonSerialized]public float timeBetweenAttacks;
@@ -36,6 +36,7 @@ public class Enemy_AI_LongRanged : MonoBehaviour
     private void Awake()
     {
         Player = GameObject.FindGameObjectWithTag("Player").transform;
+        initialRotation = transform.rotation;
         agent = GetComponent<NavMeshAgent>();
         
     
@@ -110,7 +111,7 @@ public class Enemy_AI_LongRanged : MonoBehaviour
     {
         // controllo che non sia in movimento 
         agent.SetDestination(transform.position);
-        transform.LookAt(Player);
+        //transform.LookAt(Player);
         if (!alreadyAttacked)
         {
             /*
@@ -150,7 +151,7 @@ public class Enemy_AI_LongRanged : MonoBehaviour
     {
         if (grounded)
         {
-            transform.LookAt(Player);
+            //transform.LookAt(Player);
             // vado a vededere se il player se è in attack range o in sight range
             playerInSightRange = Physics.CheckSphere(transform.position, sightRange, playerLayer);
             playerInAttackRange = Physics.CheckSphere(transform.position, attackRange, playerLayer);
@@ -160,6 +161,7 @@ public class Enemy_AI_LongRanged : MonoBehaviour
                 ChasePlayer(); // segue il player 
             if (!playerInSightRange && playerInAttackRange && !OnAttack)
                 AttackPlayer(); // lo attacca
+            transform.rotation = initialRotation;
         }
     }
 

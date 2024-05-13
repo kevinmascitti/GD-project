@@ -1,23 +1,18 @@
 fileFormatVersion: 2
-guid: 2ba6f97fc0ac2fe409ec11d121577fa8
+guid: 632b9408e647d104dae35c823eecf222
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
-  externalObjects:
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: TVKidMaterial
-    second: {fileID: 2100000, guid: fb88b8adac785204b97e084af6270e30, type: 2}
+  externalObjects: {}
   materials:
-    materialImportMode: 1
-    materialName: 1
-    materialSearch: 2
+    materialImportMode: 2
+    materialName: 0
+    materialSearch: 1
     materialLocation: 1
   animations:
     legacyGenerateAnimations: 4
     bakeSimulation: 0
-    resampleCurves: 0
+    resampleCurves: 1
     optimizeGameObjects: 0
     removeConstantScaleCurves: 0
     motionNodeName: 
@@ -104,7 +99,7 @@ ModelImporter:
   autoGenerateAvatarMappingIfUnspecified: 1
   animationType: 2
   humanoidOversampling: 1
-  avatarSetup: 1
+  avatarSetup: 0
   addHumanoidExtraRootOnlyWhenUsingAvatar: 1
   importBlendShapeDeformPercent: 1
   remapMaterialsIfMaterialImportModeIsNone: 0
