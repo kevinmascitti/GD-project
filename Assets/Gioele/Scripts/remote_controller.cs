@@ -76,9 +76,13 @@ public class remote_controller : MonoBehaviour
         // raggio laser
         if (Physics.Raycast(playerTransform.position, transform.forward))
         {
+            // non ho idea del motivo ma se setto una nuova posizione funziona malissimo, 
+            
+            // utilizziamo i parametri dati da console 
+            
             //RaycastHit _raycastHit = Physics.Raycast(playerTransform.position, transform.forward);
-            laser.SetPosition(0,laserFirePoint.position);
-            laser.SetPosition(1,laserFirePoint.forward*distance);
+            //laser.SetPosition(0,laserFirePoint.position);
+            //laser.SetPosition(1,new Vector3(laserFirePoint.position.x,laserFirePoint.position.y, laserFirePoint.position.z+distance));
         }
         StartTimer(timerDuration, StopLaser);
     }
@@ -122,6 +126,12 @@ public class remote_controller : MonoBehaviour
         // Disattiva il componente NavMeshAgent su ciascun oggetto trovato
         foreach (GameObject obj in objectsInLayer)
         {
+            if(obj.GetComponent<Enemy_AI_Melee>())
+                obj.GetComponent<Enemy_AI_Melee>().enabled = false;
+            if(obj.GetComponent<Enemy_AI_LongRanged>())
+                obj.GetComponent<Enemy_AI_LongRanged>().enabled = false;
+            if(obj.GetComponent<EnemyAI>())
+                obj.GetComponent<EnemyAI>().enabled = false;
             NavMeshAgent agent = obj.GetComponent<NavMeshAgent>();
             if (agent != null)
             {
@@ -141,6 +151,12 @@ public class remote_controller : MonoBehaviour
         // Disattiva il componente NavMeshAgent su ciascun oggetto trovato
         foreach (GameObject obj in objectsInLayer)
         {
+            if(obj.GetComponent<Enemy_AI_Melee>())
+                obj.GetComponent<Enemy_AI_Melee>().enabled = true;
+            if(obj.GetComponent<Enemy_AI_LongRanged>())
+                obj.GetComponent<Enemy_AI_LongRanged>().enabled = true;
+            if(obj.GetComponent<EnemyAI>())
+                obj.GetComponent<EnemyAI>().enabled = true;
             NavMeshAgent agent = obj.GetComponent<NavMeshAgent>();
             if (agent != null)
             {

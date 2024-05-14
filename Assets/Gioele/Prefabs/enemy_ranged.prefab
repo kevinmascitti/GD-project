@@ -16,9 +16,9 @@ GameObject:
   - component: {fileID: 6671432346157373700}
   - component: {fileID: 3506020255975999674}
   - component: {fileID: 2673420273973131395}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: enemy_ranged
-  m_TagString: Untagged
+  m_TagString: enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -157,8 +157,6 @@ MonoBehaviour:
   walkPoint: {x: 0, y: 0, z: 0}
   walkPointSet: 0
   walkPointRange: 0
-  timeBetweenAttacks: 1
-  alreadyAttacked: 0
   projectile: {fileID: 1367908784354803864, guid: ddd353402a4266142a333a2df5b430db,
     type: 3}
   projectileSpeed: 20
@@ -168,7 +166,6 @@ MonoBehaviour:
   playerInSightRange: 0
   playerInAttackRange: 0
   vita: 5
-  grounded: 0
 --- !u!54 &3506020255975999674
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -229,7 +226,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8263912520486575612}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: GameObject
   m_TagString: Untagged
   m_Icon: {fileID: 0}
