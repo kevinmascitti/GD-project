@@ -42,7 +42,7 @@ public class EntertainmentBar : MonoBehaviour
             }
         }
 
-        EnemyCollision.current.OnAttackLended += AttackPerfomed;
+      //  EnemyCollision.current.OnAttackLended += AttackPerfomed;
     }
 
     //INCREMENTO FLAT DELLA BARRA DI INTRATTENIMENTO TEST 1 
@@ -71,7 +71,6 @@ public class EntertainmentBar : MonoBehaviour
         }
     }
 
-    // TODO FUNZIONE CHE CAMBIERà I PARAMETRI PER FAR DECRESCERE LA BARRA DI INTRATTENIMENTO PIù LENTAMENTE 
     //QUESTA FUNZIONE VERRà CHIAMATA QUANDO SI ENTRERà IN UNA NUOVA PARTE DEL LIVELLO E CAMBIERà
     // I PARAMETRI DELLA BARRA PER PERMETTERE UNA DECRESCITà MENO RAPIDA A SECONDA DELLE PARTI DELLO SCENARIO
     public void ChangeEntertainmentBarParameter(float decreaseSpeed, float IncreaseSpeed)
