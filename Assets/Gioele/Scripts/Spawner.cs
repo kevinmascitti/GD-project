@@ -8,7 +8,7 @@ public class Spawner : MonoBehaviour
     public List<float> spawnProbability;
     private float totalProbability=0f;
     public GameObject plane;
-    
+    public float spawnTime = 2f;
     void Start()
     {
         //somma delle probabilità totali
@@ -22,11 +22,16 @@ public class Spawner : MonoBehaviour
         StartCoroutine(SpawnObjects());
     }
 
+    public void changeSpawnTime(float time)
+    {
+        spawnTime = time;
+    }
+
     IEnumerator SpawnObjects()
     {
         while (true)
         {
-            yield return new WaitForSeconds(2f); //  2 secondi--> da decidere/ modificare , Fede divertiti :)
+            yield return new WaitForSeconds(spawnTime); //  2 secondi--> da decidere/ modificare , Fede divertiti :)
 
             // Generiamo un numero casuale per selezionare l'oggetto da spawnare
             float randomValue = Random.Range(0f, totalProbability);
