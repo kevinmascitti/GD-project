@@ -42,7 +42,7 @@ public class EntertainmentBar : MonoBehaviour
             }
         }
 
-      //  EnemyCollision.current.OnAttackLended += AttackPerfomed;
+        EnemyCollision.current.OnAttackLended += AttackPerfomed;
     }
 
     //INCREMENTO FLAT DELLA BARRA DI INTRATTENIMENTO TEST 1 
