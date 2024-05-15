@@ -5,20 +5,11 @@ using UnityEngine;
 
 public class EnemyCollision : MonoBehaviour
 {
-    [SerializeField] public GameObject player;
-    public static EnemyCollision current;
-    public event Action OnAttackLended;
-
-    public void AttackLended()
-    {
-        if(OnAttackLended!=null)
-            OnAttackLended();
-    }
+    public GameObject player;
     
-    public void Awake()
-    {
-        current = this;
-    }
+    [SerializeField] private int comboValue;
+    
+    public static EventHandler<EnemyCollisionArgs> OnAttackLended;
 
     public void OnTriggerEnter(Collider other)
     {
@@ -30,7 +21,17 @@ public class EnemyCollision : MonoBehaviour
         if (enemy != null && anim.GetFloat("Weapon.Active")>0f)
         {
             Debug.Log("Enemy Hit bro");
-            AttackLended();
+            OnAttackLended?.Invoke(this, new EnemyCollisionArgs(comboValue));
         }
     }
+}
+
+public class EnemyCollisionArgs : EventArgs
+{
+    public EnemyCollisionArgs(int a)
+    {
+        comboValue = a;
+    }
+
+    public int comboValue;
 }

@@ -1084,6 +1084,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 81980834}
+  comboValue: 0
 --- !u!65 &81980841
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -2965,7 +2966,7 @@ MonoBehaviour:
   maxEntertainmentValue: 100
   decreaseSpeed: 25
   IncreaseSpeed: 10
-  comboCounter: 1
+  comboCounter: {fileID: 0}
 --- !u!114 &1070467525
 MonoBehaviour:
   m_ObjectHideFlags: 0

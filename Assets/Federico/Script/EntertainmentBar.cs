@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -7,9 +8,9 @@ using UnityEngine.UI;
 public class EntertainmentBar : MonoBehaviour
 {
     // oggetti della Barra non dovrebbero cambiare mai 
-    [SerializeField] private  Slider slider;
-    [SerializeField] private  Image fill;
-    [SerializeField] private  Gradient gradient;
+    [SerializeField] private Slider slider;
+    [SerializeField] private Image fill;
+    [SerializeField] private Gradient gradient;
 
     /*
      * SIGNIFICATO:
@@ -23,7 +24,8 @@ public class EntertainmentBar : MonoBehaviour
     [SerializeField] float maxEntertainmentValue = 100;
     [SerializeField] float decreaseSpeed = 10f;
     [SerializeField] private float IncreaseSpeed = 10f;
-    [SerializeField] float comboCounter = 1f;
+    // [SerializeField] float comboCounter = 1f;
+    [SerializeField] private ComboCounter comboCounter;
     private float currEntertainmentValue = 100;
 
 
@@ -42,7 +44,7 @@ public class EntertainmentBar : MonoBehaviour
             }
         }
 
-        EnemyCollision.current.OnAttackLended += AttackPerfomed;
+        EnemyCollision.OnAttackLended += AttackPerfomed;
     }
 
     //INCREMENTO FLAT DELLA BARRA DI INTRATTENIMENTO TEST 1 
@@ -53,11 +55,11 @@ public class EntertainmentBar : MonoBehaviour
     }
 
     // FUNZIONE DI ATTACCO EFFETTUATO
-    public void AttackPerfomed()
+    public void AttackPerfomed(object sender, EventArgs args)
     {
         Debug.Log("hey la barra d'intrattenimento ha rilevato l'attacco");
-        currEntertainmentValue += IncreaseSpeed * comboCounter;
-        comboCounter += 3; // TEMPORARY QUANDO KEVIN FARà IL COMBO SYSTEM SARà TOLTO
+        currEntertainmentValue += IncreaseSpeed * comboCounter.counter;
+        comboCounter.counter += 3; // TEMPORARY QUANDO KEVIN FARà IL COMBO SYSTEM SARà TOLTO
         if (currEntertainmentValue > 100) currEntertainmentValue = 100;
 
 
@@ -90,7 +92,7 @@ public class EntertainmentBar : MonoBehaviour
         // TO REMOVE solo ai fini di debugging 
         if (Input.GetKeyDown(KeyCode.C))
         {
-            comboCounter += 2;
+            comboCounter.counter += 2;
         }
 
 
@@ -110,7 +112,7 @@ public class EntertainmentBar : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.U))
         {
-            AttackPerfomed();
+            AttackPerfomed(null, EventArgs.Empty);
         }
     }
 }
