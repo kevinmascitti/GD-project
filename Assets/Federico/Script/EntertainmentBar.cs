@@ -59,7 +59,6 @@ public class EntertainmentBar : MonoBehaviour
     {
         Debug.Log("hey la barra d'intrattenimento ha rilevato l'attacco");
         currEntertainmentValue += IncreaseSpeed * comboCounter.counter;
-        comboCounter.counter += 10; // TEMPORARY QUANDO KEVIN FARà IL COMBO SYSTEM SARà TOLTO
         if (currEntertainmentValue > 100) 
             currEntertainmentValue = 100;
 

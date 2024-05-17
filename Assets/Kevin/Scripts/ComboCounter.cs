@@ -9,31 +9,28 @@ public class ComboCounter : MonoBehaviour
 {
     [NonSerialized] public int counter = 0;
     
-    [SerializeField] private double comboDefaultTimer = 3000;
-    private Timer comboTimer;
+    private ComboTimer comboTimer;
 
     public static EventHandler OnCounterIncreased;
 
     void Start()
     {
-        comboTimer = new Timer(comboDefaultTimer);
-        comboTimer.Enabled = false;
-        comboTimer.AutoReset = false;
+        comboTimer = GetComponent<ComboTimer>();
         
         EnemyCollision.OnAttackLended += IncreaseCounter;
+        ComboTimer.Elapsed += ElapsedTimer;
     }
 
     private void IncreaseCounter(object sender, EnemyCollisionArgs args)
     {
-        comboTimer.Elapsed += ElapsedTimer;
-        comboTimer.Start();
+        comboTimer.Begin();
         counter += args.comboValue;
+        OnCounterIncreased?.Invoke(this, EventArgs.Empty);
         Debug.Log("Combo counter is " + counter);
     }
 
-    private void ElapsedTimer(object sender, ElapsedEventArgs args)
+    private void ElapsedTimer(object sender, EventArgs args)
     {
-        Debug.Log("STOPPED TIMER");
         counter = 0;
     }
 }

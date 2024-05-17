@@ -13,7 +13,8 @@ public enum GrabbableState
     UNGRABBABLE,
     GRABBABLE,
     GRABBED,
-    THROWN
+    THROWN, 
+    USED
 }
 
 public class Grabbable : MonoBehaviour
@@ -24,12 +25,13 @@ public class Grabbable : MonoBehaviour
     [SerializeField] private Vector3 grabEulerRotation;
     [SerializeField] private float throwForce;
     [SerializeField] private float rotationSpeed;
+    [SerializeField] private bool hasToBeThrown;
+    [SerializeField] private float atk;
 
     private bool isInRange = false;
     private GrabbableState state = GrabbableState.UNGRABBABLE;
     private GameObject player;
     private TMP_Text hint;
-    private Vector3 throwDirection = new Vector3(1, 0, 0);
     private Vector3 rotationAxis = Vector3.forward;
     private GameObject centerOfRotation;
     
@@ -37,6 +39,7 @@ public class Grabbable : MonoBehaviour
     public static EventHandler<GrabbableArgs> OnOutsideRange;
     public static EventHandler<GrabbableArgs> OnGrab;
     public static EventHandler<GrabbableArgs> OnThrow;
+    public static EventHandler<GrabbableArgs> OnUse;
     [SerializeField] private Object Enemy;
 
     // Start is called before the first frame update
@@ -68,6 +71,16 @@ public class Grabbable : MonoBehaviour
     public GrabbableState GetState()
     {
         return state;
+    }
+
+    public bool GetThrowState()
+    {
+        return hasToBeThrown;
+    }
+
+    public float GetAtk()
+    {
+        return atk;
     }
 
     public void SetGrabbable(object sender, GrabbableArgs args)
@@ -116,15 +129,35 @@ public class Grabbable : MonoBehaviour
     public void Throw()
     {
         state = GrabbableState.THROWN;
-        Rigidbody rb = GetComponent<Rigidbody>();
-        if (rb)
-        {
-            rb.AddForce(throwDirection.normalized * throwForce, ForceMode.Impulse);
-        }
+        StartCoroutine(MoveGrabbable());
         StartCoroutine(SpinContinuously());
         transform.SetParent(null);
         StartCoroutine(StartDestroyTimer());
         OnThrow?.Invoke(this, new GrabbableArgs(this));
+    }
+
+    public void Use()
+    {
+        state = GrabbableState.USED;
+        StartCoroutine(StartDestroyTimer());
+        OnUse?.Invoke(this, new GrabbableArgs(this));
+    }
+
+    private IEnumerator MoveGrabbable()
+    {
+        Vector3 startPosition = transform.position;
+        Vector3 throwDirection = player.transform.rotation.eulerAngles.normalized;
+        Vector3 endPosition = startPosition + throwDirection * throwForce;
+        float elapsedTime = 0f;
+
+        while (elapsedTime < destroyTimer)
+        {
+            transform.position = Vector3.Lerp(startPosition, endPosition, elapsedTime / destroyTimer);
+            elapsedTime += Time.deltaTime;
+            yield return null;
+        }
+
+        transform.position = endPosition;
     }
 
     private IEnumerator SpinContinuously()

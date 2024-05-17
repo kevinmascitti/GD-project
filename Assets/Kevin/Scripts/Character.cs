@@ -9,7 +9,6 @@ public abstract class Character : MonoBehaviour
     public float currentHP;
     public bool isPlayer = false;
     public int atk;
-    public int def;
 
     // Update is called once per frame
     public void Update()
@@ -19,12 +18,18 @@ public abstract class Character : MonoBehaviour
             Debug.Log("Damage " + atk);
             if (isPlayer)
             {
-                if(currentHP-(atk-def)>=0)
-                    gameObject.GetComponent<PlayerCharacter>().UpdateHP(currentHP-(atk-def));
+                if(currentHP-atk>=0)
+                    gameObject.GetComponent<PlayerCharacter>().UpdateHP(currentHP-atk);
                 else
                     gameObject.GetComponent<PlayerCharacter>().UpdateHP(0);
             }
         }
+    }
+
+    public void TakeDamage(float damage)
+    {
+        currentHP -= damage;
+        // TO DO animazione danno subito??
     }
 
     public abstract void Die();
