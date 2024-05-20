@@ -7,7 +7,7 @@ using UnityEngine.AI;
 using Random = UnityEngine.Random;
 
 
-public class EnemyAI : MonoBehaviour
+public class EnemyAI : Enemy
 {
     public NavMeshAgent agent;
 
