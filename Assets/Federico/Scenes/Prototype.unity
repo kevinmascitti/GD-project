@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18028326, g: 0.22571333, b: 0.30692202, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -267,7 +267,7 @@ PrefabInstance:
     - target: {fileID: 7897149327893079946, guid: 86decf478d7f44de6ba6c659c541a018,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8499191450984056692, guid: 86decf478d7f44de6ba6c659c541a018,
         type: 3}
@@ -277,7 +277,7 @@ PrefabInstance:
     - target: {fileID: 8499191450984056692, guid: 86decf478d7f44de6ba6c659c541a018,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: -100.051636
+      value: -99.81
       objectReference: {fileID: 0}
     - target: {fileID: 8499191450984056692, guid: 86decf478d7f44de6ba6c659c541a018,
         type: 3}
@@ -796,7 +796,7 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: 5531465e413494583a61734bf8a4c490,
         type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 5531465e413494583a61734bf8a4c490,
         type: 3}
@@ -1121,7 +1121,6 @@ MonoBehaviour:
   currentHP: 72.8
   isPlayer: 0
   atk: 55
-  def: 23
   MAX_HP: 100
   def_HP: 100
   MAX_STAMINA: 100
@@ -4174,7 +4173,7 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: 2ba6f97fc0ac2fe409ec11d121577fa8,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 2ba6f97fc0ac2fe409ec11d121577fa8,
         type: 3}
@@ -4471,7 +4470,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &1588279018
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4851,7 +4850,6 @@ MonoBehaviour:
   currentHP: 72.8
   isPlayer: 0
   atk: 55
-  def: 23
   MAX_HP: 100
   def_HP: 100
   MAX_STAMINA: 100
@@ -5389,7 +5387,6 @@ MonoBehaviour:
   currentHP: 72.8
   isPlayer: 0
   atk: 55
-  def: 23
   MAX_HP: 100
   def_HP: 100
   MAX_STAMINA: 100
