@@ -13,14 +13,14 @@ public class EnemyCollision : MonoBehaviour
 
     public void OnTriggerEnter(Collider other)
     {
-        //Debug.Log("Enemy Hit bro"); 
+        
         TeamComponent enemy= other.gameObject.GetComponent<TeamComponent>();
         
         Animator anim = player.GetComponent<Animator>();
         
         if (enemy != null && anim.GetFloat("Weapon.Active")>0f)
         {
-            Debug.Log("Enemy Hit bro");
+            Debug.Log("Enemy Hit");
             OnAttackLended?.Invoke(this, new EnemyCollisionArgs(comboValue));
         }
     }

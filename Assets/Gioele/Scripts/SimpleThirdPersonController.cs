@@ -31,16 +31,19 @@ public class SimpleThirdPersonController : MonoBehaviour
         float v = Input.GetAxis("Vertical");
         if (fede)
         {
-            
             PlayerAnim.SetFloat("horizontal", h);
             PlayerAnim.SetFloat("vertical", v);
         }
-        
+        /* versione precedente 
         if (h>0 || v>0)
         {
             GetComponent<Animator>().SetBool("walking", true);
         }
-        
+        */
+        if (h!=0 || v!=0)
+        {
+            GetComponent<Animator>().SetBool("walking", true);
+        }
         
         _inputVector = new Vector3(h, 0, v);
         _inputSpeed = Mathf.Clamp(_inputVector.magnitude, 0f, 1f);

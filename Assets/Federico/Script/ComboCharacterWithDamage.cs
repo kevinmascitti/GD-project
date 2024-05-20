@@ -7,6 +7,7 @@ public class ComboCharacterWithDamage : MonoBehaviour
 
     private StateMachine meleeStateMachine;
 
+    protected bool shouldKick = false;
    // [SerializeField] public BoxCollider hitbox;
     [SerializeField] public GameObject Hiteffect;
 
@@ -23,5 +24,15 @@ public class ComboCharacterWithDamage : MonoBehaviour
         {
             meleeStateMachine.SetNextState(new GroundEntryState());
         }
+        if (Input.GetKeyDown(KeyCode.O) && meleeStateMachine.CurrentState.GetType() == typeof(IdleCombatState) )
+        {
+            meleeStateMachine.SetNextState(new DashState());
+        }
+        
+        if (Input.GetKeyDown(KeyCode.K) && meleeStateMachine.CurrentState.GetType() == typeof(IdleCombatState) )
+        {
+            meleeStateMachine.SetNextState(new KickState());
+        }
+        
     }
 }
