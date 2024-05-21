@@ -5,7 +5,7 @@ using UnityEngine;
 public class KickState : MeleeBaseState
 {
     // Start is called before the first frame update
-    public float duration=0.5f;
+    public float duration=0.2f;
 
     
     private float KickPressedTimer = 0;
@@ -15,9 +15,10 @@ public class KickState : MeleeBaseState
     {
         base.OnEnter(_stateMachine);
         animator.SetTrigger("Kick");
+        
         Debug.Log("Kick button pressed congratulations");
         
-        
+
     }
 
     // Update is called once per frame
@@ -27,7 +28,7 @@ public class KickState : MeleeBaseState
         if (fixedtime >= duration)
         {
             animator.ResetTrigger("Kick");
-          stateMachine.SetNextStateToMain();
+            stateMachine.SetNextStateToMain();
         }
      
     }

@@ -29,6 +29,7 @@ public class GroundComboState : MeleeBaseState
             else
             {
                 animator.ResetTrigger("Attack"+attackIndex);
+                animator.SetBool("InvalidateMoving",false);
                 stateMachine.SetNextStateToMain();
             }
         }

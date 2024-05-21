@@ -30,6 +30,8 @@ public abstract class Character : MonoBehaviour
     {
         currentHP -= damage;
         // TO DO animazione danno subito??
+        if (currentHP <= 0)
+            Die();
     }
 
     public abstract void Die();
