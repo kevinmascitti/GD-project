@@ -16,11 +16,12 @@ public class remote_controller : MonoBehaviour
     [SerializeField]private Transform laserFirePoint;
     [SerializeField]private Transform playerTransform;
     [SerializeField] private GameObject squashAndStress;
+    [SerializeField] private GameObject player;
     void Awake()
     {
         playerTransform = GetComponent<Transform>();
         originalScale = transform.localScale;
-        //squashAndStress.SetActive(false);
+        squashAndStress.SetActive(false);
     }
     void MethodToExecute()
     {
@@ -71,6 +72,10 @@ public class remote_controller : MonoBehaviour
     {
         // blocco dall’alto che li “schiaccia” o appiattisce
         squashAndStress.SetActive(true);
+        //Vector3 newPosition = player.transform.position;
+
+        // Set the position of squashAndStress
+        //squashAndStress.transform.position = newPosition;
     }
 
     public void StartLaser()

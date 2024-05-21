@@ -35,7 +35,6 @@ public class sqash_and_stress_controller : MonoBehaviour
         // Ottieni le informazioni sullo stato corrente del layer 0 dell'animator
         AnimatorStateInfo stateInfo = GetComponent<Animator>().GetCurrentAnimatorStateInfo(0);
 
-        
 
         // Verifica se l'animazione corrente è prossima alla fine
         if (stateInfo.normalizedTime >= 1.0f && !GetComponent<Animator>().IsInTransition(0))
