@@ -1045,6 +1045,7 @@ MonoBehaviour:
   minDepthBound: -20
   maxDepthBound: 20
   fede: 1
+  isGrounded: 0
 --- !u!114 &81980838
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4699,6 +4700,7 @@ MonoBehaviour:
   minDepthBound: 7
   maxDepthBound: 7
   fede: 1
+  isGrounded: 0
 --- !u!54 &1958569414
 Rigidbody:
   m_ObjectHideFlags: 0

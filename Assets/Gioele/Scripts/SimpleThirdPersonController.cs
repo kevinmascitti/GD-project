@@ -16,13 +16,22 @@ public class SimpleThirdPersonController : MonoBehaviour
     private Vector3 _inputVector;
     private float _inputSpeed;
     private Vector3 _targetDirection;
-
+    [SerializeField] private bool isGrounded=false;
     public void Start()
     {
         depthPoint = GameObject.Find("DepthPoint");
         
     }
-
+    void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.CompareTag("Ground"))
+        {
+            isGrounded = true;
+            Debug.Log("Player has landed on the ground.");
+            GetComponent<Rigidbody>().isKinematic = true;
+        }
+    }
+    
     void Update()
     {
         //Handle the Input
@@ -118,6 +127,7 @@ public class SimpleThirdPersonController : MonoBehaviour
 
             Debug.DrawRay(transform.position + transform.up * 3f, _targetDirection * 5f, Color.red);
             //Debug.DrawRay(transform.position + transform.up * 3f, newDir * 5f, Color.blue);
-        }
-    }
+            }
+    
+}
 
