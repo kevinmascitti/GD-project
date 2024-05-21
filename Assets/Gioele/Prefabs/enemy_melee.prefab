@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1188201126791972847}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: GameObject
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -46,9 +46,9 @@ GameObject:
   - component: {fileID: 214297753178498671}
   - component: {fileID: 4651755148953748539}
   - component: {fileID: 4323395106971299071}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: enemy_melee
-  m_TagString: Untagged
+  m_TagString: enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -203,6 +203,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7c491ad9ca6bd0a40a1c05604fbf205a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  currentHP: 0
+  isPlayer: 0
+  atk: 0
   agent: {fileID: 214297753178498671}
   Player: {fileID: 0}
   ground:

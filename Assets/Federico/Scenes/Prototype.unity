@@ -801,7 +801,7 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: 5531465e413494583a61734bf8a4c490,
         type: 3}
       propertyPath: m_TagString
-      value: Player
+      value: Untagged
       objectReference: {fileID: 0}
     - target: {fileID: 1082271958561512970, guid: 5531465e413494583a61734bf8a4c490,
         type: 3}
@@ -3511,7 +3511,6 @@ GameObject:
   - component: {fileID: 1157339288}
   - component: {fileID: 1157339287}
   - component: {fileID: 1157339291}
-  - component: {fileID: 1157339292}
   m_Layer: 3
   m_Name: Plane
   m_TagString: Ground
@@ -3635,38 +3634,7 @@ MonoBehaviour:
   m_OverrideVoxelSize: 0
   m_VoxelSize: 0.16666667
   m_MinRegionArea: 2
-  m_NavMeshData: {fileID: 23800000, guid: 6b8037a987e6d4346befb6c6610876b5, type: 2}
-  m_BuildHeightMesh: 0
---- !u!114 &1157339292
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1157339286}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7a5ac11cc976e418e8d13136b07e1f52, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_AgentTypeID: 0
-  m_CollectObjects: 0
-  m_Size: {x: 10, y: 10, z: 10}
-  m_Center: {x: 0, y: 2, z: 0}
-  m_LayerMask:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_UseGeometry: 0
-  m_DefaultArea: 0
-  m_GenerateLinks: 0
-  m_IgnoreNavMeshAgent: 1
-  m_IgnoreNavMeshObstacle: 1
-  m_OverrideTileSize: 0
-  m_TileSize: 256
-  m_OverrideVoxelSize: 0
-  m_VoxelSize: 0.16666667
-  m_MinRegionArea: 2
-  m_NavMeshData: {fileID: 23800000, guid: 000acee51fb084238a7f95c25e2469ff, type: 2}
+  m_NavMeshData: {fileID: 23800000, guid: 79556745ce457134a8c55fc240ffcd8f, type: 2}
   m_BuildHeightMesh: 0
 --- !u!1 &1163403842
 GameObject:
@@ -4611,7 +4579,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &1588279018
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4639,6 +4607,8 @@ MonoBehaviour:
   plane: {fileID: 1157339286}
   spawnTime: 2
   canSpawn: 1
+  spawnCount: 0
+  spawnLimit: 7
 --- !u!4 &1588279019
 Transform:
   m_ObjectHideFlags: 0
@@ -5377,7 +5347,7 @@ GameObject:
   - component: {fileID: 1958569420}
   m_Layer: 6
   m_Name: Player
-  m_TagString: Player
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

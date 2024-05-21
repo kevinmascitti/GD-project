@@ -36,11 +36,16 @@ public class Enemy_AI_Melee : Enemy
     [NonSerialized]public bool OnAttack;
     private void Awake()
     {
+        StartCoroutine(TimerCoroutine());
         Player = GameObject.FindGameObjectWithTag("Player").transform;
         initialRotation = transform.rotation;
         agent = GetComponent<NavMeshAgent>();
-        
-    
+    }
+    IEnumerator TimerCoroutine()
+    {
+        // Attende 3 secondi poi mette tutto a is kinamatic
+        yield return new WaitForSeconds(2.0f);
+        GetComponent<Rigidbody>().isKinematic = true;
     }
 
     private void Patroling()
@@ -50,7 +55,7 @@ public class Enemy_AI_Melee : Enemy
         if (walkPointSet)
             agent.SetDestination(walkPoint);
         Vector3 distanceToWalkPoint = transform.position - walkPoint;
-        if (distanceToWalkPoint.magnitude < 1f)// ottengo la distanza effettiva
+        if (distanceToWalkPoint.magnitude < 2f)// ottengo la distanza effettiva
         {
             walkPointSet = false;
         }
@@ -59,10 +64,11 @@ public class Enemy_AI_Melee : Enemy
 
     private void SearchWalkPoint()
     {
+        //Player = GameObject.FindGameObjectWithTag("Player").transform;
         float randomz = Random.Range(-walkPointRange, walkPointRange);
         float randomx = Random.Range(-walkPointRange, walkPointRange);
         walkPoint = new Vector3(Player.transform.position.x+randomx, Player.transform.position.y, Player.transform.position.z+randomz);
-        if (Physics.Raycast(walkPoint, -transform.up, 2f, ground))
+        if (Physics.Raycast(walkPoint, -transform.up, 3f, ground))
             walkPointSet = true;
     }
 
@@ -103,6 +109,11 @@ public class Enemy_AI_Melee : Enemy
             OnAttack = true;
             Invoke("ChangeState", 1.2f);
         }
+        if (collision.collider.CompareTag("Ground"))
+        {
+            GetComponent<Rigidbody>().isKinematic = true;
+            grounded = true;
+        }
         
     }
    
@@ -139,16 +150,27 @@ public class Enemy_AI_Melee : Enemy
             
             //transform.LookAt(Player.position);
             
-            
             // vado a vededere se il player se è in attack range o in sight range
             playerInSightRange = Physics.CheckSphere(transform.position, sightRange, playerLayer);
             playerInAttackRange = Physics.CheckSphere(transform.position, attackRange, playerLayer);
             if (!playerInSightRange && !playerInAttackRange)
-                Patroling(); // nulla 
+            {
+                Patroling();
+                //Debug.Log("patroling"); // nulla 
+            }
+
             if (playerInSightRange && !playerInAttackRange)
-                ChasePlayer(); // segue il player 
+            {
+                    ChasePlayer(); // segue il player 
+                    //Debug.Log("chase pplayer");
+            }
+
             if (!playerInSightRange && playerInAttackRange && !OnAttack)
-                AttackPlayer(); // lo attacca
+            {
+                    AttackPlayer(); // lo attacca
+                    //Debug.Log("chase pplayer");
+            }
+
             transform.rotation = initialRotation;
         }
     }
@@ -165,6 +187,7 @@ public class Enemy_AI_Melee : Enemy
     {
         Destroy(gameObject);
     }
+    /*
     void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Ground"))
@@ -175,6 +198,7 @@ public class Enemy_AI_Melee : Enemy
 
         
     }
+    */
 
     private void OnDrawGizmosSelected()
     {

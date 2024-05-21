@@ -13,6 +13,9 @@ public class Spawner : MonoBehaviour
     public GameObject plane;
     public float spawnTime = 2f;
     public bool canSpawn = true;
+    [SerializeField]private int spawnCount=0;
+    [SerializeField]private int spawnLimit=7;
+
     void Start()
     {
         //somma delle probabilità totali
@@ -22,6 +25,8 @@ public class Spawner : MonoBehaviour
             _totalProbability += spawnProbability[i];
         }
         //start spawn
+        spawnCount = 0;
+        spawnLimit = 7;
         StartSpawn();
         //setto i nemici del primo livello
         ChangePrefabs(0);
@@ -71,6 +76,10 @@ public class Spawner : MonoBehaviour
         while (true && canSpawn)
         {
             yield return new WaitForSeconds(spawnTime); //  2 secondi--> da decidere/ modificare , Fede divertiti :)
+            if (spawnCount == (spawnLimit - 1))
+            {
+                StopSpawn();
+            }
 
             // Generiamo un numero casuale per selezionare l'oggetto da spawnare
             float randomValue = Random.Range(0f, _totalProbability);
@@ -99,7 +108,7 @@ public class Spawner : MonoBehaviour
                 //inserito una y =10 in modo che in nemico cada dal cielo 
                 // Aggiunta la posizione del piano per mantenere il punto random nel contesto del piano e non fuori
                 Vector3 spawnPosition = plane.transform.position + randomPosition;
-
+                spawnCount++;
                 // oggetto istanziato su un punto random del piano
                 Instantiate(selectedObject, spawnPosition, Quaternion.identity);
             }
