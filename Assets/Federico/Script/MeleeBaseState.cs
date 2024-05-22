@@ -24,7 +24,7 @@ public class MeleeBaseState : State
     {
         base.OnEnter(_stateMachine);
         animator = GetComponent<Animator>(); 
-        HitEffectPrefab = GetComponent<ComboCharacterWithDamage>().Hiteffect;
+    //    HitEffectPrefab = GetComponent<ComboCharacterWithDamage>().Hiteffect;
     }
 
     public override void OnUpdate()
