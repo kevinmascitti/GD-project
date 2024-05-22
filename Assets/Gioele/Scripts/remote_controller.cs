@@ -7,18 +7,21 @@ using UnityEngine.AI;
 public class remote_controller : MonoBehaviour
 {
     public float timerDuration = 3f;
-    public delegate void TimerCallback();
+    [SerializeField]private delegate void TimerCallback();
     private Vector3 originalScale;
-    public float moltiplicatoreCombo = 1f;
-    public float moltiplicatoreDanniNemici = 1f;
-    public LineRenderer laser;
-    public float distance = 5f;
-    public Transform laserFirePoint;
-    public Transform playerTransform;
+    [SerializeField]private float moltiplicatoreCombo = 1f;
+    [SerializeField]private float moltiplicatoreDanniNemici = 1f;
+    [SerializeField]private LineRenderer laser;
+    [SerializeField]private float distance = 5f;
+    [SerializeField]private Transform laserFirePoint;
+    [SerializeField]private Transform playerTransform;
+    [SerializeField] private GameObject squashAndStress;
+    [SerializeField] private GameObject player;
     void Awake()
     {
         playerTransform = GetComponent<Transform>();
         originalScale = transform.localScale;
+        squashAndStress.SetActive(false);
     }
     void MethodToExecute()
     {
@@ -68,6 +71,11 @@ public class remote_controller : MonoBehaviour
     public void StopVolumeMinus()
     {
         // blocco dall’alto che li “schiaccia” o appiattisce
+        squashAndStress.SetActive(true);
+        //Vector3 newPosition = player.transform.position;
+
+        // Set the position of squashAndStress
+        //squashAndStress.transform.position = newPosition;
     }
 
     public void StartLaser()

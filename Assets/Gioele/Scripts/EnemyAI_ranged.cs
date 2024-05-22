@@ -35,9 +35,16 @@ public class EnemyAI : Enemy
     [NonSerialized]public bool OnAttack;
     private void Awake()
     {
+        StartCoroutine(TimerCoroutine());
         Player = GameObject.FindGameObjectWithTag("Player").transform;
         initialRotation = transform.rotation;
         agent = GetComponent<NavMeshAgent>();
+    }
+    IEnumerator TimerCoroutine()
+    {
+        // Attende 3 secondi poi mette tutto a is kinamatic
+        yield return new WaitForSeconds(2.0f);
+        GetComponent<Rigidbody>().isKinematic = true;
     }
 
     private void Patroling()
@@ -59,6 +66,11 @@ public class EnemyAI : Enemy
         {
             OnAttack = true;
             Invoke("ChangeState", 1.2f);
+        }
+        if (collision.collider.CompareTag("Ground"))
+        {
+            GetComponent<Rigidbody>().isKinematic = true;
+            grounded = true;
         }
         
     }
@@ -125,7 +137,7 @@ public class EnemyAI : Enemy
 
     }
 
-
+    /*
     void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Ground"))
@@ -136,7 +148,7 @@ public class EnemyAI : Enemy
 
         
     }
-
+    */
     // Update is called once per frame
     void Update()
     {
