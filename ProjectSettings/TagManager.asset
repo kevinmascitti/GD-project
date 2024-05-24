@@ -8,6 +8,7 @@ TagManager:
   - enemy
   - startCaduta
   - Exit
+  - Wall
   layers:
   - Default
   - TransparentFX

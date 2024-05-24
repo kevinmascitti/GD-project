@@ -13,7 +13,26 @@ public class EnemyCollision : MonoBehaviour
     private GameObject hitEffectPrefabTemp;
 
     public GameObject HitEffectPrefab;
-    
+    /*
+    public void OnCollisionEnter(Collision other)
+    {
+        Enemy enemy = other.gameObject.GetComponent<Enemy>();
+        Animator anim = player.GetComponent<Animator>();
+        Vector3 contactPoint = other.collider.ClosestPoint(this.transform.position);
+      
+        
+        if (enemy != null && anim.GetFloat("Weapon.Active") > 0f)
+        {
+            // enemy.TakeDamage(20000.0f);        
+            hitEffectPrefabTemp = GameObject.Instantiate(HitEffectPrefab, contactPoint, Quaternion.identity);
+            StartCoroutine("KillHitEffect");
+            
+            // StartCoroutine("KillHitEffect");
+            Debug.Log("Enemy Hit");
+            OnAttackLended?.Invoke(this, new EnemyCollisionArgs(comboValue));
+        }
+    }
+    */
     public void OnTriggerEnter(Collider other)
     {
         Enemy enemy = other.gameObject.GetComponent<Enemy>();

@@ -45,7 +45,7 @@ public class Enemy_AI_Melee : Enemy
     {
         // Attende 3 secondi poi mette tutto a is kinamatic
         yield return new WaitForSeconds(2.0f);
-        GetComponent<Rigidbody>().isKinematic = true;
+       // GetComponent<Rigidbody>().isKinematic = true;
     }
 
     private void Patroling()
