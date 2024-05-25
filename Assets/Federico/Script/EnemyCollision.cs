@@ -38,19 +38,19 @@ public class EnemyCollision : MonoBehaviour
         Enemy enemy = other.gameObject.GetComponent<Enemy>();
         Animator anim = player.GetComponent<Animator>();
         Vector3 contactPoint = other.ClosestPoint(this.transform.position);
-      
-        
+    
         if (enemy != null && anim.GetFloat("Weapon.Active") > 0f)
         {
-            // enemy.TakeDamage(20000.0f);        
-            hitEffectPrefabTemp = GameObject.Instantiate(HitEffectPrefab, contactPoint, Quaternion.identity);
+            // Calcola la posizione corretta per l'effetto
+            Vector3 effectPosition = other.transform.position + new Vector3(0, +1.5f, 0); // Esempio di offset verticale
+        
+            hitEffectPrefabTemp = GameObject.Instantiate(HitEffectPrefab, effectPosition, Quaternion.identity);
             StartCoroutine("KillHitEffect");
-            
-           // StartCoroutine("KillHitEffect");
             Debug.Log("Enemy Hit");
             OnAttackLended?.Invoke(this, new EnemyCollisionArgs(comboValue));
         }
     }
+
 
    
 

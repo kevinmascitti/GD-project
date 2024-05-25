@@ -6,6 +6,7 @@ public class AntiOverlap : MonoBehaviour
     public int numRays = 8; // Numero di raggi da lanciare per ogni livello
     public float pushForce = 10f; // Forza con cui spingere indietro i nemici
     public float[] heights = new float[] { 1.0f }; // Altezze da cui lanciare i raggi
+    public LayerMask enemyLayer; // Layer dei nemici
 
     private Rigidbody rb;
 
@@ -40,14 +41,15 @@ public class AntiOverlap : MonoBehaviour
             foreach (var direction in directions)
             {
                 Ray ray = new Ray(origin, direction);
-                RaycastHit hit;
+                RaycastHit[] hits = Physics.RaycastAll(ray, detectionRadius, enemyLayer);
 
-                if (Physics.Raycast(ray, out hit, detectionRadius))
+                foreach (var hit in hits)
                 {
+                    Debug.Log("Hai colpito qualcosa");
                     Rigidbody hitRb = hit.collider.attachedRigidbody;
-                    if (hitRb != null && !hitRb.isKinematic &&  hitRb.GetComponent<Enemy_AI_Melee>()!=null )
+                    if (hitRb != null && !hitRb.isKinematic && hitRb.GetComponent<Enemy_AI_Melee>() != null)
                     {
-                        Debug.Log("nemico intersecato ");
+                        Debug.Log("Nemico intersecato");
                         Vector3 pushDirection = hit.point - origin;
                         pushDirection.y = 0; // Non spingere verticalmente
                         pushDirection.Normalize();
@@ -55,6 +57,9 @@ public class AntiOverlap : MonoBehaviour
                         hitRb.AddForce(pushDirection * pushForce, ForceMode.Impulse);
                     }
                 }
+
+                // Disegna il raggio per il debug
+                Debug.DrawRay(origin, direction * detectionRadius, Color.red);
             }
         }
     }
