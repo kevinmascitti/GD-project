@@ -16,96 +16,99 @@ public class SimpleThirdPersonController : MonoBehaviour
     private Vector3 _inputVector;
     private float _inputSpeed;
     private Vector3 _targetDirection;
+    [SerializeField] private bool isGrounded = false;
+    private float boundingBoxWidth = 1.0f;
 
     public void Start()
     {
         depthPoint = GameObject.Find("DepthPoint");
-        
+    }
+
+    void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.CompareTag("Ground"))
+        {
+            isGrounded = true;
+            Debug.Log("Player has landed on the ground.");
+            GetComponent<Rigidbody>().isKinematic = true;
+        }
+    }
+
+    private bool CanMove(Vector3 direction)
+    {
+        RaycastHit hit;
+        // Adjusted to use the magnitude of the movement vector for the ray length
+        if (Physics.Raycast(transform.position, direction, out hit, boundingBoxWidth))
+        {
+            if (hit.collider.CompareTag("Wall"))
+            {
+                return false;
+            }
+        }
+        return true;
     }
 
     void Update()
     {
-        //Handle the Input
-        //comment from github
+        // Handle the Input
         float h = Input.GetAxis("Horizontal");
         float v = Input.GetAxis("Vertical");
-        if (fede)
+
+        if (fede) // To remove fede variable if-cases
         {
-            
             PlayerAnim.SetFloat("horizontal", h);
             PlayerAnim.SetFloat("vertical", v);
         }
-        
-        if (h>0 || v>0)
+
+        // Walk if you aren't attacking
+        if ((h != 0 || v != 0) && !GetComponent<Animator>().GetBool("InvalidateMoving"))
         {
             GetComponent<Animator>().SetBool("walking", true);
         }
-        
-        
+
+        // Elaborate input Vector and input Speed
         _inputVector = new Vector3(h, 0, v);
         _inputSpeed = Mathf.Clamp(_inputVector.magnitude, 0f, 1f);
 
-        //Compute direction According to Camera Orientation
+        // Compute direction according to Camera orientation
         _targetDirection = Camera.transform.TransformDirection(_inputVector).normalized;
         _targetDirection.y = 0f;
-        
-        if (_inputSpeed <= 0f)
+
+        if (_inputSpeed <= 0f && !GetComponent<Animator>().GetBool("InvalidateMoving"))
         {
             GetComponent<Animator>().SetBool("walking", false);
         }
         else
         {
-            //Calculate the new expected direction (newDir) and rotate
-            Vector3 newDir =
-                Vector3.RotateTowards(transform.forward, _targetDirection, RotationSpeed * Time.deltaTime, 0f);
+            // Calculate the new expected direction (newDir) and rotate
+            Vector3 newDir = Vector3.RotateTowards(transform.forward, _targetDirection, RotationSpeed * Time.deltaTime, 0f);
             transform.rotation = Quaternion.LookRotation(newDir);
         }
-        
-        //Translate along forward
-        transform.Translate(transform.forward * _inputSpeed * Speed * Time.deltaTime, Space.World);
-        if (fede)
+
+        if (!PlayerAnim.GetBool("InvalidateMoving"))
         {
-            PlayerAnim.SetFloat("forward",
-                Vector3.Dot(transform.forward,
-                    new Vector3 (_inputSpeed * Speed, _inputSpeed * Speed, _inputSpeed * Speed)));
-        }
-        
-        if (transform.position.z < depthPoint.transform.position.z - minDepthBound)
-        {
-            transform.position = new Vector3(transform.position.x, transform.position.y, depthPoint.transform.position.z - minDepthBound);
-        }
-        else
-        {
-           
-            //Calculate the new expected direction (newDir) and rotate
-            Vector3 newDir =
-                Vector3.RotateTowards(transform.forward, _targetDirection, RotationSpeed * Time.deltaTime, 0f);
-            transform.rotation = Quaternion.LookRotation(newDir);
-            
-            //Translate along forward
-            transform.Translate(transform.forward * _inputSpeed * Speed * Time.deltaTime, Space.World);
+            // Translate along forward
+            Vector3 movement = transform.forward * _inputSpeed * Speed * Time.deltaTime;
+            if (CanMove(movement))
+            {
+                transform.Translate(movement, Space.World);
+            }
+
             if (fede)
             {
-                PlayerAnim.SetFloat("forward",
-                    Vector3.Dot(transform.forward,
-                        new Vector3 (_inputSpeed * Speed, _inputSpeed * Speed, _inputSpeed * Speed)));
-            }
-            
-            if (depthPoint && transform.position.z < depthPoint.transform.position.z - minDepthBound)
-            {
-                
-                transform.position = new Vector3(transform.position.x, transform.position.y,
-                    depthPoint.transform.position.z - minDepthBound);
-            }
-            else if (depthPoint && transform.position.z > depthPoint.transform.position.z + maxDepthBound)
-            {
-                transform.position = new Vector3(transform.position.x, transform.position.y,
-                    depthPoint.transform.position.z + maxDepthBound);
+                PlayerAnim.SetFloat("forward", Vector3.Dot(transform.forward, new Vector3(_inputSpeed * Speed, 0, _inputSpeed * Speed)));
             }
 
+            if (transform.position.z < depthPoint.transform.position.z - minDepthBound)
+            {
+                transform.position = new Vector3(transform.position.x, transform.position.y, depthPoint.transform.position.z - minDepthBound);
+            }
+            else if (transform.position.z > depthPoint.transform.position.z + maxDepthBound)
+            {
+                transform.position = new Vector3(transform.position.x, transform.position.y, depthPoint.transform.position.z + maxDepthBound);
+            }
 
             Debug.DrawRay(transform.position + transform.up * 3f, _targetDirection * 5f, Color.red);
-            Debug.DrawRay(transform.position + transform.up * 3f, newDir * 5f, Color.blue);
         }
     }
 }

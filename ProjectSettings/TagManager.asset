@@ -6,6 +6,9 @@ TagManager:
   tags:
   - Ground
   - enemy
+  - startCaduta
+  - Exit
+  - Wall
   layers:
   - Default
   - TransparentFX

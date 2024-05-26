@@ -1,19 +1,46 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using UnityEngine.Networking;
 public class ComboCharacterWithDamage : MonoBehaviour
 {
 
     private StateMachine meleeStateMachine;
-
+    private GameObject hitEffectPrefabTemp;
+    protected bool shouldKick = false;
    // [SerializeField] public BoxCollider hitbox;
-    [SerializeField] public GameObject Hiteffect;
-
+    public GameObject HitEffectPrefab;
     // Start is called before the first frame update
+    
+    public GameObject parentObject; // Assegna l'oggetto padre via Inspector
+    public string boneName; // Nome dell'osso che vuoi trovare
+    public GameObject handBone;
     void Start()
     {
         meleeStateMachine = GetComponent<StateMachine>();
+        Transform[] childTransforms = parentObject.GetComponentsInChildren<Transform>();
+
+        Transform targetBone = null;
+        foreach (Transform childTransform in childTransforms)
+        {
+            if (childTransform.name == boneName)
+            {
+                targetBone = childTransform;
+                break;
+            }
+        }
+
+        if (targetBone != null)
+        {
+            Debug.Log("Osso trovato: " + targetBone.name);
+            // Ora puoi fare qualcosa con l'osso trovato, ad esempio:
+            // targetBone.position = new Vector3(0, 0, 0);
+        }
+        else
+        {
+            Debug.Log("Osso non trovato.");
+        }
+        
     }
 
     // Update is called once per frame
@@ -21,7 +48,42 @@ public class ComboCharacterWithDamage : MonoBehaviour
     {
         if (Input.GetMouseButton(0) && meleeStateMachine.CurrentState.GetType() == typeof(IdleCombatState))
         {
-            meleeStateMachine.SetNextState(new GroundEntryState());
+            Vector3 contactPoint =handBone.transform.position;
+            GetComponent<Animator>().SetBool("InvalidateMoving",true);
+            meleeStateMachine.SetNextState(new GroundEntryState()); 
+            // hitEffectPrefabTemp = GameObject.Instantiate(HitEffectPrefab, contactPoint, Quaternion.identity);
+         //   StartCoroutine("KillHitEffect");
         }
+        if (Input.GetKeyDown(KeyCode.O) && meleeStateMachine.CurrentState.GetType() == typeof(IdleCombatState) )
+        {
+            GetComponent<Animator>().SetBool("InvalidateMoving",true);
+            meleeStateMachine.SetNextState(new DashState());
+        }
+        
+        if (Input.GetKeyDown(KeyCode.K) && meleeStateMachine.CurrentState.GetType() == typeof(IdleCombatState) )
+        {
+            GetComponent<Animator>().SetBool("InvalidateMoving",true);
+            StartCoroutine("validateMoving");
+            meleeStateMachine.SetNextState(new KickState());
+        }
+        
     }
+    // soluzione 1: 
+    IEnumerator validateMoving()
+    {
+        Debug.Log("Started Coroutine at timestamp : " + Time.time); 
+       yield return new WaitForSeconds(0.5f);
+      
+       GetComponent<Animator>().SetBool("InvalidateMoving",false);
+       Debug.Log("Coroutine ended " + Time.time);
+    }
+    IEnumerator KillHitEffect()
+    {
+        Debug.Log("Started Coroutine KillhitEffect  at timestamp : " + Time.time);
+        yield return new WaitForSeconds(0.1f);
+
+        GameObject.Destroy(hitEffectPrefabTemp);
+        Debug.Log("Coroutine ended " + Time.time);
+    }
+
 }

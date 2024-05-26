@@ -7,7 +7,7 @@ using UnityEngine.AI;
 using Random = UnityEngine.Random;
 
 
-public class EnemyAI : MonoBehaviour
+public class EnemyAI : Enemy
 {
     public NavMeshAgent agent;
 
@@ -35,9 +35,16 @@ public class EnemyAI : MonoBehaviour
     [NonSerialized]public bool OnAttack;
     private void Awake()
     {
+        StartCoroutine(TimerCoroutine());
         Player = GameObject.FindGameObjectWithTag("Player").transform;
         initialRotation = transform.rotation;
         agent = GetComponent<NavMeshAgent>();
+    }
+    IEnumerator TimerCoroutine()
+    {
+        // Attende 3 secondi poi mette tutto a is kinamatic
+        yield return new WaitForSeconds(2.0f);
+        GetComponent<Rigidbody>().isKinematic = true;
     }
 
     private void Patroling()
@@ -59,6 +66,11 @@ public class EnemyAI : MonoBehaviour
         {
             OnAttack = true;
             Invoke("ChangeState", 1.2f);
+        }
+        if (collision.collider.CompareTag("Ground"))
+        {
+            GetComponent<Rigidbody>().isKinematic = true;
+            grounded = true;
         }
         
     }
@@ -125,7 +137,7 @@ public class EnemyAI : MonoBehaviour
 
     }
 
-
+    /*
     void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Ground"))
@@ -136,7 +148,7 @@ public class EnemyAI : MonoBehaviour
 
         
     }
-
+    */
     // Update is called once per frame
     void Update()
     {

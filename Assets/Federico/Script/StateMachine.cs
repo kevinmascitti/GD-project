@@ -59,8 +59,9 @@ public class StateMachine : MonoBehaviour
 
     private void Awake()
     {
+       // mainStateType = new IdleCombatState();
         SetNextStateToMain();
-
+        
     }
 
 

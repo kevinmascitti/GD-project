@@ -1,24 +1,30 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Threading;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
 
 public class remote_controller : MonoBehaviour
 {
     public float timerDuration = 3f;
-    public delegate void TimerCallback();
+    [SerializeField]private delegate void TimerCallback();
     private Vector3 originalScale;
-    public float moltiplicatoreCombo = 1f;
-    public float moltiplicatoreDanniNemici = 1f;
-    public LineRenderer laser;
-    public float distance = 5f;
-    public Transform laserFirePoint;
-    public Transform playerTransform;
+    [SerializeField]private float moltiplicatoreCombo = 1f;
+    [SerializeField]private float moltiplicatoreDanniNemici = 1f;
+    [SerializeField]private LineRenderer laser;
+    [SerializeField]private float distance = 5f;
+    [SerializeField]private Transform laserFirePoint;
+    [SerializeField]private Transform playerTransform;
+    [SerializeField] private GameObject squashAndStress;
+    [SerializeField] private GameObject player;
+    [SerializeField] private LayerMask layerLaserMask;
+    [SerializeField] private float laserDamage = 0.1f;
     void Awake()
     {
         playerTransform = GetComponent<Transform>();
         originalScale = transform.localScale;
+        squashAndStress.SetActive(false);
     }
     void MethodToExecute()
     {
@@ -52,7 +58,7 @@ public class remote_controller : MonoBehaviour
     public void StartVolumePlus()
     {
         // moltiplicatore di combo
-        moltiplicatoreCombo = 1.3f;
+        moltiplicatoreCombo = 1.5f;
         StartTimer(timerDuration, StopVolumePlus);
     }
     public void StopVolumePlus()
@@ -68,6 +74,11 @@ public class remote_controller : MonoBehaviour
     public void StopVolumeMinus()
     {
         // blocco dall’alto che li “schiaccia” o appiattisce
+        squashAndStress.SetActive(true);
+        //Vector3 newPosition = player.transform.position;
+
+        // Set the position of squashAndStress
+        //squashAndStress.transform.position = newPosition;
     }
 
     public void StartLaser()
@@ -92,14 +103,43 @@ public class remote_controller : MonoBehaviour
         GetComponent<LineRenderer>().enabled = false;
     }
 
+    void DetectHit()
+    {
+        // Posizione di partenza del raycast
+        Vector3 startPoint = laserFirePoint.position;
+        // Direzione del raycast (dritta lungo l'asse in avanti del laserFirePoint)
+        Vector3 direction = laserFirePoint.forward;
+
+        // Visualizza il raycast con una linea blu
+        Debug.DrawRay(startPoint, direction * 2f, Color.blue);
+
+        // Esegui il raycast
+        RaycastHit hit;
+        if (Physics.Raycast(startPoint, direction, out hit, 2f))
+        {
+            // Se c'è una collisione, fai qualcosa con l'oggetto colpito
+            Debug.Log("Oggetto colpito: " + hit.collider.gameObject.name);
+            if (hit.collider.gameObject.CompareTag("enemy"))
+            {
+                // se ho colpito un enemy allora gli faccio un po di danno
+                // mantengo il time delta time ? non sono sicuro di questa cosa;
+                laserDamage += 0.1f*Time.deltaTime;
+                hit.collider.GameObject().GetComponent<Enemy>().currentHP -= 0.1f;
+                // non serve credo in laser damage
+            }
+        }
+    }
+
     public void StartChPLus()
     {
+        moltiplicatoreDanniNemici = 1.5f;
         transform.localScale *= 1.5f;
         //mi ingrandisco (posso colpire più nemici contemporaneamente)
         StartTimer(timerDuration,StopChPLus);
     }
     public void StopChPLus()
     {
+        moltiplicatoreDanniNemici = 1;
         transform.localScale = originalScale;
         //mi ingrandisco (posso colpire più nemici contemporaneamente)
     }
@@ -192,6 +232,11 @@ public class remote_controller : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.K))
         {
             StartVolumeMinus();
+        }
+        
+        if (laser.enabled)
+        {
+            DetectHit();
         }
     }
 }

@@ -15,7 +15,7 @@ public class ShootingTower : MonoBehaviour
 
     [SerializeField] private projectile _bullet;
     [SerializeField] private float _shootFrequency;
-    [SerializeField] private float _shootForce;
+    public float _shootForce=5f;
 
     private GameObject _target;
     private bool _targetInSight = false;

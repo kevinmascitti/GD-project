@@ -10,16 +10,11 @@ public class MeleeBaseState : State
     protected Animator animator;
     // bool to check whether or not the next attack in the sequence should be played or not
     protected bool shouldCombo;
+
+    
     // The attack index in the sequence of attacks
     protected int attackIndex;
-
-
-
-    // The cached hit collider component of this attack
-    protected Collider2D hitCollider;
-    // Cached already struck objects of said attack to avoid overlapping attacks on same target
-    private List<Collider2D> collidersDamaged;
-    // The Hit Effect to Spawn on the afflicted Enemy
+    
     private GameObject HitEffectPrefab;
 
     // Input buffer Timer
@@ -28,21 +23,23 @@ public class MeleeBaseState : State
     public override void OnEnter(StateMachine _stateMachine)
     {
         base.OnEnter(_stateMachine);
-        animator = GetComponent<Animator>();
-      //  collidersDamaged = new List<Collider2D>();
-       // hitCollider = GetComponent<ComboCharacter>().hitbox;
-        HitEffectPrefab = GetComponent<ComboCharacterWithDamage>().Hiteffect;
+        animator = GetComponent<Animator>(); 
+    //    HitEffectPrefab = GetComponent<ComboCharacterWithDamage>().Hiteffect;
     }
 
     public override void OnUpdate()
     {
         base.OnUpdate();
         AttackPressedTimer -= Time.deltaTime;
-        
+        /*
         if (animator.GetFloat("Weapon.Active") > 0f)
         {
            // Attack();
         }
+        */
+        
+   
+        
         if (Input.GetMouseButtonDown(0))
         {
             AttackPressedTimer = 2;
@@ -59,7 +56,7 @@ public class MeleeBaseState : State
     {
         base.OnExit();
     }
-
+/*
     protected void Attack()
     {
         Collider2D[] collidersToDamage = new Collider2D[10];
@@ -83,5 +80,5 @@ public class MeleeBaseState : State
             }
         }
     }
-
+*/
 }

@@ -23,6 +23,7 @@ public class GroundFinisherState : MeleeBaseState
         if (fixedtime >= duration)
         {
             animator.ResetTrigger("Attack"+attackIndex);
+            animator.SetBool("InvalidateMoving",false);
             stateMachine.SetNextStateToMain();
         }
     }
