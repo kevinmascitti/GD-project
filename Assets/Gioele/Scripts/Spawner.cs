@@ -15,6 +15,7 @@ public class Spawner : MonoBehaviour
     public bool canSpawn = true;
     [SerializeField] private int spawnCount = 0;
     [SerializeField] private int spawnLimit = 7;
+    [SerializeField] public GameObject levelPlane;
 
     void Start()
     {
