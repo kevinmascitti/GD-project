@@ -35,19 +35,14 @@ public class Enemy_AI_LongRanged : Enemy
     [NonSerialized]public bool OnAttack;
     private void Awake()
     {
-        StartCoroutine(TimerCoroutine());
+      
         Player = GameObject.FindGameObjectWithTag("Player").transform;
         initialRotation = transform.rotation;
         agent = GetComponent<NavMeshAgent>();
         
     
     }
-    IEnumerator TimerCoroutine()
-    {
-        // Attende 3 secondi poi mette tutto a is kinamatic
-        yield return new WaitForSeconds(2.0f);
-        GetComponent<Rigidbody>().isKinematic = true;
-    }
+    
     private void OnCollisionEnter(Collision collision)
     {
 
@@ -58,7 +53,7 @@ public class Enemy_AI_LongRanged : Enemy
         }
         if (collision.collider.CompareTag("Ground"))
         {
-            GetComponent<Rigidbody>().isKinematic = true;
+            //GetComponent<Rigidbody>().isKinematic = true;
             grounded = true;
         }
     }
