@@ -21,8 +21,8 @@ public class sqash_and_stress_controller : MonoBehaviour
         if (other.gameObject.layer == enemyLayer)
         {
             // Destroy the enemy game object
-            Destroy(other.gameObject);
-            Debug.Log("Enemy destroyed!");
+            other.gameObject.GetComponent<Enemy>().currentHP = 0f;
+            // da discutere se qui non fare l'animazione
         }
     }
     public void DestroySelf()

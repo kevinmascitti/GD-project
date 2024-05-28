@@ -118,7 +118,6 @@ public class remote_controller : MonoBehaviour
         if (Physics.Raycast(startPoint, direction, out hit, 2f))
         {
             // Se c'è una collisione, fai qualcosa con l'oggetto colpito
-            Debug.Log("Oggetto colpito: " + hit.collider.gameObject.name);
             if (hit.collider.gameObject.CompareTag("enemy"))
             {
                 // se ho colpito un enemy allora gli faccio un po di danno
