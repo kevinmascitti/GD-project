@@ -11,6 +11,7 @@ public class AdTrigger : MonoBehaviour
 
     [Header ("Oggetti necessari")]
     [SerializeField] private Slider TimerBar;
+    [SerializeField] private Canvas PowerUpMenu;
 
     // EVENTS
     public static EventHandler OnAdStart;
@@ -19,15 +20,14 @@ public class AdTrigger : MonoBehaviour
     private Spawner adSpawner;
     private float adTimer = 0f;
     
-    private bool hasAdStarted = false;
+    private bool isAdGoing = false;
 
     private void Start()
     {
-        SetSpawnerPlane(null);
         adSpawner = GetComponent<Spawner>();
         TimerBar.maxValue = adDuration;
         TimerBar.value = adDuration;
-        OnAdStart += AdSequence;
+        OnAdStart += AdSequenceStart;
     }
 
     // Update is called once per frame
@@ -40,7 +40,9 @@ public class AdTrigger : MonoBehaviour
         }
         // -------------------------------------------------------
 
-        if(hasAdStarted)
+        // Qui c'è tutta la logica alto livello dello svolgimento della scena
+        // L'ho messa in Update perché mi serviva il timer col delta time
+        if(isAdGoing)
         {
             if(adSpawner.enabled == false)
                 AdStart();
@@ -52,15 +54,17 @@ public class AdTrigger : MonoBehaviour
             }
             else
             {
-                OnAdStart -= AdSequence;
+                OnAdStart -= AdSequenceStart;
                 AdStop();
+                PowerUpMenu.gameObject.SetActive(true);
+                AdSequenceEnd();
             }
         }
     }
 
-    private void AdSequence(object sender, EventArgs args)
+    private void AdSequenceStart(object sender, EventArgs args)
     {
-        hasAdStarted = true;
+        isAdGoing = true;
     }
 
     private void AdStart()
@@ -87,7 +91,10 @@ public class AdTrigger : MonoBehaviour
                 obj.GetComponent<EnemyAI>().Die();
         }
         Debug.Log("Ad ended.");
-        hasAdStarted = false;
+        isAdGoing = false;
+    }
+
+    private void AdSequenceEnd(){
         Destroy(gameObject);
     }
 
