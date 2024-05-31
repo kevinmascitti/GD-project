@@ -33,18 +33,13 @@ public class EnemyAI : Enemy
     public int vita; // numero di colpi che può subire prima di morire
     [NonSerialized]public bool grounded = true;
     [NonSerialized]public bool OnAttack;
+    public GameObject levelPlane;
     private void Awake()
     {
-        StartCoroutine(TimerCoroutine());
         Player = GameObject.FindGameObjectWithTag("Player").transform;
         initialRotation = transform.rotation;
         agent = GetComponent<NavMeshAgent>();
-    }
-    IEnumerator TimerCoroutine()
-    {
-        // Attende 3 secondi poi mette tutto a is kinamatic
-        yield return new WaitForSeconds(2.0f);
-        GetComponent<Rigidbody>().isKinematic = true;
+        levelPlane = GameObject.FindGameObjectWithTag("Spawner").GetComponent<Spawner>().levelPlane;
     }
 
     private void Patroling()
@@ -69,7 +64,7 @@ public class EnemyAI : Enemy
         }
         if (collision.collider.CompareTag("Ground"))
         {
-            GetComponent<Rigidbody>().isKinematic = true;
+            //GetComponent<Rigidbody>().isKinematic = true;
             grounded = true;
         }
         
@@ -92,14 +87,29 @@ public class EnemyAI : Enemy
         }
     }    
     */
-    private void SearchWalkPoint()
-    {
-        float randomz = Random.Range(-walkPointRange, walkPointRange);
-        float randomx = Random.Range(-walkPointRange, walkPointRange);
-        walkPoint = new Vector3(Player.transform.position.x+randomx, Player.transform.position.y, Player.transform.position.z+randomz);
-        if (Physics.Raycast(walkPoint, -transform.up, 2f, ground))
-            walkPointSet = true;
-    }
+   private void SearchWalkPoint()
+   {
+       bool validPointFound = false;
+
+       while (!validPointFound)
+       {
+           float randomz = Random.Range(-walkPointRange, walkPointRange);
+           float randomx = Random.Range(-walkPointRange, walkPointRange);
+           walkPoint = new Vector3(Player.transform.position.x + randomx, Player.transform.position.y, Player.transform.position.z + randomz);
+
+           // Controlla se il walkPoint è all'interno dei limiti del piano di livello
+           if (walkPoint.x >= levelPlane.transform.position.x && walkPoint.x <= levelPlane.transform.position.x &&
+               walkPoint.z >= levelPlane.transform.position.y && walkPoint.z <= levelPlane.transform.position.y)
+           {
+               // Controlla se il walkPoint è su un terreno valido usando il raycast
+               if (Physics.Raycast(walkPoint, -transform.up, 2f, ground))
+               {
+                   walkPointSet = true;
+                   validPointFound = true;
+               }
+           }
+       }
+   }
 
     private void ChasePlayer()
     {
