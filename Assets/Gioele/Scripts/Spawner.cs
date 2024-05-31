@@ -97,7 +97,7 @@ public class Spawner : MonoBehaviour
 
     IEnumerator SpawnObjects()
     {
-        while (true && canSpawn)
+        while (canSpawn)
         {
             yield return new WaitForSeconds(spawnTime); //  2 secondi--> da decidere/ modificare , Fede divertiti :)
             if (spawnCount == (spawnLimit - 1))

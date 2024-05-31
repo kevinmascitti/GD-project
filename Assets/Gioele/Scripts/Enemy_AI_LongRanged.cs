@@ -34,6 +34,12 @@ public class Enemy_AI_LongRanged : Enemy
     private bool grounded = true;
     [NonSerialized]public bool OnAttack;
     public GameObject levelPlane;
+    [NonSerialized] public float minX;
+    [NonSerialized] public float minY;
+    [NonSerialized] public float minZ;
+    [NonSerialized] public float maxX;
+    [NonSerialized] public float maxY;
+    [NonSerialized] public float maxZ;
     private void Awake()
     {
       
@@ -41,7 +47,17 @@ public class Enemy_AI_LongRanged : Enemy
         initialRotation = transform.rotation;
         agent = GetComponent<NavMeshAgent>();
         levelPlane = GameObject.FindGameObjectWithTag("Spawner").GetComponent<Spawner>().levelPlane;
-    
+        MeshFilter meshFilter = levelPlane.GetComponent<MeshFilter>();
+        Mesh mesh = meshFilter.mesh;
+        // Ottieni i vertici del mesh del piano
+        Vector3[] vertices = mesh.vertices;
+        for (int i = 1; i < vertices.Length; i++)
+        {
+            minX = Mathf.Min(minX, vertices[i].x);
+            maxX = Mathf.Max(maxX, vertices[i].x);
+            minZ = Mathf.Min(minZ, vertices[i].y);
+            maxZ = Mathf.Max(maxZ, vertices[i].y);
+        }
     }
     
     private void OnCollisionEnter(Collision collision)
@@ -93,25 +109,16 @@ public class Enemy_AI_LongRanged : Enemy
 
     private void SearchWalkPoint()
     {
-        bool validPointFound = false;
-
-        while (!validPointFound)
+        Player = GameObject.FindGameObjectWithTag("Player").transform;
+        float randomz = Random.Range(-walkPointRange, walkPointRange);
+        float randomx = Random.Range(-walkPointRange, walkPointRange);
+        walkPoint = new Vector3(Player.transform.position.x + randomx, Player.transform.position.y,
+            Player.transform.position.z + randomz);
+      
+        if (Physics.Raycast(walkPoint, -transform.up, 2f, ground))
         {
-            float randomz = Random.Range(-walkPointRange, walkPointRange);
-            float randomx = Random.Range(-walkPointRange, walkPointRange);
-            walkPoint = new Vector3(Player.transform.position.x + randomx, Player.transform.position.y, Player.transform.position.z + randomz);
-
-            // Controlla se il walkPoint è all'interno dei limiti del piano di livello
-            if (walkPoint.x >= levelPlane.transform.position.x && walkPoint.x <= levelPlane.transform.position.x &&
-                walkPoint.z >= levelPlane.transform.position.y && walkPoint.z <= levelPlane.transform.position.y)
-            {
-                // Controlla se il walkPoint è su un terreno valido usando il raycast
-                if (Physics.Raycast(walkPoint, -transform.up, 2f, ground))
-                {
-                    walkPointSet = true;
-                    validPointFound = true;
-                }
-            }
+            walkPointSet = true;
+                   
         }
     }
 
