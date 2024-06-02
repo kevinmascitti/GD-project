@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -15,6 +16,9 @@ public class ComboCharacterWithDamage : MonoBehaviour
     public GameObject parentObject; // Assegna l'oggetto padre via Inspector
     public string boneName; // Nome dell'osso che vuoi trovare
     public GameObject handBone;
+
+    public static EventHandler OnDashExecuted;
+    
     void Start()
     {
         meleeStateMachine = GetComponent<StateMachine>();
@@ -58,6 +62,7 @@ public class ComboCharacterWithDamage : MonoBehaviour
         {
             GetComponent<Animator>().SetBool("InvalidateMoving",true);
             meleeStateMachine.SetNextState(new DashState());
+            OnDashExecuted?.Invoke(this, EventArgs.Empty);
         }
         
         if (Input.GetKeyDown(KeyCode.K) && meleeStateMachine.CurrentState.GetType() == typeof(IdleCombatState) )
