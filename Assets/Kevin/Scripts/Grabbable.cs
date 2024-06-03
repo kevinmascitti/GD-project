@@ -32,7 +32,7 @@ public class Grabbable : MonoBehaviour
     private GrabbableState state = GrabbableState.UNGRABBABLE;
     private GameObject player;
     private TMP_Text hint;
-    private Vector3 rotationAxis = Vector3.forward;
+    private Vector3 rotationAxis = Vector3.up;
     private GameObject centerOfRotation;
     
     public static EventHandler<GrabbableArgs> OnInsideRange;
@@ -146,7 +146,7 @@ public class Grabbable : MonoBehaviour
     private IEnumerator MoveGrabbable()
     {
         Vector3 startPosition = transform.position;
-        Vector3 throwDirection = player.transform.rotation.eulerAngles.normalized;
+        Vector3 throwDirection = player.transform.forward.normalized;
         Vector3 endPosition = startPosition + throwDirection * throwForce;
         float elapsedTime = 0f;
 
@@ -162,9 +162,23 @@ public class Grabbable : MonoBehaviour
 
     private IEnumerator SpinContinuously()
     {
-        while(centerOfRotation)
+        while (centerOfRotation)
         {
-            transform.RotateAround(centerOfRotation.transform.position, -rotationAxis, rotationSpeed * Time.deltaTime);
+            // Ottieni la posizione del centro di rotazione nelle coordinate locali dell'oggetto
+            Vector3 localCenterOfRotation = transform.InverseTransformPoint(centerOfRotation.transform.position);
+
+            // Crea un'istanza di rotazione attorno all'asse locale
+            Quaternion localRotation = Quaternion.AngleAxis(rotationSpeed * Time.deltaTime, rotationAxis);
+
+            // Sposta l'oggetto al centro di rotazione locale
+            transform.position -= localCenterOfRotation;
+        
+            // Applica la rotazione
+            transform.rotation *= localRotation;
+
+            // Riporta l'oggetto alla posizione originale
+            transform.position += localCenterOfRotation;
+
             yield return null;
         }
     }

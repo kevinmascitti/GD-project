@@ -106,10 +106,11 @@ public class moving : MonoBehaviour
         {
             RotateByNegative30Degrees(head);
         }
-        if (Input.GetKeyDown(KeyCode.P))
+        if (Input.GetKeyDown(KeyCode.P) && punto_esclamativo)
         {
             punto_esclamativo.SetActive(true);
-            nemico.SetActive(true);
+            if(nemico)
+                nemico.SetActive(true);
 
         }
         if (Input.GetKeyDown(KeyCode.U))
