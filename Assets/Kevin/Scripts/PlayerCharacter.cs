@@ -80,6 +80,9 @@ public class PlayerCharacter : Character
         Grabbable.OnGrab += StartMovingUpArm;
         Grabbable.OnThrow += StartMovingDownArm;
         Grabbable.OnUse += StartMovingDownArm;
+
+        Boss.OnBossDeath += UnlockRoom;
+        Boss.OnBossDeath += UnlockButton;
     }
 
     public void Start()
@@ -278,7 +281,7 @@ public class PlayerCharacter : Character
 
     private void NewLevel()
     {
-        OnStartLevel?.Invoke(this, new RoomManagerArgs(currentLevel));
+        OnStartLevel?.Invoke(this, new RoomManagerArgs(currentRoom.level));
         Debug.Log("NEW LEVEL");
         
         NewRoom();
@@ -376,6 +379,20 @@ public class PlayerCharacter : Character
     //     GetComponent<Animator>().enabled = true;
     // }
 
+    private void UnlockRoom(object sender, ControllerButton newButton)
+    {
+        if (currentRoom.isLocked)
+        {
+            currentRoom.isLocked = false;
+            Debug.Log("NEXT ROOM UNLOCKED");
+        }
+    }
+    
+    private void UnlockButton(object sender, ControllerButton newButton)
+    {
+        // TO DO: unlock button
+    }
+    
 }
 
 public class RoomArgs : EventArgs

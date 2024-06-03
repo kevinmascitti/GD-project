@@ -7,7 +7,7 @@ using UnityEngine.SceneManagement;
 public class Room : MonoBehaviour
 {
     public bool isLocked = false;
-
+    
     [NonSerialized] public int ID;
     [NonSerialized] public GameObject plane;
     [NonSerialized] public Vector3 spawnPoint;
@@ -17,6 +17,8 @@ public class Room : MonoBehaviour
     [NonSerialized] public RoomManager level;
     [NonSerialized] public BoxCollider enterWall;
     [NonSerialized] public BoxCollider exitWall;
+    
+    [SerializeField] private bool isBossRoom = false;
 
     public void Awake()
     {
@@ -28,6 +30,7 @@ public class Room : MonoBehaviour
     {
         if (args.room == this)
         {
+            // TO DO: spawner is activated
             Debug.Log("ENABLE ROOM " + ID + " in Level " + level.ID);
         }
     }
