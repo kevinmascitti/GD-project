@@ -10,6 +10,7 @@ public class Dash : MonoBehaviour
     [SerializeField] private float distance = 3f;
     [SerializeField] private float damageRadius = 1f;
     [SerializeField] private float damage = 5;
+    [SerializeField] private GameObject VFX;
 
     void Start()
     {
@@ -20,6 +21,7 @@ public class Dash : MonoBehaviour
 
     public void ExecuteDash(object sender, EventArgs args)
     {
+        VFX.SetActive(true);
         StartCoroutine(DashNow());
     }
 
@@ -46,5 +48,7 @@ public class Dash : MonoBehaviour
         }
         
         transform.position = newPosition;
+        yield return new WaitForSeconds(dashPreparationTime/2);
+        VFX.SetActive(false);
     }
 }

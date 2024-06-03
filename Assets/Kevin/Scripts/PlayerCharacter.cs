@@ -84,8 +84,6 @@ public class PlayerCharacter : Character
 
     public void Start()
     {
-        OnStartRoom?.Invoke(this, new RoomArgs(currentRoom));
-        OnStartLevel?.Invoke(this, new RoomManagerArgs(currentLevel));
     }
 
     // Update is called once per frame
@@ -263,6 +261,11 @@ public class PlayerCharacter : Character
     {
         currentLevel = args.firstLevel;
         currentRoom = currentLevel.firstRoom.GetComponent<Room>();
+        
+        transform.position = currentRoom.spawnPoint;
+        
+        OnStartRoom?.Invoke(this, new RoomArgs(currentRoom));
+        OnStartLevel?.Invoke(this, new RoomManagerArgs(currentLevel));
     }
 
     private void EndPlayerAnimation(object sender, AnimationArgs args)
