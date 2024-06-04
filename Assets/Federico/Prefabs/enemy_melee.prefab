@@ -14,7 +14,6 @@ GameObject:
   - component: {fileID: 6063792246491597428}
   - component: {fileID: 6508631950434962066}
   - component: {fileID: 7369354529107647035}
-  - component: {fileID: 9161371124910899722}
   m_Layer: 10
   m_Name: enemy_melee
   m_TagString: enemy
@@ -148,6 +147,7 @@ MonoBehaviour:
   playerInAttackRange: 0
   vita: 2
   grounded: 1
+  levelPlane: {fileID: 0}
 --- !u!65 &7369354529107647035
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -169,33 +169,6 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1.4667468, y: 1.4693053, z: 0.919075}
   m_Center: {x: -0.0036630034, y: -0.20691204, z: -0.23531723}
---- !u!54 &9161371124910899722
-Rigidbody:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7897149327893079946}
-  serializedVersion: 4
-  m_Mass: 10
-  m_Drag: 0
-  m_AngularDrag: 0.05
-  m_CenterOfMass: {x: 0, y: 0, z: 0}
-  m_InertiaTensor: {x: 1, y: 1, z: 1}
-  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ImplicitCom: 1
-  m_ImplicitTensor: 1
-  m_UseGravity: 1
-  m_IsKinematic: 0
-  m_Interpolate: 0
-  m_Constraints: 0
-  m_CollisionDetection: 0
 --- !u!1001 &8172173815790460404
 PrefabInstance:
   m_ObjectHideFlags: 0
