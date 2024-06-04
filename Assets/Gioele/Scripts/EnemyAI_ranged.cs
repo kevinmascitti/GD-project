@@ -185,18 +185,8 @@ public class EnemyAI : Enemy
         }
     }
 
-    public void TakeDamage(int damage)
-    {
-        vita -= damage;
-        if (vita <= 0)
-        {
-            Invoke(nameof(DestroyEnemy),0.5f);
-        }
-    }
-    private void DestroyEnemy()
-    {
-        Destroy(gameObject);
-    }
+ 
+    
 
     private void OnDrawGizmosSelected()
     {

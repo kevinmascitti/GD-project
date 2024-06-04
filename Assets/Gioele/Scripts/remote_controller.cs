@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Threading;
@@ -16,6 +17,9 @@ public class remote_controller : MonoBehaviour
     [SerializeField]private float distance = 5f;
     [SerializeField]private Transform laserFirePoint;
     [SerializeField]private Transform playerTransform;
+    [NonSerialized]private Vector3 meleeTransform;
+    [NonSerialized]private Vector3 rangedTransform;
+    [NonSerialized]private Vector3 longRangedTransform;
     [SerializeField] private GameObject squashAndStress;
     [SerializeField] private GameObject player;
     [SerializeField] private LayerMask layerLaserMask;
@@ -142,15 +146,68 @@ public class remote_controller : MonoBehaviour
         transform.localScale = originalScale;
         //mi ingrandisco (posso colpire più nemici contemporaneamente)
     }
-    public void StartChMinus()
+    public void StartChMinus(string layerName)
     {
         moltiplicatoreDanniNemici = 1.5f;
+        
+        int layer = LayerMask.NameToLayer(layerName);
+
+        // Trova tutti gli oggetti nel layer specificato
+        GameObject[] objectsInLayer = GameObject.FindGameObjectsWithTag("enemy");
+
+        // Disattiva il componente NavMeshAgent su ciascun oggetto trovato
+        foreach (GameObject obj in objectsInLayer)
+        {
+            if (obj.GetComponent<Enemy_AI_Melee>())
+            {
+                meleeTransform = obj.transform.localScale;
+                obj.transform.localScale *= 0.7f;
+            }
+
+            if (obj.GetComponent<Enemy_AI_LongRanged>()){
+                longRangedTransform = obj.transform.localScale;
+                obj.transform.localScale *= 0.7f;
+            }
+
+            if (obj.GetComponent<EnemyAI>())
+            {
+                rangedTransform = obj.transform.localScale;
+                obj.transform.localScale *= 0.7f;
+            }
+
+            
+        }
         //rimpicciolisco i nemici (mi fanno pochi danni)
         StartTimer(timerDuration,StopChMinus);
     }
     public void StopChMinus()
     {
         moltiplicatoreDanniNemici = 1f;
+        int layer = LayerMask.NameToLayer("Enemy");
+
+        // Trova tutti gli oggetti nel layer specificato
+        GameObject[] objectsInLayer = GameObject.FindGameObjectsWithTag("enemy");
+
+        // Disattiva il componente NavMeshAgent su ciascun oggetto trovato
+        foreach (GameObject obj in objectsInLayer)
+        {
+            if (obj.GetComponent<Enemy_AI_Melee>())
+            {
+                obj.transform.localScale=meleeTransform;
+                // torna alla local scale orginale
+            }
+
+            if (obj.GetComponent<Enemy_AI_LongRanged>()){
+                obj.transform.localScale=longRangedTransform ;
+            }
+
+            if (obj.GetComponent<EnemyAI>())
+            {
+                obj.transform.localScale=rangedTransform;
+            }
+
+            
+        }
         //rimpicciolisco i nemici (mi fanno pochi danni)
 
     }
@@ -218,7 +275,7 @@ public class remote_controller : MonoBehaviour
         }
         if (Input.GetKeyDown(KeyCode.O))
         {
-            StartChMinus();
+            StartChMinus("Enemy");
         }
         if (Input.GetKeyDown(KeyCode.P))
         {
