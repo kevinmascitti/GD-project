@@ -3142,6 +3142,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isLocked: 1
+  isBossRoom: 0
 --- !u!1 &950575306 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 3437633161199904590, guid: 8b59635cd0adb41f1ba8fbc68f23c4c3,
@@ -3342,6 +3343,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isLocked: 1
+  isBossRoom: 0
 --- !u!4 &1036592878
 Transform:
   m_ObjectHideFlags: 0
@@ -4184,6 +4186,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isLocked: 1
+  isBossRoom: 0
 --- !u!4 &1189088106
 Transform:
   m_ObjectHideFlags: 0
@@ -4677,6 +4680,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isLocked: 1
+  isBossRoom: 0
 --- !u!1 &1791181771
 GameObject:
   m_ObjectHideFlags: 0
@@ -5001,6 +5005,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isLocked: 1
+  isBossRoom: 0
 --- !u!1 &1928428859
 GameObject:
   m_ObjectHideFlags: 0
@@ -5594,6 +5599,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isLocked: 1
+  isBossRoom: 0
 --- !u!4 &2091221341
 Transform:
   m_ObjectHideFlags: 0
@@ -6351,7 +6357,7 @@ PrefabInstance:
     - target: {fileID: 4119299395154771010, guid: 8b59635cd0adb41f1ba8fbc68f23c4c3,
         type: 3}
       propertyPath: m_IsKinematic
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4119299395154771010, guid: 8b59635cd0adb41f1ba8fbc68f23c4c3,
         type: 3}

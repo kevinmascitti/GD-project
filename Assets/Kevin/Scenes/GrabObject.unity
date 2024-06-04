@@ -963,6 +963,12 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 1765920686163179154}
   m_PrefabAsset: {fileID: 0}
+--- !u!95 &1002312432 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 3358758807483888116, guid: 798621e27960b46f4bd6e147861920f7,
+    type: 3}
+  m_PrefabInstance: {fileID: 3050436171957066279}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1086841446
 GameObject:
   m_ObjectHideFlags: 0
@@ -1714,6 +1720,11 @@ PrefabInstance:
       objectReference: {fileID: 508822414}
     - target: {fileID: 6841379643553849075, guid: 046be516ca5844d19b46ba198a72f3f2,
         type: 3}
+      propertyPath: hasToBeThrown
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6841379643553849075, guid: 046be516ca5844d19b46ba198a72f3f2,
+        type: 3}
       propertyPath: grabRotation.x
       value: 355.1
       objectReference: {fileID: 0}
@@ -1760,6 +1771,21 @@ PrefabInstance:
       propertyPath: Camera
       value: 
       objectReference: {fileID: 673694835}
+    - target: {fileID: 1606784645035634810, guid: 798621e27960b46f4bd6e147861920f7,
+        type: 3}
+      propertyPath: PlayerAnim
+      value: 
+      objectReference: {fileID: 1002312432}
+    - target: {fileID: 3125893098338734875, guid: 798621e27960b46f4bd6e147861920f7,
+        type: 3}
+      propertyPath: m_IsKinematic
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3358758807483888116, guid: 798621e27960b46f4bd6e147861920f7,
+        type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: e27ee0651863743fb876c9b3a47030bb, type: 2}
     - target: {fileID: 3626473926558927226, guid: 798621e27960b46f4bd6e147861920f7,
         type: 3}
       propertyPath: camera

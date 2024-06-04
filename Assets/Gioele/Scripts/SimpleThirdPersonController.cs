@@ -84,7 +84,7 @@ public class SimpleThirdPersonController : MonoBehaviour
             transform.rotation = Quaternion.LookRotation(newDir);
         }
 
-        if (!PlayerAnim.GetBool("InvalidateMoving"))
+        if (PlayerAnim && !PlayerAnim.GetBool("InvalidateMoving"))
         {
             // Translate along forward
             Vector3 movement = transform.forward * _inputSpeed * Speed * Time.deltaTime;
