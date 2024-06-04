@@ -2787,7 +2787,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b660a67f72db743eb8ce8d80d1eb6430, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  detectionRadius: 1.5
+  detectionRadius: 0.46
   numRays: 16
   pushForce: 2
   heights:

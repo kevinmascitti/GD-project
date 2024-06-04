@@ -45,21 +45,23 @@ public class EnemyCollision : MonoBehaviour
             Vector3 effectPosition = other.transform.position + new Vector3(0, +1.5f, 0); // Esempio di offset verticale
         
             hitEffectPrefabTemp = GameObject.Instantiate(HitEffectPrefab, effectPosition, Quaternion.identity);
-            StartCoroutine("KillHitEffect");
+            StartCoroutine(KillHitEffect(hitEffectPrefabTemp));
             Debug.Log("Enemy Hit");
             OnAttackLended?.Invoke(this, new EnemyCollisionArgs(comboValue));
         }
+
+        enemy = null;
     }
 
 
    
 
-    IEnumerator KillHitEffect()
+    IEnumerator KillHitEffect(GameObject hitEffect)
     {
         Debug.Log("Started Coroutine KillhitEffect  at timestamp : " + Time.time);
         yield return new WaitForSeconds(0.2f);
 
-        GameObject.Destroy(hitEffectPrefabTemp);
+        GameObject.Destroy(hitEffect);
         Debug.Log("Coroutine ended " + Time.time);
     }
 
