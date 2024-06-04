@@ -9,6 +9,7 @@ TagManager:
   - startCaduta
   - Exit
   - Wall
+  - Spawner
   layers:
   - Default
   - TransparentFX

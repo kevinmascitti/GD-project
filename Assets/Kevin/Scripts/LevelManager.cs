@@ -17,7 +17,7 @@ public class LevelManager : MonoBehaviour
 
     public static EventHandler<LevelManagerArgs> OnInitializedLevels; 
 
-    public void Start()
+    public void Awake()
     {
         player = GameObject.Find("Player");
         

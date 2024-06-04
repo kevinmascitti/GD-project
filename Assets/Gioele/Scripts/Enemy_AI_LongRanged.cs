@@ -33,21 +33,33 @@ public class Enemy_AI_LongRanged : Enemy
     public int vita; // numero di colpi che può subire prima di morire
     private bool grounded = true;
     [NonSerialized]public bool OnAttack;
+    public GameObject levelPlane;
+    [NonSerialized] public float minX;
+    [NonSerialized] public float minY;
+    [NonSerialized] public float minZ;
+    [NonSerialized] public float maxX;
+    [NonSerialized] public float maxY;
+    [NonSerialized] public float maxZ;
     private void Awake()
     {
-        StartCoroutine(TimerCoroutine());
+      
         Player = GameObject.FindGameObjectWithTag("Player").transform;
         initialRotation = transform.rotation;
         agent = GetComponent<NavMeshAgent>();
-        
+        levelPlane = GameObject.FindGameObjectWithTag("Spawner").GetComponent<Spawner>().levelPlane;
+        MeshFilter meshFilter = levelPlane.GetComponent<MeshFilter>();
+        Mesh mesh = meshFilter.mesh;
+        // Ottieni i vertici del mesh del piano
+        Vector3[] vertices = mesh.vertices;
+        for (int i = 1; i < vertices.Length; i++)
+        {
+            minX = Mathf.Min(minX, vertices[i].x);
+            maxX = Mathf.Max(maxX, vertices[i].x);
+            minZ = Mathf.Min(minZ, vertices[i].y);
+            maxZ = Mathf.Max(maxZ, vertices[i].y);
+        }
+    }
     
-    }
-    IEnumerator TimerCoroutine()
-    {
-        // Attende 3 secondi poi mette tutto a is kinamatic
-        yield return new WaitForSeconds(2.0f);
-        GetComponent<Rigidbody>().isKinematic = true;
-    }
     private void OnCollisionEnter(Collision collision)
     {
 
@@ -58,7 +70,7 @@ public class Enemy_AI_LongRanged : Enemy
         }
         if (collision.collider.CompareTag("Ground"))
         {
-            GetComponent<Rigidbody>().isKinematic = true;
+            //GetComponent<Rigidbody>().isKinematic = true;
             grounded = true;
         }
     }
@@ -97,11 +109,17 @@ public class Enemy_AI_LongRanged : Enemy
 
     private void SearchWalkPoint()
     {
+        Player = GameObject.FindGameObjectWithTag("Player").transform;
         float randomz = Random.Range(-walkPointRange, walkPointRange);
         float randomx = Random.Range(-walkPointRange, walkPointRange);
-        walkPoint = new Vector3(Player.transform.position.x+randomx, Player.transform.position.y, Player.transform.position.z+randomz);
+        walkPoint = new Vector3(Player.transform.position.x + randomx, Player.transform.position.y,
+            Player.transform.position.z + randomz);
+      
         if (Physics.Raycast(walkPoint, -transform.up, 2f, ground))
+        {
             walkPointSet = true;
+                   
+        }
     }
 
     private void ChasePlayer()
@@ -177,18 +195,7 @@ public class Enemy_AI_LongRanged : Enemy
         }
     }
 
-    public void TakeDamage(int damage)
-    {
-        vita -= damage;
-        if (vita <= 0)
-        {
-            Invoke(nameof(DestroyEnemy),0.5f);
-        }
-    }
-    private void DestroyEnemy()
-    {
-        Destroy(gameObject);
-    }
+    
 
     private void OnDrawGizmosSelected()
     {

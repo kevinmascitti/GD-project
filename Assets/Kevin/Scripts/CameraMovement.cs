@@ -14,11 +14,12 @@ public class CameraMovement : MonoBehaviour
     [SerializeField] private int distanceFromLevelLimit;
     [SerializeField] private int playerDistanceFromCamera;
 
-    public void Start()
+    public void Awake()
     {
         target = GameObject.Find("Player").transform;
         player = target.GetComponent<PlayerCharacter>();
         depthPoint = GameObject.Find("DepthPoint");
+
     }
 
     private void FollowTarget()
@@ -36,5 +37,6 @@ public class CameraMovement : MonoBehaviour
         Vector3 depthPointPos = transform.position;
         depthPointPos.z += playerDistanceFromCamera;
         depthPoint.transform.position = depthPointPos;
+        
     }
 }

@@ -19,7 +19,8 @@ public enum GrabbableState
 
 public class Grabbable : MonoBehaviour
 {
-    [SerializeField] private float destroyTimer;
+    [SerializeField] private float destroyThrowTimer;
+    [SerializeField] private float destroyUsedTimer;
     [SerializeField] private float transitionDuration;
     [SerializeField] private float distanceTrigger;
     [SerializeField] private Vector3 grabEulerRotation;
@@ -32,7 +33,7 @@ public class Grabbable : MonoBehaviour
     private GrabbableState state = GrabbableState.UNGRABBABLE;
     private GameObject player;
     private TMP_Text hint;
-    private Vector3 rotationAxis = Vector3.forward;
+    private Vector3 rotationAxis = Vector3.up;
     private GameObject centerOfRotation;
     
     public static EventHandler<GrabbableArgs> OnInsideRange;
@@ -132,27 +133,28 @@ public class Grabbable : MonoBehaviour
         StartCoroutine(MoveGrabbable());
         StartCoroutine(SpinContinuously());
         transform.SetParent(null);
-        StartCoroutine(StartDestroyTimer());
+        StartCoroutine(StartDestroyTimer(destroyThrowTimer));
         OnThrow?.Invoke(this, new GrabbableArgs(this));
     }
 
     public void Use()
     {
         state = GrabbableState.USED;
-        StartCoroutine(StartDestroyTimer());
+        transform.SetParent(null);
+        StartCoroutine(StartDestroyTimer(destroyUsedTimer));
         OnUse?.Invoke(this, new GrabbableArgs(this));
     }
 
     private IEnumerator MoveGrabbable()
     {
         Vector3 startPosition = transform.position;
-        Vector3 throwDirection = player.transform.rotation.eulerAngles.normalized;
+        Vector3 throwDirection = player.transform.forward.normalized;
         Vector3 endPosition = startPosition + throwDirection * throwForce;
         float elapsedTime = 0f;
 
-        while (elapsedTime < destroyTimer)
+        while (elapsedTime < destroyThrowTimer)
         {
-            transform.position = Vector3.Lerp(startPosition, endPosition, elapsedTime / destroyTimer);
+            transform.position = Vector3.Lerp(startPosition, endPosition, elapsedTime / destroyThrowTimer);
             elapsedTime += Time.deltaTime;
             yield return null;
         }
@@ -162,14 +164,28 @@ public class Grabbable : MonoBehaviour
 
     private IEnumerator SpinContinuously()
     {
-        while(centerOfRotation)
+        while (centerOfRotation)
         {
-            transform.RotateAround(centerOfRotation.transform.position, -rotationAxis, rotationSpeed * Time.deltaTime);
+            // Ottieni la posizione del centro di rotazione nelle coordinate locali dell'oggetto
+            Vector3 localCenterOfRotation = transform.InverseTransformPoint(centerOfRotation.transform.position);
+
+            // Crea un'istanza di rotazione attorno all'asse locale
+            Quaternion localRotation = Quaternion.AngleAxis(rotationSpeed * Time.deltaTime, rotationAxis);
+
+            // Sposta l'oggetto al centro di rotazione locale
+            transform.position -= localCenterOfRotation;
+        
+            // Applica la rotazione
+            transform.rotation *= localRotation;
+
+            // Riporta l'oggetto alla posizione originale
+            transform.position += localCenterOfRotation;
+
             yield return null;
         }
     }
 
-    private IEnumerator StartDestroyTimer()
+    private IEnumerator StartDestroyTimer(float destroyTimer)
     {
         yield return new WaitForSeconds(destroyTimer);
         Destroy(gameObject);

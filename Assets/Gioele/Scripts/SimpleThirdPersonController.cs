@@ -73,7 +73,6 @@ public class SimpleThirdPersonController : MonoBehaviour
         // Compute direction according to Camera orientation
         _targetDirection = Camera.transform.TransformDirection(_inputVector).normalized;
         _targetDirection.y = 0f;
-
         if (_inputSpeed <= 0f && !GetComponent<Animator>().GetBool("InvalidateMoving"))
         {
             GetComponent<Animator>().SetBool("walking", false);
@@ -85,7 +84,7 @@ public class SimpleThirdPersonController : MonoBehaviour
             transform.rotation = Quaternion.LookRotation(newDir);
         }
 
-        if (!PlayerAnim.GetBool("InvalidateMoving"))
+        if (PlayerAnim && !PlayerAnim.GetBool("InvalidateMoving"))
         {
             // Translate along forward
             Vector3 movement = transform.forward * _inputSpeed * Speed * Time.deltaTime;

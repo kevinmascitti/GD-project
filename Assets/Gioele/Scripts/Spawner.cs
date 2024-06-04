@@ -9,21 +9,23 @@ public class Spawner : MonoBehaviour
     public List<GameObject> spawnableObjects;
     public List<GameObject> EnemyObjects;
     public List<float> spawnProbability;
-    [NonSerialized]private float _totalProbability=0f;
+    [NonSerialized] private float _totalProbability = 0f;
     public GameObject plane;
     public float spawnTime = 2f;
     public bool canSpawn = true;
-    [SerializeField]private int spawnCount=0;
-    [SerializeField]private int spawnLimit=7;
+    [SerializeField] private int spawnCount = 0;
+    [SerializeField] private int spawnLimit = 7;
+    [SerializeField] public GameObject levelPlane;
 
     void Start()
     {
         //somma delle probabilità totali
         _totalProbability = 0f;
-        for (int i=0;i<spawnableObjects.Count;i++)
+        for (int i = 0; i < spawnableObjects.Count; i++)
         {
             _totalProbability += spawnProbability[i];
         }
+
         //start spawn
         spawnCount = 0;
         spawnLimit = 7;
@@ -31,17 +33,39 @@ public class Spawner : MonoBehaviour
         //setto i nemici del primo livello
         ChangePrefabs(0);
         StartCoroutine(SpawnObjects());
+        StartCoroutine(ShowExit(1.5f));
+    }
+
+    IEnumerator ShowExit(float delay)
+    {
+        // Attendi per il numero di secondi specificato
+        yield return new WaitForSeconds(delay);
+
+        // Chiama il metodo desiderato
+        ManageExit(true);
     }
 
     public void ChangeSpawnTime(float time)
     {
         spawnTime = time;
     }
+
     public void StopSpawn()
     {
+        ManageExit(false);
         // se è false non spawna nulla
         canSpawn = false;
     }
+
+    public void ManageExit(bool flag)
+    {
+        GameObject[] objectsWithTag = GameObject.FindGameObjectsWithTag("Exit");
+        foreach (GameObject obj in objectsWithTag)
+        {
+            obj.SetActive(flag);
+        }
+    }
+
     public void StartSpawn()
     {
         canSpawn = true;
@@ -73,7 +97,7 @@ public class Spawner : MonoBehaviour
 
     IEnumerator SpawnObjects()
     {
-        while (true && canSpawn)
+        while (canSpawn)
         {
             yield return new WaitForSeconds(spawnTime); //  2 secondi--> da decidere/ modificare , Fede divertiti :)
             if (spawnCount == (spawnLimit - 1))
