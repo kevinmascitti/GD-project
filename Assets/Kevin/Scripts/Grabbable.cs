@@ -19,7 +19,8 @@ public enum GrabbableState
 
 public class Grabbable : MonoBehaviour
 {
-    [SerializeField] private float destroyTimer;
+    [SerializeField] private float destroyThrowTimer;
+    [SerializeField] private float destroyUsedTimer;
     [SerializeField] private float transitionDuration;
     [SerializeField] private float distanceTrigger;
     [SerializeField] private Vector3 grabEulerRotation;
@@ -132,14 +133,15 @@ public class Grabbable : MonoBehaviour
         StartCoroutine(MoveGrabbable());
         StartCoroutine(SpinContinuously());
         transform.SetParent(null);
-        StartCoroutine(StartDestroyTimer());
+        StartCoroutine(StartDestroyTimer(destroyThrowTimer));
         OnThrow?.Invoke(this, new GrabbableArgs(this));
     }
 
     public void Use()
     {
         state = GrabbableState.USED;
-        StartCoroutine(StartDestroyTimer());
+        transform.SetParent(null);
+        StartCoroutine(StartDestroyTimer(destroyUsedTimer));
         OnUse?.Invoke(this, new GrabbableArgs(this));
     }
 
@@ -150,9 +152,9 @@ public class Grabbable : MonoBehaviour
         Vector3 endPosition = startPosition + throwDirection * throwForce;
         float elapsedTime = 0f;
 
-        while (elapsedTime < destroyTimer)
+        while (elapsedTime < destroyThrowTimer)
         {
-            transform.position = Vector3.Lerp(startPosition, endPosition, elapsedTime / destroyTimer);
+            transform.position = Vector3.Lerp(startPosition, endPosition, elapsedTime / destroyThrowTimer);
             elapsedTime += Time.deltaTime;
             yield return null;
         }
@@ -183,7 +185,7 @@ public class Grabbable : MonoBehaviour
         }
     }
 
-    private IEnumerator StartDestroyTimer()
+    private IEnumerator StartDestroyTimer(float destroyTimer)
     {
         yield return new WaitForSeconds(destroyTimer);
         Destroy(gameObject);
