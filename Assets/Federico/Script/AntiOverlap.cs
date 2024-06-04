@@ -47,7 +47,7 @@ public class AntiOverlap : MonoBehaviour
                 {
                     Debug.Log("Hai colpito qualcosa");
                     Rigidbody hitRb = hit.collider.attachedRigidbody;
-                    if (hitRb != null && !hitRb.isKinematic && hitRb.GetComponent<Enemy_AI_Melee>() != null)
+                    if (hitRb != null && !hitRb.isKinematic && hitRb.GetComponent<Enemy>() != null)
                     {
                         Debug.Log("Nemico intersecato");
                         Vector3 pushDirection = hit.point - origin;
