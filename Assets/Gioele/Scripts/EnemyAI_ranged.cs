@@ -33,28 +33,14 @@ public class EnemyAI : Enemy
     public int vita; // numero di colpi che può subire prima di morire
     [NonSerialized]public bool grounded = true;
     [NonSerialized]public bool OnAttack;
-    public GameObject levelPlane;
-    [NonSerialized] public float minX;
-    [NonSerialized] public float minZ;
-    [NonSerialized] public float maxX;
-    [NonSerialized] public float maxZ;
+    public Plane levelPlane;
+    
     private void Awake()
     {
         Player = GameObject.FindGameObjectWithTag("Player").transform;
         initialRotation = transform.rotation;
         agent = GetComponent<NavMeshAgent>();
-        levelPlane = GameObject.FindGameObjectWithTag("Spawner").GetComponent<Spawner>().levelPlane;
-        MeshFilter meshFilter = levelPlane.GetComponent<MeshFilter>();
-        Mesh mesh = meshFilter.mesh;
-        // Ottieni i vertici del mesh del piano
-        Vector3[] vertices = mesh.vertices;
-        for (int i = 1; i < vertices.Length; i++)
-        {
-            minX = Mathf.Min(minX, vertices[i].x);
-            maxX = Mathf.Max(maxX, vertices[i].x);
-            minZ = Mathf.Min(minZ, vertices[i].z);
-            maxZ = Mathf.Max(maxZ, vertices[i].z);
-        }
+        
     }
 
     private void Patroling()
@@ -62,13 +48,23 @@ public class EnemyAI : Enemy
         if (!walkPointSet)
             SearchWalkPoint(); //vado a capire dove si trova il player per seguirlo 
         if (walkPointSet)
+        {
             agent.SetDestination(walkPoint);
+            // evito che vada a seguire un punto per troppo tempo
+            StartCoroutine(NuovoObbiettivo(3f));
+        }
+
         Vector3 distanceToWalkPoint = transform.position - walkPoint;
         if (distanceToWalkPoint.magnitude < 1f)// ottengo la distanza effettiva
         {
             walkPointSet = false;
         }
-    }   
+    }  
+    IEnumerator NuovoObbiettivo(float seconds)
+    {
+        yield return new WaitForSeconds(seconds);
+        SearchWalkPoint();
+    }
     private void OnCollisionEnter(Collision collision)
     {
 
@@ -115,6 +111,12 @@ public class EnemyAI : Enemy
            walkPointSet = true;
                    
        }
+   }
+   bool IsPointOnPlane(Vector3 point)
+   {
+       // Verifica se il punto è sul piano usando la distanza dal piano
+       float distance = levelPlane.GetDistanceToPoint(point);
+       return Mathf.Approximately(distance, 0);
    }
 
     private void ChasePlayer()
