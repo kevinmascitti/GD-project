@@ -25,14 +25,82 @@ public class remote_controller : MonoBehaviour
     [SerializeField] private LayerMask layerLaserMask;
     [SerializeField] private float laserDamage = 0.1f;
     [SerializeField] private bool RechargeButton;
+    [SerializeField] public bool ButtonChPlusEnabled;
+    [SerializeField] public bool ButtonVolumePlusEnabled;
+    [SerializeField] public bool ButtonVolumeMinusEnabled;
+    [SerializeField] public bool ButtonLaserEnabled;
+    [SerializeField] public bool ButtonChminusEnabled;
+    [SerializeField] public bool ButtonPauseEnabled;
     void Awake()
     {
         playerTransform = GetComponent<Transform>();
         originalScale = transform.localScale;
         squashAndStress.SetActive(false);
         RechargeButton = false;
+        ButtonLaserEnabled = false;
+        ButtonChminusEnabled = false;
+        ButtonPauseEnabled = false;
+        ButtonVolumeMinusEnabled = false;
+        ButtonVolumePlusEnabled = false;
+        ButtonChPlusEnabled = false;
     }
-    
+
+    public void EnableChplus()
+    {
+        ButtonChPlusEnabled = true;
+    }
+    public void DisableChplus()
+    {
+        ButtonChPlusEnabled = false;
+    }
+
+    public void EnableChminus()
+    {
+        ButtonChminusEnabled = true;
+    }
+
+    public void DisableChminus()
+    {
+        ButtonChminusEnabled = false;
+    }
+    public void EnablePause()
+    {
+        ButtonPauseEnabled = true;
+    }
+
+    public void DisablePause()
+    {
+        ButtonPauseEnabled = false;
+    }
+    public void EnableVolumeplus()
+    {
+        ButtonVolumePlusEnabled = true;
+    }
+
+    public void DisableVolumePlus()
+    {
+        ButtonVolumePlusEnabled = false;
+    }
+    public void EnableVolumeMinus()
+    {
+        ButtonVolumeMinusEnabled = true;
+    }
+
+    public void DisableVolumeMInus()
+    {
+        ButtonVolumeMinusEnabled = false;
+    }
+    public void EnableLaser()
+    {
+        ButtonLaserEnabled = true;
+    }
+
+    public void DisableLaser()
+    {
+        ButtonLaserEnabled = false;
+    }
+
+
     // Metodo per avviare il timer
     void StartTimer(float duration, TimerCallback callback)
     {
@@ -294,27 +362,27 @@ public class remote_controller : MonoBehaviour
     void Update()
     {
         
-        if (Input.GetKeyDown(KeyCode.I))
+        if (Input.GetKeyDown(KeyCode.I)  && ButtonLaserEnabled)
         {
             StartLaser();
         }
-        if (Input.GetKeyDown(KeyCode.U))
+        if (Input.GetKeyDown(KeyCode.U) && ButtonPauseEnabled)
         {
             StartPause("Enemy");
         }
-        if (Input.GetKeyDown(KeyCode.O))
+        if (Input.GetKeyDown(KeyCode.O) && ButtonChminusEnabled)
         {
             StartChMinus("Enemy");
         }
-        if (Input.GetKeyDown(KeyCode.P))
+        if (Input.GetKeyDown(KeyCode.P) && ButtonVolumePlusEnabled)
         {
             StartVolumePlus();
         }
-        if (Input.GetKeyDown(KeyCode.L))
+        if (Input.GetKeyDown(KeyCode.L) && ButtonChPlusEnabled)
         {
             StartChPLus();
         }
-        if (Input.GetKeyDown(KeyCode.K))
+        if (Input.GetKeyDown(KeyCode.K) && ButtonVolumeMinusEnabled)
         {
             StartVolumeMinus();
         }
