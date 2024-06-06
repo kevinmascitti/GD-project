@@ -30,10 +30,10 @@ public class EnemyAI : Enemy
     public float sightRange, attackRange;
     public bool playerInSightRange, playerInAttackRange;
     // caratteristiche
-    public int vita; // numero di colpi che può subire prima di morire
     [NonSerialized]public bool grounded = true;
     [NonSerialized]public bool OnAttack;
-    public Plane levelPlane;
+    [SerializeField] private Plane levelPlane;
+    
     
     private void Awake()
     {

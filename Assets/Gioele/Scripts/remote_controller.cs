@@ -24,18 +24,82 @@ public class remote_controller : MonoBehaviour
     [SerializeField] private GameObject player;
     [SerializeField] private LayerMask layerLaserMask;
     [SerializeField] private float laserDamage = 0.1f;
+    [SerializeField] private bool RechargeButton;
+    [SerializeField] public bool ButtonChPlusEnabled;
+    [SerializeField] public bool ButtonVolumePlusEnabled;
+    [SerializeField] public bool ButtonVolumeMinusEnabled;
+    [SerializeField] public bool ButtonLaserEnabled;
+    [SerializeField] public bool ButtonChminusEnabled;
+    [SerializeField] public bool ButtonPauseEnabled;
     void Awake()
     {
         playerTransform = GetComponent<Transform>();
         originalScale = transform.localScale;
         squashAndStress.SetActive(false);
+        RechargeButton = false;
+        ButtonLaserEnabled = false;
+        ButtonChminusEnabled = false;
+        ButtonPauseEnabled = false;
+        ButtonVolumeMinusEnabled = false;
+        ButtonVolumePlusEnabled = false;
+        ButtonChPlusEnabled = false;
     }
-    void MethodToExecute()
+
+    public void EnableChplus()
     {
-        Debug.Log("Il timer è scaduto e ha eseguito il metodo specificato!");
-        // Esempio: Disattiva un oggetto
-        gameObject.SetActive(false);
+        ButtonChPlusEnabled = true;
     }
+    public void DisableChplus()
+    {
+        ButtonChPlusEnabled = false;
+    }
+
+    public void EnableChminus()
+    {
+        ButtonChminusEnabled = true;
+    }
+
+    public void DisableChminus()
+    {
+        ButtonChminusEnabled = false;
+    }
+    public void EnablePause()
+    {
+        ButtonPauseEnabled = true;
+    }
+
+    public void DisablePause()
+    {
+        ButtonPauseEnabled = false;
+    }
+    public void EnableVolumeplus()
+    {
+        ButtonVolumePlusEnabled = true;
+    }
+
+    public void DisableVolumePlus()
+    {
+        ButtonVolumePlusEnabled = false;
+    }
+    public void EnableVolumeMinus()
+    {
+        ButtonVolumeMinusEnabled = true;
+    }
+
+    public void DisableVolumeMInus()
+    {
+        ButtonVolumeMinusEnabled = false;
+    }
+    public void EnableLaser()
+    {
+        ButtonLaserEnabled = true;
+    }
+
+    public void DisableLaser()
+    {
+        ButtonLaserEnabled = false;
+    }
+
 
     // Metodo per avviare il timer
     void StartTimer(float duration, TimerCallback callback)
@@ -50,30 +114,43 @@ public class remote_controller : MonoBehaviour
         // Esegui il metodo specificato
         callback();
     }
-
-    public void Menu()
-    {
-        // utilizzo per aprire il menu di pausa
-    }
+    
     public void Mute()
     {
         //muto i nemici urlanti
     }
     public void StartVolumePlus()
     {
-        // moltiplicatore di combo
-        moltiplicatoreCombo = 1.5f;
-        StartTimer(timerDuration, StopVolumePlus);
+        if (!RechargeButton)
+        {
+            RechargeButton = true;
+            // moltiplicatore di combo
+            moltiplicatoreCombo = 1.5f;
+            StartTimer(timerDuration, StopVolumePlus);
+            StartTimer(2*timerDuration,EnableButton);
+        }
+    }
+
+    public void EnableButton()
+    {
+        RechargeButton = false;
     }
     public void StopVolumePlus()
     {
+        
         // moltiplicatore di combo
         moltiplicatoreCombo = 1f;
+            
     }
     public void StartVolumeMinus()
     {
-        // blocco dall’alto che li “schiaccia” o appiattisce
-        StartTimer(timerDuration, StopVolumeMinus);
+        if (!RechargeButton)
+        {
+            RechargeButton = true;
+            // blocco dall’alto che li “schiaccia” o appiattisce
+            StartTimer(timerDuration, StopVolumeMinus);
+            StartTimer(2*timerDuration,EnableButton);
+        }
     }
     public void StopVolumeMinus()
     {
@@ -87,19 +164,24 @@ public class remote_controller : MonoBehaviour
 
     public void StartLaser()
     {
-        GetComponent<LineRenderer>().enabled = true;
-        // raggio laser
-        if (Physics.Raycast(playerTransform.position, transform.forward))
+        if (!RechargeButton)
         {
-            // non ho idea del motivo ma se setto una nuova posizione funziona malissimo, 
-            
-            // utilizziamo i parametri dati da console 
-            
-            //RaycastHit _raycastHit = Physics.Raycast(playerTransform.position, transform.forward);
-            //laser.SetPosition(0,laserFirePoint.position);
-            //laser.SetPosition(1,new Vector3(laserFirePoint.position.x,laserFirePoint.position.y, laserFirePoint.position.z+distance));
+            RechargeButton = true;
+            GetComponent<LineRenderer>().enabled = true;
+            // raggio laser
+            if (Physics.Raycast(playerTransform.position, transform.forward))
+            {
+                // non ho idea del motivo ma se setto una nuova posizione funziona malissimo, 
+                
+                // utilizziamo i parametri dati da console 
+                
+                //RaycastHit _raycastHit = Physics.Raycast(playerTransform.position, transform.forward);
+                //laser.SetPosition(0,laserFirePoint.position);
+                //laser.SetPosition(1,new Vector3(laserFirePoint.position.x,laserFirePoint.position.y, laserFirePoint.position.z+distance));
+            }
+            StartTimer(timerDuration, StopLaser);
+            StartTimer(2*timerDuration,EnableButton);
         }
-        StartTimer(timerDuration, StopLaser);
     }
     public void StopLaser()
     {
@@ -135,10 +217,15 @@ public class remote_controller : MonoBehaviour
 
     public void StartChPLus()
     {
-        moltiplicatoreDanniNemici = 1.5f;
-        transform.localScale *= 1.5f;
-        //mi ingrandisco (posso colpire più nemici contemporaneamente)
-        StartTimer(timerDuration,StopChPLus);
+        if (!RechargeButton)
+        {
+            RechargeButton = true;
+            moltiplicatoreDanniNemici = 1.5f;
+            transform.localScale *= 1.5f;
+            //mi ingrandisco (posso colpire più nemici contemporaneamente)
+            StartTimer(timerDuration,StopChPLus);
+            StartTimer(2*timerDuration,EnableButton);
+        }
     }
     public void StopChPLus()
     {
@@ -148,37 +235,42 @@ public class remote_controller : MonoBehaviour
     }
     public void StartChMinus(string layerName)
     {
-        moltiplicatoreDanniNemici = 1.5f;
-        
-        int layer = LayerMask.NameToLayer(layerName);
-
-        // Trova tutti gli oggetti nel layer specificato
-        GameObject[] objectsInLayer = GameObject.FindGameObjectsWithTag("enemy");
-
-        // Disattiva il componente NavMeshAgent su ciascun oggetto trovato
-        foreach (GameObject obj in objectsInLayer)
+        if (!RechargeButton)
         {
-            if (obj.GetComponent<Enemy_AI_Melee>())
-            {
-                meleeTransform = obj.transform.localScale;
-                obj.transform.localScale *= 0.7f;
-            }
-
-            if (obj.GetComponent<Enemy_AI_LongRanged>()){
-                longRangedTransform = obj.transform.localScale;
-                obj.transform.localScale *= 0.7f;
-            }
-
-            if (obj.GetComponent<EnemyAI>())
-            {
-                rangedTransform = obj.transform.localScale;
-                obj.transform.localScale *= 0.7f;
-            }
-
+            RechargeButton = true;
+            moltiplicatoreDanniNemici = 1.5f;
             
+            int layer = LayerMask.NameToLayer(layerName);
+
+            // Trova tutti gli oggetti nel layer specificato
+            GameObject[] objectsInLayer = GameObject.FindGameObjectsWithTag("enemy");
+
+            // Disattiva il componente NavMeshAgent su ciascun oggetto trovato
+            foreach (GameObject obj in objectsInLayer)
+            {
+                if (obj.GetComponent<Enemy_AI_Melee>())
+                {
+                    meleeTransform = obj.transform.localScale;
+                    obj.transform.localScale *= 0.7f;
+                }
+
+                if (obj.GetComponent<Enemy_AI_LongRanged>()){
+                    longRangedTransform = obj.transform.localScale;
+                    obj.transform.localScale *= 0.7f;
+                }
+
+                if (obj.GetComponent<EnemyAI>())
+                {
+                    rangedTransform = obj.transform.localScale;
+                    obj.transform.localScale *= 0.7f;
+                }
+
+                
+            }
+            //rimpicciolisco i nemici (mi fanno pochi danni)
+            StartTimer(timerDuration,StopChMinus);
+            StartTimer(2*timerDuration,EnableButton);
         }
-        //rimpicciolisco i nemici (mi fanno pochi danni)
-        StartTimer(timerDuration,StopChMinus);
     }
     public void StopChMinus()
     {
@@ -213,28 +305,33 @@ public class remote_controller : MonoBehaviour
     }
     public void StartPause(string layerName)
     {
-        // Ottieni il numero di layer dall'indice o dal nome
-        int layer = LayerMask.NameToLayer(layerName);
-
-        // Trova tutti gli oggetti nel layer specificato
-        GameObject[] objectsInLayer = GameObject.FindGameObjectsWithTag("enemy");
-
-        // Disattiva il componente NavMeshAgent su ciascun oggetto trovato
-        foreach (GameObject obj in objectsInLayer)
+        if (!RechargeButton)
         {
-            if(obj.GetComponent<Enemy_AI_Melee>())
-                obj.GetComponent<Enemy_AI_Melee>().enabled = false;
-            if(obj.GetComponent<Enemy_AI_LongRanged>())
-                obj.GetComponent<Enemy_AI_LongRanged>().enabled = false;
-            if(obj.GetComponent<EnemyAI>())
-                obj.GetComponent<EnemyAI>().enabled = false;
-            NavMeshAgent agent = obj.GetComponent<NavMeshAgent>();
-            if (agent != null)
+            RechargeButton = true;
+            // Ottieni il numero di layer dall'indice o dal nome
+            int layer = LayerMask.NameToLayer(layerName);
+
+            // Trova tutti gli oggetti nel layer specificato
+            GameObject[] objectsInLayer = GameObject.FindGameObjectsWithTag("enemy");
+
+            // Disattiva il componente NavMeshAgent su ciascun oggetto trovato
+            foreach (GameObject obj in objectsInLayer)
             {
-                agent.enabled = false;
+                if(obj.GetComponent<Enemy_AI_Melee>())
+                    obj.GetComponent<Enemy_AI_Melee>().enabled = false;
+                if(obj.GetComponent<Enemy_AI_LongRanged>())
+                    obj.GetComponent<Enemy_AI_LongRanged>().enabled = false;
+                if(obj.GetComponent<EnemyAI>())
+                    obj.GetComponent<EnemyAI>().enabled = false;
+                NavMeshAgent agent = obj.GetComponent<NavMeshAgent>();
+                if (agent != null)
+                {
+                    agent.enabled = false;
+                }
             }
+            StartTimer(timerDuration,StopPause);
+            StartTimer(2*timerDuration,EnableButton);
         }
-        StartTimer(timerDuration,StopPause);
     }
 
     public void StopPause()
@@ -265,27 +362,27 @@ public class remote_controller : MonoBehaviour
     void Update()
     {
         
-        if (Input.GetKeyDown(KeyCode.I))
+        if (Input.GetKeyDown(KeyCode.I)  && ButtonLaserEnabled)
         {
             StartLaser();
         }
-        if (Input.GetKeyDown(KeyCode.U))
+        if (Input.GetKeyDown(KeyCode.U) && ButtonPauseEnabled)
         {
             StartPause("Enemy");
         }
-        if (Input.GetKeyDown(KeyCode.O))
+        if (Input.GetKeyDown(KeyCode.O) && ButtonChminusEnabled)
         {
             StartChMinus("Enemy");
         }
-        if (Input.GetKeyDown(KeyCode.P))
+        if (Input.GetKeyDown(KeyCode.P) && ButtonVolumePlusEnabled)
         {
             StartVolumePlus();
         }
-        if (Input.GetKeyDown(KeyCode.L))
+        if (Input.GetKeyDown(KeyCode.L) && ButtonChPlusEnabled)
         {
             StartChPLus();
         }
-        if (Input.GetKeyDown(KeyCode.K))
+        if (Input.GetKeyDown(KeyCode.K) && ButtonVolumeMinusEnabled)
         {
             StartVolumeMinus();
         }
