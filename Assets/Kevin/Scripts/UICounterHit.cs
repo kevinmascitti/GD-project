@@ -10,9 +10,11 @@ public class UICounterHit : MonoBehaviour
     private bool isFading;
     [SerializeField] private float fadeDuration = 1.0f;
     [SerializeField] private float rotationDuration = 0.2f;
+    [SerializeField] private GameObject hitsWord;
 
     void Start()
     {
+        hitsWord = GameObject.Find("HitsWord");
         ComboCounter.OnCounterIncreased += ShowCounterHit;
         ComboCounter.OnCounterInitialized += HideCounterHit;
     }
@@ -29,13 +31,13 @@ public class UICounterHit : MonoBehaviour
             {
                 isCounterVisible = true;
                 Color color = GetComponent<TMP_Text>().color;
-                Color color2 = GetComponentInChildren<TMP_Text>().color;
+                Color color2 = hitsWord.GetComponent<TMP_Text>().color;
                 
                 GetComponent<TMP_Text>().color = new Color(color.r, color.g, color.b, 1f);
-                GetComponentInChildren<TMP_Text>().color = new Color(color2.r, color2.g, color2.b, 1f);
+                hitsWord.GetComponent<TMP_Text>().color = new Color(color2.r, color2.g, color2.b, 1f);
                 
-                GetComponent<TMP_Text>().gameObject.SetActive(true);
-                GetComponentInChildren<TMP_Text>().gameObject.SetActive(true);
+                // GetComponent<TMP_Text>().gameObject.SetActive(true);
+                // GetComponentInChildren<TMP_Text>().gameObject.SetActive(true);
             }
         }
     }
@@ -46,8 +48,8 @@ public class UICounterHit : MonoBehaviour
         {
             isCounterVisible = false;
             StartCoroutine(StartFadingOut());
-            GetComponent<TMP_Text>().gameObject.SetActive(false);
-            GetComponentInChildren<TMP_Text>().gameObject.SetActive(false);
+            // GetComponent<TMP_Text>().gameObject.SetActive(false);
+            // GetComponentInChildren<TMP_Text>().gameObject.SetActive(false);
         }
     }
 
@@ -68,7 +70,7 @@ public class UICounterHit : MonoBehaviour
     {
         isFading = true;
         Color color = GetComponent<TMP_Text>().color;
-        Color color2 = GetComponentInChildren<TMP_Text>().color;
+        Color color2 = hitsWord.GetComponent<TMP_Text>().color;
 
         float elapsedTime = 0f;
         while (elapsedTime < fadeDuration && isFading)
@@ -78,7 +80,7 @@ public class UICounterHit : MonoBehaviour
             if (isFading)
             {
                 GetComponent<TMP_Text>().color = new Color(color.r, color.g, color.b, alpha);
-                GetComponentInChildren<TMP_Text>().color = new Color(color2.r, color2.g, color2.b, alpha);
+                hitsWord.GetComponent<TMP_Text>().color = new Color(color2.r, color2.g, color2.b, alpha);
             }
 
             yield return null;
@@ -87,10 +89,10 @@ public class UICounterHit : MonoBehaviour
         if (isFading)
         {
             GetComponent<TMP_Text>().color = new Color(color.r, color.g, color.b, 0f);
-            GetComponentInChildren<TMP_Text>().color = new Color(color2.r, color2.g, color2.b, 0f);
+            hitsWord.GetComponent<TMP_Text>().color = new Color(color2.r, color2.g, color2.b, 0f);
 
-            GetComponent<TMP_Text>().gameObject.SetActive(false);
-            GetComponentInChildren<TMP_Text>().gameObject.SetActive(false);
+            // GetComponent<TMP_Text>().gameObject.SetActive(false);
+            // GetComponentInChildren<TMP_Text>().gameObject.SetActive(false);
             isFading = false;
         }
     }

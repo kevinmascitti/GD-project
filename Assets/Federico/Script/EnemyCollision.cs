@@ -58,11 +58,9 @@ public class EnemyCollision : MonoBehaviour
 
     IEnumerator KillHitEffect(GameObject hitEffect)
     {
-        Debug.Log("Started Coroutine KillhitEffect  at timestamp : " + Time.time);
         yield return new WaitForSeconds(0.2f);
 
         GameObject.Destroy(hitEffect);
-        Debug.Log("Coroutine ended " + Time.time);
     }
 
     

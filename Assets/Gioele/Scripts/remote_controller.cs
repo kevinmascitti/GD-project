@@ -35,7 +35,8 @@ public class remote_controller : MonoBehaviour
     {
         playerTransform = GetComponent<Transform>();
         originalScale = transform.localScale;
-        squashAndStress.SetActive(false);
+        if(squashAndStress)
+            squashAndStress.SetActive(false);
         RechargeButton = false;
         ButtonLaserEnabled = false;
         ButtonChminusEnabled = false;

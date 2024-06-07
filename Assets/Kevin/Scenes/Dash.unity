@@ -4835,7 +4835,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1669997831
 RectTransform:
   m_ObjectHideFlags: 0
@@ -4966,6 +4966,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fb1f24c7285a2452fa83dd761b015e6f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  fadeDuration: 1
+  rotationDuration: 0.2
 --- !u!1 &1791181771
 GameObject:
   m_ObjectHideFlags: 0
@@ -6573,6 +6575,11 @@ PrefabInstance:
       propertyPath: player
       value: 
       objectReference: {fileID: 950575306}
+    - target: {fileID: 3305752133941219901, guid: 8b59635cd0adb41f1ba8fbc68f23c4c3,
+        type: 3}
+      propertyPath: comboValue
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3305752133941219901, guid: 8b59635cd0adb41f1ba8fbc68f23c4c3,
         type: 3}
       propertyPath: HitEffectPrefab
