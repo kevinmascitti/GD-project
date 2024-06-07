@@ -31,7 +31,7 @@ public class PopupSpawner : MonoBehaviour
         ComboCounter.OnCounterIncreased += CheckCounter;
     }
 
-    private void CheckCounter(object sender, EventArgs args)
+    private void CheckCounter(object sender, int args)
     {
         foreach (Tuple<int, string> tuple in popupList)
         {

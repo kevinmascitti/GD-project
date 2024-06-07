@@ -17,21 +17,30 @@ public class Room : MonoBehaviour
     [NonSerialized] public RoomManager level;
     [NonSerialized] public BoxCollider enterWall;
     [NonSerialized] public BoxCollider exitWall;
-    
+
+    [SerializeField] private Spawner spawner;
     [SerializeField] private bool isBossRoom = false;
 
     public void Awake()
     {
         ID = Int32.Parse(gameObject.name.Substring("Room".Length));
         PlayerCharacter.OnStartRoom += EnableRoom;
+        PlayerCharacter.OnEndRoom += DisableRoom;
     }
 
     private void EnableRoom(object sender, RoomArgs args)
     {
         if (args.room == this)
         {
-            // TO DO: spawner is activated
-            Debug.Log("ENABLE ROOM " + ID + " in Level " + level.ID);
+            spawner.enabled = true;
+        }
+    }
+    
+    private void DisableRoom(object sender, RoomArgs args)
+    {
+        if (args.room == this)
+        {
+            spawner.enabled = false;
         }
     }
     

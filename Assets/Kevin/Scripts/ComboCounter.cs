@@ -11,7 +11,8 @@ public class ComboCounter : MonoBehaviour
     
     private ComboTimer comboTimer;
 
-    public static EventHandler OnCounterIncreased;
+    public static EventHandler<int> OnCounterIncreased;
+    public static EventHandler OnCounterInitialized;
 
     void Start()
     {
@@ -25,12 +26,13 @@ public class ComboCounter : MonoBehaviour
     {
         comboTimer.Begin();
         counter += args.comboValue;
-        OnCounterIncreased?.Invoke(this, EventArgs.Empty);
+        OnCounterIncreased?.Invoke(this, counter);
         Debug.Log("Combo counter is " + counter);
     }
 
     private void ElapsedTimer(object sender, EventArgs args)
     {
         counter = 0;
+        OnCounterInitialized?.Invoke(this, EventArgs.Empty);
     }
 }
