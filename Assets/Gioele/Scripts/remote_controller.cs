@@ -56,7 +56,7 @@ public class remote_controller : MonoBehaviour
         UnlockChminus=false;
         UnlockPause=false;
     }
-    // enbel dei bottoni
+    // enable dei bottoni
     public void UnlockChPlusButton()
     {
         UnlockChPlus = true;

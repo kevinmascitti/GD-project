@@ -35,8 +35,9 @@ public class Spawner : MonoBehaviour
         ChangePrefabs(0);
         StartCoroutine(SpawnObjects());
         StartCoroutine(ShowExit(1.5f));
-        PlayerCharacter.OnEndRoom += ManageExit;
-        
+        PlayerCharacter.OnEndRoom += OpenExit;
+        PlayerCharacter.OnStartRoom += CloseExit;
+
     }
 
     IEnumerator ShowExit(float delay)
@@ -60,7 +61,26 @@ public class Spawner : MonoBehaviour
         canSpawn = false;
     }
 
-    public void ManageExit(object sender,RoomArgs args)
+    public void CloseExit(object sender,RoomArgs args)
+    {
+        // attivare animazione
+        GameObject[] exitObjects = GameObject.FindGameObjectsWithTag("Exit");
+
+        // Itera attraverso tutti gli oggetti trovati
+        foreach (GameObject exitObject in exitObjects)
+        {
+            // Prendi il componente Animator
+            Animator animator = exitObject.GetComponent<Animator>();
+
+            if (animator != null)
+            {
+                animator.SetBool("open",false);
+            }
+            
+        }
+        
+    }
+    public void OpenExit(object sender,RoomArgs args)
     {
         // attivare animazione
         GameObject[] exitObjects = GameObject.FindGameObjectsWithTag("Exit");
