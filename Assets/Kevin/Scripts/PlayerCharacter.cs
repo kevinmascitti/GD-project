@@ -14,18 +14,19 @@ public class PlayerCharacter : Character
     public float MAX_HP = 100;
     public float def_HP = 100;
     public float MAX_STAMINA = 100;
-    public float def_STAMINA = 5;
-    public int MAX_LIFE = 99;
-    public int def_life = 5;
+    public float def_increase_STAMINA = 5;
+    public int MAX_LIFE = 4;
+    public int def_life = 4;
     
     public Slider sliderHP;
     public Slider sliderStamina;
-    public TMP_Text UIExtraLife;
+    public GameObject UIExtraLife;
     private float currentStamina;
     private float staminaUp = 5;
     
     private int currentExtraLife;
-    
+    private List<GameObject> heartList = new List<GameObject>();
+
     [SerializeField] private Camera camera;
 
     [NonSerialized] public RoomManager currentLevel;
@@ -60,16 +61,25 @@ public class PlayerCharacter : Character
         isPlayer = true;
         sliderHP = GameObject.Find("HPBar").GetComponent<Slider>();
         sliderStamina = GameObject.Find("StaminaBar").GetComponent<Slider>();
-        UIExtraLife = GameObject.Find("ExtraLifeUI").GetComponent<TMP_Text>();
+        UIExtraLife = GameObject.Find("ExtraLife");
 
         if (sliderHP && sliderStamina)
         {
             sliderHP.maxValue = MAX_HP;
             sliderStamina.maxValue = MAX_STAMINA;
         }
+
+        if (UIExtraLife)
+        {
+            for (int i = 0; i < MAX_LIFE; i++)
+            {
+                heartList.Add(Instantiate((GameObject) Resources.Load("Heart"), UIExtraLife.transform));
+                heartList[i].SetActive(false);
+            }
+        }
     
         UpdateHP(def_HP);
-        UpdateStamina(def_STAMINA);
+        UpdateStamina(0);
         UpdateExtraLife(def_life);
 
         LevelManager.OnInitializedLevels += SetCurrentRoom;
@@ -81,12 +91,10 @@ public class PlayerCharacter : Character
         Grabbable.OnThrow += StartMovingDownArm;
         Grabbable.OnUse += StartMovingDownArm;
 
+        ComboCounter.OnCounterIncreased += IncreaseStamina;
+
         Boss.OnBossDeath += UnlockRoom;
         Boss.OnBossDeath += UnlockButton;
-    }
-
-    public void Start()
-    {
     }
 
     // Update is called once per frame
@@ -153,13 +161,18 @@ public class PlayerCharacter : Character
         UpdateHPUI(currentHP);
     }
     
-    public void UpdateStamina(float newStamina)
+    private void UpdateStamina(float newStamina)
     {
         currentStamina = newStamina;
         UpdateStaminaUI(currentStamina);
     }
     
-    public void UpdateExtraLife(int newExtraLife)
+    private void IncreaseStamina(object sender, int args)
+    {
+        UpdateStamina(currentStamina+def_increase_STAMINA);
+    }
+    
+    private void UpdateExtraLife(int newExtraLife)
     {
         currentExtraLife = newExtraLife;
         UpdateExtraLifeUI(currentExtraLife);
@@ -256,8 +269,16 @@ public class PlayerCharacter : Character
     
     public void UpdateExtraLifeUI(int extraLife)
     {
-        if(UIExtraLife && extraLife >= 0)
-            UIExtraLife.text = "x" + extraLife.ToString("00");
+        if (UIExtraLife && extraLife >= 0)
+        {
+            for (int i = 0; i < MAX_LIFE; i++)
+            {
+                if(i < currentExtraLife)
+                    heartList[i].SetActive(true);
+                else
+                    heartList[i].SetActive(false);
+            }
+        }
     }
 
     public void SetCurrentRoom(object sender, LevelManagerArgs args)

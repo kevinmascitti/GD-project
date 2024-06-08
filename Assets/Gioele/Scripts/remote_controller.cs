@@ -40,7 +40,8 @@ public class remote_controller : MonoBehaviour
     {
         playerTransform = GetComponent<Transform>();
         originalScale = transform.localScale;
-        squashAndStress.SetActive(false);
+        if(squashAndStress)
+            squashAndStress.SetActive(false);
         // tutti i timer sono attivi non devono ricaricarsi
         RechargeButtonLaserEnabled = false;
         RechargeButtonChminusEnabled = false;

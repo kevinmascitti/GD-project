@@ -93,17 +93,17 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: 2ba6f97fc0ac2fe409ec11d121577fa8,
         type: 3}
       propertyPath: m_LocalScale.x
-      value: 1
+      value: 0.99999994
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 2ba6f97fc0ac2fe409ec11d121577fa8,
         type: 3}
       propertyPath: m_LocalScale.y
-      value: 1
+      value: 0.99999994
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 2ba6f97fc0ac2fe409ec11d121577fa8,
         type: 3}
       propertyPath: m_LocalScale.z
-      value: 1
+      value: 0.99999994
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 2ba6f97fc0ac2fe409ec11d121577fa8,
         type: 3}
@@ -154,6 +154,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 2ba6f97fc0ac2fe409ec11d121577fa8,
+        type: 3}
+      propertyPath: m_ConstrainProportionsScale
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: -8297060680570648588, guid: 2ba6f97fc0ac2fe409ec11d121577fa8,
         type: 3}
@@ -1089,13 +1094,18 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 0
   laserDamage: 0.1
-  RechargeButton: 0
-  ButtonChPlusEnabled: 0
-  ButtonVolumePlusEnabled: 0
-  ButtonVolumeMinusEnabled: 0
-  ButtonLaserEnabled: 0
-  ButtonChminusEnabled: 0
-  ButtonPauseEnabled: 0
+  RechargeButtonChPlusEnabled: 0
+  RechargeButtonVolumePlusEnabled: 0
+  RechargeButtonVolumeMinusEnabled: 0
+  RechargeButtonLaserEnabled: 0
+  RechargeButtonChminusEnabled: 0
+  RechargeButtonPauseEnabled: 0
+  UnlockChPlus: 0
+  UnlockVolumePlus: 0
+  UnlockVolumeMinus: 0
+  UnlockLaser: 0
+  UnlockChminus: 0
+  UnlockPause: 0
 --- !u!114 &7009421023773219503
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1114,14 +1124,14 @@ MonoBehaviour:
   MAX_HP: 100
   def_HP: 100
   MAX_STAMINA: 100
-  def_STAMINA: 5
-  MAX_LIFE: 99
-  def_life: 5
+  def_increase_STAMINA: 5
+  MAX_LIFE: 4
+  def_life: 4
   sliderHP: {fileID: 0}
   sliderStamina: {fileID: 0}
   UIExtraLife: {fileID: 0}
   camera: {fileID: 0}
-  grabbingHand: {fileID: 0}
+  grabbingHand: {fileID: 6922833940354934973}
 --- !u!114 &5065610752759917856
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1147,7 +1157,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0ea1025426b304be098f0d3194de17b0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  HitEffectPrefab: {fileID: 0}
+  HitEffectPrefab: {fileID: 1570927096764274, guid: 643639841fb531e4ba8097fed4eb9ac7,
+    type: 3}
   parentObject: {fileID: 3437633161199904590}
   boneName: Hand.l
   handBone: {fileID: 467915590724896330}
@@ -1172,7 +1183,7 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3437633161199904590}
   serializedVersion: 4
-  m_Mass: 1
+  m_Mass: 99999
   m_Drag: 0
   m_AngularDrag: 0.05
   m_CenterOfMass: {x: 0, y: 0, z: 0}
@@ -1190,7 +1201,7 @@ Rigidbody:
   m_IsKinematic: 1
   m_Interpolate: 0
   m_Constraints: 0
-  m_CollisionDetection: 0
+  m_CollisionDetection: 2
 --- !u!114 &414557874605038256
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1223,13 +1234,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   detectionRadius: 1.5
   numRays: 16
-  pushForce: 2
+  pushForce: 1
   heights:
   - 0.5
   - 1
   enemyLayer:
     serializedVersion: 2
     m_Bits: 1024
+--- !u!1 &6922833940354934973 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4856952145720570530, guid: 2ba6f97fc0ac2fe409ec11d121577fa8,
+    type: 3}
+  m_PrefabInstance: {fileID: 2555094549078825503}
+  m_PrefabAsset: {fileID: 0}
 --- !u!95 &8223310538124421006 stripped
 Animator:
   m_CorrespondingSourceObject: {fileID: 5866666021909216657, guid: 2ba6f97fc0ac2fe409ec11d121577fa8,

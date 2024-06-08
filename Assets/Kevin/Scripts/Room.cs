@@ -30,7 +30,7 @@ public class Room : MonoBehaviour
 
     private void EnableRoom(object sender, RoomArgs args)
     {
-        if (args.room == this)
+        if (args.room == this && spawner)
         {
             spawner.enabled = true;
         }
@@ -38,7 +38,7 @@ public class Room : MonoBehaviour
     
     private void DisableRoom(object sender, RoomArgs args)
     {
-        if (args.room == this)
+        if (args.room == this && spawner)
         {
             spawner.enabled = false;
         }
