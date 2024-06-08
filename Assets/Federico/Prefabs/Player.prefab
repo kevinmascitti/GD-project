@@ -1082,30 +1082,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   timerDuration: 2
+  controllerUI: {fileID: 0}
   moltiplicatoreCombo: 1
   moltiplicatoreDanniNemici: 1
   laser: {fileID: 3561294763413955962}
   distance: 5
   laserFirePoint: {fileID: 2643373115103596328}
-  playerTransform: {fileID: 2665917163245420020}
   squashAndStress: {fileID: 0}
-  player: {fileID: 0}
   layerLaserMask:
     serializedVersion: 2
     m_Bits: 0
   laserDamage: 0.1
-  RechargeButtonChPlusEnabled: 0
-  RechargeButtonVolumePlusEnabled: 0
-  RechargeButtonVolumeMinusEnabled: 0
-  RechargeButtonLaserEnabled: 0
-  RechargeButtonChminusEnabled: 0
-  RechargeButtonPauseEnabled: 0
-  UnlockChPlus: 0
-  UnlockVolumePlus: 0
-  UnlockVolumeMinus: 0
-  UnlockLaser: 0
-  UnlockChminus: 0
-  UnlockPause: 0
 --- !u!114 &7009421023773219503
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -45,6 +45,7 @@ public class PlayerCharacter : Character
     
     public static EventHandler OnDeath;
     public static EventHandler OnGameOver;
+    public static EventHandler OnStaminaFull;
 
     public static EventHandler<RoomArgs> OnStartRoom;
     public static EventHandler<RoomArgs> OnEndRoom;
@@ -92,6 +93,8 @@ public class PlayerCharacter : Character
         Grabbable.OnUse += StartMovingDownArm;
 
         ComboCounter.OnCounterIncreased += IncreaseStamina;
+
+        RemoteController.OnControllerAbility += EmptyStamina;
 
         Boss.OnBossDeath += UnlockRoom;
         Boss.OnBossDeath += UnlockButton;
@@ -161,9 +164,15 @@ public class PlayerCharacter : Character
         UpdateHPUI(currentHP);
     }
     
-    private void UpdateStamina(float newStamina)
+    public void UpdateStamina(float newStamina)
     {
-        currentStamina = newStamina;
+        if (newStamina >= MAX_STAMINA)
+        {
+            currentStamina = MAX_STAMINA;
+            OnStaminaFull?.Invoke(this, EventArgs.Empty);
+        }
+        else
+            currentStamina = newStamina;
         UpdateStaminaUI(currentStamina);
     }
     
@@ -171,8 +180,13 @@ public class PlayerCharacter : Character
     {
         UpdateStamina(currentStamina+def_increase_STAMINA);
     }
+
+    private void EmptyStamina(object sender, EventArgs args)
+    {
+        UpdateStamina(0);
+    }
     
-    private void UpdateExtraLife(int newExtraLife)
+    public void UpdateExtraLife(int newExtraLife)
     {
         currentExtraLife = newExtraLife;
         UpdateExtraLifeUI(currentExtraLife);
@@ -255,19 +269,19 @@ public class PlayerCharacter : Character
         }
     }
 
-    public void UpdateHPUI(float HP)
+    private void UpdateHPUI(float HP)
     {
         if(sliderHP)
             sliderHP.value = HP;
     }
 
-    public void UpdateStaminaUI(float stamina)
+    private void UpdateStaminaUI(float stamina)
     {
         if (sliderStamina)
             sliderStamina.value = stamina;
     }
     
-    public void UpdateExtraLifeUI(int extraLife)
+    private void UpdateExtraLifeUI(int extraLife)
     {
         if (UIExtraLife && extraLife >= 0)
         {

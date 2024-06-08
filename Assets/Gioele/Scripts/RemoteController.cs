@@ -6,57 +6,63 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class remote_controller : MonoBehaviour
+public class RemoteController : MonoBehaviour
 {
     public float timerDuration = 3f;
-    [SerializeField]private delegate void TimerCallback();
+    [SerializeField] private delegate void TimerCallback();
     private Vector3 originalScale;
-    [SerializeField]private float moltiplicatoreCombo = 1f;
-    [SerializeField]private float moltiplicatoreDanniNemici = 1f;
-    [SerializeField]private LineRenderer laser;
-    [SerializeField]private float distance = 5f;
-    [SerializeField]private Transform laserFirePoint;
-    [SerializeField]private Transform playerTransform;
-    [NonSerialized]private Vector3 meleeTransform;
-    [NonSerialized]private Vector3 rangedTransform;
-    [NonSerialized]private Vector3 longRangedTransform;
+    private bool isUIVisible = false;
+    private bool isStaminaFull = false;
+    [SerializeField] private GameObject controllerUI;
+    [SerializeField] private float moltiplicatoreCombo = 1f;
+    [SerializeField] private float moltiplicatoreDanniNemici = 1f;
+    [SerializeField] private LineRenderer laser;
+    [SerializeField] private float distance = 5f;
+    [SerializeField] private Transform laserFirePoint;
+    private Transform playerTransform;
+    [NonSerialized] private Vector3 meleeTransform;
+    [NonSerialized] private Vector3 rangedTransform;
+    [NonSerialized] private Vector3 longRangedTransform;
     [SerializeField] private GameObject squashAndStress;
-    [SerializeField] private GameObject player;
     [SerializeField] private LayerMask layerLaserMask;
     [SerializeField] private float laserDamage = 0.1f;
-    [SerializeField] public bool RechargeButtonChPlusEnabled;
-    [SerializeField] public bool RechargeButtonVolumePlusEnabled;
-    [SerializeField] public bool RechargeButtonVolumeMinusEnabled;
-    [SerializeField] public bool RechargeButtonLaserEnabled;
-    [SerializeField] public bool RechargeButtonChminusEnabled;
-    [SerializeField] public bool RechargeButtonPauseEnabled;
-    [SerializeField] private bool UnlockChPlus;
-    [SerializeField] private bool UnlockVolumePlus;
-    [SerializeField] private bool UnlockVolumeMinus;
-    [SerializeField] private bool UnlockLaser;
-    [SerializeField] private bool UnlockChminus;
-    [SerializeField] private bool UnlockPause;
+    
+    // tutti i timer sono attivi non devono ricaricarsi
+    private bool RechargeButtonChPlusEnabled = false;
+    private bool RechargeButtonVolumePlusEnabled = false;
+    private bool RechargeButtonVolumeMinusEnabled = false;
+    private bool RechargeButtonLaserEnabled = false;
+    private bool RechargeButtonChminusEnabled = false;
+    private bool RechargeButtonPauseEnabled = false;
+    
+    // tutte le abilità sono da sbloccare
+    private bool UnlockChPlus = false;
+    private bool UnlockVolumePlus = false;
+    private bool UnlockVolumeMinus = false;
+    private bool UnlockLaser = false;
+    private bool UnlockChminus = false;
+    private bool UnlockPause = false;
+
+    public static EventHandler OnControllerAbility;
+
     void Awake()
     {
         playerTransform = GetComponent<Transform>();
         originalScale = transform.localScale;
         if(squashAndStress)
             squashAndStress.SetActive(false);
-        // tutti i timer sono attivi non devono ricaricarsi
-        RechargeButtonLaserEnabled = false;
-        RechargeButtonChminusEnabled = false;
-        RechargeButtonPauseEnabled = false;
-        RechargeButtonVolumeMinusEnabled = false;
-        RechargeButtonVolumePlusEnabled = false;
-        RechargeButtonChPlusEnabled = false;
-        // tutte le abilità sono da sbloccare
-        UnlockChPlus=false;
-        UnlockVolumePlus=false;
-        UnlockVolumeMinus=false;
-        UnlockLaser=false;
-        UnlockChminus=false;
-        UnlockPause=false;
+        controllerUI = GameObject.Find("ControllerUI");
+        controllerUI.SetActive(false);
+        isUIVisible = false;
+
+        PlayerCharacter.OnStaminaFull += SetStaminaFull;
     }
+
+    private void SetStaminaFull(object sender, EventArgs args)
+    {
+        isStaminaFull = true;
+    }
+    
     // enable dei bottoni
     public void UnlockChPlusButton()
     {
@@ -125,7 +131,7 @@ public class remote_controller : MonoBehaviour
         RechargeButtonVolumeMinusEnabled = true;
     }
 
-    public void RechargeVolumeMInus()
+    public void RechargeVolumeMinus()
     {
         RechargeButtonVolumeMinusEnabled = false;
     }
@@ -138,8 +144,6 @@ public class remote_controller : MonoBehaviour
     {
         RechargeButtonLaserEnabled = false;
     }
-    
-
 
     // Metodo per avviare il timer
     void StartTimer(float duration, TimerCallback callback)
@@ -159,6 +163,7 @@ public class remote_controller : MonoBehaviour
     {
         //muto i nemici urlanti
     }
+    
     public void StartVolumePlus()
     {
         if (!RechargeButtonVolumePlusEnabled && UnlockVolumePlus)
@@ -173,7 +178,6 @@ public class remote_controller : MonoBehaviour
     
     public void StopVolumePlus()
     {
-        
         // moltiplicatore di combo
         moltiplicatoreCombo = 1f;
             
@@ -185,7 +189,7 @@ public class remote_controller : MonoBehaviour
             RechargeButtonVolumeMinusEnabled = true;
             // blocco dall’alto che li “schiaccia” o appiattisce
             StartTimer(timerDuration, StopVolumeMinus);
-            StartTimer(2*timerDuration,RechargeVolumeMInus);
+            StartTimer(2*timerDuration,RechargeVolumeMinus);
         }
     }
     public void StopVolumeMinus()
@@ -251,7 +255,7 @@ public class remote_controller : MonoBehaviour
         }
     }
 
-    public void StartChPLus()
+    public void StartChPlus()
     {
         if (!RechargeButtonChPlusEnabled && UnlockChPlus)
         {
@@ -259,11 +263,11 @@ public class remote_controller : MonoBehaviour
             moltiplicatoreDanniNemici = 1.5f;
             transform.localScale *= 1.5f;
             //mi ingrandisco (posso colpire più nemici contemporaneamente)
-            StartTimer(timerDuration,StopChPLus);
+            StartTimer(timerDuration,StopChPlus);
             StartTimer(2*timerDuration,RechargeChplus);
         }
     }
-    public void StopChPLus()
+    public void StopChPlus()
     {
         moltiplicatoreDanniNemici = 1;
         transform.localScale = originalScale;
@@ -398,32 +402,76 @@ public class remote_controller : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
-        if (Input.GetKeyDown(KeyCode.I)  )
+        if (Input.GetKeyDown(KeyCode.Alpha1) && !isUIVisible)
         {
-            StartLaser();
+            controllerUI.SetActive(true);
+            isUIVisible = true;
         }
-        if (Input.GetKeyDown(KeyCode.U) )
+        else if (Input.GetKeyUp(KeyCode.Alpha1) && isUIVisible)
         {
-            StartPause("Enemy");
+            controllerUI.SetActive(false);
+            isUIVisible = false;
         }
-        if (Input.GetKeyDown(KeyCode.O) )
+
+        if (Input.GetKey(KeyCode.Alpha1) && isStaminaFull)
         {
-            StartChMinus("Enemy");
+            if (Input.GetKeyDown(KeyCode.I))
+            {
+                Debug.Log("ability");
+                playerTransform.GetComponent<PlayerCharacter>().UpdateStamina(0);
+                StartLaser();
+                controllerUI.SetActive(false);
+                isUIVisible = false;
+                isStaminaFull = false;
+            }
+            else if (Input.GetKeyDown(KeyCode.U))
+            {
+                Debug.Log("ability");
+                playerTransform.GetComponent<PlayerCharacter>().UpdateStamina(0);
+                StartPause("Enemy");
+                controllerUI.SetActive(false);
+                isUIVisible = false;
+                isStaminaFull = false;
+            }
+            else if (Input.GetKeyDown(KeyCode.O))
+            {
+                Debug.Log("ability");
+                playerTransform.GetComponent<PlayerCharacter>().UpdateStamina(0);
+                StartChMinus("Enemy");
+                controllerUI.SetActive(false);
+                isUIVisible = false;
+                isStaminaFull = false;
+            }
+            else if (Input.GetKeyDown(KeyCode.P))
+            {
+                Debug.Log("ability");
+                playerTransform.GetComponent<PlayerCharacter>().UpdateStamina(0);
+                StartVolumePlus();
+                controllerUI.SetActive(false);
+                isUIVisible = false;
+                isStaminaFull = false;
+            }
+            else if (Input.GetKeyDown(KeyCode.L))
+            {
+                Debug.Log("ability");
+                playerTransform.GetComponent<PlayerCharacter>().UpdateStamina(0);
+                StartChPlus();
+                controllerUI.SetActive(false);
+                isUIVisible = false;
+                isStaminaFull = false;
+            }
+            else if (Input.GetKeyDown(KeyCode.K))
+            {
+                Debug.Log("ability");
+                playerTransform.GetComponent<PlayerCharacter>().UpdateStamina(0);
+                StartVolumeMinus();
+                controllerUI.SetActive(false);
+                isUIVisible = false;
+                OnControllerAbility?.Invoke(this, EventArgs.Empty);
+                isStaminaFull = false;
+            }
         }
-        if (Input.GetKeyDown(KeyCode.P) )
-        {
-            StartVolumePlus();
-        }
-        if (Input.GetKeyDown(KeyCode.L) )
-        {
-            StartChPLus();
-        }
-        if (Input.GetKeyDown(KeyCode.K) )
-        {
-            StartVolumeMinus();
-        }
-        
+
         if (laser.enabled)
         {
             DetectHit();
