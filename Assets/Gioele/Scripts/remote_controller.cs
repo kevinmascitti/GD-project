@@ -24,82 +24,120 @@ public class remote_controller : MonoBehaviour
     [SerializeField] private GameObject player;
     [SerializeField] private LayerMask layerLaserMask;
     [SerializeField] private float laserDamage = 0.1f;
-    [SerializeField] private bool RechargeButton;
-    [SerializeField] public bool ButtonChPlusEnabled;
-    [SerializeField] public bool ButtonVolumePlusEnabled;
-    [SerializeField] public bool ButtonVolumeMinusEnabled;
-    [SerializeField] public bool ButtonLaserEnabled;
-    [SerializeField] public bool ButtonChminusEnabled;
-    [SerializeField] public bool ButtonPauseEnabled;
+    [SerializeField] public bool RechargeButtonChPlusEnabled;
+    [SerializeField] public bool RechargeButtonVolumePlusEnabled;
+    [SerializeField] public bool RechargeButtonVolumeMinusEnabled;
+    [SerializeField] public bool RechargeButtonLaserEnabled;
+    [SerializeField] public bool RechargeButtonChminusEnabled;
+    [SerializeField] public bool RechargeButtonPauseEnabled;
+    [SerializeField] private bool UnlockChPlus;
+    [SerializeField] private bool UnlockVolumePlus;
+    [SerializeField] private bool UnlockVolumeMinus;
+    [SerializeField] private bool UnlockLaser;
+    [SerializeField] private bool UnlockChminus;
+    [SerializeField] private bool UnlockPause;
     void Awake()
     {
         playerTransform = GetComponent<Transform>();
         originalScale = transform.localScale;
-        if(squashAndStress)
-            squashAndStress.SetActive(false);
-        RechargeButton = false;
-        ButtonLaserEnabled = false;
-        ButtonChminusEnabled = false;
-        ButtonPauseEnabled = false;
-        ButtonVolumeMinusEnabled = false;
-        ButtonVolumePlusEnabled = false;
-        ButtonChPlusEnabled = false;
+        squashAndStress.SetActive(false);
+        // tutti i timer sono attivi non devono ricaricarsi
+        RechargeButtonLaserEnabled = false;
+        RechargeButtonChminusEnabled = false;
+        RechargeButtonPauseEnabled = false;
+        RechargeButtonVolumeMinusEnabled = false;
+        RechargeButtonVolumePlusEnabled = false;
+        RechargeButtonChPlusEnabled = false;
+        // tutte le abilità sono da sbloccare
+        UnlockChPlus=false;
+        UnlockVolumePlus=false;
+        UnlockVolumeMinus=false;
+        UnlockLaser=false;
+        UnlockChminus=false;
+        UnlockPause=false;
+    }
+    // enable dei bottoni
+    public void UnlockChPlusButton()
+    {
+        UnlockChPlus = true;
+    }
+    public void UnlockVolumePlusButton()
+    {
+        UnlockVolumePlus = true;
+    }
+    public void UnlockLaserButton()
+    {
+        UnlockLaser = true;
+    }
+    public void UnlockChminusButton()
+    {
+        UnlockChminus = true;
+    }
+    public void UnlockPauseButton()
+    {
+        UnlockPause = true;
+    }
+    public void UnlockVolumeMinusButton()
+    {
+        UnlockVolumeMinus = true;
+    }
+    // ricarica bottoni
+    
+    public void RechargedChplus()
+    {
+        RechargeButtonChPlusEnabled = true;
+    }
+    public void RechargeChplus()
+    {
+        RechargeButtonChPlusEnabled = false;
     }
 
-    public void EnableChplus()
+    public void RechargedChminus()
     {
-        ButtonChPlusEnabled = true;
-    }
-    public void DisableChplus()
-    {
-        ButtonChPlusEnabled = false;
+        RechargeButtonChminusEnabled = true;
     }
 
-    public void EnableChminus()
+    public void RechargeChminus()
     {
-        ButtonChminusEnabled = true;
+        RechargeButtonChminusEnabled = false;
+    }
+    public void RechargedPause()
+    {
+        RechargeButtonPauseEnabled = true;
     }
 
-    public void DisableChminus()
+    public void RechargePause()
     {
-        ButtonChminusEnabled = false;
+        RechargeButtonPauseEnabled = false;
     }
-    public void EnablePause()
+    public void RechargedVolumeplus()
     {
-        ButtonPauseEnabled = true;
-    }
-
-    public void DisablePause()
-    {
-        ButtonPauseEnabled = false;
-    }
-    public void EnableVolumeplus()
-    {
-        ButtonVolumePlusEnabled = true;
+        RechargeButtonVolumePlusEnabled = true;
     }
 
-    public void DisableVolumePlus()
+    public void RechargeVolumePlus()
     {
-        ButtonVolumePlusEnabled = false;
+        RechargeButtonVolumePlusEnabled = false;
     }
-    public void EnableVolumeMinus()
+    public void RechargedVolumeMinus()
     {
-        ButtonVolumeMinusEnabled = true;
-    }
-
-    public void DisableVolumeMInus()
-    {
-        ButtonVolumeMinusEnabled = false;
-    }
-    public void EnableLaser()
-    {
-        ButtonLaserEnabled = true;
+        RechargeButtonVolumeMinusEnabled = true;
     }
 
-    public void DisableLaser()
+    public void RechargeVolumeMInus()
     {
-        ButtonLaserEnabled = false;
+        RechargeButtonVolumeMinusEnabled = false;
     }
+    public void RechargedLaser()
+    {
+        RechargeButtonLaserEnabled = true;
+    }
+
+    public void RechargeLaser()
+    {
+        RechargeButtonLaserEnabled = false;
+    }
+    
 
 
     // Metodo per avviare il timer
@@ -122,20 +160,16 @@ public class remote_controller : MonoBehaviour
     }
     public void StartVolumePlus()
     {
-        if (!RechargeButton)
+        if (!RechargeButtonVolumePlusEnabled && UnlockVolumePlus)
         {
-            RechargeButton = true;
+            RechargeButtonVolumePlusEnabled = true;
             // moltiplicatore di combo
             moltiplicatoreCombo = 1.5f;
             StartTimer(timerDuration, StopVolumePlus);
-            StartTimer(2*timerDuration,EnableButton);
+            StartTimer(2*timerDuration,RechargeVolumePlus);
         }
     }
-
-    public void EnableButton()
-    {
-        RechargeButton = false;
-    }
+    
     public void StopVolumePlus()
     {
         
@@ -145,12 +179,12 @@ public class remote_controller : MonoBehaviour
     }
     public void StartVolumeMinus()
     {
-        if (!RechargeButton)
+        if (!RechargeButtonVolumeMinusEnabled && UnlockVolumeMinus)
         {
-            RechargeButton = true;
+            RechargeButtonVolumeMinusEnabled = true;
             // blocco dall’alto che li “schiaccia” o appiattisce
             StartTimer(timerDuration, StopVolumeMinus);
-            StartTimer(2*timerDuration,EnableButton);
+            StartTimer(2*timerDuration,RechargeVolumeMInus);
         }
     }
     public void StopVolumeMinus()
@@ -165,9 +199,9 @@ public class remote_controller : MonoBehaviour
 
     public void StartLaser()
     {
-        if (!RechargeButton)
+        if (!RechargeButtonLaserEnabled && UnlockLaser)
         {
-            RechargeButton = true;
+            RechargeButtonLaserEnabled = true;
             GetComponent<LineRenderer>().enabled = true;
             // raggio laser
             if (Physics.Raycast(playerTransform.position, transform.forward))
@@ -181,7 +215,7 @@ public class remote_controller : MonoBehaviour
                 //laser.SetPosition(1,new Vector3(laserFirePoint.position.x,laserFirePoint.position.y, laserFirePoint.position.z+distance));
             }
             StartTimer(timerDuration, StopLaser);
-            StartTimer(2*timerDuration,EnableButton);
+            StartTimer(2*timerDuration,RechargeLaser);
         }
     }
     public void StopLaser()
@@ -218,14 +252,14 @@ public class remote_controller : MonoBehaviour
 
     public void StartChPLus()
     {
-        if (!RechargeButton)
+        if (!RechargeButtonChPlusEnabled && UnlockChPlus)
         {
-            RechargeButton = true;
+            RechargeButtonChPlusEnabled= true;
             moltiplicatoreDanniNemici = 1.5f;
             transform.localScale *= 1.5f;
             //mi ingrandisco (posso colpire più nemici contemporaneamente)
             StartTimer(timerDuration,StopChPLus);
-            StartTimer(2*timerDuration,EnableButton);
+            StartTimer(2*timerDuration,RechargeChplus);
         }
     }
     public void StopChPLus()
@@ -236,9 +270,10 @@ public class remote_controller : MonoBehaviour
     }
     public void StartChMinus(string layerName)
     {
-        if (!RechargeButton)
+        // se il bottone è sbloccato e non si sta ricaricando
+        if (!RechargeButtonChminusEnabled && UnlockChminus)
         {
-            RechargeButton = true;
+            RechargeButtonChminusEnabled= true;
             moltiplicatoreDanniNemici = 1.5f;
             
             int layer = LayerMask.NameToLayer(layerName);
@@ -270,7 +305,7 @@ public class remote_controller : MonoBehaviour
             }
             //rimpicciolisco i nemici (mi fanno pochi danni)
             StartTimer(timerDuration,StopChMinus);
-            StartTimer(2*timerDuration,EnableButton);
+            StartTimer(2*timerDuration,RechargeChminus);
         }
     }
     public void StopChMinus()
@@ -306,9 +341,9 @@ public class remote_controller : MonoBehaviour
     }
     public void StartPause(string layerName)
     {
-        if (!RechargeButton)
+        if (!RechargeButtonPauseEnabled && UnlockPause)
         {
-            RechargeButton = true;
+            RechargeButtonPauseEnabled = true;
             // Ottieni il numero di layer dall'indice o dal nome
             int layer = LayerMask.NameToLayer(layerName);
 
@@ -331,7 +366,7 @@ public class remote_controller : MonoBehaviour
                 }
             }
             StartTimer(timerDuration,StopPause);
-            StartTimer(2*timerDuration,EnableButton);
+            StartTimer(2*timerDuration,RechargePause);
         }
     }
 
@@ -363,27 +398,27 @@ public class remote_controller : MonoBehaviour
     void Update()
     {
         
-        if (Input.GetKeyDown(KeyCode.I)  && ButtonLaserEnabled)
+        if (Input.GetKeyDown(KeyCode.I)  )
         {
             StartLaser();
         }
-        if (Input.GetKeyDown(KeyCode.U) && ButtonPauseEnabled)
+        if (Input.GetKeyDown(KeyCode.U) )
         {
             StartPause("Enemy");
         }
-        if (Input.GetKeyDown(KeyCode.O) && ButtonChminusEnabled)
+        if (Input.GetKeyDown(KeyCode.O) )
         {
             StartChMinus("Enemy");
         }
-        if (Input.GetKeyDown(KeyCode.P) && ButtonVolumePlusEnabled)
+        if (Input.GetKeyDown(KeyCode.P) )
         {
             StartVolumePlus();
         }
-        if (Input.GetKeyDown(KeyCode.L) && ButtonChPlusEnabled)
+        if (Input.GetKeyDown(KeyCode.L) )
         {
             StartChPLus();
         }
-        if (Input.GetKeyDown(KeyCode.K) && ButtonVolumeMinusEnabled)
+        if (Input.GetKeyDown(KeyCode.K) )
         {
             StartVolumeMinus();
         }

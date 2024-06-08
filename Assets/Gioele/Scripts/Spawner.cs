@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Object = System.Object;
 using Random = UnityEngine.Random;
 
 public class Spawner : MonoBehaviour
@@ -16,7 +17,7 @@ public class Spawner : MonoBehaviour
     [SerializeField] private int spawnCount = 0;
     [SerializeField] private int spawnLimit = 7;
     [SerializeField] public GameObject levelPlane;
-
+    public static EventHandler OnDoorOpen;
     void Start()
     {
         //somma delle probabilità totali
@@ -34,6 +35,9 @@ public class Spawner : MonoBehaviour
         ChangePrefabs(0);
         StartCoroutine(SpawnObjects());
         StartCoroutine(ShowExit(1.5f));
+        PlayerCharacter.OnEndRoom += OpenExit;
+        PlayerCharacter.OnStartRoom += CloseExit;
+
     }
 
     IEnumerator ShowExit(float delay)
@@ -42,7 +46,7 @@ public class Spawner : MonoBehaviour
         yield return new WaitForSeconds(delay);
 
         // Chiama il metodo desiderato
-        ManageExit(true);
+        
     }
 
     public void ChangeSpawnTime(float time)
@@ -52,18 +56,48 @@ public class Spawner : MonoBehaviour
 
     public void StopSpawn()
     {
-        ManageExit(false);
+        //ManageExit(false);
         // se è false non spawna nulla
         canSpawn = false;
     }
 
-    public void ManageExit(bool flag)
+    public void CloseExit(object sender,RoomArgs args)
     {
-        GameObject[] objectsWithTag = GameObject.FindGameObjectsWithTag("Exit");
-        foreach (GameObject obj in objectsWithTag)
+        // attivare animazione
+        GameObject[] exitObjects = GameObject.FindGameObjectsWithTag("Exit");
+
+        // Itera attraverso tutti gli oggetti trovati
+        foreach (GameObject exitObject in exitObjects)
         {
-            obj.SetActive(flag);
+            // Prendi il componente Animator
+            Animator animator = exitObject.GetComponent<Animator>();
+
+            if (animator != null)
+            {
+                animator.SetBool("open",false);
+            }
+            
         }
+        
+    }
+    public void OpenExit(object sender,RoomArgs args)
+    {
+        // attivare animazione
+        GameObject[] exitObjects = GameObject.FindGameObjectsWithTag("Exit");
+
+        // Itera attraverso tutti gli oggetti trovati
+        foreach (GameObject exitObject in exitObjects)
+        {
+            // Prendi il componente Animator
+            Animator animator = exitObject.GetComponent<Animator>();
+
+            if (animator != null)
+            {
+                animator.SetBool("open",true);
+            }
+            
+        }
+        
     }
 
     public void StartSpawn()
@@ -103,6 +137,7 @@ public class Spawner : MonoBehaviour
             if (spawnCount == (spawnLimit - 1))
             {
                 StopSpawn();
+                
             }
 
             // Generiamo un numero casuale per selezionare l'oggetto da spawnare
@@ -137,5 +172,10 @@ public class Spawner : MonoBehaviour
                 Instantiate(selectedObject, spawnPosition, Quaternion.identity);
             }
         }
+    }
+
+    public void Update()
+    {
+        throw new NotImplementedException();
     }
 }
