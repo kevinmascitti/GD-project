@@ -3206,6 +3206,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isLocked: 1
+  spawner: {fileID: 0}
   isBossRoom: 0
 --- !u!4 &153083625 stripped
 Transform:
@@ -9142,6 +9143,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemyLayer: 0
+  red: {r: 1, g: 0, b: 0, a: 1}
+  green: {r: 0, g: 1, b: 0, a: 1}
+  renderer: {fileID: 0}
 --- !u!65 &583133760
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -15569,6 +15573,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isLocked: 1
+  spawner: {fileID: 0}
   isBossRoom: 0
 --- !u!1001 &1001510878
 PrefabInstance:
@@ -16409,6 +16414,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isLocked: 1
+  spawner: {fileID: 0}
   isBossRoom: 0
 --- !u!4 &1036592878
 Transform:
@@ -19241,6 +19247,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isLocked: 1
+  spawner: {fileID: 0}
   isBossRoom: 0
 --- !u!4 &1189088106
 Transform:
@@ -19377,7 +19384,7 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: a045374b974734b34a0d68b0ac720446,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 2351.6
+      value: 2364.7
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: a045374b974734b34a0d68b0ac720446,
         type: 3}
@@ -19387,7 +19394,7 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: a045374b974734b34a0d68b0ac720446,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: -256.56
+      value: -281.7
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: a045374b974734b34a0d68b0ac720446,
         type: 3}
@@ -26964,6 +26971,18 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 0
   laserDamage: 0.1
+  RechargeButtonChPlusEnabled: 0
+  RechargeButtonVolumePlusEnabled: 0
+  RechargeButtonVolumeMinusEnabled: 0
+  RechargeButtonLaserEnabled: 0
+  RechargeButtonChminusEnabled: 0
+  RechargeButtonPauseEnabled: 0
+  UnlockChPlus: 0
+  UnlockVolumePlus: 0
+  UnlockVolumeMinus: 0
+  UnlockLaser: 0
+  UnlockChminus: 0
+  UnlockPause: 0
 --- !u!120 &1747058552
 LineRenderer:
   serializedVersion: 2
@@ -27819,6 +27838,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isLocked: 1
+  spawner: {fileID: 0}
   isBossRoom: 0
 --- !u!4 &1805868050 stripped
 Transform:
@@ -32767,6 +32787,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isLocked: 1
+  spawner: {fileID: 0}
   isBossRoom: 0
 --- !u!4 &2091221341
 Transform:
