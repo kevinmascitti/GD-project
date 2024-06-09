@@ -54,6 +54,13 @@ public class SimpleThirdPersonController : MonoBehaviour
         float h = Input.GetAxis("Horizontal");
         float v = Input.GetAxis("Vertical");
 
+        if(h > 0){
+            transform.transform.rotation = Quaternion.Euler(0, 270, 0);
+        }
+        else if (h < 0){
+            transform.transform.rotation = Quaternion.Euler(0, 90, 0);
+        }
+
         if (fede) // To remove fede variable if-cases
         {
             PlayerAnim.SetFloat("horizontal", h);
@@ -67,7 +74,7 @@ public class SimpleThirdPersonController : MonoBehaviour
         }
 
         // Elaborate input Vector and input Speed
-        _inputVector = new Vector3(h, 0, v);
+        _inputVector = new Vector3(-h, 0, -v);
         _inputSpeed = Mathf.Clamp(_inputVector.magnitude, 0f, 1f);
 
         // Compute direction according to Camera orientation
@@ -80,14 +87,14 @@ public class SimpleThirdPersonController : MonoBehaviour
         else
         {
             // Calculate the new expected direction (newDir) and rotate
-            Vector3 newDir = Vector3.RotateTowards(transform.forward, _targetDirection, RotationSpeed * Time.deltaTime, 0f);
-            transform.rotation = Quaternion.LookRotation(newDir);
+            //Vector3 newDir = Vector3.RotateTowards(transform.forward, _targetDirection, RotationSpeed * Time.deltaTime, 0f);
+            //transform.rotation = Quaternion.LookRotation(newDir);
         }
 
         if (PlayerAnim && !PlayerAnim.GetBool("InvalidateMoving"))
         {
             // Translate along forward
-            Vector3 movement = transform.forward * _inputSpeed * Speed * Time.deltaTime;
+            Vector3 movement = _inputVector * Speed * Time.deltaTime;
             if (CanMove(movement))
             {
                 transform.Translate(movement, Space.World);
