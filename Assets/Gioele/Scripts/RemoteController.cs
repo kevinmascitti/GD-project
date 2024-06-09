@@ -54,7 +54,14 @@ public class RemoteController : MonoBehaviour
         controllerUI = GameObject.Find("ControllerUI");
         controllerUI.SetActive(false);
         isUIVisible = false;
-
+        /*
+        UnlockChPlus = true;
+        UnlockChminus = true;
+        UnlockLaser = true;
+        UnlockPause = true;
+        UnlockVolumeMinus = true;
+        UnlockVolumePlus = true;
+        */
         PlayerCharacter.OnStaminaFull += SetStaminaFull;
     }
 
@@ -417,7 +424,6 @@ public class RemoteController : MonoBehaviour
         {
             if (Input.GetKeyDown(KeyCode.I))
             {
-                Debug.Log("ability");
                 playerTransform.GetComponent<PlayerCharacter>().UpdateStamina(0);
                 StartLaser();
                 controllerUI.SetActive(false);
@@ -426,7 +432,6 @@ public class RemoteController : MonoBehaviour
             }
             else if (Input.GetKeyDown(KeyCode.U))
             {
-                Debug.Log("ability");
                 playerTransform.GetComponent<PlayerCharacter>().UpdateStamina(0);
                 StartPause("Enemy");
                 controllerUI.SetActive(false);
@@ -435,7 +440,6 @@ public class RemoteController : MonoBehaviour
             }
             else if (Input.GetKeyDown(KeyCode.O))
             {
-                Debug.Log("ability");
                 playerTransform.GetComponent<PlayerCharacter>().UpdateStamina(0);
                 StartChMinus("Enemy");
                 controllerUI.SetActive(false);
@@ -444,7 +448,6 @@ public class RemoteController : MonoBehaviour
             }
             else if (Input.GetKeyDown(KeyCode.P))
             {
-                Debug.Log("ability");
                 playerTransform.GetComponent<PlayerCharacter>().UpdateStamina(0);
                 StartVolumePlus();
                 controllerUI.SetActive(false);
@@ -453,7 +456,6 @@ public class RemoteController : MonoBehaviour
             }
             else if (Input.GetKeyDown(KeyCode.L))
             {
-                Debug.Log("ability");
                 playerTransform.GetComponent<PlayerCharacter>().UpdateStamina(0);
                 StartChPlus();
                 controllerUI.SetActive(false);
@@ -462,7 +464,6 @@ public class RemoteController : MonoBehaviour
             }
             else if (Input.GetKeyDown(KeyCode.K))
             {
-                Debug.Log("ability");
                 playerTransform.GetComponent<PlayerCharacter>().UpdateStamina(0);
                 StartVolumeMinus();
                 controllerUI.SetActive(false);

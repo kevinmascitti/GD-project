@@ -24,14 +24,14 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 156894252090288834}
   serializedVersion: 2
-  m_LocalRotation: {x: 4.3297806e-17, y: -0.7071068, z: -0.7071068, w: -4.3297806e-17}
-  m_LocalPosition: {x: -0.010456088, y: -0.012249762, z: 0.03550015}
+  m_LocalRotation: {x: 1.3738484e-17, y: -0.9745048, z: -0.22436664, w: -5.967122e-17}
+  m_LocalPosition: {x: -0.010456088, y: -0.018383032, z: 0.04569722}
   m_LocalScale: {x: 0.02499999, y: 0.024999995, z: 0.024999995}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 8341465865388528496}
   m_Father: {fileID: 4041370884879351021}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: -25.931, y: 180, z: 0}
 --- !u!1001 &4584501783680490246
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -113,7 +113,7 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: 70f442f7c3b574af49830bbde4a6951f,
         type: 3}
       propertyPath: m_Name
-      value: StazioneSbarra
+      value: Sbarra
       objectReference: {fileID: 0}
     - target: {fileID: 3686967438152028522, guid: 70f442f7c3b574af49830bbde4a6951f,
         type: 3}
@@ -127,8 +127,39 @@ PrefabInstance:
         type: 3}
       insertIndex: -1
       addedObject: {fileID: 3352237885210093514}
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 70f442f7c3b574af49830bbde4a6951f,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 8438115361433659379}
   m_SourcePrefab: {fileID: 100100000, guid: 70f442f7c3b574af49830bbde4a6951f, type: 3}
+--- !u!1 &3701402286411916887 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 70f442f7c3b574af49830bbde4a6951f,
+    type: 3}
+  m_PrefabInstance: {fileID: 4584501783680490246}
+  m_PrefabAsset: {fileID: 0}
+--- !u!95 &8438115361433659379
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3701402286411916887}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: c5d7d3a7c735a9b4cb69487ef938d76a, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!4 &4041370884879351021 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 70f442f7c3b574af49830bbde4a6951f,
