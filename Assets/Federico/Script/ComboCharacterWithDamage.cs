@@ -80,7 +80,6 @@ public class ComboCharacterWithDamage : MonoBehaviour
        yield return new WaitForSeconds(0.5f);
       
        GetComponent<Animator>().SetBool("InvalidateMoving",false);
-       Debug.Log("Coroutine ended " + Time.time);
     }
     IEnumerator KillHitEffect()
     {
@@ -88,7 +87,6 @@ public class ComboCharacterWithDamage : MonoBehaviour
         yield return new WaitForSeconds(0.1f);
 
         GameObject.Destroy(hitEffectPrefabTemp);
-        Debug.Log("Coroutine ended " + Time.time);
     }
 
 }
