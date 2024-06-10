@@ -44,7 +44,8 @@ public class ComboCharacterWithDamage : MonoBehaviour
         {
             Debug.Log("Osso non trovato.");
         }
-        
+
+        Dash.OnDashEnded += ValidateMovingNow;
     }
 
     // Update is called once per frame
@@ -52,7 +53,7 @@ public class ComboCharacterWithDamage : MonoBehaviour
     {
         if (Input.GetMouseButton(0) && meleeStateMachine.CurrentState.GetType() == typeof(IdleCombatState))
         {
-            Vector3 contactPoint =handBone.transform.position;
+            Vector3 contactPoint = handBone.transform.position;
             GetComponent<Animator>().SetBool("InvalidateMoving",true);
             meleeStateMachine.SetNextState(new GroundEntryState()); 
             // hitEffectPrefabTemp = GameObject.Instantiate(HitEffectPrefab, contactPoint, Quaternion.identity);
@@ -68,16 +69,20 @@ public class ComboCharacterWithDamage : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.K) && meleeStateMachine.CurrentState.GetType() == typeof(IdleCombatState) )
         {
             GetComponent<Animator>().SetBool("InvalidateMoving",true);
-            StartCoroutine("validateMoving");
+            StartCoroutine(ValidateMoving(0.5f));
             meleeStateMachine.SetNextState(new KickState());
         }
         
     }
-    // soluzione 1: 
-    IEnumerator validateMoving()
+
+    private void ValidateMovingNow(object sender, EventArgs args)
     {
-        Debug.Log("Started Coroutine at timestamp : " + Time.time); 
-       yield return new WaitForSeconds(0.5f);
+        StartCoroutine(ValidateMoving(0));
+    }
+    
+    IEnumerator ValidateMoving(float validationTime)
+    { 
+       yield return new WaitForSeconds(validationTime);
       
        GetComponent<Animator>().SetBool("InvalidateMoving",false);
     }
