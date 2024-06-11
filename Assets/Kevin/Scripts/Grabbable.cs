@@ -61,7 +61,7 @@ public class Grabbable : MonoBehaviour
             isInRange = true;
             OnInsideRange?.Invoke(this, new GrabbableArgs(this));
         }
-        else if(Vector3.Distance(transform.position, player.transform.position) >= distanceTrigger && isInRange)
+        else if(Vector3.Distance(transform.position, player.transform.position) >= distanceTrigger && isInRange && state == GrabbableState.GRABBABLE)
         {
             isInRange = false;
             OnOutsideRange?.Invoke(this, new GrabbableArgs(this));
@@ -86,12 +86,12 @@ public class Grabbable : MonoBehaviour
 
     public void SetGrabbable(object sender, GrabbableArgs args)
     {
-        if (args.grabbable == this)
+        if (args.grabbable!=null && args.grabbable == this && args.grabbable.state == GrabbableState.UNGRABBABLE)
         {
             state = GrabbableState.GRABBABLE;
             //hint.gameObject.SetActive(true);
         }
-        else
+        else if(args.grabbable!=null && args.grabbable != this)
         {
             state = GrabbableState.UNGRABBABLE;
             hint.gameObject.SetActive(false);

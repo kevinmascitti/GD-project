@@ -8,6 +8,11 @@ public class UICounterHit : MonoBehaviour
 {
     [NonSerialized] public bool isCounterVisible;
     private bool isFading;
+    private int currentUIColor = 0;
+    private int currentLerpStep = 0;
+    [SerializeField] private Color uiHitsColor;
+    [SerializeField] private List<Color> uiColors = new List<Color>();
+    [SerializeField] private int stepColorLerp = 10;
     [SerializeField] private float fadeDuration = 1.0f;
     [SerializeField] private float rotationDuration = 0.2f;
     [SerializeField] private GameObject hitsWord;
@@ -15,6 +20,19 @@ public class UICounterHit : MonoBehaviour
     void Start()
     {
         hitsWord = GameObject.Find("HitsWord");
+        
+        uiColors.Add(Color.white);
+        uiColors.Add(Color.blue);
+        uiColors.Add(Color.green);
+        uiColors.Add(Color.yellow);
+        uiColors.Add(Color.magenta);
+        uiColors.Add(Color.red);
+        GetComponent<TMP_Text>().color = uiColors[currentUIColor];
+        hitsWord.GetComponent<TMP_Text>().color = uiHitsColor;
+        
+        GetComponent<TMP_Text>().alpha = 0;
+        hitsWord.GetComponent<TMP_Text>().alpha = 0;
+
         ComboCounter.OnCounterIncreased += ShowCounterHit;
         ComboCounter.OnCounterInitialized += HideCounterHit;
     }
@@ -26,6 +44,7 @@ public class UICounterHit : MonoBehaviour
             isFading = false;
             GetComponent<TMP_Text>().text = args.ToString();
             StartCoroutine(SpinAround());
+            ChangeColor();
 
             if (!isCounterVisible)
             {
@@ -36,8 +55,6 @@ public class UICounterHit : MonoBehaviour
                 GetComponent<TMP_Text>().color = new Color(color.r, color.g, color.b, 1f);
                 hitsWord.GetComponent<TMP_Text>().color = new Color(color2.r, color2.g, color2.b, 1f);
                 
-                // GetComponent<TMP_Text>().gameObject.SetActive(true);
-                // GetComponentInChildren<TMP_Text>().gameObject.SetActive(true);
             }
         }
     }
@@ -48,9 +65,28 @@ public class UICounterHit : MonoBehaviour
         {
             isCounterVisible = false;
             StartCoroutine(StartFadingOut());
+            currentLerpStep = 0;
+            currentUIColor = 0;
+            GetComponent<TMP_Text>().color = uiColors[currentUIColor];
             // GetComponent<TMP_Text>().gameObject.SetActive(false);
             // GetComponentInChildren<TMP_Text>().gameObject.SetActive(false);
         }
+    }
+
+    private void ChangeColor()
+    {
+        currentLerpStep++;
+        if (currentLerpStep == stepColorLerp)
+        {
+            currentLerpStep = 0;
+            currentUIColor = (currentUIColor + 1) % uiColors.Count;
+        }
+        int nextUIColor = (currentUIColor + 1) % uiColors.Count;
+        
+        Color startColor = uiColors[currentUIColor];
+        Color endColor = uiColors[nextUIColor];
+
+        GetComponent<TMP_Text>().color = Color.Lerp(startColor, endColor, (float) currentLerpStep / stepColorLerp);
     }
 
     IEnumerator SpinAround()
@@ -91,8 +127,6 @@ public class UICounterHit : MonoBehaviour
             GetComponent<TMP_Text>().color = new Color(color.r, color.g, color.b, 0f);
             hitsWord.GetComponent<TMP_Text>().color = new Color(color2.r, color2.g, color2.b, 0f);
 
-            // GetComponent<TMP_Text>().gameObject.SetActive(false);
-            // GetComponentInChildren<TMP_Text>().gameObject.SetActive(false);
             isFading = false;
         }
     }

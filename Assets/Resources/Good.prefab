@@ -354,12 +354,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eb0ae8807a5244a3b8bda6c4d5e05fef, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  destroyTimer: 3
+  destroyThrowTimer: 5
+  destroyUsedTimer: 5
   transitionDuration: 0.5
   distanceTrigger: 2
   grabEulerRotation: {x: 0, y: -100, z: 90}
   throwForce: 10
   rotationSpeed: 500
+  hasToBeThrown: 1
+  atk: 0
   Enemy: {fileID: 0}
 --- !u!54 &6753128158604427262
 Rigidbody:
