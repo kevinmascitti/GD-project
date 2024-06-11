@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Networking;
 public class ComboCharacterWithDamage : MonoBehaviour
@@ -12,7 +13,7 @@ public class ComboCharacterWithDamage : MonoBehaviour
    // [SerializeField] public BoxCollider hitbox;
     public GameObject HitEffectPrefab;
     // Start is called before the first frame update
-    
+    public bool isAttacking = false;
     public GameObject parentObject; // Assegna l'oggetto padre via Inspector
     public string boneName; // Nome dell'osso che vuoi trovare
     public GameObject handBone;
@@ -52,6 +53,7 @@ public class ComboCharacterWithDamage : MonoBehaviour
     {
         if (Input.GetMouseButton(0) && meleeStateMachine.CurrentState.GetType() == typeof(IdleCombatState))
         {
+            isAttacking = true;
             Vector3 contactPoint =handBone.transform.position;
             GetComponent<Animator>().SetBool("InvalidateMoving",true);
             meleeStateMachine.SetNextState(new GroundEntryState()); 

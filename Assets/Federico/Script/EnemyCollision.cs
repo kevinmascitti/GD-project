@@ -10,35 +10,43 @@ public class EnemyCollision : MonoBehaviour
     public static EventHandler<EnemyCollisionArgs> OnAttackLended;
     private GameObject hitEffectPrefabTemp;
     public GameObject HitEffectPrefab;
-
+    public ComboCharacterWithDamage oggetto;
     private bool canCollide = true;
     private float collisionCooldown = 0.1f; // Cooldown di 0.1 secondi
-
-    public Boolean CheckCollision(Enemy Enemy,Animator PlayerAnim)
-    {
-        if (Enemy == null)
-            return false;
-        if (
-            (PlayerAnim.GetFloat("LeftArm")>0.0 &&
-             PlayerAnim.GetFloat("RightArm")==0.0 && 
-             PlayerAnim.GetFloat("LeftKick")==0.0) || 
-            (PlayerAnim.GetFloat("LeftArm")==0.0 &&
-            PlayerAnim.GetFloat("RightArm")>0.0 &&
-            PlayerAnim.GetFloat("LeftKick")==0.0) ||
-            (PlayerAnim.GetFloat("LeftArm")==0.0 &&
-             PlayerAnim.GetFloat("RightArm")==0.0 &&
-             PlayerAnim.GetFloat("LeftKick")>0.0)
-            )
-        {
-            return true;
-        }
+    //
+    // public bool CheckCollision(Enemy Enemy,Animator PlayerAnim)
+    // {
+    //     if (Enemy == null )
+    //         return false;
+    //     if (PlayerAnim.GetFloat("Weapon.Active") == 0)
+    //     {
+    //        Debug.Log("collisione ignorata perchè ho disabilitato il weapon active");
+    //         return false;
+    //     }
+    //
+    //     if (
+    //         (PlayerAnim.GetFloat("LeftArm")>0.0 &&
+    //          PlayerAnim.GetFloat("RightArm")==0.0 && 
+    //          PlayerAnim.GetFloat("LeftKick")==0.0) || 
+    //         (PlayerAnim.GetFloat("LeftArm")==0.0 &&
+    //         PlayerAnim.GetFloat("RightArm")>0.0 &&
+    //         PlayerAnim.GetFloat("LeftKick")==0.0) ||
+    //         (PlayerAnim.GetFloat("LeftArm")==0.0 &&
+    //          PlayerAnim.GetFloat("RightArm")==0.0 &&
+    //          PlayerAnim.GetFloat("LeftKick")>0.0)
+    //         )
+    //     {
+    //         Debug.Log("Prima collisione trovata disabilito le prossime");
+    //         PlayerAnim.SetFloat("Weapon.Active", 0);
+    //         return true;
+    //     }
         
        // Debug.Log("Error EnemyCollision.cs end of if reached without any return");
-        return false; 
-    }
+        // return false; 
+    // }
     public void OnTriggerEnter(Collider other)
     {
-        Debug.Log("OnTriggerEnter called with: " + other.name);
+        
         
         if (!canCollide) 
         {
@@ -53,8 +61,10 @@ public class EnemyCollision : MonoBehaviour
         Vector3 contactPoint = other.ClosestPoint(this.transform.position);
         // sostiuire questa riga se l'animator da errore :)
         //enemy!=null && anim.GetFloat("Weapon.Active")>0.0
-        if (CheckCollision(enemy,anim))
+        if (enemy != null && oggetto.isAttacking)
         {
+            oggetto.isAttacking = false;
+            Debug.Log("OnTriggerEnter called with: " + other.name + " FROM "+ this);
             Vector3 effectPosition = other.transform.position + new Vector3(0, +1.5f, 0);
             hitEffectPrefabTemp = GameObject.Instantiate(HitEffectPrefab, effectPosition, Quaternion.identity);
             StartCoroutine(KillHitEffect(hitEffectPrefabTemp));
