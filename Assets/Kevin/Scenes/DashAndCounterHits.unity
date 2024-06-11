@@ -2357,6 +2357,11 @@ MonoBehaviour:
   player: {fileID: 81980834}
   comboCounter: {fileID: 418309112}
   popupSpeed: 10
+  thresholdList: 050000000f00000019000000
+  popupNamesList:
+  - Good
+  - Great
+  - Amazing
 --- !u!114 &418309112
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4976,7 +4981,6 @@ MonoBehaviour:
   stepColorLerp: 15
   fadeDuration: 1
   rotationDuration: 0.2
-  colorTransitionSpeed: 5
   hitsWord: {fileID: 0}
 --- !u!1 &1791181771
 GameObject:

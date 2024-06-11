@@ -89,6 +89,7 @@ public class PlayerCharacter : Character
         Grabbable.OnInsideRange += AddGrabbableInRange;
         Grabbable.OnOutsideRange += RemoveGrabbableInRange;
         Grabbable.OnGrab += StartMovingUpArm;
+        Grabbable.OnGrab += RemoveGrabbableInRange;
         Grabbable.OnThrow += StartMovingDownArm;
         Grabbable.OnUse += StartMovingDownArm;
 
@@ -140,7 +141,6 @@ public class PlayerCharacter : Character
             grabbedItem = grabbableItem;
             grabbedItem.Grab();
             OnGrabbed?.Invoke(this, new GrabbableArgs(grabbedItem));
-            grabbableItem = null;
         }
         else if (Input.GetKeyDown(KeyCode.G) && grabbedItem && grabbedItem.GetState() == GrabbableState.GRABBED) 
         {
