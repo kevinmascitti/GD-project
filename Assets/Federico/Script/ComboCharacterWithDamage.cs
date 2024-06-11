@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Networking;
 public class ComboCharacterWithDamage : MonoBehaviour
@@ -12,7 +13,7 @@ public class ComboCharacterWithDamage : MonoBehaviour
    // [SerializeField] public BoxCollider hitbox;
     public GameObject HitEffectPrefab;
     // Start is called before the first frame update
-    
+    public bool isAttacking = false;
     public GameObject parentObject; // Assegna l'oggetto padre via Inspector
     public string boneName; // Nome dell'osso che vuoi trovare
     public GameObject handBone;
@@ -44,7 +45,8 @@ public class ComboCharacterWithDamage : MonoBehaviour
         {
             Debug.Log("Osso non trovato.");
         }
-        
+
+        Dash.OnDashEnded += ValidateMovingNow;
     }
 
     // Update is called once per frame
@@ -52,6 +54,7 @@ public class ComboCharacterWithDamage : MonoBehaviour
     {
         if (Input.GetMouseButton(0) && meleeStateMachine.CurrentState.GetType() == typeof(IdleCombatState))
         {
+            isAttacking = true;
             Vector3 contactPoint =handBone.transform.position;
             GetComponent<Animator>().SetBool("InvalidateMoving",true);
             meleeStateMachine.SetNextState(new GroundEntryState()); 
@@ -68,16 +71,20 @@ public class ComboCharacterWithDamage : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.K) && meleeStateMachine.CurrentState.GetType() == typeof(IdleCombatState) )
         {
             GetComponent<Animator>().SetBool("InvalidateMoving",true);
-            StartCoroutine("validateMoving");
+            StartCoroutine(ValidateMoving(0.5f));
             meleeStateMachine.SetNextState(new KickState());
         }
         
     }
-    // soluzione 1: 
-    IEnumerator validateMoving()
+
+    private void ValidateMovingNow(object sender, EventArgs args)
     {
-        Debug.Log("Started Coroutine at timestamp : " + Time.time); 
-       yield return new WaitForSeconds(0.5f);
+        StartCoroutine(ValidateMoving(0));
+    }
+    
+    IEnumerator ValidateMoving(float validationTime)
+    { 
+       yield return new WaitForSeconds(validationTime);
       
        GetComponent<Animator>().SetBool("InvalidateMoving",false);
     }

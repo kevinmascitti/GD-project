@@ -15,16 +15,19 @@ public class AdTrigger : MonoBehaviour
 
     // EVENTS
     public static EventHandler OnAdStart;
+    public static EventHandler OnAdEnd;
 
     // PRIVATES
-    private Spawner adSpawner;
+    private SpawnerDeterministico adSpawner;
     private float adTimer = 0f;
     
     private bool isAdGoing = false;
+    private PlayerCharacter player;
 
     private void Start()
     {
-        adSpawner = GetComponent<Spawner>();
+        player = GameObject.Find("Player").GetComponent<PlayerCharacter>();
+        adSpawner = GetComponent<SpawnerDeterministico>();
         TimerBar.maxValue = adDuration;
         TimerBar.value = adDuration;
         OnAdStart += AdSequenceStart;
@@ -69,6 +72,7 @@ public class AdTrigger : MonoBehaviour
 
     private void AdStart()
     {
+        SetSpawnerPlane(player.currentRoom.plane);
         adSpawner.enabled = true;
         GetComponent<MeshRenderer>().enabled = false;
         TimerBar.gameObject.SetActive(true);
@@ -92,6 +96,7 @@ public class AdTrigger : MonoBehaviour
         }
         Debug.Log("Ad ended.");
         isAdGoing = false;
+        OnAdEnd?.Invoke(this, EventArgs.Empty);
     }
 
     private void AdSequenceEnd(){

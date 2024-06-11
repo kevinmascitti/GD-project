@@ -52,7 +52,8 @@ public class RemoteController : MonoBehaviour
         if(squashAndStress)
             squashAndStress.SetActive(false);
         controllerUI = GameObject.Find("ControllerUI");
-        controllerUI.SetActive(false);
+        if(controllerUI)
+            controllerUI.SetActive(false);
         isUIVisible = false;
         /*
         UnlockChPlus = true;
