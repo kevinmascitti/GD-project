@@ -1,7 +1,9 @@
-﻿using System;
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Numerics;
 using UnityEngine;
+using Vector3 = UnityEngine.Vector3;
 
 public class SimpleThirdPersonController : MonoBehaviour
 {
@@ -18,6 +20,12 @@ public class SimpleThirdPersonController : MonoBehaviour
     private Vector3 _targetDirection;
     [SerializeField] private bool isGrounded = false;
     private float boundingBoxWidth = 1.0f;
+
+    // VECTOR CONSTANTS TO ROTATE THE PLAYER
+    private Vector3 forwardVector = new Vector3(-1, 0, 0);
+    private Vector3 forwardScaleVector = new Vector3(1, 1, 1);
+    private Vector3 backwardVector = new Vector3(1, 0, 0);
+    private Vector3 backwardScaleVector = new Vector3(-1, 1, 1);
 
     public void Start()
     {
@@ -55,10 +63,12 @@ public class SimpleThirdPersonController : MonoBehaviour
         float v = Input.GetAxis("Vertical");
 
         if(h > 0){
-            transform.transform.rotation = Quaternion.Euler(0, 270, 0);
+            transform.forward = forwardVector;
+            transform.localScale = forwardScaleVector;
         }
         else if (h < 0){
-            transform.transform.rotation = Quaternion.Euler(0, 90, 0);
+            transform.forward = backwardVector;
+            transform.localScale = backwardScaleVector;
         }
 
         if (fede) // To remove fede variable if-cases
@@ -78,18 +88,18 @@ public class SimpleThirdPersonController : MonoBehaviour
         _inputSpeed = Mathf.Clamp(_inputVector.magnitude, 0f, 1f);
 
         // Compute direction according to Camera orientation
-        _targetDirection = Camera.transform.TransformDirection(_inputVector).normalized;
-        _targetDirection.y = 0f;
+        //_targetDirection = Camera.transform.TransformDirection(_inputVector).normalized;
+        //_targetDirection.y = 0f;
         if (_inputSpeed <= 0f && !GetComponent<Animator>().GetBool("InvalidateMoving"))
         {
             GetComponent<Animator>().SetBool("walking", false);
         }
-        else
-        {
+        //else
+        //{
             // Calculate the new expected direction (newDir) and rotate
             //Vector3 newDir = Vector3.RotateTowards(transform.forward, _targetDirection, RotationSpeed * Time.deltaTime, 0f);
             //transform.rotation = Quaternion.LookRotation(newDir);
-        }
+        //}
 
         if (PlayerAnim && !PlayerAnim.GetBool("InvalidateMoving"))
         {
@@ -115,6 +125,7 @@ public class SimpleThirdPersonController : MonoBehaviour
             }
 
             Debug.DrawRay(transform.position + transform.up * 3f, _targetDirection * 5f, Color.red);
+            Debug.DrawRay(transform.position + transform.up * 3f, transform.forward * 5f, Color.green);
         }
     }
 }
