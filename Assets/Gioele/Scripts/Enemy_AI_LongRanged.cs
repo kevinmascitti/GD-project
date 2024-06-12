@@ -105,7 +105,7 @@ public class Enemy_AI_LongRanged : Enemy
             float randomz = Random.Range(-walkPointRange, walkPointRange);
             float randomx = Random.Range(-walkPointRange, walkPointRange);
             walkPoint = new Vector3(Player.transform.position.x + randomx, Player.transform.position.y,
-                Player.transform.position.z + randomz);
+                Player.transform.position.z);
             pointFound=IsPointOnPlane(walkPoint);
         }
 
@@ -187,7 +187,7 @@ public class Enemy_AI_LongRanged : Enemy
                 Patroling(); // nulla 
             if (playerInSightRange && !playerInAttackRange)
                 ChasePlayer(); // segue il player 
-            if (!playerInSightRange && playerInAttackRange && !OnAttack)
+            if (!playerInSightRange && playerInAttackRange && !OnAttack )//&& Math.Abs(this.transform.position.z - Player.transform.position.z) < 0.05f)
                 AttackPlayer(); // lo attacca
             transform.rotation = initialRotation;
         }

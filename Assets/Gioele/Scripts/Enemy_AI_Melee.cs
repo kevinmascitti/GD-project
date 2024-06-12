@@ -70,7 +70,7 @@ public class Enemy_AI_Melee : Enemy
         float randomz = Random.Range(-walkPointRange, walkPointRange);
         float randomx = Random.Range(-walkPointRange, walkPointRange);
         walkPoint = new Vector3(Player.transform.position.x + randomx, Player.transform.position.y,
-            Player.transform.position.z + randomz);
+            Player.transform.position.z);
       
         if (Physics.Raycast(walkPoint, -transform.up, 2f, ground))
         {
@@ -178,7 +178,7 @@ public class Enemy_AI_Melee : Enemy
                     //Debug.Log("chase pplayer");
             }
 
-            if (!playerInSightRange && playerInAttackRange && !OnAttack)
+            if (!playerInSightRange && playerInAttackRange && !OnAttack && Math.Abs(this.transform.position.z - Player.transform.position.z) < 0.05f)
             {
                     AttackPlayer(); // lo attacca
                     //Debug.Log("chase pplayer");

@@ -55,7 +55,7 @@ public class EnemyAI : Enemy
         }
 
         Vector3 distanceToWalkPoint = transform.position - walkPoint;
-        if (distanceToWalkPoint.magnitude < 1f)// ottengo la distanza effettiva
+        if (distanceToWalkPoint.magnitude < 0.3f)// ottengo la distanza effettiva
         {
             walkPointSet = false;
         }
@@ -104,7 +104,7 @@ public class EnemyAI : Enemy
        float randomz = Random.Range(-walkPointRange, walkPointRange);
        float randomx = Random.Range(-walkPointRange, walkPointRange);
        walkPoint = new Vector3(Player.transform.position.x + randomx, Player.transform.position.y,
-               Player.transform.position.z + randomz);
+               Player.transform.position.z);
       
        if (Physics.Raycast(walkPoint, -transform.up, 2f, ground))
        {
@@ -181,7 +181,7 @@ public class EnemyAI : Enemy
                 Patroling(); // nulla 
             if (playerInSightRange && !playerInAttackRange)
                 ChasePlayer(); // segue il player 
-            if (!playerInSightRange && playerInAttackRange && !OnAttack)
+            if (!playerInSightRange && playerInAttackRange && !OnAttack )//&& Math.Abs(this.transform.position.z - Player.transform.position.z) < 0.05f)
                 AttackPlayer(); // lo attacca
             transform.rotation = initialRotation;
         }

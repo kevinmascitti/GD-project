@@ -15,7 +15,7 @@ public class Spawner : MonoBehaviour
     public float spawnTime = 2f;
     public bool canSpawn = true;
     [SerializeField] private int spawnCount = 0;
-    [SerializeField] private int spawnLimit = 7;
+    public int spawnLimit = 7;
     [SerializeField] public GameObject levelPlane;
     public static EventHandler OnDoorOpen;
     void Start()
