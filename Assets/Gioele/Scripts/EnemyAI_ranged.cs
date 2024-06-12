@@ -21,11 +21,13 @@ public class EnemyAI : Enemy
     private Quaternion initialRotation;
     public float walkPointRange;
     // attacco
-    [NonSerialized]public float timeBetweenAttacks;
+    public float timeBetweenAttacks;
     [NonSerialized]public bool alreadyAttacked;
     public GameObject projectile;
     public float projectileSpeed=20f;
     public float projectileUPSpeed=1.5f;
+
+    public Transform gunpivot;
     // stati
     public float sightRange, attackRange;
     public bool playerInSightRange, playerInAttackRange;
@@ -37,6 +39,7 @@ public class EnemyAI : Enemy
     
     private void Awake()
     {
+        timeBetweenAttacks = 3f;
         Player = GameObject.FindGameObjectWithTag("Player").transform;
         initialRotation = transform.rotation;
         agent = GetComponent<NavMeshAgent>();
@@ -130,18 +133,13 @@ public class EnemyAI : Enemy
         transform.LookAt(Player.position);
         if (!alreadyAttacked)
         {
-            /*
             // attacco ranged/long ranged
-            Rigidbody rb = Instantiate(projectile,transform.position,Quaternion.identity).GetComponent<Rigidbody>();
+            GameObject rb= Instantiate(projectile,gunpivot.position,Quaternion.identity);
             // trovo lla direzine del player
-            Vector3 direction_player = Player.position - transform.position;
+            Vector3 direction_player = Player.position - gunpivot.position;
+            rb.transform.forward = new Vector3(direction_player.x,direction_player.y+1.5f,direction_player.z);
             
-            rb.AddForce(direction_player.normalized*projectileSpeed,ForceMode.Impulse);
-            // se vogliamo che il proiettile sia diretto senza nessun effetto
-            // parabolico aumento la forza forward e tolgo la up force
-            rb.AddForce(transform.up*projectileUPSpeed,ForceMode.Impulse);
-            // setto a true perche sto attaccando 
-            */
+            
             alreadyAttacked = true;
             Invoke(nameof(ResetAttack),timeBetweenAttacks);// cosi do la temporizzazione per gli attacchi
             
@@ -180,9 +178,11 @@ public class EnemyAI : Enemy
             if (!playerInSightRange && !playerInAttackRange)
                 Patroling(); // nulla 
             if (playerInSightRange && !playerInAttackRange)
-                ChasePlayer(); // segue il player 
+                ChasePlayer(); // segue il player
+                GetComponent<Animator>().SetBool("walking",true);
             if (!playerInSightRange && playerInAttackRange && !OnAttack )//&& Math.Abs(this.transform.position.z - Player.transform.position.z) < 0.05f)
                 AttackPlayer(); // lo attacca
+                GetComponent<Animator>().SetBool("shoot",true);
             transform.rotation = initialRotation;
         }
     }

@@ -159,11 +159,18 @@ public class Spawner : MonoBehaviour
             // Se abbiamo selezionato un oggetto, lo spawniamo
             if (selectedObject != null)
             {
+                // aggiungo altezza
+                float addedEight = 0;
+                if (selectedObject.tag.CompareTo("EnemyObj")==0)
+                {
+                    addedEight = 4f;
+                }
+
                 MeshRenderer planeRenderer = plane.GetComponent<MeshRenderer>();
                 Vector3 planeSize = planeRenderer.bounds.size;
 
                 //posizione casuale all'interno delle dimensioni del piano
-                Vector3 randomPosition = new Vector3(Random.Range(-planeSize.x / 2f, planeSize.x / 2f), 5f, Random.Range(-planeSize.z / 2f, planeSize.z / 2f));
+                Vector3 randomPosition = new Vector3(Random.Range(-planeSize.x / 2f, planeSize.x / 2f), 5f+addedEight, Random.Range(-planeSize.z / 2f, planeSize.z / 2f));
                 //inserito una y =10 in modo che in nemico cada dal cielo 
                 // Aggiunta la posizione del piano per mantenere il punto random nel contesto del piano e non fuori
                 Vector3 spawnPosition = plane.transform.position + randomPosition;

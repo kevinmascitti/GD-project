@@ -9,6 +9,7 @@ public abstract class Character : MonoBehaviour
     public float currentHP;
     public bool isPlayer = false;
     public int atk;
+    public float damageReducer;
 
     // Update is called once per frame
     public void Update()
@@ -28,7 +29,7 @@ public abstract class Character : MonoBehaviour
 
     public void TakeDamage(float damage)
     {
-        currentHP -= damage;
+        currentHP -= damage/damageReducer;
         // TO DO animazione danno subito??
         if (currentHP <= 0)
             Die();
