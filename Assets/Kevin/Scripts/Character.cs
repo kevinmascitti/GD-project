@@ -9,7 +9,7 @@ public abstract class Character : MonoBehaviour
     public float currentHP;
     public bool isPlayer = false;
     public int atk;
-    public float damageReducer;
+    public float damageReducer=1;
 
     // Update is called once per frame
     public void Update()
