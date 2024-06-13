@@ -28,8 +28,6 @@ public class Spawner : MonoBehaviour
         }
 
         //start spawn
-        spawnCount = 0;
-        spawnLimit = 7;
         StartSpawn();
         //setto i nemici del primo livello
         ChangePrefabs(0);

@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 442a0ec08cf01384c9b773a1542ca9fd
+guid: 58634a68ea2c84840aae8bdd6ba77c16
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
@@ -33,11 +33,11 @@ ModelImporter:
     extraUserProperties: []
     clipAnimations:
     - serializedVersion: 16
-      name: Vuoto|CubeAction
-      takeName: Vuoto|CubeAction
+      name: apertura
+      takeName: Cube|VuotoAction.001
       internalID: -4730181223659504859
       firstFrame: 0
-      lastFrame: 0
+      lastFrame: 14
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
@@ -62,8 +62,8 @@ ModelImporter:
       maskSource: {instanceID: 0}
       additiveReferencePoseFrame: 0
     - serializedVersion: 16
-      name: Vuoto|VuotoAction
-      takeName: Vuoto|VuotoAction
+      name: Cube|VuotoAction.001
+      takeName: Cube|VuotoAction.001
       internalID: 5569133723446285569
       firstFrame: 0
       lastFrame: 14

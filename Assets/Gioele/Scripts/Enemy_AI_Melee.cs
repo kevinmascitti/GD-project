@@ -22,7 +22,7 @@ public class Enemy_AI_Melee : Enemy
     public float walkPointRange;
     private Quaternion initialRotation;
     // attacco
-    public float timeBetweenAttacks;
+    public float timeBetweenAttacks = 2f;
     public bool alreadyAttacked;
     public GameObject projectile;
     public float projectileSpeed=25f;
@@ -96,11 +96,9 @@ public class Enemy_AI_Melee : Enemy
         //transform.LookAt(Player);
         if (!alreadyAttacked)
         {
-            // attacco ranged/long ranged
-            Rigidbody rb = Instantiate(projectile,transform.position,Quaternion.identity).GetComponent<Rigidbody>();
-            Vector3 direction_player = Player.position - transform.position;
-            rb.AddForce(direction_player.normalized*projectileSpeed,ForceMode.Impulse);
-            rb.AddForce(transform.up*projectileUPSpeed,ForceMode.Impulse);
+            // voglio animazione di attacco 
+            
+            
             // setto a true perche sto attaccando 
             alreadyAttacked = true;
             Invoke(nameof(ResetAttack),timeBetweenAttacks);// cosi do la temporizzazione per gli attacchi
