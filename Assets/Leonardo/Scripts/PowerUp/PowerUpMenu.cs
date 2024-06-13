@@ -11,6 +11,7 @@ public class PowerUpMenu : MonoBehaviour
     // Start is called before the first frame update
 
     [SerializeField] private PowerUpButton[] availablePowerUpButtons;
+    private int[] powerUpInButton = new int[3];
     private Button[] PUBslots;
     
     void Start()
@@ -22,15 +23,24 @@ public class PowerUpMenu : MonoBehaviour
         selectedPUB = pickPowerUps();
         for(int i = 0; i < 3; i++){
             PUBslots[i].GetComponentsInChildren<Image>()[1].sprite = selectedPUB[i].powerUpSprite;
+            
             PUBtexts = PUBslots[i].GetComponentsInChildren<TMP_Text>();
             PUBtexts[0].text = selectedPUB[i].powerUpName;
             PUBtexts[1].text = selectedPUB[i].powerUpDescription;
+
+            powerUpInButton[i] = selectedPUB[i].powerUpID;
         }
     }
 
     public void DeactivatePowerUpMenu(){
         GameUI.gameObject.SetActive(true);
         gameObject.SetActive(false);
+    }
+
+    public void SelectPowerUp(int buttonID){
+        PowerUpManager powerUpManager = FindObjectOfType<PowerUpManager>();
+        powerUpManager.SetPowerUp(powerUpInButton[buttonID]);
+        DeactivatePowerUpMenu();
     }
 
     private PowerUpButton[] pickPowerUps(){

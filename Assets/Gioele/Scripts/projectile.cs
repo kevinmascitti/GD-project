@@ -21,4 +21,10 @@ public class projectile : MonoBehaviour
     {
         Destroy(gameObject);
     }
+
+    private void Update()
+    {
+        // fino a che non collide
+        transform.position += transform.forward * 3.5f * Time.deltaTime;
+    }
 }

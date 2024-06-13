@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -5,24 +6,12 @@ using UnityEngine.Timeline;
 
 public class PowerUp : MonoBehaviour
 {
-    public string PUname
-    {
-        get { return PUname; }
-    }
+    public string PUname;
 
-    public float PUduration
-    {
-        get { return PUduration; }
-    }
+    public float PUduration;
 
-    public float PUvalue
-    {
-        get { return PUvalue; }
-    }
+    public float PUvalue;
 
-    public virtual void ActivatePowerUp()
-    {
-        Debug.Log("PowerUp attivato");
-    }
+    public virtual void ActivatePowerUp(object sender, EventArgs args) {}
 
 }

@@ -13,7 +13,7 @@ public class ShootingTower : MonoBehaviour
     [Range(0,360)]
     [SerializeField] private float _viewAngle;
 
-    [SerializeField] private projectile _bullet;
+    public GameObject bullet;
     [SerializeField] private float _shootFrequency;
     public float _shootForce=5f;
 
@@ -57,11 +57,9 @@ public class ShootingTower : MonoBehaviour
         _isShooting = true;
         Vector3 targetHead = _target.transform.position + Vector3.up ;
         Vector3 shootingDirection = (targetHead - _gunPivot.position).normalized;
-        projectile bullet = Instantiate(_bullet, _gunPivot.position, Quaternion.identity);
+        GameObject newbullet = Instantiate(bullet, _gunPivot.position, Quaternion.identity);
         bullet.transform.forward = shootingDirection;
-
-        Rigidbody bulletRb = bullet.GetComponent<Rigidbody>();
-        bulletRb.AddForce(shootingDirection * _shootForce, ForceMode.Impulse);
+        
     }
 
     private bool IsTargetVisible(Vector3 directionToTarget)

@@ -15,7 +15,7 @@ public class Spawner : MonoBehaviour
     public float spawnTime = 2f;
     public bool canSpawn = true;
     [SerializeField] private int spawnCount = 0;
-    [SerializeField] private int spawnLimit = 7;
+    public int spawnLimit = 7;
     [SerializeField] public GameObject levelPlane;
     public static EventHandler OnDoorOpen;
     void Start()
@@ -28,8 +28,6 @@ public class Spawner : MonoBehaviour
         }
 
         //start spawn
-        spawnCount = 0;
-        spawnLimit = 7;
         StartSpawn();
         //setto i nemici del primo livello
         ChangePrefabs(0);
@@ -159,11 +157,18 @@ public class Spawner : MonoBehaviour
             // Se abbiamo selezionato un oggetto, lo spawniamo
             if (selectedObject != null)
             {
+                // aggiungo altezza
+                float addedEight = 0;
+                if (selectedObject.tag.CompareTo("EnemyObj")==0)
+                {
+                    addedEight = 4f;
+                }
+
                 MeshRenderer planeRenderer = plane.GetComponent<MeshRenderer>();
                 Vector3 planeSize = planeRenderer.bounds.size;
 
                 //posizione casuale all'interno delle dimensioni del piano
-                Vector3 randomPosition = new Vector3(Random.Range(-planeSize.x / 2f, planeSize.x / 2f), 5f, Random.Range(-planeSize.z / 2f, planeSize.z / 2f));
+                Vector3 randomPosition = new Vector3(Random.Range(-planeSize.x / 2f, planeSize.x / 2f), 5f+addedEight, Random.Range(-planeSize.z / 2f, planeSize.z / 2f));
                 //inserito una y =10 in modo che in nemico cada dal cielo 
                 // Aggiunta la posizione del piano per mantenere il punto random nel contesto del piano e non fuori
                 Vector3 spawnPosition = plane.transform.position + randomPosition;
@@ -176,6 +181,6 @@ public class Spawner : MonoBehaviour
 
     public void Update()
     {
-        throw new NotImplementedException();
+        //throw new NotImplementedException();
     }
 }

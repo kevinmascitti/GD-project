@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e8d8ead7ad2027e4c9741686ca05d7a6, type: 3}
   m_Name: PowerUpButton_ComboBoost
   m_EditorClassIdentifier: 
+  powerUpID: 4
   powerUpName: Combo Boost
   powerUpDescription: Increase the Combo multiplier for each hit
   powerUpSprite: {fileID: 21300000, guid: 1cbc0eb8906ea0242b8e53c0081d6c98, type: 3}

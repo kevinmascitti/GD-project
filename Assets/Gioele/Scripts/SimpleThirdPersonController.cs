@@ -1,7 +1,9 @@
-﻿using System;
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Numerics;
 using UnityEngine;
+using Vector3 = UnityEngine.Vector3;
 
 public class SimpleThirdPersonController : MonoBehaviour
 {
@@ -18,6 +20,12 @@ public class SimpleThirdPersonController : MonoBehaviour
     private Vector3 _targetDirection;
     [SerializeField] private bool isGrounded = false;
     private float boundingBoxWidth = 1.0f;
+
+    // VECTOR CONSTANTS TO ROTATE THE PLAYER
+    private Vector3 forwardVector = new Vector3(-1, 0, 0);
+    private Vector3 forwardScaleVector = new Vector3(1, 1, 1);
+    private Vector3 backwardVector = new Vector3(1, 0, 0);
+    private Vector3 backwardScaleVector = new Vector3(-1, 1, 1);
 
     public void Start()
     {
@@ -54,6 +62,15 @@ public class SimpleThirdPersonController : MonoBehaviour
         float h = Input.GetAxis("Horizontal");
         float v = Input.GetAxis("Vertical");
 
+        if(h > 0){
+            transform.forward = forwardVector;
+            transform.localScale = forwardScaleVector;
+        }
+        else if (h < 0){
+            transform.forward = backwardVector;
+            transform.localScale = backwardScaleVector;
+        }
+
         if (fede) // To remove fede variable if-cases
         {
             PlayerAnim.SetFloat("horizontal", h);
@@ -67,27 +84,27 @@ public class SimpleThirdPersonController : MonoBehaviour
         }
 
         // Elaborate input Vector and input Speed
-        _inputVector = new Vector3(h, 0, v);
+        _inputVector = new Vector3(-h, 0, -v);
         _inputSpeed = Mathf.Clamp(_inputVector.magnitude, 0f, 1f);
 
         // Compute direction according to Camera orientation
-        _targetDirection = Camera.transform.TransformDirection(_inputVector).normalized;
-        _targetDirection.y = 0f;
+        //_targetDirection = Camera.transform.TransformDirection(_inputVector).normalized;
+        //_targetDirection.y = 0f;
         if (_inputSpeed <= 0f && !GetComponent<Animator>().GetBool("InvalidateMoving"))
         {
             GetComponent<Animator>().SetBool("walking", false);
         }
-        else
-        {
+        //else
+        //{
             // Calculate the new expected direction (newDir) and rotate
-            Vector3 newDir = Vector3.RotateTowards(transform.forward, _targetDirection, RotationSpeed * Time.deltaTime, 0f);
-            transform.rotation = Quaternion.LookRotation(newDir);
-        }
+            //Vector3 newDir = Vector3.RotateTowards(transform.forward, _targetDirection, RotationSpeed * Time.deltaTime, 0f);
+            //transform.rotation = Quaternion.LookRotation(newDir);
+        //}
 
         if (PlayerAnim && !PlayerAnim.GetBool("InvalidateMoving"))
         {
             // Translate along forward
-            Vector3 movement = transform.forward * _inputSpeed * Speed * Time.deltaTime;
+            Vector3 movement = _inputVector * Speed * Time.deltaTime;
             if (CanMove(movement))
             {
                 transform.Translate(movement, Space.World);
@@ -108,6 +125,7 @@ public class SimpleThirdPersonController : MonoBehaviour
             }
 
             Debug.DrawRay(transform.position + transform.up * 3f, _targetDirection * 5f, Color.red);
+            Debug.DrawRay(transform.position + transform.up * 3f, transform.forward * 5f, Color.green);
         }
     }
 }

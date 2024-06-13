@@ -22,7 +22,7 @@ public class Enemy_AI_Melee : Enemy
     public float walkPointRange;
     private Quaternion initialRotation;
     // attacco
-    public float timeBetweenAttacks;
+    public float timeBetweenAttacks = 2f;
     public bool alreadyAttacked;
     public GameObject projectile;
     public float projectileSpeed=25f;
@@ -70,7 +70,7 @@ public class Enemy_AI_Melee : Enemy
         float randomz = Random.Range(-walkPointRange, walkPointRange);
         float randomx = Random.Range(-walkPointRange, walkPointRange);
         walkPoint = new Vector3(Player.transform.position.x + randomx, Player.transform.position.y,
-            Player.transform.position.z + randomz);
+            Player.transform.position.z);
       
         if (Physics.Raycast(walkPoint, -transform.up, 2f, ground))
         {
@@ -96,11 +96,9 @@ public class Enemy_AI_Melee : Enemy
         //transform.LookAt(Player);
         if (!alreadyAttacked)
         {
-            // attacco ranged/long ranged
-            Rigidbody rb = Instantiate(projectile,transform.position,Quaternion.identity).GetComponent<Rigidbody>();
-            Vector3 direction_player = Player.position - transform.position;
-            rb.AddForce(direction_player.normalized*projectileSpeed,ForceMode.Impulse);
-            rb.AddForce(transform.up*projectileUPSpeed,ForceMode.Impulse);
+            // voglio animazione di attacco 
+            
+            
             // setto a true perche sto attaccando 
             alreadyAttacked = true;
             Invoke(nameof(ResetAttack),timeBetweenAttacks);// cosi do la temporizzazione per gli attacchi
@@ -178,7 +176,7 @@ public class Enemy_AI_Melee : Enemy
                     //Debug.Log("chase pplayer");
             }
 
-            if (!playerInSightRange && playerInAttackRange && !OnAttack)
+            if (!playerInSightRange && playerInAttackRange && !OnAttack && Math.Abs(this.transform.position.z - Player.transform.position.z) < 0.05f)
             {
                     AttackPlayer(); // lo attacca
                     //Debug.Log("chase pplayer");

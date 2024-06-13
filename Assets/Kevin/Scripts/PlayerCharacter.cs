@@ -17,12 +17,15 @@ public class PlayerCharacter : Character
     public float def_increase_STAMINA = 5;
     public int MAX_LIFE = 4;
     public int def_life = 4;
+    public int enemy_killed=0;
     
     public Slider sliderHP;
     public Slider sliderStamina;
     public GameObject UIExtraLife;
     private float currentStamina;
     private float staminaUp = 5;
+    private bool dieAnimation;
+    private AnimatorStateInfo stateInfo;
     
     private int currentExtraLife;
     private List<GameObject> heartList = new List<GameObject>();
@@ -59,6 +62,7 @@ public class PlayerCharacter : Character
     // Start is called before the first frame update
     public void Awake()
     {
+        dieAnimation=false;
         isPlayer = true;
         sliderHP = GameObject.Find("HPBar").GetComponent<Slider>();
         sliderStamina = GameObject.Find("StaminaBar").GetComponent<Slider>();
@@ -105,7 +109,14 @@ public class PlayerCharacter : Character
     void Update()
     {
         base.Update();
-        
+        if (enemy_killed == GameObject.FindGameObjectWithTag("Spawner").GetComponent<Spawner>().spawnLimit)
+        {
+            // devo chiamare door open;
+            //OnEndRoom?.Invoke(this,new RoomArgs(on));
+            // questa cosa non so se sia giusta :(
+            GameObject.FindGameObjectWithTag("Spawner").GetComponent<Spawner>().OpenExit(this, new RoomArgs(currentRoom));
+        }
+
         // AUMENTO STAMINA
         if (Input.GetKeyDown(KeyCode.E))
         {
@@ -129,12 +140,23 @@ public class PlayerCharacter : Character
                 Debug.Log("NEXT ROOM UNLOCKED");
             }
         }
-
-        if (currentHP <= 0)
+        
+        if (currentHP <= 0 && !dieAnimation)
         {
             Die();
         }
-        
+
+        if (dieAnimation)
+        {
+            if (stateInfo.normalizedTime >= 1.0f && !GetComponent<Animator>().IsInTransition(0))
+            {
+                // Fai qualcosa quando l'animazione è terminata
+                this.gameObject.SetActive(false);
+                Debug.Log("L'animazione è terminata!");
+            }
+        }
+
+
         // LANCIO OGGETTO
         if (Input.GetKeyDown(KeyCode.G) && grabbableItem && grabbedItem == null && grabbableItem.GetState() == GrabbableState.GRABBABLE)
         {
@@ -204,6 +226,15 @@ public class PlayerCharacter : Character
         
         if (currentExtraLife < 0)
         {
+            // animazione di morte
+            Animator animator = this.GetComponent<Animator>();
+
+            if (animator != null)
+            {
+                AnimatorStateInfo stateInfo = animator.GetCurrentAnimatorStateInfo(0);
+                animator.SetBool("die",true);
+                dieAnimation = true;
+            }
             GameOver();
         }
         else
@@ -326,6 +357,7 @@ public class PlayerCharacter : Character
     {
         OnStartRoom?.Invoke(this, new RoomArgs(currentRoom));
         Debug.Log("NEW ROOM");
+        enemy_killed = 0;
             
         GetComponent<Rigidbody>().useGravity = true;
         GetComponent<Rigidbody>().isKinematic = false;

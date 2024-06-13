@@ -52,7 +52,8 @@ public class RemoteController : MonoBehaviour
         if(squashAndStress)
             squashAndStress.SetActive(false);
         controllerUI = GameObject.Find("ControllerUI");
-        controllerUI.SetActive(false);
+        if(controllerUI)
+            controllerUI.SetActive(false);
         isUIVisible = false;
         /*
         UnlockChPlus = true;
@@ -287,6 +288,8 @@ public class RemoteController : MonoBehaviour
         {
             RechargeButtonChminusEnabled= true;
             moltiplicatoreDanniNemici = 1.5f;
+            GameObject.FindGameObjectWithTag("Player").GetComponent<Character>().damageReducer =
+                moltiplicatoreDanniNemici;
             
             int layer = LayerMask.NameToLayer(layerName);
 
@@ -323,6 +326,8 @@ public class RemoteController : MonoBehaviour
     public void StopChMinus()
     {
         moltiplicatoreDanniNemici = 1f;
+        GameObject.FindGameObjectWithTag("Player").GetComponent<Character>().damageReducer =
+            moltiplicatoreDanniNemici;
         int layer = LayerMask.NameToLayer("Enemy");
 
         // Trova tutti gli oggetti nel layer specificato
