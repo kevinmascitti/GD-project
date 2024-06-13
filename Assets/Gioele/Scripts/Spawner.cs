@@ -181,6 +181,6 @@ public class Spawner : MonoBehaviour
 
     public void Update()
     {
-        throw new NotImplementedException();
+        //throw new NotImplementedException();
     }
 }
