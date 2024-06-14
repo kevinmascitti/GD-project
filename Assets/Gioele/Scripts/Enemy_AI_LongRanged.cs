@@ -187,7 +187,7 @@ public class Enemy_AI_LongRanged : Enemy
                 Patroling(); // nulla 
             if (playerInSightRange && !playerInAttackRange)
                 ChasePlayer(); // segue il player 
-            if (!playerInSightRange && playerInAttackRange && !OnAttack )//&& Math.Abs(this.transform.position.z - Player.transform.position.z) < 0.05f)
+            if (!playerInSightRange && playerInAttackRange && !OnAttack && Math.Abs(this.transform.position.z - Player.transform.position.z) < 0.05f)
                 AttackPlayer(); // lo attacca
             transform.rotation = initialRotation;
         }

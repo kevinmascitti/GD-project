@@ -179,8 +179,9 @@ public class EnemyAI : Enemy
                 Patroling(); // nulla 
             if (playerInSightRange && !playerInAttackRange)
                 ChasePlayer(); // segue il player
-                GetComponent<Animator>().SetBool("walking",true);
-            if (!playerInSightRange && playerInAttackRange && !OnAttack )//&& Math.Abs(this.transform.position.z - Player.transform.position.z) < 0.05f)
+                GetComponent<Animator>().SetBool("shot",false);
+                //GetComponent<Animator>().SetBool("walking",true);
+            if (!playerInSightRange && playerInAttackRange && !OnAttack && Math.Abs(this.transform.position.z - Player.transform.position.z) < 0.05f)
                 AttackPlayer(); // lo attacca
                 GetComponent<Animator>().SetBool("shoot",true);
             transform.rotation = initialRotation;
