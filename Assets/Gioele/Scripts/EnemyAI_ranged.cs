@@ -35,8 +35,13 @@ public class EnemyAI : Enemy
     [NonSerialized]public bool grounded = true;
     [NonSerialized]public bool OnAttack;
     [SerializeField] private Plane levelPlane;
-    
-    
+    // VECTOR CONSTANTS TO ROTATE THE PLAYER
+    private Vector3 forwardVector = new Vector3(-1, 0, 0);
+    private Vector3 forwardScaleVector = new Vector3(1, 1, 1);
+    private Vector3 backwardVector = new Vector3(1, 0, 0);
+    private Vector3 backwardScaleVector = new Vector3(1, 1, -1);
+    private bool destinationReached = false;
+    public GameObject gunPivotobj;
     private void Awake()
     {
         timeBetweenAttacks = 3f;
@@ -104,8 +109,18 @@ public class EnemyAI : Enemy
    private void SearchWalkPoint()
    {
        Player = GameObject.FindGameObjectWithTag("Player").transform;
-       float randomz = Random.Range(-walkPointRange, walkPointRange);
-       float randomx = Random.Range(-walkPointRange, walkPointRange);
+       //float randomz = Random.Range(-walkPointRange, walkPointRange);
+       float randomx;
+       if (Random.value < 0.5f)
+       {
+           // Genera un valore casuale tra walkpoint range e -6
+           randomx = Random.Range(-walkPointRange, -6f);
+       }
+       else
+       {
+           // Genera un valore casuale tra walkpoint range e 8
+           randomx = Random.Range(6f, walkPointRange);
+       }
        walkPoint = new Vector3(Player.transform.position.x + randomx, Player.transform.position.y,
                Player.transform.position.z);
       
@@ -128,6 +143,7 @@ public class EnemyAI : Enemy
     }
     private void AttackPlayer()
     {
+        GetComponent<Animator>().SetBool("shot",true);
         // controllo che non sia in movimento 
         agent.SetDestination(transform.position);
         transform.LookAt(Player.position);
@@ -138,8 +154,6 @@ public class EnemyAI : Enemy
             // trovo lla direzine del player
             Vector3 direction_player = Player.position - gunpivot.position;
             rb.transform.forward = new Vector3(direction_player.x,direction_player.y+1.5f,direction_player.z);
-            
-            
             alreadyAttacked = true;
             Invoke(nameof(ResetAttack),timeBetweenAttacks);// cosi do la temporizzazione per gli attacchi
             
@@ -149,6 +163,7 @@ public class EnemyAI : Enemy
     private void ResetAttack()
     {
         alreadyAttacked = false;
+        GetComponent<Animator>().SetBool("shot",false);
         // posso attaccare di nuovo 
 
     }
@@ -168,6 +183,29 @@ public class EnemyAI : Enemy
     // Update is called once per frame
     void Update()
     {
+        float range= 4f;
+        float playerX = Player.transform.position.x;
+        float targetX = transform.position.x;
+    
+        // Controlla se targetX è all'interno dell'intervallo playerX ± range
+        if(targetX >= (playerX - range) && targetX <= (playerX + range)){
+            // ho enemuy nella posizione sbagliata cerco un nuovo punto
+            Patroling();
+        }
+        if(Player.transform.position.x > this.transform.position.x){
+            //player davanti e enemy dietro
+            transform.forward = forwardVector;
+            gunPivotobj.transform.forward = forwardVector;
+            transform.localScale = forwardScaleVector;
+            gunPivotobj.transform.localScale = forwardScaleVector;
+        }
+        else if (Player.transform.position.x < this.transform.position.x){
+            //player dietro e enemy davanti
+            transform.forward = backwardVector;
+            gunPivotobj.transform.forward = backwardVector;
+            transform.localScale = backwardScaleVector;
+            gunPivotobj.transform.localScale = backwardScaleVector;
+        }
         if (grounded)
         {
             // solo se l'enemy è a terra
@@ -179,10 +217,9 @@ public class EnemyAI : Enemy
                 Patroling(); // nulla 
             if (playerInSightRange && !playerInAttackRange)
                 ChasePlayer(); // segue il player
-                GetComponent<Animator>().SetBool("walking",true);
-            if (!playerInSightRange && playerInAttackRange && !OnAttack )//&& Math.Abs(this.transform.position.z - Player.transform.position.z) < 0.05f)
+                //GetComponent<Animator>().SetBool("walking",true);
+            if (!playerInSightRange && playerInAttackRange && !OnAttack && HasArrived())// && Math.Abs(this.transform.position.z - Player.transform.position.z) < 0.05f)
                 AttackPlayer(); // lo attacca
-                GetComponent<Animator>().SetBool("shoot",true);
             transform.rotation = initialRotation;
         }
     }
@@ -196,6 +233,25 @@ public class EnemyAI : Enemy
         Gizmos.DrawWireSphere(transform.position,attackRange);
         Gizmos.color=Color.yellow;
         Gizmos.DrawWireSphere(transform.position, sightRange);
+    }
+    
+    private bool HasArrived()
+    {
+        // Controlla se l'agente ha una destinazione
+        if (!agent.pathPending)
+        {
+            // Controlla se l'agente è vicino alla destinazione
+            if (agent.remainingDistance <= agent.stoppingDistance)
+            {
+                // Controlla se l'agente non si sta più muovendo
+                if (!agent.hasPath || agent.velocity.sqrMagnitude == 0f)
+                {
+                    return true;
+                }
+            }
+        }
+
+        return false;
     }
 }
 

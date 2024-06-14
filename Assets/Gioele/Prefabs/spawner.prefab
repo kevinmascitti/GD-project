@@ -45,12 +45,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spawnableObjects:
-  - {fileID: 639919568979264030, guid: ad9f4c9032e2f32419f565b38ae08fb6, type: 3}
   - {fileID: 7897149327893079946, guid: 86decf478d7f44de6ba6c659c541a018, type: 3}
+  - {fileID: 1719429749345404538, guid: 7d8272ab49b34b545a672c23fb8e6016, type: 3}
   - {fileID: 845877483370869507, guid: a36135325f2986d4fb5c840426a26ae1, type: 3}
   EnemyObjects:
   - {fileID: 7897149327893079946, guid: 86decf478d7f44de6ba6c659c541a018, type: 3}
-  - {fileID: 639919568979264030, guid: ad9f4c9032e2f32419f565b38ae08fb6, type: 3}
+  - {fileID: 1719429749345404538, guid: 7d8272ab49b34b545a672c23fb8e6016, type: 3}
   - {fileID: 845877483370869507, guid: a36135325f2986d4fb5c840426a26ae1, type: 3}
   spawnProbability:
   - 0.8
