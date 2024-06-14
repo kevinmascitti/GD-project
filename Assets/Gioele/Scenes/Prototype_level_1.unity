@@ -20142,6 +20142,21 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2624777380427030808, guid: 7d8272ab49b34b545a672c23fb8e6016,
+        type: 3}
+      propertyPath: m_StoppingDistance
+      value: 0.05
+      objectReference: {fileID: 0}
+    - target: {fileID: 4793743380407969800, guid: 7d8272ab49b34b545a672c23fb8e6016,
+        type: 3}
+      propertyPath: gunPivotobj
+      value: 
+      objectReference: {fileID: 2072667749}
+    - target: {fileID: 4793743380407969800, guid: 7d8272ab49b34b545a672c23fb8e6016,
+        type: 3}
+      propertyPath: walkPointRange
+      value: 7
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -21486,6 +21501,12 @@ Transform:
   - {fileID: 2003666773}
   m_Father: {fileID: 2091221341}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &2072667749 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8755769013013334981, guid: 7d8272ab49b34b545a672c23fb8e6016,
+    type: 3}
+  m_PrefabInstance: {fileID: 1916773270}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &2084243003
 GameObject:
   m_ObjectHideFlags: 0
