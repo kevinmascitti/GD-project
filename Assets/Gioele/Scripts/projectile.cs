@@ -26,5 +26,6 @@ public class projectile : MonoBehaviour
     {
         // fino a che non collide
         transform.position += transform.forward * 3.5f * Time.deltaTime;
+        // devo inserire la rotazione
     }
 }
