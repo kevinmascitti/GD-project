@@ -61,7 +61,7 @@ public class EnemyCollision : MonoBehaviour
         Vector3 contactPoint = other.ClosestPoint(this.transform.position);
         // sostiuire questa riga se l'animator da errore :)
         //enemy!=null && anim.GetFloat("Weapon.Active")>0.0
-        if (enemy != null && oggetto.isAttacking)
+        if (enemy != null && oggetto!=null && oggetto.isAttacking)
         {
             oggetto.isAttacking = false;
             Debug.Log("OnTriggerEnter called with: " + other.name + " FROM "+ this);

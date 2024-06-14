@@ -884,6 +884,7 @@ MonoBehaviour:
   comboValue: 0
   HitEffectPrefab: {fileID: 1570927096764274, guid: 643639841fb531e4ba8097fed4eb9ac7,
     type: 3}
+  oggetto: {fileID: 0}
 --- !u!4 &2665917163245420020 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 2ba6f97fc0ac2fe409ec11d121577fa8,
@@ -1108,12 +1109,14 @@ MonoBehaviour:
   currentHP: 72.8
   isPlayer: 0
   atk: 55
+  damageReducer: 1
   MAX_HP: 100
   def_HP: 100
   MAX_STAMINA: 100
   def_increase_STAMINA: 5
   MAX_LIFE: 4
   def_life: 4
+  enemy_killed: 0
   sliderHP: {fileID: 0}
   sliderStamina: {fileID: 0}
   UIExtraLife: {fileID: 0}
@@ -1146,6 +1149,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   HitEffectPrefab: {fileID: 1570927096764274, guid: 643639841fb531e4ba8097fed4eb9ac7,
     type: 3}
+  isAttacking: 0
   parentObject: {fileID: 3437633161199904590}
   boneName: Hand.l
   handBone: {fileID: 467915590724896330}
@@ -1228,6 +1232,8 @@ MonoBehaviour:
   enemyLayer:
     serializedVersion: 2
     m_Bits: 1024
+  fadeDuration: 0.5
+  blinkDuration: 1.5
 --- !u!1 &6922833940354934973 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 4856952145720570530, guid: 2ba6f97fc0ac2fe409ec11d121577fa8,
@@ -1310,6 +1316,7 @@ MonoBehaviour:
   comboValue: 1
   HitEffectPrefab: {fileID: 1250507045210962, guid: 3fe0df07025a3e747855b1bb671fc04e,
     type: 3}
+  oggetto: {fileID: 0}
 --- !u!1 &8367596965251447521 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 6298893136178684158, guid: 2ba6f97fc0ac2fe409ec11d121577fa8,
@@ -1353,3 +1360,4 @@ MonoBehaviour:
   comboValue: 1
   HitEffectPrefab: {fileID: 1570927096764274, guid: 643639841fb531e4ba8097fed4eb9ac7,
     type: 3}
+  oggetto: {fileID: 0}
