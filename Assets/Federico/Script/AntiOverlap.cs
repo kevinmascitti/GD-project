@@ -9,8 +9,7 @@ public class AntiOverlap : MonoBehaviour
     public float pushForce = 10f; // Forza con cui spingere indietro i nemici
     public float[] heights = new float[] { 1.0f }; // Altezze da cui lanciare i raggi
     public LayerMask enemyLayer; // Layer dei nemici
-    public float fadeDuration = 0.5f; // Durata del fading
-    public float blinkDuration = 1.5f; // Durata del lampeggiamento
+
 
     private Rigidbody rb;
     private Renderer playerRenderer;
