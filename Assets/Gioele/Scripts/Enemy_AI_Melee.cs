@@ -24,9 +24,8 @@ public class Enemy_AI_Melee : Enemy
     // attacco
     public float timeBetweenAttacks = 2f;
     public bool alreadyAttacked;
-    public GameObject projectile;
-    public float projectileSpeed=25f;
-    public float projectileUPSpeed=1.2f;
+
+    public float damage;
     // stati
     public float sightRange, attackRange;
     public bool playerInSightRange, playerInAttackRange;
@@ -35,13 +34,15 @@ public class Enemy_AI_Melee : Enemy
     public bool grounded = true;
     [NonSerialized]public bool OnAttack;
     public Plane levelPlane;
+    public Animator _animator;
     
     private void Awake()
     {
         Player = GameObject.FindGameObjectWithTag("Player").transform;
         initialRotation = transform.rotation;
         agent = GetComponent<NavMeshAgent>();
-        
+        _animator = GetComponent<Animator>();
+
     }
     
 
@@ -98,7 +99,7 @@ public class Enemy_AI_Melee : Enemy
         {
             // voglio animazione di attacco 
             
-            
+            _animator.SetBool("attack",true);
             // setto a true perche sto attaccando 
             alreadyAttacked = true;
             Invoke(nameof(ResetAttack),timeBetweenAttacks);// cosi do la temporizzazione per gli attacchi
@@ -107,6 +108,7 @@ public class Enemy_AI_Melee : Enemy
 
     private void ResetAttack()
     {
+        _animator.SetBool("attack",false);
         alreadyAttacked = false;
         // posso attaccare di nuovo 
 
@@ -188,18 +190,17 @@ public class Enemy_AI_Melee : Enemy
 
    
     
-    /*
+    
     void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Ground"))
+        if (other.CompareTag("Player"))
         {
-            GetComponent<Rigidbody>().isKinematic = true;
-            grounded = true;
+            GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerCharacter>().currentHP -= damage;
         }
 
         
     }
-    */
+    
 
     private void OnDrawGizmosSelected()
     {

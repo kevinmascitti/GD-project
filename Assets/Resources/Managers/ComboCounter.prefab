@@ -61,8 +61,11 @@ MonoBehaviour:
   player: {fileID: 0}
   comboCounter: {fileID: 3288879567937045116}
   popupSpeed: 10
-  thresholdList: 
-  popupNamesList: []
+  thresholdList: 050000000f00000019000000
+  popupNamesList:
+  - Good
+  - Great
+  - Amazing
 --- !u!114 &6201562856487515731
 MonoBehaviour:
   m_ObjectHideFlags: 0

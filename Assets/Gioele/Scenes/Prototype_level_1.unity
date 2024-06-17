@@ -16975,6 +16975,16 @@ PrefabInstance:
       propertyPath: walkPointRange
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 7369354529107647035, guid: 86decf478d7f44de6ba6c659c541a018,
+        type: 3}
+      propertyPath: m_IsTrigger
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7369354529107647035, guid: 86decf478d7f44de6ba6c659c541a018,
+        type: 3}
+      propertyPath: m_ProvidesContacts
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7726724210522450151, guid: 86decf478d7f44de6ba6c659c541a018,
         type: 3}
       propertyPath: m_LocalPosition.y
@@ -22488,6 +22498,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
+    - target: {fileID: 589328013818428226, guid: 95b1403566088be4b9a4c74cdc6304d2,
+        type: 3}
+      propertyPath: m_IsTrigger
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 946462498689834143, guid: 95b1403566088be4b9a4c74cdc6304d2,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -22726,6 +22741,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: sushiChefUnriggedKnife
+      objectReference: {fileID: 0}
+    - target: {fileID: 1172552055829091318, guid: 3d32ff33526df3b4ea06c209ca614fff,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1949615868239972684, guid: 3d32ff33526df3b4ea06c209ca614fff,
         type: 3}

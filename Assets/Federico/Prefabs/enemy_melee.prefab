@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 6063792246491597428}
   - component: {fileID: 6508631950434962066}
   - component: {fileID: 7369354529107647035}
+  - component: {fileID: 2570180440800264085}
   m_Layer: 10
   m_Name: enemy_melee
   m_TagString: enemy
@@ -124,6 +125,7 @@ MonoBehaviour:
   currentHP: 0
   isPlayer: 0
   atk: 0
+  damageReducer: 1
   agent: {fileID: 6063792246491597428}
   Player: {fileID: 0}
   ground:
@@ -137,17 +139,14 @@ MonoBehaviour:
   walkPointRange: 1
   timeBetweenAttacks: 2
   alreadyAttacked: 0
-  projectile: {fileID: 1367908784354803864, guid: ddd353402a4266142a333a2df5b430db,
-    type: 3}
-  projectileSpeed: 25
-  projectileUPSpeed: 1.2
+  damage: 5
   sightRange: 0.8
   attackRange: 1.1
   playerInSightRange: 0
   playerInAttackRange: 0
   vita: 2
   grounded: 1
-  levelPlane: {fileID: 0}
+  _animator: {fileID: 0}
 --- !u!65 &7369354529107647035
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -167,8 +166,29 @@ BoxCollider:
   m_ProvidesContacts: 1
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1.4667468, y: 1.4693053, z: 0.919075}
-  m_Center: {x: -0.0036630034, y: -0.20691204, z: -0.23531723}
+  m_Size: {x: 1.9006271, y: 1.4693053, z: 0.919075}
+  m_Center: {x: -0.03358078, y: -0.20691204, z: -0.23531723}
+--- !u!95 &2570180440800264085
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7897149327893079946}
+  m_Enabled: 1
+  m_Avatar: {fileID: 9000000, guid: b757a7e6326ea2d47ad706f705629ec3, type: 3}
+  m_Controller: {fileID: 9100000, guid: 690eb00ec0d69a04bb995b234d9634f7, type: 2}
+  m_CullingMode: 1
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1001 &8172173815790460404
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -302,7 +322,8 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 10
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 5866666021909216657, guid: d41fc3b1f6b1c02409c2e2198b1359ff, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
