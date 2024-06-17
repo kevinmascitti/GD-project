@@ -48,13 +48,13 @@ public class PlayerCharacter : Character
     
     public static EventHandler OnGameOver;
     public static EventHandler OnStaminaFull;
-    public static EventHandler OnRequestLevel;
 
     public static EventHandler<RoomArgs> OnStartRoom;
     public static EventHandler<RoomArgs> OnEndRoom;
     public static EventHandler<RoomArgs> OnNextRoom;
     public static EventHandler<RoomManagerArgs> OnStartLevel;
     public static EventHandler<RoomManagerArgs> OnEndLevel;
+    public static EventHandler<RoomManager> OnRequestLevel;
     public static EventHandler<GrabbableArgs> OnGrabbed;
     public static EventHandler<GrabbableArgs> OnUsed;
     public static EventHandler<GrabbableArgs> OnComputedNearestGrabbable;
@@ -244,7 +244,7 @@ public class PlayerCharacter : Character
         {
             // VFX nuvoletta di respawn e transizione con timer
             Debug.Log("DIED");
-            OnRequestLevel?.Invoke(this, EventArgs.Empty);
+            OnRequestLevel?.Invoke(this, currentLevel);
         }
     }
 
@@ -263,7 +263,7 @@ public class PlayerCharacter : Character
     {
         OnEndRoom?.Invoke(this, new RoomArgs(currentRoom));
         OnEndLevel?.Invoke(this, new RoomManagerArgs(currentLevel));
-        OnRequestLevel?.Invoke(this, EventArgs.Empty);
+        OnRequestLevel?.Invoke(this, currentLevel);
     }
 
     public void GameOver()

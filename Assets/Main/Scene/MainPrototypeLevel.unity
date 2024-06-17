@@ -707,6 +707,11 @@ PrefabInstance:
       propertyPath: comboCounter
       value: 
       objectReference: {fileID: 650435202}
+    - target: {fileID: 4917933223307876155, guid: 03552866a0cad59479b1468956722dfe,
+        type: 3}
+      propertyPath: decreaseSpeed
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 6718038216353055278, guid: 03552866a0cad59479b1468956722dfe,
         type: 3}
       propertyPath: m_AnchorMax.x
@@ -1822,6 +1827,21 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
       value: -90
+      objectReference: {fileID: 0}
+    - target: {fileID: 6455777469622759621, guid: a629d78297fc1a84fa173b1a061b3e09,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6683810452736750464, guid: a629d78297fc1a84fa173b1a061b3e09,
+        type: 3}
+      propertyPath: spawnCount
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6977902295547022119, guid: a629d78297fc1a84fa173b1a061b3e09,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8699497083254408108, guid: a629d78297fc1a84fa173b1a061b3e09,
         type: 3}

@@ -18,12 +18,14 @@ public class Room : MonoBehaviour
     [NonSerialized] public BoxCollider enterWall;
     [NonSerialized] public BoxCollider exitWall;
 
-    [SerializeField] private Spawner spawner;
+    private Spawner spawner;
     [SerializeField] private bool isBossRoom = false;
 
     public void Awake()
     {
         ID = Int32.Parse(gameObject.name.Substring("Room".Length));
+        spawner = transform.Find("spawner").GetComponent<Spawner>();
+        
         PlayerCharacter.OnStartRoom += EnableRoom;
         PlayerCharacter.OnEndRoom += DisableRoom;
     }
@@ -32,7 +34,7 @@ public class Room : MonoBehaviour
     {
         if (args.room == this && spawner)
         {
-            spawner.enabled = true;
+            spawner.SetEnable(true);
         }
     }
     
@@ -40,10 +42,10 @@ public class Room : MonoBehaviour
     {
         if (args.room == this && spawner)
         {
-            spawner.enabled = false;
+            spawner.SetEnable(false);
         }
     }
-    
+
     public void ClearEnterLayer()
     {
         enterWall.gameObject.layer = 0;
