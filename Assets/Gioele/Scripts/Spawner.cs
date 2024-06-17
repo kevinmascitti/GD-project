@@ -11,6 +11,7 @@ public class Spawner : MonoBehaviour
     public List<GameObject> EnemyObjects;
     public List<GameObject> spawnOrder;
     public List<float> spawnProbability;
+    [SerializeField] private List<GameObject> spawnedEnemies = new List<GameObject>();
     [NonSerialized] private float _totalProbability = 0f;
     public GameObject plane;
     public float spawnTime = 2f;
@@ -30,9 +31,6 @@ public class Spawner : MonoBehaviour
             _totalProbability += spawnProbability[i];
         }
 
-        spawnCount = 0;
-        //start spawn
-        StartSpawn();
         //setto i nemici del primo livello
         ChangePrefabs(0);
         StartCoroutine(SpawnObjects());
@@ -139,7 +137,6 @@ public class Spawner : MonoBehaviour
             if (spawnCount == (spawnLimit - 1))
             {
                 StopSpawn();
-                
             }
 
             // Generiamo un numero casuale per selezionare l'oggetto da spawnare
@@ -178,7 +175,7 @@ public class Spawner : MonoBehaviour
                 Vector3 spawnPosition = plane.transform.position + randomPosition;
                 spawnCount++;
                 // oggetto istanziato su un punto random del piano
-                Instantiate(selectedObject, spawnPosition, Quaternion.identity);
+                spawnedEnemies.Add(Instantiate(selectedObject, spawnPosition, Quaternion.identity));
             }
         }
         while (canSpawn && isdeterministic)
@@ -204,13 +201,25 @@ public class Spawner : MonoBehaviour
                 Vector3 spawnPosition = plane.transform.position + randomPosition;
                 spawnCount++;
                 // oggetto istanziato su un punto random del piano
-                Instantiate(selectedObject, spawnPosition, Quaternion.identity);
+                spawnedEnemies.Add(Instantiate(selectedObject, spawnPosition, Quaternion.identity));
             }
         }
     }
 
-    public void Update()
+    public void SetEnable(bool state)
     {
-        //throw new NotImplementedException();
+        if (state)
+        {
+            StartSpawn();
+        }
+        else
+        {
+            StopSpawn();
+            foreach(GameObject obj in spawnedEnemies)
+                if(obj)
+                    Destroy(obj);
+            spawnedEnemies.Clear();
+        }
     }
+    
 }
