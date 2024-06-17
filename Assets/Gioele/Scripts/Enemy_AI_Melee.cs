@@ -34,7 +34,7 @@ public class Enemy_AI_Melee : Enemy
     public bool grounded = true;
     [NonSerialized]public bool OnAttack;
     public Plane levelPlane;
-    private Animator _animator;
+    public Animator _animator;
     
     private void Awake()
     {
