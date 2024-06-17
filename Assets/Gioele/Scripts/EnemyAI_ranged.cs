@@ -177,7 +177,7 @@ public class EnemyAI : Enemy
             grounded = true;
         }
 
-        
+  
     }
     */
     // Update is called once per frame
