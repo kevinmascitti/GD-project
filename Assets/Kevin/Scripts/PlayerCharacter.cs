@@ -109,6 +109,7 @@ public class PlayerCharacter : Character
     void Update()
     {
         base.Update();
+     /*
         if (enemy_killed == GameObject.FindGameObjectWithTag("Spawner").GetComponent<Spawner>().spawnLimit)
         {
             // devo chiamare door open;
@@ -116,7 +117,7 @@ public class PlayerCharacter : Character
             // questa cosa non so se sia giusta :(
             GameObject.FindGameObjectWithTag("Spawner").GetComponent<Spawner>().OpenExit(this, new RoomArgs(currentRoom));
         }
-
+*/
         // AUMENTO STAMINA
         if (Input.GetKeyDown(KeyCode.E))
         {

@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using System.Collections;
 
@@ -15,6 +16,8 @@ public class AntiOverlap : MonoBehaviour
     private Renderer playerRenderer;
     private Material originalMaterial;
     private bool isBlinking = false;
+
+    
 
     void Start()
     {
@@ -63,39 +66,12 @@ public class AntiOverlap : MonoBehaviour
             {
                 Ray ray = new Ray(origin, direction);
                 RaycastHit[] hits = Physics.RaycastAll(ray, detectionRadius, enemyLayer);
-
-                foreach (var hit in hits)
+                Debug.Log("numero di nemici intersacati prodotti"+hits.Length);
+                if(hits.Length!=0)
                 {
-                    Debug.Log("Hai colpito qualcosa");
-                    Rigidbody hitRb = hit.collider.attachedRigidbody;
-                    if (hitRb != null && !hitRb.isKinematic && hitRb.GetComponent<Enemy>() != null)
-                    {
-                        Debug.Log("Nemico intersecato");
-                        Vector3 pushDirection = hit.point - origin;
-                        pushDirection.y = 0; // Non spingere verticalmente
-                        pushDirection.Normalize();
-
-                        // Applica la forza al nemico
-                        //hitRb.AddForce(pushDirection * pushForce, ForceMode.Impulse);
-                        // Controlla se la nuova posizione è libera
-                        /*
-                        float distance = Mathf.Clamp(selfPushDistance, minPushDistance, maxPushDistance);
-                           Vector3 selfPushDirection = -pushDirection;
-                           Vector3 newPosition = transform.position + selfPushDirection * distance;
-                           
-                        if (!Physics.CheckSphere(newPosition, detectionRadius, enemyLayer))
-                        {
-                            rb.MovePosition(newPosition);
-                        }
-                        */
-                        // Attiva l'effetto di lampeggiamento
-                        
-                        if (!isBlinking)
-                        {
-                            StartCoroutine(BlinkEffect());
-                        }
-                        
-                    }
+                        Debug.Log("sei stato colpito dal nemico ho lanciato l'evento");
+                        PlayerDamageReceived.TriggerDamageReceived();
+                    
                 }
 
                 // Disegna il raggio per il debug
@@ -103,29 +79,7 @@ public class AntiOverlap : MonoBehaviour
             }
         }
     }
-
-    IEnumerator BlinkEffect()
-    {
-        isBlinking = true;
-        Color originalColor = originalMaterial.color;
-        Color transparentColor = new Color(originalColor.r, originalColor.g, originalColor.b, 0);
-
-        float timer = 0f;
-
-        while (timer < blinkDuration)
-        {
-            Color lerpedColor = Color.Lerp(originalColor, transparentColor, Mathf.PingPong(timer * 2 / fadeDuration, 1));
-            playerRenderer.material.color = lerpedColor;
-            Debug.Log("Colore attuale: " + lerpedColor);
-            timer += Time.deltaTime;
-            yield return null;
-        }
-
-        playerRenderer.material.color = transparentColor;
-        Debug.Log("Ripristinato colore originale: " + originalColor);
-        isBlinking = false;
-    }
-
+    
     void OnDrawGizmos()
     {
         if (rb != null)
