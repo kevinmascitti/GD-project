@@ -12,15 +12,13 @@ public class projectile : MonoBehaviour
         {
             // il danno del projectile è damage e lo sottraggo alla vita del player
             // vado a diminuire la vita al player che viene colpito 
+            other.GetComponent<PlayerCharacter>().currentHP -= 5;
         }
 
         Destroy(gameObject);
     }
 
-    private void OnCollisionEnter(Collision other)
-    {
-        Destroy(gameObject);
-    }
+    
 
     private void Update()
     {
