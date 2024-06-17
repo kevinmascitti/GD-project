@@ -109,13 +109,13 @@ public class PlayerCharacter : Character
     void Update()
     {
         base.Update();
-        if (enemy_killed == GameObject.FindGameObjectWithTag("Spawner").GetComponent<Spawner>().spawnLimit)
-        {
-            // devo chiamare door open;
-            //OnEndRoom?.Invoke(this,new RoomArgs(on));
-            // questa cosa non so se sia giusta :(
-            GameObject.FindGameObjectWithTag("Spawner").GetComponent<Spawner>().OpenExit(this, new RoomArgs(currentRoom));
-        }
+        // if (enemy_killed == GameObject.FindGameObjectWithTag("Spawner").GetComponent<Spawner>().spawnLimit)
+        // {
+        //     // devo chiamare door open;
+        //     //OnEndRoom?.Invoke(this,new RoomArgs(on));
+        //     // questa cosa non so se sia giusta :(
+        //     GameObject.FindGameObjectWithTag("Spawner").GetComponent<Spawner>().OpenExit(this, new RoomArgs(currentRoom));
+        // }
 
         // AUMENTO STAMINA
         if (Input.GetKeyDown(KeyCode.E))
