@@ -17,8 +17,8 @@ public class PlayerCharacter : Character
     public float def_increase_STAMINA = 5;
     public int MAX_LIFE = 4;
     public int def_life = 4;
-    public int enemy_killed=0;
-    
+    public int enemy_killed = 0;
+    public bool isInvincible = true; // player invincibile quando riceve danno
     public Slider sliderHP;
     public Slider sliderStamina;
     public GameObject UIExtraLife;
@@ -26,7 +26,7 @@ public class PlayerCharacter : Character
     private float staminaUp = 5;
     private bool dieAnimation;
     private AnimatorStateInfo stateInfo;
-    
+
     private int currentExtraLife;
     private List<GameObject> heartList = new List<GameObject>();
 
@@ -39,13 +39,13 @@ public class PlayerCharacter : Character
     [NonSerialized] public Grabbable grabbedItem = null;
     public GameObject grabbingHand;
     [NonSerialized] private List<Grabbable> nearGrabbables = new List<Grabbable>();
-    
+
     // [SerializeField] private GameObject shoulder;
     // [SerializeField] private GameObject upperArm;
     // [SerializeField] private GameObject mediumArm;
     // [SerializeField] private GameObject hand;
     // [SerializeField] private GameObject knuckles;
-    
+
     public static EventHandler OnGameOver;
     public static EventHandler OnStaminaFull;
     public static EventHandler OnRequestLevel;
@@ -59,10 +59,11 @@ public class PlayerCharacter : Character
     public static EventHandler<GrabbableArgs> OnUsed;
     public static EventHandler<GrabbableArgs> OnComputedNearestGrabbable;
 
+
     // Start is called before the first frame update
     public void Awake()
     {
-        dieAnimation=false;
+        dieAnimation = false;
         isPlayer = true;
         sliderHP = GameObject.Find("HPBar").GetComponent<Slider>();
         sliderStamina = GameObject.Find("StaminaBar").GetComponent<Slider>();
@@ -78,11 +79,11 @@ public class PlayerCharacter : Character
         {
             for (int i = 0; i < MAX_LIFE; i++)
             {
-                heartList.Add(Instantiate((GameObject) Resources.Load("Heart"), UIExtraLife.transform));
+                heartList.Add(Instantiate((GameObject)Resources.Load("Heart"), UIExtraLife.transform));
                 heartList[i].SetActive(false);
             }
         }
-    
+
         UpdateHP(def_HP);
         UpdateStamina(0);
         UpdateExtraLife(def_life);
@@ -105,7 +106,10 @@ public class PlayerCharacter : Character
 
         Boss.OnBossDeath += UnlockRoom;
         Boss.OnBossDeath += UnlockButton;
+        PlayerDamageReceived.OnDamageReceivedFinish += PlayerSetInvincibleFalse;
+        PlayerDamageReceived.OnDamageReceived += PlayerSetInvincibleTrue;
     }
+
 
     // Update is called once per frame
     void Update()
@@ -142,7 +146,7 @@ public class PlayerCharacter : Character
                 Debug.Log("NEXT ROOM UNLOCKED");
             }
         }
-        
+
         if (currentHP <= 0 && !dieAnimation)
         {
             Die();
@@ -160,13 +164,14 @@ public class PlayerCharacter : Character
 
 
         // LANCIO OGGETTO
-        if (Input.GetKeyDown(KeyCode.G) && grabbableItem && grabbedItem == null && grabbableItem.GetState() == GrabbableState.GRABBABLE)
+        if (Input.GetKeyDown(KeyCode.G) && grabbableItem && grabbedItem == null &&
+            grabbableItem.GetState() == GrabbableState.GRABBABLE)
         {
             grabbedItem = grabbableItem;
             grabbedItem.Grab();
             OnGrabbed?.Invoke(this, new GrabbableArgs(grabbedItem));
         }
-        else if (Input.GetKeyDown(KeyCode.G) && grabbedItem && grabbedItem.GetState() == GrabbableState.GRABBED) 
+        else if (Input.GetKeyDown(KeyCode.G) && grabbedItem && grabbedItem.GetState() == GrabbableState.GRABBED)
         {
             if (grabbedItem.GetThrowState())
             {
@@ -178,6 +183,7 @@ public class PlayerCharacter : Character
                 grabbedItem.Use();
                 grabbedItem = null;
             }
+
             OnUsed?.Invoke(this, new GrabbableArgs(grabbedItem));
         }
     }
@@ -187,7 +193,7 @@ public class PlayerCharacter : Character
         currentHP = newHP;
         UpdateHPUI(currentHP);
     }
-    
+
     public void UpdateStamina(float newStamina)
     {
         if (newStamina >= MAX_STAMINA)
@@ -197,19 +203,20 @@ public class PlayerCharacter : Character
         }
         else
             currentStamina = newStamina;
+
         UpdateStaminaUI(currentStamina);
     }
-    
+
     private void IncreaseStamina(object sender, int args)
     {
-        UpdateStamina(currentStamina+def_increase_STAMINA);
+        UpdateStamina(currentStamina + def_increase_STAMINA);
     }
 
     private void EmptyStamina(object sender, EventArgs args)
     {
         UpdateStamina(0);
     }
-    
+
     public void UpdateExtraLife(int newExtraLife)
     {
         currentExtraLife = newExtraLife;
@@ -218,37 +225,59 @@ public class PlayerCharacter : Character
 
     public override void Die()
     {
-        OnEndRoom?.Invoke(this, new RoomArgs(currentRoom));
-        OnEndLevel?.Invoke(this, new RoomManagerArgs(currentLevel));
         
-        UpdateHP(MAX_HP);
-        UpdateStamina(0);
-        UpdateExtraLife(currentExtraLife-1);
-        
-        // animazione personaggio che muore
-        
-        if (currentExtraLife < 0)
-        {
-            // animazione di morte
-            Animator animator = this.GetComponent<Animator>();
+         OnEndRoom?.Invoke(this, new RoomArgs(currentRoom));
+         OnEndLevel?.Invoke(this, new RoomManagerArgs(currentLevel));
 
-            if (animator != null)
-            {
-                AnimatorStateInfo stateInfo = animator.GetCurrentAnimatorStateInfo(0);
-                animator.SetBool("die",true);
-                dieAnimation = true;
-            }
-            GameOver();
-        }
-        else
-        {
-            // VFX nuvoletta di respawn e transizione con timer
-            Debug.Log("DIED");
-            OnRequestLevel?.Invoke(this, EventArgs.Empty);
-        }
+         UpdateHP(MAX_HP);
+         UpdateStamina(0);
+         UpdateExtraLife(currentExtraLife-1);
+
+         // animazione personaggio che muore
+
+         if (currentExtraLife < 0)
+         {
+             // animazione di morte
+             Animator animator = this.GetComponent<Animator>();
+
+             if (animator != null)
+             {
+                 AnimatorStateInfo stateInfo = animator.GetCurrentAnimatorStateInfo(0);
+                 animator.SetBool("die",true);
+                 dieAnimation = true;
+             }
+             GameOver();
+         }
+         else
+         {
+             // VFX nuvoletta di respawn e transizione con timer
+             Debug.Log("DIED");
+             OnRequestLevel?.Invoke(this, EventArgs.Empty);
+         }
+         
+    }
+    public override void TakeDamage(float damage)
+    {
+        // Player-specific logic
+        if (isInvincible) return;
+
+        base.TakeDamage(damage);
+    }
+    
+    // FINESTRA DI INVINCIBILITA DEL GIOCATORE 
+    private void PlayerSetInvincibleTrue(object sender, EventArgs e)
+    {
+        Debug.Log("il player è ora invincibile");
+        isInvincible = true;
+    }
+    
+    private void PlayerSetInvincibleFalse(object sender, EventArgs e)
+    {
+        Debug.Log("il player non è più invincibile");
+        isInvincible = false;
     }
 
-    private void ChangeLevel(object sender, RoomManager args)
+private void ChangeLevel(object sender, RoomManager args)
     {
         currentLevel = args;
         OnStartLevel?.Invoke(this, new RoomManagerArgs(currentLevel));

@@ -5,11 +5,12 @@ using UnityEngine;
 public class PlayerDamageReceived : MonoBehaviour
 {
     [SerializeField] public GameObject player;
-    [SerializeField] private float totalFlickerDuration = 2.0f; // Durata totale del lampeggio in secondi
-    [SerializeField] private float flickerInterval = 0.1f; // Intervallo di tempo per alternare visibilità (in secondi)
+    [SerializeField] private float totalFlickerDuration = 1.0f; // Durata totale del lampeggio in secondi
+    [SerializeField] private float flickerInterval = 0.2f; // Intervallo di tempo per alternare visibilità (in secondi)
     private SkinnedMeshRenderer playerRenderer;
     private bool isFlickering = false;
     public static event EventHandler OnDamageReceived;
+    public static event EventHandler OnDamageReceivedFinish;
 
     void Awake()
     {
@@ -26,6 +27,7 @@ public class PlayerDamageReceived : MonoBehaviour
         OnDamageReceived -= DamageManager;
     }
 
+    
     void DamageManager(object sender, EventArgs e)
     {
         if (!isFlickering)
@@ -64,9 +66,15 @@ public class PlayerDamageReceived : MonoBehaviour
         {
             playerRenderer.enabled = true;
         }
+
         isFlickering = false;
+        TriggerDamageReceivedEnding();
     }
 
+    public static void TriggerDamageReceivedEnding()
+    {
+        OnDamageReceivedFinish?.Invoke(null, EventArgs.Empty);
+    }
     public static void TriggerDamageReceived()
     {
         OnDamageReceived?.Invoke(null, EventArgs.Empty);

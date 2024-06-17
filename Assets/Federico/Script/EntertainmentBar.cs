@@ -106,7 +106,7 @@ public class EntertainmentBar : MonoBehaviour
             {
                 currEntertainmentValue = 0;
                 isZero = true;
-                OnZeroedEnterteinmentBar?.Invoke(this, EventArgs.Empty);
+          //      OnZeroedEnterteinmentBar?.Invoke(this, EventArgs.Empty);
             }
         }
 
