@@ -702,6 +702,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4917933223307876155, guid: 03552866a0cad59479b1468956722dfe,
+        type: 3}
+      propertyPath: comboCounter
+      value: 
+      objectReference: {fileID: 650435202}
     - target: {fileID: 6718038216353055278, guid: 03552866a0cad59479b1468956722dfe,
         type: 3}
       propertyPath: m_AnchorMax.x
@@ -979,6 +984,18 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a7cf4fe8f39124f439b0c4ad1f10bd47, type: 3}
+--- !u!114 &650435202 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3288879567937045116, guid: 487b0de3aa24823469c4ac8d0ba20af5,
+    type: 3}
+  m_PrefabInstance: {fileID: 169189499}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9a707759cc8b74ab892b051c15b5137e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &728306897
 GameObject:
   m_ObjectHideFlags: 0
