@@ -13,6 +13,15 @@ public class EnemyCollision : MonoBehaviour
     public ComboCharacterWithDamage oggetto;
     private bool canCollide = true;
     private float collisionCooldown = 0.1f; // Cooldown di 0.1 secondi
+
+    void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.I))
+        {
+            OnAttackLended?.Invoke(this, new EnemyCollisionArgs(comboValue));
+        }
+    }
+    
     //
     // public bool CheckCollision(Enemy Enemy,Animator PlayerAnim)
     // {

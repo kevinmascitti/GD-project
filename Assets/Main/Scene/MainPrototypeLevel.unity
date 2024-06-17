@@ -824,13 +824,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fb1f24c7285a2452fa83dd761b015e6f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  uiHitsColor: {r: 1, g: 1, b: 1, a: 0}
+  uiHitsColor: {r: 1, g: 1, b: 1, a: 1}
   uiColors:
-  - {r: 0, g: 0.38723636, b: 0.6415094, a: 0}
-  - {r: 0, g: 0.509434, b: 0.24173503, a: 0}
-  - {r: 0.735849, g: 0.708391, b: 0, a: 0}
-  - {r: 0.7169812, g: 0, b: 0, a: 0}
-  - {r: 0.754717, g: 0, b: 0.6729378, a: 0}
+  - {r: 0, g: 0.38723636, b: 0.6415094, a: 1}
+  - {r: 0, g: 0.509434, b: 0.24173503, a: 1}
+  - {r: 0.735849, g: 0.708391, b: 0, a: 1}
+  - {r: 0.7169812, g: 0, b: 0, a: 1}
+  - {r: 0.754717, g: 0, b: 0.6729378, a: 1}
   stepColorLerp: 15
   fadeDuration: 1
   rotationDuration: 0.2

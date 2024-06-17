@@ -19,7 +19,7 @@ public class PopupSpawner : MonoBehaviour
     private Dictionary<int, bool> isPopupSpawned = new Dictionary<int, bool>();
     private int lastCounter;
     private Vector3 spawningDirection = Vector3.forward;
-    private Quaternion spawningRotation = Quaternion.Euler(270, 0, 0);
+    private Quaternion spawningRotation = Quaternion.Euler(270, 0, 180);
 
     void Start()
     {

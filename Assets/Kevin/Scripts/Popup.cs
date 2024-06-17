@@ -4,7 +4,7 @@ public class Popup : MonoBehaviour
 {
     public float jumpForce = 5f;
     public float bounceForce = 2f;
-    public int maxBounces = 2;
+    public int maxBounces = 10;
 
     private Rigidbody rb;
     private int bounceCount = 0;

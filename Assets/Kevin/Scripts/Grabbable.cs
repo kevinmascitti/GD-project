@@ -14,7 +14,8 @@ public enum GrabbableState
     GRABBABLE,
     GRABBED,
     THROWN, 
-    USED
+    USED,
+    INACTIVE
 }
 
 public class Grabbable : MonoBehaviour
@@ -28,14 +29,19 @@ public class Grabbable : MonoBehaviour
     [SerializeField] private float rotationSpeed;
     [SerializeField] private bool hasToBeThrown;
     [SerializeField] private float atk;
+    [SerializeField] private float animationSeconds;
+    [SerializeField] private float distanceFromCamera;
+    [SerializeField] private float rotationAmplitude; // Ampiezza massima della rotazione
+    [SerializeField] private int rotationOscillations; // Numero di oscillazioni complete
 
     private bool isInRange = false;
-    private GrabbableState state = GrabbableState.UNGRABBABLE;
+    private GrabbableState state = GrabbableState.INACTIVE;
     private GameObject player;
     private TMP_Text hint;
     private Vector3 rotationAxis = Vector3.up;
     private GameObject centerOfRotation;
-    
+    private Transform mainCamera;
+
     public static EventHandler<GrabbableArgs> OnInsideRange;
     public static EventHandler<GrabbableArgs> OnOutsideRange;
     public static EventHandler<GrabbableArgs> OnGrab;
@@ -47,15 +53,18 @@ public class Grabbable : MonoBehaviour
     {
         player = GameObject.Find("Player");
         hint = transform.Find("Hint").GetComponent<TMP_Text>();
+        hint.gameObject.SetActive(false);
         centerOfRotation = transform.Find("CenterOfRotation").gameObject;
-
+        mainCamera = GameObject.Find("Main Camera").transform;
+        StartCoroutine(AnimateObject(transform.position, transform.rotation));
+        
         PlayerCharacter.OnComputedNearestGrabbable += SetGrabbable;
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (Vector3.Distance(transform.position, player.transform.position) < distanceTrigger && !isInRange)
+        if (Vector3.Distance(transform.position, player.transform.position) < distanceTrigger && !isInRange && state == GrabbableState.UNGRABBABLE)
         {
             isInRange = true;
             OnInsideRange?.Invoke(this, new GrabbableArgs(this));
@@ -85,12 +94,12 @@ public class Grabbable : MonoBehaviour
 
     public void SetGrabbable(object sender, GrabbableArgs args)
     {
-        if (args.grabbable!=null && args.grabbable == this && args.grabbable.state == GrabbableState.UNGRABBABLE)
+        if (args.grabbable != null && hint && args.grabbable == this && args.grabbable.state == GrabbableState.UNGRABBABLE)
         {
             state = GrabbableState.GRABBABLE;
-            //hint.gameObject.SetActive(true);
+            hint.gameObject.SetActive(true);
         }
-        else if(args.grabbable!=null && args.grabbable != this)
+        else if((args.grabbable == null || (args.grabbable != null && args.grabbable != this)) && hint && state == GrabbableState.GRABBABLE)
         {
             state = GrabbableState.UNGRABBABLE;
             hint.gameObject.SetActive(false);
@@ -190,19 +199,53 @@ public class Grabbable : MonoBehaviour
         Destroy(gameObject);
     }
 
-    void OnCollisionEnter(Collision collision)
+    public void OnTriggerEnter(Collider other)
     {
-        
-        string collidedObjectTag = collision.gameObject.tag;
-        
-        // Stampa il tag dell'oggetto con cui si è avuta la collisione
-        Debug.Log("Collisione con oggetto con tag: " + collidedObjectTag+" stato : "+state);
-        if (collision.gameObject.CompareTag("enemy")) // state == GrabbableState.THROWN && --> tolto perche diventa 
-        // improvvisamente ungrabbable dopo il lancio
+        if(other.GetComponent<Enemy>() && (state == GrabbableState.USED || state == GrabbableState.THROWN)) 
         {
-            Debug.Log("kaboom riko");
-            Destroy(this.gameObject);
-            // morte nemico other.Getcomponent<Enemy>()...
+            other.GetComponent<Enemy>().TakeDamage(atk);
+            // VFX
+            Destroy(gameObject);
         }
+    }
+    
+    IEnumerator AnimateObject(Vector3 initialPosition, Quaternion initialRotation)
+    {
+        float elapsedTime = 0f;
+        Vector3 targetPosition = mainCamera.position + mainCamera.forward * distanceFromCamera;
+        targetPosition.y -= 0.8f;
+
+        while (elapsedTime < animationSeconds)
+        {
+            float fraction = elapsedTime / animationSeconds;
+            transform.position = Vector3.Lerp(initialPosition, targetPosition, fraction);
+            
+            float angle = Mathf.Sin(fraction * Mathf.PI * rotationOscillations) * rotationAmplitude;
+            Vector3 direction = (targetPosition - initialPosition).normalized;
+            Quaternion rotation = Quaternion.AngleAxis(angle, Vector3.up);
+            transform.rotation = initialRotation * rotation;
+            
+            elapsedTime += Time.deltaTime;
+            yield return null;
+        }
+        transform.position = targetPosition;
+        yield return new WaitForSeconds(0.2f);
+        elapsedTime = 0f;
+
+        while (elapsedTime < animationSeconds)
+        {
+            float fraction = elapsedTime / animationSeconds;
+            transform.position = Vector3.Lerp(targetPosition, initialPosition, fraction);
+            
+            float angle = Mathf.Sin(fraction * Mathf.PI * rotationOscillations) * rotationAmplitude;
+            Vector3 direction = (targetPosition - initialPosition).normalized;
+            Quaternion rotation = Quaternion.AngleAxis(angle, Vector3.up);
+            transform.rotation = initialRotation * rotation;
+            
+            elapsedTime += Time.deltaTime;
+            yield return null;
+        }
+        transform.position = initialPosition;
+        state = GrabbableState.UNGRABBABLE;
     }
 }

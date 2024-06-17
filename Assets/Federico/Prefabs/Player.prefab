@@ -1112,7 +1112,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentHP: 72.8
-  isPlayer: 0
+  isPlayer: 1
   atk: 55
   damageReducer: 1
   MAX_HP: 100
@@ -1122,11 +1122,12 @@ MonoBehaviour:
   MAX_LIFE: 4
   def_life: 4
   enemy_killed: 0
+  isInvincible: 1
   sliderHP: {fileID: 0}
   sliderStamina: {fileID: 0}
   UIExtraLife: {fileID: 0}
   camera: {fileID: 0}
-  grabbingHand: {fileID: 6922833940354934973}
+  grabbingHand: {fileID: 7237955793452121194}
 --- !u!114 &5065610752759917856
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1237,11 +1238,9 @@ MonoBehaviour:
   enemyLayer:
     serializedVersion: 2
     m_Bits: 1024
-  fadeDuration: 0.5
-  blinkDuration: 1.5
---- !u!1 &6922833940354934973 stripped
+--- !u!1 &7237955793452121194 stripped
 GameObject:
-  m_CorrespondingSourceObject: {fileID: 4856952145720570530, guid: 2ba6f97fc0ac2fe409ec11d121577fa8,
+  m_CorrespondingSourceObject: {fileID: 5118312966169618037, guid: 2ba6f97fc0ac2fe409ec11d121577fa8,
     type: 3}
   m_PrefabInstance: {fileID: 2555094549078825503}
   m_PrefabAsset: {fileID: 0}

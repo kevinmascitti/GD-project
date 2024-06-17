@@ -443,48 +443,59 @@ private void ChangeLevel(object sender, RoomManager args)
 
     private void StartMovingUpArm(object sender, GrabbableArgs args)
     {
-        GetComponent<Animator>().SetTrigger("GrabObject");
+        // GetComponent<Animator>().SetTrigger("GrabObject");
         // GetComponent<Animator>().enabled = false;
-        // StartCoroutine(MoveUpArm());
+        StartCoroutine(MoveUpArm());
     }
     
-    // private IEnumerator MoveUpArm()
-    // {
-    //     yield return new WaitForSeconds(0.2f);
-    //     
-    //     float angle = shoulder.transform.localRotation.eulerAngles.x;
-    //     while((shoulder.transform.localRotation.eulerAngles.x % 360) < angle + 50)
-    //     {
-    //         shoulder.transform.Rotate(-Vector3.up, 500 * Time.deltaTime, Space.Self);
-    //         upperArm.transform.RotateAround(shoulder.transform.Find("Center").transform.position, Vector3.forward, 500 * Time.deltaTime);
-    //         mediumArm.transform.RotateAround(shoulder.transform.Find("Center").transform.position, Vector3.forward, 500 * Time.deltaTime);
-    //         hand.transform.RotateAround(shoulder.transform.Find("Center").transform.position, Vector3.forward, 500 * Time.deltaTime);
-    //         knuckles.transform.RotateAround(shoulder.transform.Find("Center").transform.position, Vector3.forward, 500 * Time.deltaTime);
-    //         yield return null;
-    //     }
-    // }
+    private IEnumerator MoveUpArm()
+    {
+        GameObject shoulder = transform.Find("Shoulder.l").gameObject;
+        GameObject upperArm = transform.Find("UpperArm.l").gameObject;
+        GameObject mediumArm = transform.Find("MediumArm.l").gameObject;
+        GameObject hand = transform.Find("Hand.l").gameObject;
+        GameObject knuckles = transform.Find("Knuckles.l").gameObject;
+        yield return new WaitForSeconds(0.2f);
+        
+        float angle = shoulder.transform.localRotation.eulerAngles.x;
+        while((shoulder.transform.localRotation.eulerAngles.x % 360) < angle + 50)
+        {
+            shoulder.transform.Rotate(-Vector3.up, 500 * Time.deltaTime, Space.Self);
+            upperArm.transform.RotateAround(shoulder.transform.Find("Center").transform.position, Vector3.forward, 500 * Time.deltaTime);
+            mediumArm.transform.RotateAround(shoulder.transform.Find("Center").transform.position, Vector3.forward, 500 * Time.deltaTime);
+            hand.transform.RotateAround(shoulder.transform.Find("Center").transform.position, Vector3.forward, 500 * Time.deltaTime);
+            knuckles.transform.RotateAround(shoulder.transform.Find("Center").transform.position, Vector3.forward, 500 * Time.deltaTime);
+            yield return null;
+        }
+    }
 
     private void StartMovingDownArm(object sender, GrabbableArgs args)
     {
-        GetComponent<Animator>().SetTrigger("UseOrThrowObject");
-        // StartCoroutine(MoveDownArm());
+        // GetComponent<Animator>().SetTrigger("UseOrThrowObject");
+        // GetComponent<Animator>().enabled = true;
+        StartCoroutine(MoveDownArm());
     }
     
-    // private IEnumerator MoveDownArm()
-    // {
-    //     float angle = shoulder.transform.localRotation.eulerAngles.x;
-    //     while((shoulder.transform.localRotation.eulerAngles.x % 360) > angle - 50)
-    //     {
-    //         shoulder.transform.Rotate(Vector3.up, 500 * Time.deltaTime, Space.Self);
-    //         upperArm.transform.RotateAround(shoulder.transform.Find("Center").transform.position, -Vector3.forward, 500 * Time.deltaTime);
-    //         mediumArm.transform.RotateAround(shoulder.transform.Find("Center").transform.position, -Vector3.forward, 500 * Time.deltaTime);
-    //         hand.transform.RotateAround(shoulder.transform.Find("Center").transform.position, -Vector3.forward, 500 * Time.deltaTime);
-    //         knuckles.transform.RotateAround(shoulder.transform.Find("Center").transform.position, -Vector3.forward, 500 * Time.deltaTime);
-    //         yield return null;
-    //     }
-    //
-    //     GetComponent<Animator>().enabled = true;
-    // }
+    private IEnumerator MoveDownArm()
+    {
+        GameObject shoulder = transform.Find("Shoulder.l").gameObject;
+        GameObject upperArm = transform.Find("UpperArm.l").gameObject;
+        GameObject mediumArm = transform.Find("MediumArm.l").gameObject;
+        GameObject hand = transform.Find("Hand.l").gameObject;
+        GameObject knuckles = transform.Find("Knuckles.l").gameObject;
+        float angle = shoulder.transform.localRotation.eulerAngles.x;
+        while((shoulder.transform.localRotation.eulerAngles.x % 360) > angle - 50)
+        {
+            shoulder.transform.Rotate(Vector3.up, 500 * Time.deltaTime, Space.Self);
+            upperArm.transform.RotateAround(shoulder.transform.Find("Center").transform.position, -Vector3.forward, 500 * Time.deltaTime);
+            mediumArm.transform.RotateAround(shoulder.transform.Find("Center").transform.position, -Vector3.forward, 500 * Time.deltaTime);
+            hand.transform.RotateAround(shoulder.transform.Find("Center").transform.position, -Vector3.forward, 500 * Time.deltaTime);
+            knuckles.transform.RotateAround(shoulder.transform.Find("Center").transform.position, -Vector3.forward, 500 * Time.deltaTime);
+            yield return null;
+        }
+    
+        GetComponent<Animator>().enabled = true;
+    }
 
     private void UnlockRoom(object sender, ControllerButton newButton)
     {
