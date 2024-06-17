@@ -61,13 +61,35 @@ public class LevelManager : MonoBehaviour
         }
     }
 
-    private void ChooseNextLevel(object sender, EventArgs args)
+    private void ChooseNextLevel(object sender, RoomManager args)
     {
-        int rand = Random.Range(0, levels.Count);
-        while (levels[rand].isCompleted)
+        bool isCurrentLevelChosen = true;
+        RoomManager currentLevel = args;
+        RoomManager levelToChoose;
+        foreach (RoomManager level in levels)
         {
-            rand = Random.Range(0, levels.Count);
+            if (!level.isCompleted && level != currentLevel)
+            {
+                isCurrentLevelChosen = false;
+                break;
+            }
         }
-        OnShuffleLevel?.Invoke(this, levels[rand]);
+        
+        if(isCurrentLevelChosen)
+        {
+            levelToChoose = currentLevel;
+        }
+        else
+        {
+            int rand = Random.Range(0, levels.Count);
+            levelToChoose = levels[rand];
+            while (levelToChoose.isCompleted || levelToChoose == currentLevel)
+            {
+                rand = Random.Range(0, levels.Count);
+                levelToChoose = levels[rand];
+            }
+        }
+        
+        OnShuffleLevel?.Invoke(this, levelToChoose);
     }
 }

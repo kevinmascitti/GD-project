@@ -28,6 +28,7 @@ public class EntertainmentBar : MonoBehaviour
     [SerializeField] private ComboCounter comboCounter;
     private float currEntertainmentValue = 100;
     private bool isZero = false;
+    private bool isActive = false;
     
     private float speed = 1.0f; //how fast it shakes
     private float amount = 1.0f; //how much it shakes
@@ -47,10 +48,24 @@ public class EntertainmentBar : MonoBehaviour
         }
 
         EnemyCollision.OnAttackLended += AttackPerfomed;
+        PlayerCharacter.OnStartRoom += ResetEntertainmentBar;
+        PlayerCharacter.OnStartRoom += StartBar;
+        PlayerCharacter.OnEndRoom += StopBar;
+        PlayerCharacter.OnNextRoom += ResetEntertainmentBar;
     }
 
+    private void StartBar(object sender, EventArgs args)
+    {
+        isActive = true;
+    }
+
+    private void StopBar(object sender, EventArgs args)
+    {
+        isActive = false;
+    }
+    
     //INCREMENTO FLAT DELLA BARRA DI INTRATTENIMENTO TEST 1 
-    public void increaseEnterntaiment()
+    public void IncreaseEnterntaiment()
     {
         slider.value += 0.2f;
         fill.color = gradient.Evaluate(slider.normalizedValue);
@@ -86,9 +101,9 @@ public class EntertainmentBar : MonoBehaviour
     }
 
     //RESET DELLA BARRA DI INTRATTENIMENTO A SEGUITO DI UN CAMBIO LIVELLO 
-    public void resetEntertainmentBar()
+    public void ResetEntertainmentBar(object sender, EventArgs args)
     {
-        this.currEntertainmentValue = this.maxEntertainmentValue;
+        currEntertainmentValue = maxEntertainmentValue;
     }
 
     void Update()
@@ -99,14 +114,14 @@ public class EntertainmentBar : MonoBehaviour
             comboCounter.counter += 2;
         }
 
-        if (!isZero)
+        if (!isZero && isActive)
         {
             currEntertainmentValue -= decreaseSpeed * Time.deltaTime;
             if (currEntertainmentValue < 0)
             {
                 currEntertainmentValue = 0;
                 isZero = true;
-                OnZeroedEnterteinmentBar?.Invoke(this, EventArgs.Empty);
+          //      OnZeroedEnterteinmentBar?.Invoke(this, EventArgs.Empty);
             }
         }
 

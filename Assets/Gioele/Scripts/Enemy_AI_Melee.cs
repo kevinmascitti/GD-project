@@ -195,7 +195,7 @@ public class Enemy_AI_Melee : Enemy
     {
         if (other.CompareTag("Player"))
         {
-            GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerCharacter>().currentHP -= damage;
+            other.GetComponent<PlayerCharacter>().TakeDamage(0);
         }
 
         

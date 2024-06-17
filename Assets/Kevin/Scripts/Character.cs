@@ -26,8 +26,8 @@ public abstract class Character : MonoBehaviour
             }
         }
     }
-
-    public void TakeDamage(float damage)
+    
+    public virtual void TakeDamage(float damage)
     {
         currentHP -= damage/damageReducer;
         // TO DO animazione danno subito??
