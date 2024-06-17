@@ -16975,6 +16975,16 @@ PrefabInstance:
       propertyPath: walkPointRange
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 7369354529107647035, guid: 86decf478d7f44de6ba6c659c541a018,
+        type: 3}
+      propertyPath: m_IsTrigger
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7369354529107647035, guid: 86decf478d7f44de6ba6c659c541a018,
+        type: 3}
+      propertyPath: m_ProvidesContacts
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7726724210522450151, guid: 86decf478d7f44de6ba6c659c541a018,
         type: 3}
       propertyPath: m_LocalPosition.y

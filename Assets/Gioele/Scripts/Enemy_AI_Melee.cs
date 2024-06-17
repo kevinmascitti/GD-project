@@ -193,7 +193,7 @@ public class Enemy_AI_Melee : Enemy
     
     void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Ground"))
+        if (other.CompareTag("Player"))
         {
             GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerCharacter>().currentHP -= damage;
         }
