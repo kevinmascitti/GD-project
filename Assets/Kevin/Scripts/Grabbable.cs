@@ -29,7 +29,9 @@ public class Grabbable : MonoBehaviour
     [SerializeField] private float rotationSpeed;
     [SerializeField] private bool hasToBeThrown;
     [SerializeField] private float atk;
-    [SerializeField] private float animationSeconds;
+    [SerializeField] private float startAnimationSeconds;
+    [SerializeField] private float hitSeconds;
+    [SerializeField] private int hitRotation;
     [SerializeField] private float distanceFromCamera;
     [SerializeField] private float rotationAmplitude; // Ampiezza massima della rotazione
     [SerializeField] private int rotationOscillations; // Numero di oscillazioni complete
@@ -111,6 +113,8 @@ public class Grabbable : MonoBehaviour
         state = GrabbableState.GRABBED;
         hint.gameObject.SetActive(false);
         GetComponent<Rigidbody>().useGravity = false;
+        GetComponent<BoxCollider>().enabled = false;
+        GetComponent<MeshCollider>().enabled = true;
         
         transform.SetParent(player.GetComponent<PlayerCharacter>().grabbingHand.transform);
         
@@ -145,14 +149,65 @@ public class Grabbable : MonoBehaviour
         OnThrow?.Invoke(this, new GrabbableArgs(this));
     }
 
-    public void Use()
+    public void Use(Vector3 forward)
     {
         state = GrabbableState.USED;
-        transform.SetParent(null);
-        StartCoroutine(StartDestroyTimer(destroyUsedTimer));
         OnUse?.Invoke(this, new GrabbableArgs(this));
+        if(forward.x >= 0)
+            StartCoroutine(Hit(hitRotation, hitSeconds, true));
+        else
+            StartCoroutine(Hit(hitRotation, hitSeconds, false));
     }
 
+    private IEnumerator Hit(float totalAngle, float duration, bool isRight)
+    {
+        float elapsedTime = 0f;
+        float rotationSpeed = totalAngle / duration; // Calcola la velocità di rotazione in gradi per secondo
+
+        while (elapsedTime < duration)
+        {
+            // Ottieni la posizione del centro di rotazione nelle coordinate locali dell'oggetto
+            Vector3 localCenterOfRotation = transform.InverseTransformPoint(centerOfRotation.transform.position);
+
+            // Calcola l'angolo di rotazione per questo frame
+            float angleThisFrame = rotationSpeed * Time.deltaTime;
+
+            // Crea un'istanza di rotazione attorno all'asse locale
+            Quaternion localRotation;
+            if(isRight)
+                localRotation = Quaternion.AngleAxis(angleThisFrame, rotationAxis);
+            else
+                localRotation = Quaternion.AngleAxis(-angleThisFrame, rotationAxis);
+
+            // Sposta l'oggetto al centro di rotazione locale
+            transform.position -= localCenterOfRotation;
+
+            // Applica la rotazione
+            transform.rotation *= localRotation;
+
+            // Riporta l'oggetto alla posizione originale
+            transform.position += localCenterOfRotation;
+
+            // Incrementa il tempo trascorso
+            elapsedTime += Time.deltaTime;
+
+            // Attendiamo il frame successivo
+            yield return null;
+        }
+
+        // Assicura che l'oggetto raggiunga esattamente l'angolo desiderato alla fine della rotazione
+        float remainingAngle = totalAngle - (rotationSpeed * elapsedTime);
+        Quaternion finalRotation = Quaternion.AngleAxis(remainingAngle, rotationAxis);
+
+        transform.position -= centerOfRotation.transform.localPosition;
+        transform.rotation *= finalRotation;
+        transform.position += centerOfRotation.transform.localPosition;
+
+        yield return new WaitForSeconds(0.1f);
+        Destroy(gameObject);
+    }
+
+    
     private IEnumerator MoveGrabbable()
     {
         Vector3 startPosition = transform.position;
@@ -215,9 +270,9 @@ public class Grabbable : MonoBehaviour
         Vector3 targetPosition = mainCamera.position + mainCamera.forward * distanceFromCamera;
         targetPosition.y -= 0.8f;
 
-        while (elapsedTime < animationSeconds)
+        while (elapsedTime < startAnimationSeconds)
         {
-            float fraction = elapsedTime / animationSeconds;
+            float fraction = elapsedTime / startAnimationSeconds;
             transform.position = Vector3.Lerp(initialPosition, targetPosition, fraction);
             
             float angle = Mathf.Sin(fraction * Mathf.PI * rotationOscillations) * rotationAmplitude;
@@ -232,9 +287,9 @@ public class Grabbable : MonoBehaviour
         yield return new WaitForSeconds(0.2f);
         elapsedTime = 0f;
 
-        while (elapsedTime < animationSeconds)
+        while (elapsedTime < startAnimationSeconds)
         {
-            float fraction = elapsedTime / animationSeconds;
+            float fraction = elapsedTime / startAnimationSeconds;
             transform.position = Vector3.Lerp(targetPosition, initialPosition, fraction);
             
             float angle = Mathf.Sin(fraction * Mathf.PI * rotationOscillations) * rotationAmplitude;

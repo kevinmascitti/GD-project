@@ -183,7 +183,7 @@ public class PlayerCharacter : Character
             }
             else
             {
-                grabbedItem.Use();
+                grabbedItem.Use(transform.forward);
                 grabbedItem = null;
             }
 
@@ -448,16 +448,16 @@ private void ChangeLevel(object sender, RoomManager args)
     {
         // GetComponent<Animator>().SetTrigger("GrabObject");
         // GetComponent<Animator>().enabled = false;
-        StartCoroutine(MoveUpArm());
+        // StartCoroutine(MoveUpArm());
     }
     
     private IEnumerator MoveUpArm()
     {
-        GameObject shoulder = transform.Find("Shoulder.l").gameObject;
-        GameObject upperArm = transform.Find("UpperArm.l").gameObject;
-        GameObject mediumArm = transform.Find("MediumArm.l").gameObject;
-        GameObject hand = transform.Find("Hand.l").gameObject;
-        GameObject knuckles = transform.Find("Knuckles.l").gameObject;
+        GameObject shoulder = transform.Find("BoyRig").Find("Bone").Find("Shoulder.l").gameObject;
+        GameObject upperArm = transform.Find("BoyRig").Find("Bone").Find("UpperArm.l").gameObject;
+        GameObject mediumArm = transform.Find("BoyRig").Find("Bone").Find("MediumArm.l").gameObject;
+        GameObject hand = transform.Find("BoyRig").Find("Bone").Find("Hand.l").gameObject;
+        GameObject knuckles = transform.Find("BoyRig").Find("Bone").Find("Knuckles.l").gameObject;
         yield return new WaitForSeconds(0.2f);
         
         float angle = shoulder.transform.localRotation.eulerAngles.x;
@@ -476,16 +476,16 @@ private void ChangeLevel(object sender, RoomManager args)
     {
         // GetComponent<Animator>().SetTrigger("UseOrThrowObject");
         // GetComponent<Animator>().enabled = true;
-        StartCoroutine(MoveDownArm());
+        // StartCoroutine(MoveDownArm());
     }
     
     private IEnumerator MoveDownArm()
     {
-        GameObject shoulder = transform.Find("Shoulder.l").gameObject;
-        GameObject upperArm = transform.Find("UpperArm.l").gameObject;
-        GameObject mediumArm = transform.Find("MediumArm.l").gameObject;
-        GameObject hand = transform.Find("Hand.l").gameObject;
-        GameObject knuckles = transform.Find("Knuckles.l").gameObject;
+        GameObject shoulder = transform.Find("BoyRig").Find("Bone").Find("Shoulder.l").gameObject;
+        GameObject upperArm = transform.Find("BoyRig").Find("Bone").Find("UpperArm.l").gameObject;
+        GameObject mediumArm = transform.Find("BoyRig").Find("Bone").Find("MediumArm.l").gameObject;
+        GameObject hand = transform.Find("BoyRig").Find("Bone").Find("Hand.l").gameObject;
+        GameObject knuckles = transform.Find("BoyRig").Find("Bone").Find("Knuckles.l").gameObject;
         float angle = shoulder.transform.localRotation.eulerAngles.x;
         while((shoulder.transform.localRotation.eulerAngles.x % 360) > angle - 50)
         {

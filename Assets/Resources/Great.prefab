@@ -313,6 +313,10 @@ PrefabInstance:
         type: 3}
       insertIndex: -1
       addedObject: {fileID: 4745769743310636420}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 80cfdea1bd5ecb1488d93e7499dcea52,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 4002887801870523692}
   m_SourcePrefab: {fileID: 100100000, guid: 80cfdea1bd5ecb1488d93e7499dcea52, type: 3}
 --- !u!4 &4956511310108530817 stripped
 Transform:
@@ -363,12 +367,14 @@ MonoBehaviour:
   destroyUsedTimer: 10
   transitionDuration: 0.5
   distanceTrigger: 2
-  grabEulerRotation: {x: 0, y: -100, z: 90}
+  grabEulerRotation: {x: 160, y: 80, z: 90}
   throwForce: 10
   rotationSpeed: 500
   hasToBeThrown: 0
   atk: 15
-  animationSeconds: 0.5
+  startAnimationSeconds: 0.5
+  hitSeconds: 0.05
+  hitRotation: 140
   distanceFromCamera: 3
   rotationAmplitude: 0
   rotationOscillations: 0
@@ -414,3 +420,25 @@ MonoBehaviour:
   jumpForce: 5
   bounceForce: 2
   maxBounces: 2
+--- !u!64 &4002887801870523692
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5729353237577450043}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 0
+  serializedVersion: 5
+  m_Convex: 1
+  m_CookingOptions: 30
+  m_Mesh: {fileID: -5495902117074765545, guid: 80cfdea1bd5ecb1488d93e7499dcea52, type: 3}
