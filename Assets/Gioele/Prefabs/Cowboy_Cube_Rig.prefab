@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &8755769013013334981
+--- !u!1 &6628251011095238455
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,7 +8,7 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 887681572853985302}
+  - component: {fileID: 5479345050920022295}
   m_Layer: 0
   m_Name: spawnProjectile
   m_TagString: Untagged
@@ -16,22 +16,22 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &887681572853985302
+--- !u!4 &5479345050920022295
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8755769013013334981}
+  m_GameObject: {fileID: 6628251011095238455}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0.16753691, z: -0, w: 0.98586583}
   m_LocalPosition: {x: -0.443, y: 1.84, z: 1.461}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 2060243532933274816}
+  m_Father: {fileID: 4582309631107242457}
   m_LocalEulerAnglesHint: {x: 0, y: -19.289, z: 0}
---- !u!1001 &1953944238218935083
+--- !u!1001 &4043417906212699698
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -92,7 +92,7 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: 321a1e033d7ee03439b7a5f0b701e36b,
         type: 3}
       propertyPath: m_Name
-      value: Cowboy_Cube_Rig
+      value: Cowboy_Cube_Rig (1)
       objectReference: {fileID: 0}
     - target: {fileID: 5866666021909216657, guid: 321a1e033d7ee03439b7a5f0b701e36b,
         type: 3}
@@ -108,30 +108,30 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: -8679921383154817045, guid: 321a1e033d7ee03439b7a5f0b701e36b,
         type: 3}
       insertIndex: -1
-      addedObject: {fileID: 887681572853985302}
+      addedObject: {fileID: 5479345050920022295}
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 321a1e033d7ee03439b7a5f0b701e36b,
         type: 3}
       insertIndex: -1
-      addedObject: {fileID: 2624777380427030808}
+      addedObject: {fileID: 8991230504907810884}
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 321a1e033d7ee03439b7a5f0b701e36b,
         type: 3}
       insertIndex: -1
-      addedObject: {fileID: 4793743380407969800}
+      addedObject: {fileID: 5073318237389837700}
   m_SourcePrefab: {fileID: 100100000, guid: 321a1e033d7ee03439b7a5f0b701e36b, type: 3}
---- !u!1 &1719429749345404538 stripped
+--- !u!1 &3809045795639903075 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 321a1e033d7ee03439b7a5f0b701e36b,
     type: 3}
-  m_PrefabInstance: {fileID: 1953944238218935083}
+  m_PrefabInstance: {fileID: 4043417906212699698}
   m_PrefabAsset: {fileID: 0}
---- !u!195 &2624777380427030808
+--- !u!195 &8991230504907810884
 NavMeshAgent:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1719429749345404538}
+  m_GameObject: {fileID: 3809045795639903075}
   m_Enabled: 1
   m_AgentTypeID: 0
   m_Radius: 0.5
@@ -147,13 +147,13 @@ NavMeshAgent:
   m_BaseOffset: 0
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
---- !u!114 &4793743380407969800
+--- !u!114 &5073318237389837700
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1719429749345404538}
+  m_GameObject: {fileID: 3809045795639903075}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 733bb09504aa7af42b901d870697e644, type: 3}
@@ -179,15 +179,15 @@ MonoBehaviour:
     type: 3}
   projectileSpeed: 20
   projectileUPSpeed: 1.5
-  gunpivot: {fileID: 887681572853985302}
+  gunpivot: {fileID: 5479345050920022295}
   sightRange: 2
   attackRange: 10
   playerInSightRange: 0
   playerInAttackRange: 0
-  gunPivotobj: {fileID: 8755769013013334981}
---- !u!4 &2060243532933274816 stripped
+  gunPivotobj: {fileID: 6628251011095238455}
+--- !u!4 &4582309631107242457 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 321a1e033d7ee03439b7a5f0b701e36b,
     type: 3}
-  m_PrefabInstance: {fileID: 1953944238218935083}
+  m_PrefabInstance: {fileID: 4043417906212699698}
   m_PrefabAsset: {fileID: 0}

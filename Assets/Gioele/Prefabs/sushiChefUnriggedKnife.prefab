@@ -82,6 +82,12 @@ PrefabInstance:
       insertIndex: -1
       addedObject: {fileID: 2853908740609641002}
   m_SourcePrefab: {fileID: 100100000, guid: 1172fb229b8d31f45aafda9746242879, type: 3}
+--- !u!1 &350469688300715256 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1754656056922952287, guid: 1172fb229b8d31f45aafda9746242879,
+    type: 3}
+  m_PrefabInstance: {fileID: 2055000632684048039}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1172552055829091318 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 1172fb229b8d31f45aafda9746242879,
@@ -116,16 +122,16 @@ MonoBehaviour:
   walkPointSet: 0
   walkPointRange: 7
   timeBetweenAttacks: 3
-  projectile: {fileID: 8451419581102632517, guid: 77847cbeb7437d747ba5e12377f85945,
+  projectile: {fileID: 2868518990019339048, guid: f1d7bdf9be3cde74aad04d3735805190,
     type: 3}
   projectileSpeed: 20
   projectileUPSpeed: 1.5
-  gunpivot: {fileID: 8515012371826320475}
+  gunpivot: {fileID: 1515036099962704634}
   sightRange: 2
   attackRange: 10
   playerInSightRange: 0
   playerInAttackRange: 0
-  gunPivotobj: {fileID: 0}
+  gunPivotobj: {fileID: 350469688300715256}
 --- !u!195 &2853908740609641002
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -148,9 +154,9 @@ NavMeshAgent:
   m_BaseOffset: 0
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
---- !u!4 &8515012371826320475 stripped
+--- !u!4 &1515036099962704634 stripped
 Transform:
-  m_CorrespondingSourceObject: {fileID: 7687559434525362940, guid: 1172fb229b8d31f45aafda9746242879,
+  m_CorrespondingSourceObject: {fileID: 685296453362285661, guid: 1172fb229b8d31f45aafda9746242879,
     type: 3}
   m_PrefabInstance: {fileID: 2055000632684048039}
   m_PrefabAsset: {fileID: 0}

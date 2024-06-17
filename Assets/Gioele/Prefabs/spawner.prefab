@@ -46,19 +46,22 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   spawnableObjects:
   - {fileID: 7897149327893079946, guid: 86decf478d7f44de6ba6c659c541a018, type: 3}
-  - {fileID: 1719429749345404538, guid: 7d8272ab49b34b545a672c23fb8e6016, type: 3}
+  - {fileID: 3809045795639903075, guid: d7ca263a9200ff245826591feba32a6a, type: 3}
   - {fileID: 845877483370869507, guid: a36135325f2986d4fb5c840426a26ae1, type: 3}
   EnemyObjects:
   - {fileID: 7897149327893079946, guid: 86decf478d7f44de6ba6c659c541a018, type: 3}
-  - {fileID: 1719429749345404538, guid: 7d8272ab49b34b545a672c23fb8e6016, type: 3}
+  - {fileID: 3809045795639903075, guid: d7ca263a9200ff245826591feba32a6a, type: 3}
   - {fileID: 845877483370869507, guid: a36135325f2986d4fb5c840426a26ae1, type: 3}
+  spawnOrder: []
   spawnProbability:
   - 0.8
   - 0.3
   - 0.2
+  spawnedEnemies: []
   plane: {fileID: 0}
   spawnTime: 2
   canSpawn: 1
   spawnCount: 0
   spawnLimit: 7
   levelPlane: {fileID: 0}
+  isdeterministic: 0
