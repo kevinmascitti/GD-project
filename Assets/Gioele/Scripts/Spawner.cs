@@ -30,6 +30,7 @@ public class Spawner : MonoBehaviour
             _totalProbability += spawnProbability[i];
         }
 
+        spawnCount = 0;
         //start spawn
         StartSpawn();
         //setto i nemici del primo livello
