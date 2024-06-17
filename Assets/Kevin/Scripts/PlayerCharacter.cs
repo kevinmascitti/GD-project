@@ -252,7 +252,7 @@ public class PlayerCharacter : Character
          {
              // VFX nuvoletta di respawn e transizione con timer
              Debug.Log("DIED");
-             OnRequestLevel?.Invoke(this, EventArgs.Empty);
+             OnRequestLevel?.Invoke(this, currentLevel);
          }
          
     }
