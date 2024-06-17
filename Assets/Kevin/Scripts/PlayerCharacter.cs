@@ -46,9 +46,9 @@ public class PlayerCharacter : Character
     // [SerializeField] private GameObject hand;
     // [SerializeField] private GameObject knuckles;
     
-    public static EventHandler OnDeath;
     public static EventHandler OnGameOver;
     public static EventHandler OnStaminaFull;
+    public static EventHandler OnRequestLevel;
 
     public static EventHandler<RoomArgs> OnStartRoom;
     public static EventHandler<RoomArgs> OnEndRoom;
@@ -87,7 +87,8 @@ public class PlayerCharacter : Character
         UpdateStamina(0);
         UpdateExtraLife(def_life);
 
-        LevelManager.OnInitializedLevels += SetCurrentRoom;
+        LevelManager.OnInitializedLevels += SetFirstLevelAndRoom;
+        LevelManager.OnShuffleLevel += ChangeLevel;
         LerpAnimation.OnEndAnimation += EndPlayerAnimation;
 
         Grabbable.OnInsideRange += AddGrabbableInRange;
@@ -98,6 +99,7 @@ public class PlayerCharacter : Character
         Grabbable.OnUse += StartMovingDownArm;
 
         ComboCounter.OnCounterIncreased += IncreaseStamina;
+        EntertainmentBar.OnZeroedEnterteinmentBar += RequestNewLevel;
 
         RemoteController.OnControllerAbility += EmptyStamina;
 
@@ -217,6 +219,7 @@ public class PlayerCharacter : Character
     public override void Die()
     {
         OnEndRoom?.Invoke(this, new RoomArgs(currentRoom));
+        OnEndLevel?.Invoke(this, new RoomManagerArgs(currentLevel));
         
         UpdateHP(MAX_HP);
         UpdateStamina(0);
@@ -240,23 +243,31 @@ public class PlayerCharacter : Character
         else
         {
             // VFX nuvoletta di respawn e transizione con timer
-            Respawn();
+            Debug.Log("DIED");
+            OnRequestLevel?.Invoke(this, EventArgs.Empty);
         }
     }
 
-    public void Respawn()
+    private void ChangeLevel(object sender, RoomManager args)
     {
-        OnDeath?.Invoke(this, EventArgs.Empty);
-        
+        currentLevel = args;
+        OnStartLevel?.Invoke(this, new RoomManagerArgs(currentLevel));
         currentRoom = currentLevel.firstRoom;
+        OnStartRoom?.Invoke(this, new RoomArgs(currentRoom));
+        
         gameObject.transform.position = currentLevel.rooms[0].spawnPoint;
         camera.transform.position = currentLevel.rooms[0].cameraPosition;
-        Debug.Log("DIED");
+    }
+
+    private void RequestNewLevel(object sender, EventArgs args)
+    {
+        OnEndRoom?.Invoke(this, new RoomArgs(currentRoom));
+        OnEndLevel?.Invoke(this, new RoomManagerArgs(currentLevel));
+        OnRequestLevel?.Invoke(this, EventArgs.Empty);
     }
 
     public void GameOver()
     {
-        OnEndLevel?.Invoke(this, new RoomManagerArgs(currentLevel));
         OnGameOver?.Invoke(this, EventArgs.Empty);
         
         // UI visibile
@@ -326,7 +337,7 @@ public class PlayerCharacter : Character
         }
     }
 
-    public void SetCurrentRoom(object sender, LevelManagerArgs args)
+    public void SetFirstLevelAndRoom(object sender, LevelManagerArgs args)
     {
         currentLevel = args.firstLevel;
         currentRoom = currentLevel.firstRoom.GetComponent<Room>();

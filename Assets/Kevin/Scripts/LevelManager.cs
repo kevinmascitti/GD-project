@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using Unity.PlasticSCM.Editor.WebApi;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using Random = UnityEngine.Random;
 
 public class LevelManager : MonoBehaviour
 {
@@ -16,6 +17,7 @@ public class LevelManager : MonoBehaviour
     [NonSerialized] public RoomManager firstLevel;
 
     public static EventHandler<LevelManagerArgs> OnInitializedLevels; 
+    public static EventHandler<RoomManager> OnShuffleLevel; 
 
     public void Awake()
     {
@@ -38,9 +40,10 @@ public class LevelManager : MonoBehaviour
         }
         
         RoomManager.OnInitializedLevel += LinkLevels;
+        PlayerCharacter.OnRequestLevel += ChooseNextLevel;
     }
 
-    public void LinkLevels(object sender, EventArgs args)
+    private void LinkLevels(object sender, EventArgs args)
     {
         initializedLevels++;
         if (initializedLevels == levels.Count)
@@ -56,5 +59,15 @@ public class LevelManager : MonoBehaviour
             firstLevel.firstRoom.ClearEnterLayer();
             levels[levels.Count-1].rooms[levels[levels.Count-1].rooms.Count-1].ClearExitLayer();
         }
+    }
+
+    private void ChooseNextLevel(object sender, EventArgs args)
+    {
+        int rand = Random.Range(0, levels.Count);
+        while (levels[rand].isCompleted)
+        {
+            rand = Random.Range(0, levels.Count);
+        }
+        OnShuffleLevel?.Invoke(this, levels[rand]);
     }
 }

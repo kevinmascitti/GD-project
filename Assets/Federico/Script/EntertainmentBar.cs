@@ -27,10 +27,12 @@ public class EntertainmentBar : MonoBehaviour
     // [SerializeField] float comboCounter = 1f;
     [SerializeField] private ComboCounter comboCounter;
     private float currEntertainmentValue = 100;
-
-
+    private bool isZero = false;
+    
     private float speed = 1.0f; //how fast it shakes
     private float amount = 1.0f; //how much it shakes
+
+    public static EventHandler OnZeroedEnterteinmentBar;
 
     // Start is called before the first frame update
     void Start()
@@ -58,6 +60,8 @@ public class EntertainmentBar : MonoBehaviour
     public void AttackPerfomed(object sender, EventArgs args)
     {
         Debug.Log("hey la barra d'intrattenimento ha rilevato l'attacco");
+        if(isZero)
+            isZero = false;
         currEntertainmentValue += IncreaseSpeed * comboCounter.counter;
         if (currEntertainmentValue > 100) 
             currEntertainmentValue = 100;
@@ -95,10 +99,16 @@ public class EntertainmentBar : MonoBehaviour
             comboCounter.counter += 2;
         }
 
-
-        currEntertainmentValue -= decreaseSpeed * Time.deltaTime;
-        if (currEntertainmentValue < 0) currEntertainmentValue = 0;
-
+        if (!isZero)
+        {
+            currEntertainmentValue -= decreaseSpeed * Time.deltaTime;
+            if (currEntertainmentValue < 0)
+            {
+                currEntertainmentValue = 0;
+                isZero = true;
+                OnZeroedEnterteinmentBar?.Invoke(this, EventArgs.Empty);
+            }
+        }
 
         if (slider != null)
         {

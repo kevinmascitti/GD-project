@@ -13,6 +13,7 @@ public class RoomManager : MonoBehaviour
     [NonSerialized] public RoomManager nextLevel;
     [NonSerialized] public Room firstRoom;
     [NonSerialized] public Room lastRoom;
+    [NonSerialized] public bool isCompleted = false;
 
     public static EventHandler OnInitializedLevel;
 

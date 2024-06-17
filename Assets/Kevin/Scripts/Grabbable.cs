@@ -41,7 +41,6 @@ public class Grabbable : MonoBehaviour
     public static EventHandler<GrabbableArgs> OnGrab;
     public static EventHandler<GrabbableArgs> OnThrow;
     public static EventHandler<GrabbableArgs> OnUse;
-    [SerializeField] private Object Enemy;
 
     // Start is called before the first frame update
     void Start()
@@ -204,7 +203,6 @@ public class Grabbable : MonoBehaviour
             Debug.Log("kaboom riko");
             Destroy(this.gameObject);
             // morte nemico other.Getcomponent<Enemy>()...
-            Destroy(Enemy);
         }
     }
 }
