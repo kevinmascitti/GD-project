@@ -7,12 +7,13 @@ public class EnemyCollision : MonoBehaviour
     public GameObject player;
 
     [SerializeField] private int comboValue;
-    public static EventHandler<EnemyCollisionArgs> OnAttackLended;
     private GameObject hitEffectPrefabTemp;
     public GameObject HitEffectPrefab;
     public ComboCharacterWithDamage oggetto;
     private bool canCollide = true;
     private float collisionCooldown = 0.1f; // Cooldown di 0.1 secondi
+    
+    public static EventHandler<EnemyCollisionArgs> OnAttackLended;
 
     void Update()
     {
@@ -79,6 +80,7 @@ public class EnemyCollision : MonoBehaviour
             StartCoroutine(KillHitEffect(hitEffectPrefabTemp));
             Debug.Log("Enemy Hit");
             OnAttackLended?.Invoke(this, new EnemyCollisionArgs(comboValue));
+            enemy.TakeDamage(1);
 
             canCollide = false; // Disabilita ulteriori collisioni per la durata del cooldown
             StartCoroutine(CollisionCooldown());

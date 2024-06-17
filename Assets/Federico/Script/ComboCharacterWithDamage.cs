@@ -52,29 +52,32 @@ public class ComboCharacterWithDamage : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetMouseButton(0) && meleeStateMachine.CurrentState.GetType() == typeof(IdleCombatState))
+        if (GetComponent<PlayerCharacter>().isInputEnabled)
         {
-            isAttacking = true;
-            Vector3 contactPoint =handBone.transform.position;
-            GetComponent<Animator>().SetBool("InvalidateMoving",true);
-            meleeStateMachine.SetNextState(new GroundEntryState()); 
-            // hitEffectPrefabTemp = GameObject.Instantiate(HitEffectPrefab, contactPoint, Quaternion.identity);
-         //   StartCoroutine("KillHitEffect");
+            if (Input.GetMouseButton(0) && meleeStateMachine.CurrentState.GetType() == typeof(IdleCombatState))
+            {
+                isAttacking = true;
+                Vector3 contactPoint = handBone.transform.position;
+                GetComponent<Animator>().SetBool("InvalidateMoving", true);
+                meleeStateMachine.SetNextState(new GroundEntryState());
+                // hitEffectPrefabTemp = GameObject.Instantiate(HitEffectPrefab, contactPoint, Quaternion.identity);
+                //   StartCoroutine("KillHitEffect");
+            }
+
+            if (Input.GetKeyDown(KeyCode.O) && meleeStateMachine.CurrentState.GetType() == typeof(IdleCombatState))
+            {
+                GetComponent<Animator>().SetBool("InvalidateMoving", true);
+                meleeStateMachine.SetNextState(new DashState());
+                OnDashExecuted?.Invoke(this, EventArgs.Empty);
+            }
+
+            if (Input.GetKeyDown(KeyCode.K) && meleeStateMachine.CurrentState.GetType() == typeof(IdleCombatState))
+            {
+                GetComponent<Animator>().SetBool("InvalidateMoving", true);
+                StartCoroutine(ValidateMoving(0.5f));
+                meleeStateMachine.SetNextState(new KickState());
+            }
         }
-        if (Input.GetKeyDown(KeyCode.O) && meleeStateMachine.CurrentState.GetType() == typeof(IdleCombatState) )
-        {
-            GetComponent<Animator>().SetBool("InvalidateMoving",true);
-            meleeStateMachine.SetNextState(new DashState());
-            OnDashExecuted?.Invoke(this, EventArgs.Empty);
-        }
-        
-        if (Input.GetKeyDown(KeyCode.K) && meleeStateMachine.CurrentState.GetType() == typeof(IdleCombatState) )
-        {
-            GetComponent<Animator>().SetBool("InvalidateMoving",true);
-            StartCoroutine(ValidateMoving(0.5f));
-            meleeStateMachine.SetNextState(new KickState());
-        }
-        
     }
 
     private void ValidateMovingNow(object sender, EventArgs args)

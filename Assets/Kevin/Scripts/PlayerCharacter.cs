@@ -18,6 +18,7 @@ public class PlayerCharacter : Character
     public int MAX_LIFE = 4;
     public int def_life = 4;
     public int enemy_killed = 0;
+    [NonSerialized] public bool isInputEnabled = false;
     public bool isInvincible = true; // player invincibile quando riceve danno
     public Slider sliderHP;
     public Slider sliderStamina;
@@ -63,6 +64,60 @@ public class PlayerCharacter : Character
     // Start is called before the first frame update
     public void Awake()
     {
+        Initialize();
+        
+        LevelManager.OnInitializedLevels += SetFirstLevelAndRoom;
+        LevelManager.OnShuffleLevel += ChangeLevel;
+        LerpAnimation.OnEndAnimation += EndPlayerAnimation;
+
+        Grabbable.OnInsideRange += AddGrabbableInRange;
+        Grabbable.OnOutsideRange += RemoveGrabbableInRange;
+        Grabbable.OnGrab += StartMovingUpArm;
+        Grabbable.OnGrab += RemoveGrabbableInRange;
+        Grabbable.OnThrow += StartMovingDownArm;
+        Grabbable.OnUse += StartMovingDownArm;
+
+        ComboCounter.OnCounterIncreased += IncreaseStamina;
+        EntertainmentBar.OnZeroedEnterteinmentBar += RequestNewLevel;
+
+        RemoteController.OnControllerAbility += EmptyStamina;
+
+        Boss.OnBossDeath += UnlockRoom;
+        Boss.OnBossDeath += UnlockButton;
+        PlayerDamageReceived.OnDamageReceivedFinish += PlayerSetInvincibleFalse;
+        PlayerDamageReceived.OnDamageReceived += PlayerSetInvincibleTrue;
+
+        MainMenu.OnNewGame += NewGame;
+    }
+    
+    private void OnDestroy()
+    {
+        LevelManager.OnInitializedLevels -= SetFirstLevelAndRoom;
+        LevelManager.OnShuffleLevel -= ChangeLevel;
+        LerpAnimation.OnEndAnimation -= EndPlayerAnimation;
+
+        Grabbable.OnInsideRange -= AddGrabbableInRange;
+        Grabbable.OnOutsideRange -= RemoveGrabbableInRange;
+        Grabbable.OnGrab -= StartMovingUpArm;
+        Grabbable.OnGrab -= RemoveGrabbableInRange;
+        Grabbable.OnThrow -= StartMovingDownArm;
+        Grabbable.OnUse -= StartMovingDownArm;
+
+        ComboCounter.OnCounterIncreased -= IncreaseStamina;
+        EntertainmentBar.OnZeroedEnterteinmentBar -= RequestNewLevel;
+
+        RemoteController.OnControllerAbility -= EmptyStamina;
+
+        Boss.OnBossDeath -= UnlockRoom;
+        Boss.OnBossDeath -= UnlockButton;
+        PlayerDamageReceived.OnDamageReceivedFinish -= PlayerSetInvincibleFalse;
+        PlayerDamageReceived.OnDamageReceived -= PlayerSetInvincibleTrue;
+
+        MainMenu.OnNewGame -= NewGame;
+    }
+
+    public void Initialize()
+    {
         dieAnimation = false;
         isPlayer = true;
         sliderHP = GameObject.Find("HPBar").GetComponent<Slider>();
@@ -87,29 +142,7 @@ public class PlayerCharacter : Character
         UpdateHP(def_HP);
         UpdateStamina(0);
         UpdateExtraLife(def_life);
-
-        LevelManager.OnInitializedLevels += SetFirstLevelAndRoom;
-        LevelManager.OnShuffleLevel += ChangeLevel;
-        LerpAnimation.OnEndAnimation += EndPlayerAnimation;
-
-        Grabbable.OnInsideRange += AddGrabbableInRange;
-        Grabbable.OnOutsideRange += RemoveGrabbableInRange;
-        Grabbable.OnGrab += StartMovingUpArm;
-        Grabbable.OnGrab += RemoveGrabbableInRange;
-        Grabbable.OnThrow += StartMovingDownArm;
-        Grabbable.OnUse += StartMovingDownArm;
-
-        ComboCounter.OnCounterIncreased += IncreaseStamina;
-        EntertainmentBar.OnZeroedEnterteinmentBar += RequestNewLevel;
-
-        RemoteController.OnControllerAbility += EmptyStamina;
-
-        Boss.OnBossDeath += UnlockRoom;
-        Boss.OnBossDeath += UnlockButton;
-        PlayerDamageReceived.OnDamageReceivedFinish += PlayerSetInvincibleFalse;
-        PlayerDamageReceived.OnDamageReceived += PlayerSetInvincibleTrue;
     }
-
 
     // Update is called once per frame
     void Update()
@@ -117,83 +150,90 @@ public class PlayerCharacter : Character
         base.Update();
         if (enemy_killed == GameObject.FindGameObjectWithTag("Spawner").GetComponent<Spawner>().spawnLimit)
         {
-                // test per vedere se correttamente di aprono le porte
-                Debug.Log("door open");
-        //     // devo chiamare door open;
-        //     //OnEndRoom?.Invoke(this,new RoomArgs(on));
-        //     // questa cosa non so se sia giusta :(
-        //     //GameObject.FindGameObjectWithTag("Spawner").GetComponent<Spawner>().OpenExit(this, new RoomArgs(currentRoom));
-        }
-        
-
-        // AUMENTO STAMINA
-        if (Input.GetKeyDown(KeyCode.E))
-        {
-            Debug.Log("Stamina++ " + staminaUp);
-            if (currentStamina + staminaUp <= MAX_STAMINA)
-            {
-                currentStamina += staminaUp;
-            }
-            else
-            {
-                currentStamina = MAX_STAMINA;
-            }
-
-            UpdateStaminaUI(currentStamina);
-        } // SBLOCCO LIVELLO SUCCESSIVO
-        else if (Input.GetKeyDown(KeyCode.L))
-        {
-            if (currentRoom.isLocked)
-            {
-                currentRoom.isLocked = false;
-                Debug.Log("NEXT ROOM UNLOCKED");
-            }
+            // test per vedere se correttamente di aprono le porte
+            Debug.Log("door open");
+            // devo chiamare door open;
+            //OnEndRoom?.Invoke(this,new RoomArgs(on));
+            // questa cosa non so se sia giusta :(
+            //GameObject.FindGameObjectWithTag("Spawner").GetComponent<Spawner>().OpenExit(this, new RoomArgs(currentRoom));
         }
 
-        if (currentHP <= 0 && !dieAnimation)
+        if (isInputEnabled)
         {
-            Die();
-        }
-
-        if (dieAnimation)
-        {
-            if (stateInfo.normalizedTime >= 1.0f && !GetComponent<Animator>().IsInTransition(0))
+            // AUMENTO STAMINA
+            if (Input.GetKeyDown(KeyCode.E))
             {
-                // Fai qualcosa quando l'animazione è terminata
-                this.gameObject.SetActive(false);
-                Debug.Log("L'animazione è terminata!");
-            }
-        }
+                Debug.Log("Stamina++ " + staminaUp);
+                if (currentStamina + staminaUp <= MAX_STAMINA)
+                {
+                    currentStamina += staminaUp;
+                }
+                else
+                {
+                    currentStamina = MAX_STAMINA;
+                }
 
-
-        // LANCIO OGGETTO
-        if (Input.GetKeyDown(KeyCode.G) && grabbableItem && grabbedItem == null &&
-            grabbableItem.GetState() == GrabbableState.GRABBABLE)
-        {
-            grabbedItem = grabbableItem;
-            grabbedItem.Grab();
-            OnGrabbed?.Invoke(this, new GrabbableArgs(grabbedItem));
-        }
-        else if (Input.GetKeyDown(KeyCode.G) && grabbedItem && grabbedItem.GetState() == GrabbableState.GRABBED)
-        {
-            if (grabbedItem.GetThrowState())
+                UpdateStaminaUI(currentStamina);
+            } // SBLOCCO LIVELLO SUCCESSIVO
+            else if (Input.GetKeyDown(KeyCode.L))
             {
-                grabbedItem.Throw();
-                grabbedItem = null;
-            }
-            else
-            {
-                grabbedItem.Use(transform.forward);
-                grabbedItem = null;
+                if (currentRoom.isLocked)
+                {
+                    currentRoom.isLocked = false;
+                    Debug.Log("NEXT ROOM UNLOCKED");
+                }
             }
 
-            OnUsed?.Invoke(this, new GrabbableArgs(grabbedItem));
+            if (dieAnimation)
+            {
+                if (stateInfo.normalizedTime >= 1.0f && !GetComponent<Animator>().IsInTransition(0))
+                {
+                    // Fai qualcosa quando l'animazione è terminata
+                    this.gameObject.SetActive(false);
+                    Debug.Log("L'animazione è terminata!");
+                }
+            }
+
+
+            // LANCIO OGGETTO
+            if (Input.GetKeyDown(KeyCode.G) && grabbableItem && grabbedItem == null &&
+                grabbableItem.GetState() == GrabbableState.GRABBABLE)
+            {
+                grabbedItem = grabbableItem;
+                grabbedItem.Grab();
+                OnGrabbed?.Invoke(this, new GrabbableArgs(grabbedItem));
+            }
+            else if (Input.GetKeyDown(KeyCode.G) && grabbedItem && grabbedItem.GetState() == GrabbableState.GRABBED)
+            {
+                if (grabbedItem.GetThrowState())
+                {
+                    grabbedItem.Throw();
+                    grabbedItem = null;
+                }
+                else
+                {
+                    grabbedItem.Use(transform.forward);
+                    grabbedItem = null;
+                }
+
+                OnUsed?.Invoke(this, new GrabbableArgs(grabbedItem));
+            }
         }
+    }
+
+    private void NewGame(object sender, EventArgs args)
+    {
+        Initialize();
     }
 
     public void UpdateHP(float newHP)
     {
         currentHP = newHP;
+        if (currentHP <= 0)
+        {
+            currentHP = 0;
+            Die();
+        }
         UpdateHPUI(currentHP);
     }
 
@@ -228,37 +268,40 @@ public class PlayerCharacter : Character
 
     public override void Die()
     {
+        OnEndRoom?.Invoke(this, new RoomArgs(currentRoom));
+        OnEndLevel?.Invoke(this, new RoomManagerArgs(currentLevel));
+
+        isInputEnabled = false;
+
+        // animazione personaggio che muore
+
+        // animazione di morte
+        Animator animator = GetComponent<Animator>();
+
+        if (animator != null)
+        {
+            // AnimatorStateInfo stateInfo = animator.GetCurrentAnimatorStateInfo(0);
+            animator.SetBool("die",true);
+            dieAnimation = true;
+            isInvincible = true;
+        }
         
-         OnEndRoom?.Invoke(this, new RoomArgs(currentRoom));
-         OnEndLevel?.Invoke(this, new RoomManagerArgs(currentLevel));
-
-         UpdateHP(MAX_HP);
-         UpdateStamina(0);
-         UpdateExtraLife(currentExtraLife-1);
-
-         // animazione personaggio che muore
-
-         if (currentExtraLife < 0)
-         {
-             // animazione di morte
-             Animator animator = this.GetComponent<Animator>();
-
-             if (animator != null)
-             {
-                 AnimatorStateInfo stateInfo = animator.GetCurrentAnimatorStateInfo(0);
-                 animator.SetBool("die",true);
-                 dieAnimation = true;
-             }
-             GameOver();
-         }
-         else
-         {
-             // VFX nuvoletta di respawn e transizione con timer
-             Debug.Log("DIED");
-             OnRequestLevel?.Invoke(this, currentLevel);
-         }
-         
+        Invoke("ApplyDeath", 2f);
     }
+
+    private void ApplyDeath()
+    {
+        if (currentExtraLife < 0)
+        {
+            GameOver();
+        }
+        else
+        {
+            // VFX nuvoletta di respawn e transizione con timer
+            OnRequestLevel?.Invoke(this, currentLevel);
+        }
+    }
+    
     public override void TakeDamage(float damage)
     {
         // Player-specific logic
@@ -280,30 +323,43 @@ public class PlayerCharacter : Character
         isInvincible = false;
     }
 
-private void ChangeLevel(object sender, RoomManager args)
+    private void ChangeLevel(object sender, RoomManager args)
     {
+        if (dieAnimation)
+        {
+            UpdateHP(MAX_HP);
+            UpdateStamina(0);
+            UpdateExtraLife(currentExtraLife - 1);
+            GetComponent<Animator>().SetBool("die",false);
+        }
+
         currentLevel = args;
         OnStartLevel?.Invoke(this, new RoomManagerArgs(currentLevel));
         currentRoom = currentLevel.firstRoom;
         OnStartRoom?.Invoke(this, new RoomArgs(currentRoom));
+        isInvincible = false;
+        dieAnimation = false;
         
         gameObject.transform.position = currentLevel.rooms[0].spawnPoint;
         camera.transform.position = currentLevel.rooms[0].cameraPosition;
+        isInputEnabled = true;
     }
 
     private void RequestNewLevel(object sender, EventArgs args)
     {
         OnEndRoom?.Invoke(this, new RoomArgs(currentRoom));
         OnEndLevel?.Invoke(this, new RoomManagerArgs(currentLevel));
+        isInputEnabled = false;
+        isInvincible = true;
         OnRequestLevel?.Invoke(this, currentLevel);
     }
 
     public void GameOver()
     {
+        OnEndRoom?.Invoke(this, new RoomArgs(currentRoom));
+        OnEndLevel?.Invoke(this, new RoomManagerArgs(currentLevel));
+        isInputEnabled = false;
         OnGameOver?.Invoke(this, EventArgs.Empty);
-        
-        // UI visibile
-        Debug.Log("GAMEOVER");
     }
     
     private void OnCollisionEnter(Collision collision)
@@ -373,6 +429,7 @@ private void ChangeLevel(object sender, RoomManager args)
     {
         currentLevel = args.firstLevel;
         currentRoom = currentLevel.firstRoom.GetComponent<Room>();
+        isInputEnabled = true;
         
         transform.position = currentRoom.spawnPoint;
         

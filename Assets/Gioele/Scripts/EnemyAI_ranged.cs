@@ -59,7 +59,7 @@ public class EnemyAI : Enemy
         {
             agent.SetDestination(walkPoint);
             // evito che vada a seguire un punto per troppo tempo
-            StartCoroutine(NuovoObbiettivo(3f));
+            StartCoroutine(NewTarget(3f));
         }
 
         Vector3 distanceToWalkPoint = transform.position - walkPoint;
@@ -68,7 +68,7 @@ public class EnemyAI : Enemy
             walkPointSet = false;
         }
     }  
-    IEnumerator NuovoObbiettivo(float seconds)
+    IEnumerator NewTarget(float seconds)
     {
         yield return new WaitForSeconds(seconds);
         SearchWalkPoint();

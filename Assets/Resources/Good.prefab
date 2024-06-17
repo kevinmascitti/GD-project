@@ -372,7 +372,7 @@ MonoBehaviour:
   rotationSpeed: 500
   hasToBeThrown: 1
   atk: 10
-  startAnimationSeconds: 0.05
+  startAnimationSeconds: 0.5
   hitSeconds: 0.2
   hitRotation: 140
   distanceFromCamera: 3

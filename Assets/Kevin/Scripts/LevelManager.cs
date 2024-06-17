@@ -41,6 +41,7 @@ public class LevelManager : MonoBehaviour
         
         RoomManager.OnInitializedLevel += LinkLevels;
         PlayerCharacter.OnRequestLevel += ChooseNextLevel;
+        MainMenu.OnNewGame += NewGame;
     }
 
     private void LinkLevels(object sender, EventArgs args)
@@ -59,6 +60,23 @@ public class LevelManager : MonoBehaviour
             firstLevel.firstRoom.ClearEnterLayer();
             levels[levels.Count-1].rooms[levels[levels.Count-1].rooms.Count-1].ClearExitLayer();
         }
+    }
+
+    public void NewGame(object sender, EventArgs args)
+    {
+        foreach (RoomManager level in levels)
+        {
+            foreach (Room room in level.rooms)
+            {
+                room.isLocked = true;
+            }
+            level.isCompleted = false;
+        }
+
+        int firstLevelRand = Random.Range(0, levels.Count);
+        firstLevel = levels[firstLevelRand];
+        
+        OnInitializedLevels?.Invoke(this, new LevelManagerArgs(levels, firstLevel));
     }
 
     private void ChooseNextLevel(object sender, RoomManager args)
