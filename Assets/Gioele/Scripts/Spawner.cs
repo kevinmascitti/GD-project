@@ -33,7 +33,6 @@ public class Spawner : MonoBehaviour
 
         //setto i nemici del primo livello
         ChangePrefabs(0);
-        StartCoroutine(SpawnObjects());
         StartCoroutine(ShowExit(1.5f));
         PlayerCharacter.OnEndRoom += OpenExit;
         PlayerCharacter.OnStartRoom += CloseExit;
@@ -103,6 +102,7 @@ public class Spawner : MonoBehaviour
     public void StartSpawn()
     {
         canSpawn = true;
+        StartCoroutine(SpawnObjects());
     }
 
     public void ChangePrefabs(int indice)
