@@ -53,79 +53,88 @@ public class SimpleThirdPersonController : MonoBehaviour
                 return false;
             }
         }
+
         return true;
     }
 
     void Update()
     {
-        // Handle the Input
-        float h = Input.GetAxis("Horizontal");
-        float v = Input.GetAxis("Vertical");
-
-        if(h > 0){
-            transform.forward = forwardVector;
-            transform.localScale = forwardScaleVector;
-        }
-        else if (h < 0){
-            transform.forward = backwardVector;
-            transform.localScale = backwardScaleVector;
-        }
-
-        if (fede) // To remove fede variable if-cases
+        if (GetComponent<PlayerCharacter>().isInputEnabled)
         {
-            PlayerAnim.SetFloat("horizontal", h);
-            PlayerAnim.SetFloat("vertical", v);
-        }
+            // Handle the Input
+            float h = Input.GetAxis("Horizontal");
+            float v = Input.GetAxis("Vertical");
 
-        // Walk if you aren't attacking
-        if ((h != 0 || v != 0) && !GetComponent<Animator>().GetBool("InvalidateMoving"))
-        {
-            GetComponent<Animator>().SetBool("walking", true);
-        }
+            if (h > 0)
+            {
+                transform.forward = forwardVector;
+                transform.localScale = forwardScaleVector;
+            }
+            else if (h < 0)
+            {
+                transform.forward = backwardVector;
+                transform.localScale = backwardScaleVector;
+            }
 
-        // Elaborate input Vector and input Speed
-        _inputVector = new Vector3(-h, 0, -v);
-        _inputSpeed = Mathf.Clamp(_inputVector.magnitude, 0f, 1f);
+            if (fede) // To remove fede variable if-cases
+            {
+                PlayerAnim.SetFloat("horizontal", h);
+                PlayerAnim.SetFloat("vertical", v);
+            }
 
-        // Compute direction according to Camera orientation
-        //_targetDirection = Camera.transform.TransformDirection(_inputVector).normalized;
-        //_targetDirection.y = 0f;
-        if (_inputSpeed <= 0f && !GetComponent<Animator>().GetBool("InvalidateMoving"))
-        {
-            GetComponent<Animator>().SetBool("walking", false);
-        }
-        //else
-        //{
+            // Walk if you aren't attacking
+            if ((h != 0 || v != 0) && !GetComponent<Animator>().GetBool("InvalidateMoving"))
+            {
+                GetComponent<Animator>().SetBool("walking", true);
+            }
+
+            // Elaborate input Vector and input Speed
+            _inputVector = new Vector3(-h, 0, -v);
+            _inputSpeed = Mathf.Clamp(_inputVector.magnitude, 0f, 1f);
+
+            // Compute direction according to Camera orientation
+            //_targetDirection = Camera.transform.TransformDirection(_inputVector).normalized;
+            //_targetDirection.y = 0f;
+            if (_inputSpeed <= 0f && !GetComponent<Animator>().GetBool("InvalidateMoving"))
+            {
+                GetComponent<Animator>().SetBool("walking", false);
+            }
+            //else
+            //{
             // Calculate the new expected direction (newDir) and rotate
             //Vector3 newDir = Vector3.RotateTowards(transform.forward, _targetDirection, RotationSpeed * Time.deltaTime, 0f);
             //transform.rotation = Quaternion.LookRotation(newDir);
-        //}
+            //}
 
-        if (PlayerAnim && !PlayerAnim.GetBool("InvalidateMoving"))
-        {
-            // Translate along forward
-            Vector3 movement = _inputVector * Speed * Time.deltaTime;
-            if (CanMove(movement))
+            if (PlayerAnim && !PlayerAnim.GetBool("InvalidateMoving"))
             {
-                transform.Translate(movement, Space.World);
-            }
+                // Translate along forward
+                Vector3 movement = _inputVector * Speed * Time.deltaTime;
+                if (CanMove(movement))
+                {
+                    transform.Translate(movement, Space.World);
+                }
 
-            if (fede)
-            {
-                PlayerAnim.SetFloat("forward", Vector3.Dot(transform.forward, new Vector3(_inputSpeed * Speed, 0, _inputSpeed * Speed)));
-            }
+                if (fede)
+                {
+                    PlayerAnim.SetFloat("forward",
+                        Vector3.Dot(transform.forward, new Vector3(_inputSpeed * Speed, 0, _inputSpeed * Speed)));
+                }
 
-            if (transform.position.z < depthPoint.transform.position.z - minDepthBound)
-            {
-                transform.position = new Vector3(transform.position.x, transform.position.y, depthPoint.transform.position.z - minDepthBound);
-            }
-            else if (transform.position.z > depthPoint.transform.position.z + maxDepthBound)
-            {
-                transform.position = new Vector3(transform.position.x, transform.position.y, depthPoint.transform.position.z + maxDepthBound);
-            }
+                if (transform.position.z < depthPoint.transform.position.z - minDepthBound)
+                {
+                    transform.position = new Vector3(transform.position.x, transform.position.y,
+                        depthPoint.transform.position.z - minDepthBound);
+                }
+                else if (transform.position.z > depthPoint.transform.position.z + maxDepthBound)
+                {
+                    transform.position = new Vector3(transform.position.x, transform.position.y,
+                        depthPoint.transform.position.z + maxDepthBound);
+                }
 
-            Debug.DrawRay(transform.position + transform.up * 3f, _targetDirection * 5f, Color.red);
-            Debug.DrawRay(transform.position + transform.up * 3f, transform.forward * 5f, Color.green);
+                Debug.DrawRay(transform.position + transform.up * 3f, _targetDirection * 5f, Color.red);
+                Debug.DrawRay(transform.position + transform.up * 3f, transform.forward * 5f, Color.green);
+            }
         }
     }
 }

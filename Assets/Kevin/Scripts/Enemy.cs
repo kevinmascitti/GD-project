@@ -6,19 +6,19 @@ using UnityEngine;
 public class Enemy : Character
 {
     public static EventHandler OnEnemyDeath;
+    
     public void Update()
     {
         base.Update();
-        
     }
-
-    
 
     public override void Die()
     {
         // TO DO animazione e morte
         OnEnemyDeath?.Invoke(this,EventArgs.Empty);
-        
+        // agigungo la kill al player
+        GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerCharacter>().enemy_killed++;
         Destroy(gameObject);
     }
+
 }

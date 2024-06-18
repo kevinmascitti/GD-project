@@ -17,8 +17,9 @@ public class PlayerCharacter : Character
     public float def_increase_STAMINA = 5;
     public int MAX_LIFE = 4;
     public int def_life = 4;
-    public int enemy_killed=0;
-    
+    public int enemy_killed = 0;
+    [NonSerialized] public bool isInputEnabled = false;
+    public bool isInvincible = true; // player invincibile quando riceve danno
     public Slider sliderHP;
     public Slider sliderStamina;
     public GameObject UIExtraLife;
@@ -26,7 +27,7 @@ public class PlayerCharacter : Character
     private float staminaUp = 5;
     private bool dieAnimation;
     private AnimatorStateInfo stateInfo;
-    
+
     private int currentExtraLife;
     private List<GameObject> heartList = new List<GameObject>();
 
@@ -39,14 +40,13 @@ public class PlayerCharacter : Character
     [NonSerialized] public Grabbable grabbedItem = null;
     public GameObject grabbingHand;
     [NonSerialized] private List<Grabbable> nearGrabbables = new List<Grabbable>();
-    
+
     // [SerializeField] private GameObject shoulder;
     // [SerializeField] private GameObject upperArm;
     // [SerializeField] private GameObject mediumArm;
     // [SerializeField] private GameObject hand;
     // [SerializeField] private GameObject knuckles;
-    
-    public static EventHandler OnDeath;
+
     public static EventHandler OnGameOver;
     public static EventHandler OnStaminaFull;
 
@@ -55,14 +55,70 @@ public class PlayerCharacter : Character
     public static EventHandler<RoomArgs> OnNextRoom;
     public static EventHandler<RoomManagerArgs> OnStartLevel;
     public static EventHandler<RoomManagerArgs> OnEndLevel;
+    public static EventHandler<RoomManager> OnRequestLevel;
     public static EventHandler<GrabbableArgs> OnGrabbed;
     public static EventHandler<GrabbableArgs> OnUsed;
     public static EventHandler<GrabbableArgs> OnComputedNearestGrabbable;
 
+
     // Start is called before the first frame update
     public void Awake()
     {
-        dieAnimation=false;
+        Initialize();
+        
+        LevelManager.OnInitializedLevels += SetFirstLevelAndRoom;
+        LevelManager.OnShuffleLevel += ChangeLevel;
+        LerpAnimation.OnEndAnimation += EndPlayerAnimation;
+
+        Grabbable.OnInsideRange += AddGrabbableInRange;
+        Grabbable.OnOutsideRange += RemoveGrabbableInRange;
+        Grabbable.OnGrab += StartMovingUpArm;
+        Grabbable.OnGrab += RemoveGrabbableInRange;
+        Grabbable.OnThrow += StartMovingDownArm;
+        Grabbable.OnUse += StartMovingDownArm;
+
+        ComboCounter.OnCounterIncreased += IncreaseStamina;
+        EntertainmentBar.OnZeroedEnterteinmentBar += RequestNewLevel;
+
+        RemoteController.OnControllerAbility += EmptyStamina;
+
+        Boss.OnBossDeath += UnlockRoom;
+        Boss.OnBossDeath += UnlockButton;
+        PlayerDamageReceived.OnDamageReceivedFinish += PlayerSetInvincibleFalse;
+        PlayerDamageReceived.OnDamageReceived += PlayerSetInvincibleTrue;
+
+        MainMenu.OnNewGame += NewGame;
+    }
+    
+    private void OnDestroy()
+    {
+        LevelManager.OnInitializedLevels -= SetFirstLevelAndRoom;
+        LevelManager.OnShuffleLevel -= ChangeLevel;
+        LerpAnimation.OnEndAnimation -= EndPlayerAnimation;
+
+        Grabbable.OnInsideRange -= AddGrabbableInRange;
+        Grabbable.OnOutsideRange -= RemoveGrabbableInRange;
+        Grabbable.OnGrab -= StartMovingUpArm;
+        Grabbable.OnGrab -= RemoveGrabbableInRange;
+        Grabbable.OnThrow -= StartMovingDownArm;
+        Grabbable.OnUse -= StartMovingDownArm;
+
+        ComboCounter.OnCounterIncreased -= IncreaseStamina;
+        EntertainmentBar.OnZeroedEnterteinmentBar -= RequestNewLevel;
+
+        RemoteController.OnControllerAbility -= EmptyStamina;
+
+        Boss.OnBossDeath -= UnlockRoom;
+        Boss.OnBossDeath -= UnlockButton;
+        PlayerDamageReceived.OnDamageReceivedFinish -= PlayerSetInvincibleFalse;
+        PlayerDamageReceived.OnDamageReceived -= PlayerSetInvincibleTrue;
+
+        MainMenu.OnNewGame -= NewGame;
+    }
+
+    public void Initialize()
+    {
+        dieAnimation = false;
         isPlayer = true;
         sliderHP = GameObject.Find("HPBar").GetComponent<Slider>();
         sliderStamina = GameObject.Find("StaminaBar").GetComponent<Slider>();
@@ -78,31 +134,14 @@ public class PlayerCharacter : Character
         {
             for (int i = 0; i < MAX_LIFE; i++)
             {
-                heartList.Add(Instantiate((GameObject) Resources.Load("Heart"), UIExtraLife.transform));
+                heartList.Add(Instantiate((GameObject)Resources.Load("Heart"), UIExtraLife.transform));
                 heartList[i].SetActive(false);
             }
         }
-    
+
         UpdateHP(def_HP);
         UpdateStamina(0);
         UpdateExtraLife(def_life);
-
-        LevelManager.OnInitializedLevels += SetCurrentRoom;
-        LerpAnimation.OnEndAnimation += EndPlayerAnimation;
-
-        Grabbable.OnInsideRange += AddGrabbableInRange;
-        Grabbable.OnOutsideRange += RemoveGrabbableInRange;
-        Grabbable.OnGrab += StartMovingUpArm;
-        Grabbable.OnGrab += RemoveGrabbableInRange;
-        Grabbable.OnThrow += StartMovingDownArm;
-        Grabbable.OnUse += StartMovingDownArm;
-
-        ComboCounter.OnCounterIncreased += IncreaseStamina;
-
-        RemoteController.OnControllerAbility += EmptyStamina;
-
-        Boss.OnBossDeath += UnlockRoom;
-        Boss.OnBossDeath += UnlockButton;
     }
 
     // Update is called once per frame
@@ -111,81 +150,93 @@ public class PlayerCharacter : Character
         base.Update();
         if (enemy_killed == GameObject.FindGameObjectWithTag("Spawner").GetComponent<Spawner>().spawnLimit)
         {
+            // test per vedere se correttamente di aprono le porte
+            Debug.Log("door open");
             // devo chiamare door open;
             //OnEndRoom?.Invoke(this,new RoomArgs(on));
             // questa cosa non so se sia giusta :(
-            GameObject.FindGameObjectWithTag("Spawner").GetComponent<Spawner>().OpenExit(this, new RoomArgs(currentRoom));
+            //GameObject.FindGameObjectWithTag("Spawner").GetComponent<Spawner>().OpenExit(this, new RoomArgs(currentRoom));
         }
 
-        // AUMENTO STAMINA
-        if (Input.GetKeyDown(KeyCode.E))
+        if (isInputEnabled)
         {
-            Debug.Log("Stamina++ " + staminaUp);
-            if (currentStamina + staminaUp <= MAX_STAMINA)
+            // AUMENTO STAMINA
+            if (Input.GetKeyDown(KeyCode.E))
             {
-                currentStamina += staminaUp;
-            }
-            else
+                Debug.Log("Stamina++ " + staminaUp);
+                if (currentStamina + staminaUp <= MAX_STAMINA)
+                {
+                    currentStamina += staminaUp;
+                }
+                else
+                {
+                    currentStamina = MAX_STAMINA;
+                }
+
+                UpdateStaminaUI(currentStamina);
+            } // SBLOCCO LIVELLO SUCCESSIVO
+            else if (Input.GetKeyDown(KeyCode.L))
             {
-                currentStamina = MAX_STAMINA;
+                if (currentRoom.isLocked)
+                {
+                    currentRoom.isLocked = false;
+                    Debug.Log("NEXT ROOM UNLOCKED");
+                }
             }
 
-            UpdateStaminaUI(currentStamina);
-        } // SBLOCCO LIVELLO SUCCESSIVO
-        else if (Input.GetKeyDown(KeyCode.L))
-        {
-            if (currentRoom.isLocked)
+            if (dieAnimation)
             {
-                currentRoom.isLocked = false;
-                Debug.Log("NEXT ROOM UNLOCKED");
+                if (stateInfo.normalizedTime >= 1.0f && !GetComponent<Animator>().IsInTransition(0))
+                {
+                    // Fai qualcosa quando l'animazione è terminata
+                    this.gameObject.SetActive(false);
+                    Debug.Log("L'animazione è terminata!");
+                }
             }
-        }
-        
-        if (currentHP <= 0 && !dieAnimation)
-        {
-            Die();
-        }
-
-        if (dieAnimation)
-        {
-            if (stateInfo.normalizedTime >= 1.0f && !GetComponent<Animator>().IsInTransition(0))
-            {
-                // Fai qualcosa quando l'animazione è terminata
-                this.gameObject.SetActive(false);
-                Debug.Log("L'animazione è terminata!");
-            }
-        }
 
 
-        // LANCIO OGGETTO
-        if (Input.GetKeyDown(KeyCode.G) && grabbableItem && grabbedItem == null && grabbableItem.GetState() == GrabbableState.GRABBABLE)
-        {
-            grabbedItem = grabbableItem;
-            grabbedItem.Grab();
-            OnGrabbed?.Invoke(this, new GrabbableArgs(grabbedItem));
-        }
-        else if (Input.GetKeyDown(KeyCode.G) && grabbedItem && grabbedItem.GetState() == GrabbableState.GRABBED) 
-        {
-            if (grabbedItem.GetThrowState())
+            // LANCIO OGGETTO
+            if (Input.GetKeyDown(KeyCode.G) && grabbableItem && grabbedItem == null &&
+                grabbableItem.GetState() == GrabbableState.GRABBABLE)
             {
-                grabbedItem.Throw();
-                grabbedItem = null;
+                grabbedItem = grabbableItem;
+                grabbedItem.Grab();
+                OnGrabbed?.Invoke(this, new GrabbableArgs(grabbedItem));
             }
-            else
+            else if (Input.GetKeyDown(KeyCode.G) && grabbedItem && grabbedItem.GetState() == GrabbableState.GRABBED)
             {
-                grabbedItem.Use();
-                grabbedItem = null;
+                if (grabbedItem.GetThrowState())
+                {
+                    grabbedItem.Throw();
+                    grabbedItem = null;
+                }
+                else
+                {
+                    grabbedItem.Use(transform.forward);
+                    grabbedItem = null;
+                }
+
+                OnUsed?.Invoke(this, new GrabbableArgs(grabbedItem));
             }
-            OnUsed?.Invoke(this, new GrabbableArgs(grabbedItem));
         }
+    }
+
+    private void NewGame(object sender, EventArgs args)
+    {
+        Initialize();
     }
 
     public void UpdateHP(float newHP)
     {
         currentHP = newHP;
+        if (currentHP <= 0)
+        {
+            currentHP = 0;
+            Die();
+        }
         UpdateHPUI(currentHP);
     }
-    
+
     public void UpdateStamina(float newStamina)
     {
         if (newStamina >= MAX_STAMINA)
@@ -195,19 +246,20 @@ public class PlayerCharacter : Character
         }
         else
             currentStamina = newStamina;
+
         UpdateStaminaUI(currentStamina);
     }
-    
+
     private void IncreaseStamina(object sender, int args)
     {
-        UpdateStamina(currentStamina+def_increase_STAMINA);
+        UpdateStamina(currentStamina + def_increase_STAMINA);
     }
 
     private void EmptyStamina(object sender, EventArgs args)
     {
         UpdateStamina(0);
     }
-    
+
     public void UpdateExtraLife(int newExtraLife)
     {
         currentExtraLife = newExtraLife;
@@ -217,50 +269,97 @@ public class PlayerCharacter : Character
     public override void Die()
     {
         OnEndRoom?.Invoke(this, new RoomArgs(currentRoom));
-        
-        UpdateHP(MAX_HP);
-        UpdateStamina(0);
-        UpdateExtraLife(currentExtraLife-1);
-        
+        OnEndLevel?.Invoke(this, new RoomManagerArgs(currentLevel));
+
+        isInputEnabled = false;
+
         // animazione personaggio che muore
+
+        // animazione di morte
+        Animator animator = GetComponent<Animator>();
+
+        if (animator != null)
+        {
+            // AnimatorStateInfo stateInfo = animator.GetCurrentAnimatorStateInfo(0);
+            animator.SetBool("die",true);
+            dieAnimation = true;
+            isInvincible = true;
+        }
         
+        Invoke("ApplyDeath", 2f);
+    }
+
+    private void ApplyDeath()
+    {
         if (currentExtraLife < 0)
         {
-            // animazione di morte
-            Animator animator = this.GetComponent<Animator>();
-
-            if (animator != null)
-            {
-                AnimatorStateInfo stateInfo = animator.GetCurrentAnimatorStateInfo(0);
-                animator.SetBool("die",true);
-                dieAnimation = true;
-            }
             GameOver();
         }
         else
         {
             // VFX nuvoletta di respawn e transizione con timer
-            Respawn();
+            OnRequestLevel?.Invoke(this, currentLevel);
         }
     }
-
-    public void Respawn()
+    
+    public override void TakeDamage(float damage)
     {
-        OnDeath?.Invoke(this, EventArgs.Empty);
-        
+        // Player-specific logic
+        if (isInvincible) return;
+
+        base.TakeDamage(damage);
+    }
+    
+    // FINESTRA DI INVINCIBILITA DEL GIOCATORE 
+    private void PlayerSetInvincibleTrue(object sender, EventArgs e)
+    {
+        Debug.Log("il player è ora invincibile");
+        isInvincible = true;
+    }
+    
+    private void PlayerSetInvincibleFalse(object sender, EventArgs e)
+    {
+        Debug.Log("il player non è più invincibile");
+        isInvincible = false;
+    }
+
+    private void ChangeLevel(object sender, RoomManager args)
+    {
+        if (dieAnimation)
+        {
+            UpdateHP(MAX_HP);
+            UpdateStamina(0);
+            UpdateExtraLife(currentExtraLife - 1);
+            GetComponent<Animator>().SetBool("die",false);
+        }
+
+        currentLevel = args;
+        OnStartLevel?.Invoke(this, new RoomManagerArgs(currentLevel));
         currentRoom = currentLevel.firstRoom;
+        OnStartRoom?.Invoke(this, new RoomArgs(currentRoom));
+        isInvincible = false;
+        dieAnimation = false;
+        
         gameObject.transform.position = currentLevel.rooms[0].spawnPoint;
         camera.transform.position = currentLevel.rooms[0].cameraPosition;
-        Debug.Log("DIED");
+        isInputEnabled = true;
+    }
+
+    private void RequestNewLevel(object sender, EventArgs args)
+    {
+        OnEndRoom?.Invoke(this, new RoomArgs(currentRoom));
+        OnEndLevel?.Invoke(this, new RoomManagerArgs(currentLevel));
+        isInputEnabled = false;
+        isInvincible = true;
+        OnRequestLevel?.Invoke(this, currentLevel);
     }
 
     public void GameOver()
     {
+        OnEndRoom?.Invoke(this, new RoomArgs(currentRoom));
         OnEndLevel?.Invoke(this, new RoomManagerArgs(currentLevel));
+        isInputEnabled = false;
         OnGameOver?.Invoke(this, EventArgs.Empty);
-        
-        // UI visibile
-        Debug.Log("GAMEOVER");
     }
     
     private void OnCollisionEnter(Collision collision)
@@ -326,10 +425,11 @@ public class PlayerCharacter : Character
         }
     }
 
-    public void SetCurrentRoom(object sender, LevelManagerArgs args)
+    public void SetFirstLevelAndRoom(object sender, LevelManagerArgs args)
     {
         currentLevel = args.firstLevel;
         currentRoom = currentLevel.firstRoom.GetComponent<Room>();
+        isInputEnabled = true;
         
         transform.position = currentRoom.spawnPoint;
         
@@ -403,48 +503,59 @@ public class PlayerCharacter : Character
 
     private void StartMovingUpArm(object sender, GrabbableArgs args)
     {
-        GetComponent<Animator>().SetTrigger("GrabObject");
+        // GetComponent<Animator>().SetTrigger("GrabObject");
         // GetComponent<Animator>().enabled = false;
         // StartCoroutine(MoveUpArm());
     }
     
-    // private IEnumerator MoveUpArm()
-    // {
-    //     yield return new WaitForSeconds(0.2f);
-    //     
-    //     float angle = shoulder.transform.localRotation.eulerAngles.x;
-    //     while((shoulder.transform.localRotation.eulerAngles.x % 360) < angle + 50)
-    //     {
-    //         shoulder.transform.Rotate(-Vector3.up, 500 * Time.deltaTime, Space.Self);
-    //         upperArm.transform.RotateAround(shoulder.transform.Find("Center").transform.position, Vector3.forward, 500 * Time.deltaTime);
-    //         mediumArm.transform.RotateAround(shoulder.transform.Find("Center").transform.position, Vector3.forward, 500 * Time.deltaTime);
-    //         hand.transform.RotateAround(shoulder.transform.Find("Center").transform.position, Vector3.forward, 500 * Time.deltaTime);
-    //         knuckles.transform.RotateAround(shoulder.transform.Find("Center").transform.position, Vector3.forward, 500 * Time.deltaTime);
-    //         yield return null;
-    //     }
-    // }
+    private IEnumerator MoveUpArm()
+    {
+        GameObject shoulder = transform.Find("BoyRig").Find("Bone").Find("Shoulder.l").gameObject;
+        GameObject upperArm = transform.Find("BoyRig").Find("Bone").Find("UpperArm.l").gameObject;
+        GameObject mediumArm = transform.Find("BoyRig").Find("Bone").Find("MediumArm.l").gameObject;
+        GameObject hand = transform.Find("BoyRig").Find("Bone").Find("Hand.l").gameObject;
+        GameObject knuckles = transform.Find("BoyRig").Find("Bone").Find("Knuckles.l").gameObject;
+        yield return new WaitForSeconds(0.2f);
+        
+        float angle = shoulder.transform.localRotation.eulerAngles.x;
+        while((shoulder.transform.localRotation.eulerAngles.x % 360) < angle + 50)
+        {
+            shoulder.transform.Rotate(-Vector3.up, 500 * Time.deltaTime, Space.Self);
+            upperArm.transform.RotateAround(shoulder.transform.Find("Center").transform.position, Vector3.forward, 500 * Time.deltaTime);
+            mediumArm.transform.RotateAround(shoulder.transform.Find("Center").transform.position, Vector3.forward, 500 * Time.deltaTime);
+            hand.transform.RotateAround(shoulder.transform.Find("Center").transform.position, Vector3.forward, 500 * Time.deltaTime);
+            knuckles.transform.RotateAround(shoulder.transform.Find("Center").transform.position, Vector3.forward, 500 * Time.deltaTime);
+            yield return null;
+        }
+    }
 
     private void StartMovingDownArm(object sender, GrabbableArgs args)
     {
-        GetComponent<Animator>().SetTrigger("UseOrThrowObject");
+        // GetComponent<Animator>().SetTrigger("UseOrThrowObject");
+        // GetComponent<Animator>().enabled = true;
         // StartCoroutine(MoveDownArm());
     }
     
-    // private IEnumerator MoveDownArm()
-    // {
-    //     float angle = shoulder.transform.localRotation.eulerAngles.x;
-    //     while((shoulder.transform.localRotation.eulerAngles.x % 360) > angle - 50)
-    //     {
-    //         shoulder.transform.Rotate(Vector3.up, 500 * Time.deltaTime, Space.Self);
-    //         upperArm.transform.RotateAround(shoulder.transform.Find("Center").transform.position, -Vector3.forward, 500 * Time.deltaTime);
-    //         mediumArm.transform.RotateAround(shoulder.transform.Find("Center").transform.position, -Vector3.forward, 500 * Time.deltaTime);
-    //         hand.transform.RotateAround(shoulder.transform.Find("Center").transform.position, -Vector3.forward, 500 * Time.deltaTime);
-    //         knuckles.transform.RotateAround(shoulder.transform.Find("Center").transform.position, -Vector3.forward, 500 * Time.deltaTime);
-    //         yield return null;
-    //     }
-    //
-    //     GetComponent<Animator>().enabled = true;
-    // }
+    private IEnumerator MoveDownArm()
+    {
+        GameObject shoulder = transform.Find("BoyRig").Find("Bone").Find("Shoulder.l").gameObject;
+        GameObject upperArm = transform.Find("BoyRig").Find("Bone").Find("UpperArm.l").gameObject;
+        GameObject mediumArm = transform.Find("BoyRig").Find("Bone").Find("MediumArm.l").gameObject;
+        GameObject hand = transform.Find("BoyRig").Find("Bone").Find("Hand.l").gameObject;
+        GameObject knuckles = transform.Find("BoyRig").Find("Bone").Find("Knuckles.l").gameObject;
+        float angle = shoulder.transform.localRotation.eulerAngles.x;
+        while((shoulder.transform.localRotation.eulerAngles.x % 360) > angle - 50)
+        {
+            shoulder.transform.Rotate(Vector3.up, 500 * Time.deltaTime, Space.Self);
+            upperArm.transform.RotateAround(shoulder.transform.Find("Center").transform.position, -Vector3.forward, 500 * Time.deltaTime);
+            mediumArm.transform.RotateAround(shoulder.transform.Find("Center").transform.position, -Vector3.forward, 500 * Time.deltaTime);
+            hand.transform.RotateAround(shoulder.transform.Find("Center").transform.position, -Vector3.forward, 500 * Time.deltaTime);
+            knuckles.transform.RotateAround(shoulder.transform.Find("Center").transform.position, -Vector3.forward, 500 * Time.deltaTime);
+            yield return null;
+        }
+    
+        GetComponent<Animator>().enabled = true;
+    }
 
     private void UnlockRoom(object sender, ControllerButton newButton)
     {

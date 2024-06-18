@@ -31,7 +31,11 @@ public class Enemy_AI_LongRanged : Enemy
     private bool grounded = true;
     [NonSerialized]public bool OnAttack;
     public Plane levelPlane;
-
+    // VECTOR CONSTANTS TO ROTATE THE PLAYER
+    private Vector3 forwardVector = new Vector3(-1, 0, 0);
+    private Vector3 forwardScaleVector = new Vector3(1, 1, 1);
+    private Vector3 backwardVector = new Vector3(1, 0, 0);
+    private Vector3 backwardScaleVector = new Vector3(-1, 1, 1);
     private void Awake()
     {
       
@@ -81,7 +85,7 @@ public class Enemy_AI_LongRanged : Enemy
         if (walkPointSet)
         {
             agent.SetDestination(walkPoint);
-            StartCoroutine(NuovoObbiettivo(3f));
+            StartCoroutine(NewTarget(3f));
         }
 
         Vector3 distanceToWalkPoint = transform.position - walkPoint;
@@ -90,7 +94,7 @@ public class Enemy_AI_LongRanged : Enemy
             walkPointSet = false;
         }
     }   
-    IEnumerator NuovoObbiettivo(float seconds)
+    IEnumerator NewTarget(float seconds)
     {
         yield return new WaitForSeconds(seconds);
         SearchWalkPoint();
@@ -102,8 +106,18 @@ public class Enemy_AI_LongRanged : Enemy
         while (!pointFound)
         {
             Player = GameObject.FindGameObjectWithTag("Player").transform;
-            float randomz = Random.Range(-walkPointRange, walkPointRange);
-            float randomx = Random.Range(-walkPointRange, walkPointRange);
+            //float randomz = Random.Range(-walkPointRange, walkPointRange);
+            float randomx;
+            if (Random.value < 0.5f)
+            {
+                // Genera un valore casuale tra walkpoint range e -6
+                randomx = Random.Range(-walkPointRange, -6f);
+            }
+            else
+            {
+                // Genera un valore casuale tra walkpoint range e 8
+                randomx = Random.Range(6f, walkPointRange);
+            }
             walkPoint = new Vector3(Player.transform.position.x + randomx, Player.transform.position.y,
                 Player.transform.position.z);
             pointFound=IsPointOnPlane(walkPoint);
@@ -177,6 +191,25 @@ public class Enemy_AI_LongRanged : Enemy
     // Update is called once per frame
     void Update()
     {
+        float range= 4f;
+        float playerX = Player.transform.position.x;
+        float targetX = transform.position.x;
+    
+        // Controlla se targetX è all'interno dell'intervallo playerX ± range
+        if(targetX >= (playerX - range) && targetX <= (playerX + range)){
+            // ho enemuy nella posizione sbagliata cerco un nuovo punto
+            SearchWalkPoint();
+        }
+        if(Player.transform.position.x > this.transform.position.x){
+            //player davanti e enemy dietro
+            transform.forward = forwardVector;
+            transform.localScale = forwardScaleVector;
+        }
+        else if (Player.transform.position.x < this.transform.position.x){
+            //player dietro e enemy davanti
+            transform.forward = backwardVector;
+            transform.localScale = backwardScaleVector;
+        }
         if (grounded)
         {
             //transform.LookAt(Player);
@@ -187,7 +220,7 @@ public class Enemy_AI_LongRanged : Enemy
                 Patroling(); // nulla 
             if (playerInSightRange && !playerInAttackRange)
                 ChasePlayer(); // segue il player 
-            if (!playerInSightRange && playerInAttackRange && !OnAttack )//&& Math.Abs(this.transform.position.z - Player.transform.position.z) < 0.05f)
+            if (!playerInSightRange && playerInAttackRange && !OnAttack && Math.Abs(this.transform.position.z - Player.transform.position.z) < 0.05f)
                 AttackPlayer(); // lo attacca
             transform.rotation = initialRotation;
         }

@@ -7,12 +7,22 @@ public class EnemyCollision : MonoBehaviour
     public GameObject player;
 
     [SerializeField] private int comboValue;
-    public static EventHandler<EnemyCollisionArgs> OnAttackLended;
     private GameObject hitEffectPrefabTemp;
     public GameObject HitEffectPrefab;
     public ComboCharacterWithDamage oggetto;
     private bool canCollide = true;
     private float collisionCooldown = 0.1f; // Cooldown di 0.1 secondi
+    
+    public static EventHandler<EnemyCollisionArgs> OnAttackLended;
+
+    void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.I))
+        {
+            OnAttackLended?.Invoke(this, new EnemyCollisionArgs(comboValue));
+        }
+    }
+    
     //
     // public bool CheckCollision(Enemy Enemy,Animator PlayerAnim)
     // {
@@ -61,7 +71,7 @@ public class EnemyCollision : MonoBehaviour
         Vector3 contactPoint = other.ClosestPoint(this.transform.position);
         // sostiuire questa riga se l'animator da errore :)
         //enemy!=null && anim.GetFloat("Weapon.Active")>0.0
-        if (enemy != null && oggetto.isAttacking)
+        if (enemy != null && oggetto!=null && oggetto.isAttacking)
         {
             oggetto.isAttacking = false;
             Debug.Log("OnTriggerEnter called with: " + other.name + " FROM "+ this);
@@ -70,6 +80,7 @@ public class EnemyCollision : MonoBehaviour
             StartCoroutine(KillHitEffect(hitEffectPrefabTemp));
             Debug.Log("Enemy Hit");
             OnAttackLended?.Invoke(this, new EnemyCollisionArgs(comboValue));
+            enemy.TakeDamage(1);
 
             canCollide = false; // Disabilita ulteriori collisioni per la durata del cooldown
             StartCoroutine(CollisionCooldown());

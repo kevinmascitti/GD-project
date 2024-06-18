@@ -1,4 +1,6 @@
+using System;
 using UnityEngine;
+using System.Collections;
 
 public class AntiOverlap : MonoBehaviour
 {
@@ -8,7 +10,13 @@ public class AntiOverlap : MonoBehaviour
     public float[] heights = new float[] { 1.0f }; // Altezze da cui lanciare i raggi
     public LayerMask enemyLayer; // Layer dei nemici
 
+
     private Rigidbody rb;
+    private Renderer playerRenderer;
+    private Material originalMaterial;
+    private bool isBlinking = false;
+
+    
 
     void Start()
     {
@@ -16,6 +24,21 @@ public class AntiOverlap : MonoBehaviour
         if (rb == null)
         {
             Debug.LogError("Il componente Rigidbody non è presente sul giocatore.");
+        }
+        else if (!rb.isKinematic)
+        {
+            Debug.LogWarning("Il Rigidbody del giocatore non è kinematic. Assicurati di impostarlo come kinematic per questo script.");
+        }
+
+        playerRenderer = GetComponent<Renderer>();
+        if (playerRenderer != null)
+        {
+            originalMaterial = playerRenderer.material;
+            Debug.Log("Materiale originale: " + originalMaterial.name);
+        }
+        else
+        {
+            Debug.LogError("Il componente Renderer non è presente sul giocatore.");
         }
     }
 
@@ -42,20 +65,12 @@ public class AntiOverlap : MonoBehaviour
             {
                 Ray ray = new Ray(origin, direction);
                 RaycastHit[] hits = Physics.RaycastAll(ray, detectionRadius, enemyLayer);
-
-                foreach (var hit in hits)
+                Debug.Log("numero di nemici intersacati prodotti"+hits.Length);
+                if(hits.Length!=0)
                 {
-                    Debug.Log("Hai colpito qualcosa");
-                    Rigidbody hitRb = hit.collider.attachedRigidbody;
-                    if (hitRb != null && !hitRb.isKinematic && hitRb.GetComponent<Enemy>() != null)
-                    {
-                        Debug.Log("Nemico intersecato");
-                        Vector3 pushDirection = hit.point - origin;
-                        pushDirection.y = 0; // Non spingere verticalmente
-                        pushDirection.Normalize();
-
-                        hitRb.AddForce(pushDirection * pushForce, ForceMode.Impulse);
-                    }
+                        Debug.Log("sei stato colpito dal nemico ho lanciato l'evento");
+                        PlayerDamageReceived.TriggerDamageReceived();
+                    
                 }
 
                 // Disegna il raggio per il debug
@@ -63,7 +78,7 @@ public class AntiOverlap : MonoBehaviour
             }
         }
     }
-
+    
     void OnDrawGizmos()
     {
         if (rb != null)

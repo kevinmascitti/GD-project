@@ -123,6 +123,12 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &5289382 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3437633161199904590, guid: 8b59635cd0adb41f1ba8fbc68f23c4c3,
+    type: 3}
+  m_PrefabInstance: {fileID: 4381428566493003487}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &10857729
 GameObject:
   m_ObjectHideFlags: 0
@@ -1265,12 +1271,14 @@ MonoBehaviour:
   currentHP: 72.8
   isPlayer: 0
   atk: 55
+  damageReducer: 1
   MAX_HP: 100
   def_HP: 100
   MAX_STAMINA: 100
   def_increase_STAMINA: 5
   MAX_LIFE: 99
   def_life: 5
+  enemy_killed: 0
   sliderHP: {fileID: 2107748402}
   sliderStamina: {fileID: 248918608}
   UIExtraLife: {fileID: 0}
@@ -2379,6 +2387,8 @@ MonoBehaviour:
   player: {fileID: 81980834}
   comboCounter: {fileID: 418309112}
   popupSpeed: 10
+  thresholdList: 
+  popupNamesList: []
 --- !u!114 &418309112
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3733,6 +3743,7 @@ GameObject:
   - component: {fileID: 1090015462}
   - component: {fileID: 1090015463}
   - component: {fileID: 1090015464}
+  - component: {fileID: 1090015465}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -3886,6 +3897,21 @@ MonoBehaviour:
   cameraMovementSpeed: 0.5
   distanceFromLevelLimit: 5
   playerDistanceFromCamera: -15
+--- !u!114 &1090015465
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1090015458}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3147d8e81034f47f485270222852e0a6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  player: {fileID: 5289382}
+  totalFlickerDuration: 2
+  flickerInterval: 0.5
 --- !u!1 &1111190062
 GameObject:
   m_ObjectHideFlags: 0
@@ -4768,6 +4794,7 @@ MonoBehaviour:
   - {fileID: 7897149327893079946, guid: 86decf478d7f44de6ba6c659c541a018, type: 3}
   - {fileID: 639919568979264030, guid: ad9f4c9032e2f32419f565b38ae08fb6, type: 3}
   - {fileID: 845877483370869507, guid: a36135325f2986d4fb5c840426a26ae1, type: 3}
+  spawnOrder: []
   spawnProbability:
   - 1
   - 0
@@ -4778,6 +4805,7 @@ MonoBehaviour:
   spawnCount: 0
   spawnLimit: 7
   levelPlane: {fileID: 0}
+  isdeterministic: 0
 --- !u!4 &1588279019
 Transform:
   m_ObjectHideFlags: 0
@@ -4851,7 +4879,7 @@ MonoBehaviour:
     type: 3}
   m_PrefabInstance: {fileID: 4381428566493003487}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 5289382}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0ea1025426b304be098f0d3194de17b0, type: 3}
@@ -5005,6 +5033,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fb1f24c7285a2452fa83dd761b015e6f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  uiHitsColor: {r: 0, g: 0, b: 0, a: 0}
+  uiColors: []
+  stepColorLerp: 10
   fadeDuration: 1
   rotationDuration: 0.2
   hitsWord: {fileID: 0}
@@ -5718,12 +5749,14 @@ MonoBehaviour:
   currentHP: 72.8
   isPlayer: 0
   atk: 55
+  damageReducer: 1
   MAX_HP: 100
   def_HP: 100
   MAX_STAMINA: 100
   def_increase_STAMINA: 5
   MAX_LIFE: 99
   def_life: 5
+  enemy_killed: 0
   sliderHP: {fileID: 2107748402}
   sliderStamina: {fileID: 248918608}
   UIExtraLife: {fileID: 0}
@@ -5891,6 +5924,7 @@ MonoBehaviour:
   currentHP: 150
   isPlayer: 0
   atk: 0
+  damageReducer: 1
 --- !u!4 &2046572140 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4582128608168328896, guid: 740d26cbd64e94c9c9fe11cebfdaefb8,
@@ -6512,6 +6546,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: -0.00000059608993
       objectReference: {fileID: 0}
+    - target: {fileID: 3196732268390421191, guid: 8b59635cd0adb41f1ba8fbc68f23c4c3,
+        type: 3}
+      propertyPath: m_StaticShadowCaster
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3276971327475314423, guid: 8b59635cd0adb41f1ba8fbc68f23c4c3,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -6572,6 +6611,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
+    - target: {fileID: 3437633161199904590, guid: 8b59635cd0adb41f1ba8fbc68f23c4c3,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3818874248976946703, guid: 8b59635cd0adb41f1ba8fbc68f23c4c3,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -6597,10 +6641,15 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: -90
       objectReference: {fileID: 0}
+    - target: {fileID: 4119299395154771010, guid: 8b59635cd0adb41f1ba8fbc68f23c4c3,
+        type: 3}
+      propertyPath: m_Mass
+      value: 10
+      objectReference: {fileID: 0}
     - target: {fileID: 4431608583946681021, guid: 8b59635cd0adb41f1ba8fbc68f23c4c3,
         type: 3}
       propertyPath: m_IsTrigger
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4449797106454028838, guid: 8b59635cd0adb41f1ba8fbc68f23c4c3,
         type: 3}
@@ -6850,7 +6899,7 @@ PrefabInstance:
     - target: {fileID: 7072010469048583293, guid: 8b59635cd0adb41f1ba8fbc68f23c4c3,
         type: 3}
       propertyPath: m_Enabled
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7174226242315141405, guid: 8b59635cd0adb41f1ba8fbc68f23c4c3,
         type: 3}
@@ -6989,6 +7038,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 0}
+    - {fileID: 3196732268390421191, guid: 8b59635cd0adb41f1ba8fbc68f23c4c3, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects:
     - targetCorrespondingSourceObject: {fileID: 2665917163245420020, guid: 8b59635cd0adb41f1ba8fbc68f23c4c3,
