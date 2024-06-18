@@ -45,21 +45,20 @@ public class Enemy_AI_Melee : Enemy
 
     }
     
-
     private void Patroling()
     {
         if (!walkPointSet)
             SearchWalkPoint(); //vado a capire dove si trova il player per seguirlo 
         if (walkPointSet)
             agent.SetDestination(walkPoint);
-            StartCoroutine(NuovoObbiettivo(3f));
+        StartCoroutine(NewTarget(3f));
         Vector3 distanceToWalkPoint = transform.position - walkPoint;
         if (distanceToWalkPoint.magnitude < 2f)// ottengo la distanza effettiva
         {
             walkPointSet = false;
         }
     }   
-    IEnumerator NuovoObbiettivo(float seconds)
+    IEnumerator NewTarget(float seconds)
     {
         yield return new WaitForSeconds(seconds);
         SearchWalkPoint();

@@ -6,13 +6,11 @@ using UnityEngine;
 public class Enemy : Character
 {
     public static EventHandler OnEnemyDeath;
+    
     public void Update()
     {
         base.Update();
-        
     }
-
-    
 
     public override void Die()
     {
@@ -22,4 +20,5 @@ public class Enemy : Character
         GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerCharacter>().enemy_killed++;
         Destroy(gameObject);
     }
+
 }

@@ -41,6 +41,7 @@ public class LevelManager : MonoBehaviour
         
         RoomManager.OnInitializedLevel += LinkLevels;
         PlayerCharacter.OnRequestLevel += ChooseNextLevel;
+        MainMenu.OnNewGame += NewGame;
     }
 
     private void LinkLevels(object sender, EventArgs args)
@@ -61,13 +62,52 @@ public class LevelManager : MonoBehaviour
         }
     }
 
-    private void ChooseNextLevel(object sender, EventArgs args)
+    public void NewGame(object sender, EventArgs args)
     {
-        int rand = Random.Range(0, levels.Count);
-        while (levels[rand].isCompleted)
+        foreach (RoomManager level in levels)
         {
-            rand = Random.Range(0, levels.Count);
+            foreach (Room room in level.rooms)
+            {
+                room.isLocked = true;
+            }
+            level.isCompleted = false;
         }
-        OnShuffleLevel?.Invoke(this, levels[rand]);
+
+        int firstLevelRand = Random.Range(0, levels.Count);
+        firstLevel = levels[firstLevelRand];
+        
+        OnInitializedLevels?.Invoke(this, new LevelManagerArgs(levels, firstLevel));
+    }
+
+    private void ChooseNextLevel(object sender, RoomManager args)
+    {
+        bool isCurrentLevelChosen = true;
+        RoomManager currentLevel = args;
+        RoomManager levelToChoose;
+        foreach (RoomManager level in levels)
+        {
+            if (!level.isCompleted && level != currentLevel)
+            {
+                isCurrentLevelChosen = false;
+                break;
+            }
+        }
+        
+        if(isCurrentLevelChosen)
+        {
+            levelToChoose = currentLevel;
+        }
+        else
+        {
+            int rand = Random.Range(0, levels.Count);
+            levelToChoose = levels[rand];
+            while (levelToChoose.isCompleted || levelToChoose == currentLevel)
+            {
+                rand = Random.Range(0, levels.Count);
+                levelToChoose = levels[rand];
+            }
+        }
+        
+        OnShuffleLevel?.Invoke(this, levelToChoose);
     }
 }

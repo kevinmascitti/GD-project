@@ -42,13 +42,13 @@ public class EnemyAI : Enemy
     private Vector3 backwardScaleVector = new Vector3(1, 1, -1);
     private bool destinationReached = false;
     public GameObject gunPivotobj;
+    
     private void Awake()
     {
         timeBetweenAttacks = 3f;
         Player = GameObject.FindGameObjectWithTag("Player").transform;
         initialRotation = transform.rotation;
         agent = GetComponent<NavMeshAgent>();
-        
     }
 
     private void Patroling()
@@ -59,7 +59,7 @@ public class EnemyAI : Enemy
         {
             agent.SetDestination(walkPoint);
             // evito che vada a seguire un punto per troppo tempo
-            StartCoroutine(NuovoObbiettivo(3f));
+            StartCoroutine(NewTarget(3f));
         }
 
         Vector3 distanceToWalkPoint = transform.position - walkPoint;
@@ -68,7 +68,7 @@ public class EnemyAI : Enemy
             walkPointSet = false;
         }
     }  
-    IEnumerator NuovoObbiettivo(float seconds)
+    IEnumerator NewTarget(float seconds)
     {
         yield return new WaitForSeconds(seconds);
         SearchWalkPoint();
@@ -177,7 +177,7 @@ public class EnemyAI : Enemy
             grounded = true;
         }
 
-        
+  
     }
     */
     // Update is called once per frame
@@ -195,16 +195,16 @@ public class EnemyAI : Enemy
         if(Player.transform.position.x > this.transform.position.x){
             //player davanti e enemy dietro
             transform.forward = forwardVector;
-            gunPivotobj.transform.forward = forwardVector;
+            gunpivot.forward = forwardVector;
             transform.localScale = forwardScaleVector;
-            gunPivotobj.transform.localScale = forwardScaleVector;
+            gunpivot.localScale = forwardScaleVector;
         }
         else if (Player.transform.position.x < this.transform.position.x){
             //player dietro e enemy davanti
             transform.forward = backwardVector;
-            gunPivotobj.transform.forward = backwardVector;
+            gunpivot.forward = backwardVector;
             transform.localScale = backwardScaleVector;
-            gunPivotobj.transform.localScale = backwardScaleVector;
+            gunpivot.localScale = backwardScaleVector;
         }
         if (grounded)
         {
