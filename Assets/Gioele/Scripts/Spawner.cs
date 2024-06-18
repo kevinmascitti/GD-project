@@ -33,18 +33,18 @@ public class Spawner : MonoBehaviour
 
         //setto i nemici del primo livello
         ChangePrefabs(0);
-        StartCoroutine(ShowExit(1.5f));
         //PlayerCharacter.OnEndRoom += OpenExit;
         //PlayerCharacter.OnStartRoom += CloseExit;
 
     }
 
-    IEnumerator ShowExit(float delay)
+    IEnumerator CloseExit(float delay)
     {
         // Attendi per il numero di secondi specificato
         yield return new WaitForSeconds(delay);
 
         // Chiama il metodo desiderato
+        CloseExit();
         
     }
 
@@ -78,6 +78,7 @@ public class Spawner : MonoBehaviour
             
         }
         
+        
     }
     public void OpenExit()
     {
@@ -96,7 +97,8 @@ public class Spawner : MonoBehaviour
             }
             
         }
-        
+
+        StartCoroutine(CloseExit(3f));
     }
 
     public void StartSpawn()
