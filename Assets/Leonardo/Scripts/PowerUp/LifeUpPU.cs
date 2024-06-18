@@ -13,5 +13,6 @@ public class LifeUpPU : PowerUp {
     public override void ActivatePowerUp(object sender, EventArgs args)
     {
         Debug.Log("LifeUp attivato");
+        PowerUpManager.DisablePowerUp();
     }
 }
