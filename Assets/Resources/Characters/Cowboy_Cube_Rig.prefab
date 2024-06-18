@@ -183,7 +183,7 @@ MonoBehaviour:
   walkPointSet: 0
   walkPointRange: 7
   timeBetweenAttacks: 3
-  projectile: {fileID: 1367908784354803864, guid: ddd353402a4266142a333a2df5b430db,
+  projectile: {fileID: 862695047321393832, guid: f722f05d07330644d91c75efb46a6d37,
     type: 3}
   projectileSpeed: 20
   projectileUPSpeed: 1.5
