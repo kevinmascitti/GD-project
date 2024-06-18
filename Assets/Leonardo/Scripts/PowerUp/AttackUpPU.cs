@@ -15,12 +15,12 @@ public class AttackUpPU : PowerUp {
     {
         Debug.Log("AttackUp attivato");
         StartCoroutine(PowerUpDuration());
-        Debug.Log("AttackUp disattivato");
-        PowerUpManager.DisablePowerUp();
     }
 
     private IEnumerator PowerUpDuration()
     {
         yield return new WaitForSeconds(PUduration);
+        Debug.Log("AttackUp disattivato");
+        PowerUpManager.DisablePowerUp();
     }
 }

@@ -33,18 +33,18 @@ public class Spawner : MonoBehaviour
 
         //setto i nemici del primo livello
         ChangePrefabs(0);
-        StartCoroutine(ShowExit(1.5f));
-        PlayerCharacter.OnEndRoom += OpenExit;
-        PlayerCharacter.OnStartRoom += CloseExit;
+        //PlayerCharacter.OnEndRoom += OpenExit;
+        //PlayerCharacter.OnStartRoom += CloseExit;
 
     }
 
-    IEnumerator ShowExit(float delay)
+    IEnumerator CloseExit(float delay)
     {
         // Attendi per il numero di secondi specificato
         yield return new WaitForSeconds(delay);
 
         // Chiama il metodo desiderato
+        CloseExit();
         
     }
 
@@ -60,7 +60,7 @@ public class Spawner : MonoBehaviour
         canSpawn = false;
     }
 
-    public void CloseExit(object sender,RoomArgs args)
+    public void CloseExit()
     {
         // attivare animazione
         GameObject[] exitObjects = GameObject.FindGameObjectsWithTag("Exit");
@@ -78,8 +78,9 @@ public class Spawner : MonoBehaviour
             
         }
         
+        
     }
-    public void OpenExit(object sender,RoomArgs args)
+    public void OpenExit()
     {
         // attivare animazione
         GameObject[] exitObjects = GameObject.FindGameObjectsWithTag("Exit");
@@ -96,7 +97,8 @@ public class Spawner : MonoBehaviour
             }
             
         }
-        
+
+        StartCoroutine(CloseExit(3f));
     }
 
     public void StartSpawn()
