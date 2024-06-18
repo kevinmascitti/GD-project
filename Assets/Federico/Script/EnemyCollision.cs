@@ -70,7 +70,7 @@ public class EnemyCollision : MonoBehaviour
             StartCoroutine(KillHitEffect(hitEffectPrefabTemp));
             Debug.Log("Enemy Hit");
             OnAttackLended?.Invoke(this, new EnemyCollisionArgs(comboValue));
-
+          
             canCollide = false; // Disabilita ulteriori collisioni per la durata del cooldown
             StartCoroutine(CollisionCooldown());
         }
