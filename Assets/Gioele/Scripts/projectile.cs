@@ -6,6 +6,13 @@ using UnityEngine;
 public class projectile : MonoBehaviour
 {
     public int damage = 2;
+    public float destroyTime = 5.0f;
+
+    public void Start()
+    {
+        StartCoroutine(DestroyAfterDelay(destroyTime));
+    }
+
     void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player"))
@@ -18,7 +25,13 @@ public class projectile : MonoBehaviour
         Destroy(gameObject);
     }
 
-    
+    private IEnumerator DestroyAfterDelay(float delay)
+    {
+        // Aspetta per il tempo specificato
+        yield return new WaitForSeconds(delay);
+        // Distrugge l'oggetto corrente
+        Destroy(gameObject);
+    }
 
     private void Update()
     {
