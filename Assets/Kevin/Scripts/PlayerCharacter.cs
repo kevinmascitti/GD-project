@@ -152,10 +152,10 @@ public class PlayerCharacter : Character
         {
             // test per vedere se correttamente di aprono le porte
             Debug.Log("door open");
-            // devo chiamare door open;
+            GameObject.FindGameObjectWithTag("Spawner").GetComponent<Spawner>().OpenExit();
             //OnEndRoom?.Invoke(this,new RoomArgs(on));
             // questa cosa non so se sia giusta :(
-            //GameObject.FindGameObjectWithTag("Spawner").GetComponent<Spawner>().OpenExit(this, new RoomArgs(currentRoom));
+
         }
 
         if (isInputEnabled)
