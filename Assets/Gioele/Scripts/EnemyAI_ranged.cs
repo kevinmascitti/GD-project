@@ -41,11 +41,12 @@ public class EnemyAI : Enemy
     private Vector3 backwardVector = new Vector3(1, 0, 0);
     private Vector3 backwardScaleVector = new Vector3(1, 1, -1);
     private bool destinationReached = false;
-    public GameObject gunPivotobj;
+    private int sign;
+    
     
     private void Awake()
     {
-        timeBetweenAttacks = 3f;
+        timeBetweenAttacks = 0.58f;
         Player = GameObject.FindGameObjectWithTag("Player").transform;
         initialRotation = transform.rotation;
         agent = GetComponent<NavMeshAgent>();
@@ -151,6 +152,7 @@ public class EnemyAI : Enemy
         {
             // attacco ranged/long ranged
             GameObject rb= Instantiate(projectile,gunpivot.position,Quaternion.identity);
+            rb.GetComponent<projectile>().sign = sign;
             // trovo lla direzine del player
             Vector3 direction_player = Player.position - gunpivot.position;
             rb.transform.forward = new Vector3(direction_player.x,direction_player.y+1.5f,direction_player.z);
@@ -198,6 +200,7 @@ public class EnemyAI : Enemy
             gunpivot.forward = forwardVector;
             transform.localScale = forwardScaleVector;
             gunpivot.localScale = forwardScaleVector;
+            sign = 1;
         }
         else if (Player.transform.position.x < this.transform.position.x){
             //player dietro e enemy davanti
@@ -205,6 +208,7 @@ public class EnemyAI : Enemy
             gunpivot.forward = backwardVector;
             transform.localScale = backwardScaleVector;
             gunpivot.localScale = backwardScaleVector;
+            sign = -1;
         }
         if (grounded)
         {
