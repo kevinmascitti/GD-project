@@ -214,6 +214,7 @@ public class PlayerCharacter : Character
                 else
                 {
                     grabbedItem.GetComponent<Grabbable>().outline.OutlineColor=Color.yellow;
+                    // non cambia per ora
                     grabbedItem.Use(transform.forward);
                     grabbedItem = null;
                 }
