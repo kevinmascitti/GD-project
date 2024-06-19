@@ -10,6 +10,7 @@ public class CameraMovement : MonoBehaviour
     private Transform target;
     private PlayerCharacter player;
     private GameObject depthPoint;
+    private bool isLevelInitialized = false;
     [SerializeField] private float cameraMovementSpeed;
     [SerializeField] private int distanceFromLevelLimit;
     [SerializeField] private int playerDistanceFromCamera;
@@ -20,6 +21,8 @@ public class CameraMovement : MonoBehaviour
         player = target.GetComponent<PlayerCharacter>();
         depthPoint = GameObject.Find("DepthPoint");
 
+        LevelManager.OnInitializedLevels += StartUpdate;
+        PlayerCharacter.OnGameOver += StopUpdate;
     }
 
     private void FollowTarget()
@@ -30,13 +33,25 @@ public class CameraMovement : MonoBehaviour
 
     private void Update()
     {
-        float distanceMin = Math.Abs(target.transform.position.x - player.currentRoom.enterWall.transform.position.x);
-        float distanceMax = Math.Abs(target.transform.position.x - player.currentRoom.exitWall.transform.position.x);
-        if(distanceMin > distanceFromLevelLimit && distanceMax > distanceFromLevelLimit)
-            FollowTarget();
-        Vector3 depthPointPos = transform.position;
-        depthPointPos.z += playerDistanceFromCamera;
-        depthPoint.transform.position = depthPointPos;
-        
+        if (isLevelInitialized)
+        {
+            float distanceMin = Math.Abs(target.transform.position.x - player.currentRoom.enterWall.transform.position.x);
+            float distanceMax = Math.Abs(target.transform.position.x - player.currentRoom.exitWall.transform.position.x);
+            if (distanceMin > distanceFromLevelLimit && distanceMax > distanceFromLevelLimit)
+                FollowTarget();
+            Vector3 depthPointPos = transform.position;
+            depthPointPos.z += playerDistanceFromCamera;
+            depthPoint.transform.position = depthPointPos;
+        }
+    }
+
+    private void StartUpdate(object sender, EventArgs args)
+    {
+        isLevelInitialized = true;
+    }
+    
+    private void StopUpdate(object sender, EventArgs args)
+    {
+        isLevelInitialized = false;
     }
 }

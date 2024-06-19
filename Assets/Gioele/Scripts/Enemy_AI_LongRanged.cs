@@ -85,7 +85,7 @@ public class Enemy_AI_LongRanged : Enemy
         if (walkPointSet)
         {
             agent.SetDestination(walkPoint);
-            StartCoroutine(NuovoObbiettivo(3f));
+            StartCoroutine(NewTarget(3f));
         }
 
         Vector3 distanceToWalkPoint = transform.position - walkPoint;
@@ -94,7 +94,7 @@ public class Enemy_AI_LongRanged : Enemy
             walkPointSet = false;
         }
     }   
-    IEnumerator NuovoObbiettivo(float seconds)
+    IEnumerator NewTarget(float seconds)
     {
         yield return new WaitForSeconds(seconds);
         SearchWalkPoint();

@@ -12,6 +12,7 @@ public class AdTrigger : MonoBehaviour
     [Header ("Oggetti necessari")]
     [SerializeField] private Slider TimerBar;
     [SerializeField] private Canvas PowerUpMenu;
+    [SerializeField] private RawImage adVideo;
 
     // EVENTS
     public static EventHandler OnAdStart;
@@ -39,7 +40,7 @@ public class AdTrigger : MonoBehaviour
         // DA RIMUOVERE QUANDO SI IMPLEMENTA IL SISTEMA DI TRIGGER
         if(Input.GetKeyDown(KeyCode.LeftAlt)) 
         {
-            OnAdStart.Invoke(this, EventArgs.Empty);
+            OnAdStart?.Invoke(this, EventArgs.Empty);
         }
         // -------------------------------------------------------
 
@@ -75,6 +76,7 @@ public class AdTrigger : MonoBehaviour
         SetSpawnerPlane(player.currentRoom.plane);
         adSpawner.enabled = true;
         GetComponent<MeshRenderer>().enabled = false;
+        // adVideo.gameObject.SetActive(true);
         TimerBar.gameObject.SetActive(true);
         Debug.Log("Ad started.");
     }
@@ -101,6 +103,11 @@ public class AdTrigger : MonoBehaviour
 
     private void AdSequenceEnd(){
         Destroy(gameObject);
+    }
+
+    private void OnDestroy()
+    {
+        OnAdStart -= AdSequenceStart;
     }
 
     public void SetSpawnerPlane(GameObject plane)

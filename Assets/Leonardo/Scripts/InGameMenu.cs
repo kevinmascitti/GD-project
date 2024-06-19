@@ -15,5 +15,7 @@ public class InGameMenu : MonoBehaviour
         Application.Quit();
     }
     
-
+    public void RestartScene() { 
+        UnityEngine.SceneManagement.SceneManager.LoadScene(1);
+    }
 }
