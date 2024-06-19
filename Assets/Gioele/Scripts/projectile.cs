@@ -38,8 +38,9 @@ public class projectile : MonoBehaviour
     private void Update()
     {
         // fino a che non collide
-        Debug.Log(transform.forward);
         // sign mi da la direzione corretta di shooting 
+        
+
         transform.position += new Vector3(sign,0,0) * 3.5f * Time.deltaTime;
         // devo inserire la rotazione
     }

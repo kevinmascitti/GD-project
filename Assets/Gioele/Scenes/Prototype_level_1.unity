@@ -10341,7 +10341,7 @@ PrefabInstance:
     - target: {fileID: 175647347285890481, guid: de00ae07b8cf922479031c620b23c0ab,
         type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3812463333637228162, guid: de00ae07b8cf922479031c620b23c0ab,
         type: 3}
@@ -12221,6 +12221,12 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4add0eaaa3750554d8280f6855eb364b, type: 3}
+--- !u!4 &1060291012 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 4715374644704818276, guid: d7ca263a9200ff245826591feba32a6a,
+    type: 3}
+  m_PrefabInstance: {fileID: 1426369444}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1070467522
 GameObject:
   m_ObjectHideFlags: 0
@@ -16240,6 +16246,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5073318237389837700, guid: d7ca263a9200ff245826591feba32a6a,
+        type: 3}
+      propertyPath: gunpivot
+      value: 
+      objectReference: {fileID: 1060291012}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

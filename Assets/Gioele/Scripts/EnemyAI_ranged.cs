@@ -151,13 +151,27 @@ public class EnemyAI : Enemy
         if (!alreadyAttacked)
         {
             // attacco ranged/long ranged
-            GameObject rb= Instantiate(projectile,gunpivot.position,Quaternion.identity);
-            rb.GetComponent<projectile>().sign = sign;
-            // trovo lla direzine del player
-            Vector3 direction_player = Player.position - gunpivot.position;
-            rb.transform.forward = new Vector3(direction_player.x,direction_player.y+1.5f,direction_player.z);
-            alreadyAttacked = true;
-            Invoke(nameof(ResetAttack),timeBetweenAttacks);// cosi do la temporizzazione per gli attacchi
+            if (sign == -1)
+            {
+                GameObject rb = Instantiate(projectile, new Vector3(gunpivot.transform.position.x-1.5f,gunpivot.transform.position.y,gunpivot.transform.position.z+0.4f), Quaternion.identity);
+                rb.GetComponent<projectile>().sign = sign;
+                // trovo lla direzine del player
+                Vector3 direction_player = Player.position - gunpivot.position;
+                rb.transform.forward = new Vector3(direction_player.x,direction_player.y+1.5f,direction_player.z);
+                alreadyAttacked = true;
+                Invoke(nameof(ResetAttack),timeBetweenAttacks);// cosi do la temporizzazione per gli attacchi
+            }
+            else
+            {
+                GameObject rb = Instantiate(projectile, gunpivot.transform.position, Quaternion.identity);
+                rb.GetComponent<projectile>().sign = sign;
+                // trovo lla direzine del player
+                Vector3 direction_player = Player.position - gunpivot.position;
+                rb.transform.forward = new Vector3(direction_player.x,direction_player.y+1.5f,direction_player.z);
+                alreadyAttacked = true;
+                Invoke(nameof(ResetAttack),timeBetweenAttacks);// cosi do la temporizzazione per gli attacchi
+            }
+            
             
         }
     }
@@ -196,19 +210,59 @@ public class EnemyAI : Enemy
         }
         if(Player.transform.position.x > this.transform.position.x){
             //player davanti e enemy dietro
+            // Imposta i vettori forward per transform e gunpivot
             transform.forward = forwardVector;
             gunpivot.forward = forwardVector;
+            sign = 1;
+            // Modifica la scala locale
             transform.localScale = forwardScaleVector;
             gunpivot.localScale = forwardScaleVector;
-            sign = 1;
+
+            // Salva la posizione originale
+            Vector3 originalPosition = gunpivot.position;
+
+            // Salva l'offset originale locale dell'oggetto rispetto al suo genitore
+            Vector3 localPositionOffset = gunpivot.localPosition;
+
+            // Calcola l'offset dopo l'inversione della scala
+            Vector3 newLocalPositionOffset = Vector3.Scale(localPositionOffset, forwardScaleVector);
+
+            // Modifica la scala dell'oggetto
+            gunpivot.localScale = Vector3.Scale(gunpivot.localScale, forwardScaleVector);
+
+            // Calcola la differenza di posizione
+            Vector3 positionOffset = gunpivot.parent.TransformPoint(newLocalPositionOffset) - gunpivot.parent.TransformPoint(localPositionOffset);
+
+            // Applica la differenza alla posizione originale
+            gunpivot.position = originalPosition + positionOffset;
         }
         else if (Player.transform.position.x < this.transform.position.x){
-            //player dietro e enemy davanti
+            //player davanti e enemy dietro
+            // Imposta i vettori forward per transform e gunpivot
             transform.forward = backwardVector;
             gunpivot.forward = backwardVector;
+            sign = -1;
+            // Modifica la scala locale
             transform.localScale = backwardScaleVector;
             gunpivot.localScale = backwardScaleVector;
-            sign = -1;
+
+            // Salva la posizione originale
+            Vector3 originalPosition = gunpivot.position;
+
+            // Salva l'offset originale locale dell'oggetto rispetto al suo genitore
+            Vector3 localPositionOffset = gunpivot.localPosition;
+
+            // Calcola l'offset dopo l'inversione della scala
+            Vector3 newLocalPositionOffset = Vector3.Scale(localPositionOffset, backwardScaleVector);
+
+            // Modifica la scala dell'oggetto
+            gunpivot.localScale = Vector3.Scale(gunpivot.localScale, backwardScaleVector);
+
+            // Calcola la differenza di posizione
+            Vector3 positionOffset = gunpivot.parent.TransformPoint(newLocalPositionOffset) - gunpivot.parent.TransformPoint(localPositionOffset);
+
+            // Applica la differenza alla posizione originale
+            gunpivot.position = originalPosition + positionOffset;
         }
         if (grounded)
         {
