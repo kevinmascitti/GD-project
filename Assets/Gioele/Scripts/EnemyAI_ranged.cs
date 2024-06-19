@@ -47,6 +47,12 @@ public class EnemyAI : Enemy
     private void Awake()
     {
         timeBetweenAttacks = 0.58f;
+        if (gameObject.name.CompareTo("sushiChefUnriggedKnife") == 0)
+        {
+            // temporizzazione chef
+            timeBetweenAttacks = 1.04f;
+        }
+
         Player = GameObject.FindGameObjectWithTag("Player").transform;
         initialRotation = transform.rotation;
         agent = GetComponent<NavMeshAgent>();
@@ -148,7 +154,7 @@ public class EnemyAI : Enemy
         // controllo che non sia in movimento 
         agent.SetDestination(transform.position);
         transform.LookAt(Player.position);
-        if (!alreadyAttacked)
+        if (!alreadyAttacked )
         {
             // attacco ranged/long ranged
             if (sign == -1)
@@ -277,7 +283,8 @@ public class EnemyAI : Enemy
                 ChasePlayer(); // segue il player
                 //GetComponent<Animator>().SetBool("walking",true);
             if (!playerInSightRange && playerInAttackRange && !OnAttack && HasArrived())// && Math.Abs(this.transform.position.z - Player.transform.position.z) < 0.05f)
-                AttackPlayer(); // lo attacca
+                AttackPlayer();
+                // lo attacca
             transform.rotation = initialRotation;
         }
     }
