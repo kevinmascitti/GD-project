@@ -54,7 +54,7 @@ public class Outline : MonoBehaviour {
     public List<Vector3> data;
   }
   
-  private Mode outlineMode=Mode.OutlineVisible;
+  private Mode outlineMode=Mode.OutlineAll;
 
   [SerializeField]
   private Color outlineColor = Color.white;
@@ -97,7 +97,7 @@ public class Outline : MonoBehaviour {
 
     // Apply material properties immediately
     needsUpdate = true;
-    outlineMode=Mode.OutlineVisible;
+    outlineMode=Mode.OutlineAll;
   }
 
   void OnEnable() {
