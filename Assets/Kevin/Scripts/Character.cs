@@ -26,21 +26,20 @@ public abstract class Character : MonoBehaviour
                 gameObject.GetComponent<PlayerCharacter>().UpdateHP(currentHP-atk);
             }
         }
-        if (GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).normalizedTime >= 1 && !GetComponent<Animator>().IsInTransition(0) && isTakingDamage)
-            {
-                isTakingDamage = false;
-                //animator.SetTrigger("Walk");
-                if (currentHP <= 0)
-                    Die();
-            }
     }
     
     public virtual void TakeDamage(float damage)
     {
         currentHP -= damage/damageReducer;
         // TO DO animazione danno subito
-        GetComponent<Animator>().SetTrigger("TakeDamage");
+        if (gameObject.tag.CompareTo("Player")!=0)
+        {
+            GetComponent<Animator>().SetTrigger("TakeDamage");
+        }
+
         isTakingDamage = true;
+        if (currentHP <= 0)
+            Die();
     }
 
     public abstract void Die();

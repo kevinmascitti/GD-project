@@ -101,7 +101,6 @@ public class Enemy_AI_Melee : Enemy
         if (!alreadyAttacked)
         {
             // voglio animazione di attacco 
-            Debug.Log("attaccoooooooo");
             _animator.SetBool("attack",true);
             // setto a true perche sto attaccando 
             alreadyAttacked = true;
