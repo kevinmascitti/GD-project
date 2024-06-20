@@ -1094,7 +1094,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &1416341894
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1890,6 +1890,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: CanvasCredits
+      objectReference: {fileID: 0}
+    - target: {fileID: 7496730819090979798, guid: 7333c7cae1016434d923d340c1a1dc9d,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8705350504190234861, guid: 7333c7cae1016434d923d340c1a1dc9d,
         type: 3}

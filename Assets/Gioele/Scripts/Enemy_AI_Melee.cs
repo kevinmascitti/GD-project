@@ -35,6 +35,10 @@ public class Enemy_AI_Melee : Enemy
     [NonSerialized]public bool OnAttack;
     public Plane levelPlane;
     public Animator _animator;
+    private Vector3 forwardVector = new Vector3(-1, 0, 0);
+    private Vector3 forwardScaleVector = new Vector3(1, 1, 1);
+    private Vector3 backwardVector = new Vector3(1, 0, 0);
+    private Vector3 backwardScaleVector = new Vector3(-1, 1, 1);
     
     private void Awake()
     {
@@ -97,7 +101,6 @@ public class Enemy_AI_Melee : Enemy
         if (!alreadyAttacked)
         {
             // voglio animazione di attacco 
-            Debug.Log("attaccoooooooo");
             _animator.SetBool("attack",true);
             // setto a true perche sto attaccando 
             alreadyAttacked = true;
@@ -156,6 +159,21 @@ public class Enemy_AI_Melee : Enemy
     // Update is called once per frame
     void Update()
     {
+         if(Player.transform.position.x > this.transform.position.x){
+            //player davanti e enemy dietro
+            // Imposta i vettori forward per transform e gunpivot
+            transform.forward = forwardVector;
+            // Modifica la scala locale
+            transform.localScale = forwardScaleVector;
+            
+        }
+        else if (Player.transform.position.x < this.transform.position.x){
+            //player davanti e enemy dietro
+            // Imposta i vettori forward per transform e gunpivot
+            transform.forward = backwardVector;
+            // Modifica la scala locale
+            transform.localScale = backwardScaleVector;
+        }
         if (grounded)// solo se l'enemy è a terra
         {
             // reset rotation

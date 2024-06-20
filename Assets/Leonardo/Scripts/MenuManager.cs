@@ -51,12 +51,12 @@ public class MenuManager : MonoBehaviour
 
     public void DeactivateInGameMenu()
     {
-        _inGameMenu.SetActive(false);
         Time.timeScale = 1f;
         foreach (GameObject canvas in _canvases)
         {
             canvas.SetActive(false);
         }
+        _inGameMenu.SetActive(false);
         _isMenuActive = false;
     }
 
