@@ -2294,13 +2294,29 @@ PrefabInstance:
     - target: {fileID: 6683810452736750464, guid: a629d78297fc1a84fa173b1a061b3e09,
         type: 3}
       propertyPath: spawnLimit
-      value: 3
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 6683810452736750464, guid: a629d78297fc1a84fa173b1a061b3e09,
+        type: 3}
+      propertyPath: isdeterministic
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6683810452736750464, guid: a629d78297fc1a84fa173b1a061b3e09,
+        type: 3}
+      propertyPath: spawnOrder.Array.size
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6683810452736750464, guid: a629d78297fc1a84fa173b1a061b3e09,
         type: 3}
       propertyPath: EnemyObjects.Array.size
       value: 3
       objectReference: {fileID: 0}
+    - target: {fileID: 6683810452736750464, guid: a629d78297fc1a84fa173b1a061b3e09,
+        type: 3}
+      propertyPath: spawnOrder.Array.data[0]
+      value: 
+      objectReference: {fileID: 3809045795639903075, guid: d7ca263a9200ff245826591feba32a6a,
+        type: 3}
     - target: {fileID: 6683810452736750464, guid: a629d78297fc1a84fa173b1a061b3e09,
         type: 3}
       propertyPath: EnemyObjects.Array.data[2]
