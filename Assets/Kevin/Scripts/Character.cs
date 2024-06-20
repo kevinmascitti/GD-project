@@ -14,6 +14,7 @@ public abstract class Character : MonoBehaviour
     private bool isTakingDamage = false;
     private float hurtAnimationDuration;
     private float hurtAnimationStartTime;
+    private AnimatorStateInfo stateInfo;
     // Update is called once per frame
     public void Update()
     {
@@ -25,17 +26,13 @@ public abstract class Character : MonoBehaviour
                 gameObject.GetComponent<PlayerCharacter>().UpdateHP(currentHP-atk);
             }
         }
-
-        if (isTakingDamage)
-        {
-            if (Time.time >= hurtAnimationStartTime + hurtAnimationDuration)
+        if (GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).normalizedTime >= 1 && !GetComponent<Animator>().IsInTransition(0) && isTakingDamage)
             {
                 isTakingDamage = false;
                 //animator.SetTrigger("Walk");
                 if (currentHP <= 0)
                     Die();
             }
-        }
     }
     
     public virtual void TakeDamage(float damage)
@@ -43,11 +40,7 @@ public abstract class Character : MonoBehaviour
         currentHP -= damage/damageReducer;
         // TO DO animazione danno subito
         GetComponent<Animator>().SetTrigger("TakeDamage");
-        AnimatorStateInfo stateInfo = GetComponent<Animator>().GetCurrentAnimatorStateInfo(0);
-        hurtAnimationDuration = stateInfo.length;
-        hurtAnimationStartTime = Time.time;
         isTakingDamage = true;
-        
     }
 
     public abstract void Die();
