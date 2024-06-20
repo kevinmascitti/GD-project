@@ -207,11 +207,14 @@ public class PlayerCharacter : Character
             {
                 if (grabbedItem.GetThrowState())
                 {
+                    grabbedItem.GetComponent<Grabbable>().outline.OutlineColor=Color.green;
                     grabbedItem.Throw();
                     grabbedItem = null;
                 }
                 else
                 {
+                    grabbedItem.GetComponent<Grabbable>().outline.OutlineColor=Color.yellow;
+                    // non cambia per ora
                     grabbedItem.Use(transform.forward);
                     grabbedItem = null;
                 }
@@ -496,6 +499,7 @@ public class PlayerCharacter : Character
             });
             // PRENDO L'OGGETTO PIU VICINO
             grabbableItem = nearGrabbables[0];
+            grabbableItem.outline.enabled = true;
         }
 
         OnComputedNearestGrabbable?.Invoke(this, new GrabbableArgs(grabbableItem));

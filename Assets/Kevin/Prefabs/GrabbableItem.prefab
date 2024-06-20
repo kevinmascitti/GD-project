@@ -304,6 +304,10 @@ PrefabInstance:
         type: 3}
       insertIndex: -1
       addedObject: {fileID: 6753128158604427262}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 80cfdea1bd5ecb1488d93e7499dcea52,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 5448284161631155582}
   m_SourcePrefab: {fileID: 100100000, guid: 80cfdea1bd5ecb1488d93e7499dcea52, type: 3}
 --- !u!4 &4956511310108530817 stripped
 Transform:
@@ -350,13 +354,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eb0ae8807a5244a3b8bda6c4d5e05fef, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  destroyTimer: 3
+  destroyThrowTimer: 0
+  destroyUsedTimer: 0
   transitionDuration: 0.5
   distanceTrigger: 2
   grabEulerRotation: {x: 0, y: -100, z: 90}
   throwForce: 10
   rotationSpeed: 500
-  Enemy: {fileID: 0}
+  hasToBeThrown: 0
+  atk: 0
+  startAnimationSeconds: 0
+  hitSeconds: 0
+  hitRotation: 0
+  distanceFromCamera: 0
+  rotationAmplitude: 0
+  rotationOscillations: 0
+  courrentColor: {r: 0, g: 1, b: 0, a: 1}
+  outline: {fileID: 5448284161631155582}
 --- !u!54 &6753128158604427262
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -384,3 +398,20 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &5448284161631155582
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5729353237577450043}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 51966c04ba1db6d4ba0cfa2ff453d03d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  outlineColor: {r: 0.13878335, g: 0.97735846, b: 0, a: 1}
+  outlineWidth: 9.09
+  precomputeOutline: 0
+  bakeKeys: []
+  bakeValues: []

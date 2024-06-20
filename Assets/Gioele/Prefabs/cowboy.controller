@@ -38,7 +38,7 @@ AnimatorStateTransition:
   m_Name: 
   m_Conditions:
   - m_ConditionMode: 2
-    m_ConditionEvent: hit
+    m_ConditionEvent: takedamage
     m_EventTreshold: 0
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: 4369111226660688104}
@@ -86,10 +86,7 @@ AnimatorStateTransition:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: 
-  m_Conditions:
-  - m_ConditionMode: 2
-    m_ConditionEvent: hit
-    m_EventTreshold: 0
+  m_Conditions: []
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: -9162020870940708678}
   m_Solo: 0
@@ -113,7 +110,7 @@ AnimatorStateTransition:
   m_Name: 
   m_Conditions:
   - m_ConditionMode: 1
-    m_ConditionEvent: hit
+    m_ConditionEvent: takedamage
     m_EventTreshold: 0
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: 8061292453551620304}
@@ -138,13 +135,13 @@ AnimatorController:
   m_Name: cowboy
   serializedVersion: 5
   m_AnimatorParameters:
-  - m_Name: hit
+  - m_Name: shot
     m_Type: 4
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
     m_Controller: {fileID: 9100000}
-  - m_Name: shot
+  - m_Name: takedamage
     m_Type: 4
     m_DefaultFloat: 0
     m_DefaultInt: 0
@@ -170,7 +167,7 @@ AnimatorState:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: shot
+  m_Name: walk
   m_Speed: 1
   m_CycleOffset: 0
   m_Transitions:
@@ -200,7 +197,7 @@ AnimatorStateTransition:
   m_Name: 
   m_Conditions:
   - m_ConditionMode: 1
-    m_ConditionEvent: hit
+    m_ConditionEvent: takedamage
     m_EventTreshold: 0
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: 8061292453551620304}

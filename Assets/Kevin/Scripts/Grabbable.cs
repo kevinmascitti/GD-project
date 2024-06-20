@@ -35,6 +35,8 @@ public class Grabbable : MonoBehaviour
     [SerializeField] private float distanceFromCamera;
     [SerializeField] private float rotationAmplitude; // Ampiezza massima della rotazione
     [SerializeField] private int rotationOscillations; // Numero di oscillazioni complete
+    
+     
 
     private bool isInRange = false;
     private GrabbableState state = GrabbableState.INACTIVE;
@@ -43,6 +45,9 @@ public class Grabbable : MonoBehaviour
     private Vector3 rotationAxis = Vector3.up;
     private GameObject centerOfRotation;
     private Transform mainCamera;
+    
+    public Color courrentColor=Color.green;
+    public Outline outline;
 
     public static EventHandler<GrabbableArgs> OnInsideRange;
     public static EventHandler<GrabbableArgs> OnOutsideRange;
@@ -53,6 +58,7 @@ public class Grabbable : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        //outline.enabled = false;
         player = GameObject.Find("Player");
         hint = transform.Find("Hint").GetComponent<TMP_Text>();
         hint.gameObject.SetActive(false);

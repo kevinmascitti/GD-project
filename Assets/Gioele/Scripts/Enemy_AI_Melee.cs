@@ -97,7 +97,7 @@ public class Enemy_AI_Melee : Enemy
         if (!alreadyAttacked)
         {
             // voglio animazione di attacco 
-            
+            Debug.Log("attaccoooooooo");
             _animator.SetBool("attack",true);
             // setto a true perche sto attaccando 
             alreadyAttacked = true;
@@ -177,7 +177,7 @@ public class Enemy_AI_Melee : Enemy
                     //Debug.Log("chase pplayer");
             }
 
-            if (!playerInSightRange && playerInAttackRange && !OnAttack && Math.Abs(this.transform.position.z - Player.transform.position.z) < 0.05f)
+            if (!playerInSightRange && playerInAttackRange && !OnAttack && Math.Abs(this.transform.position.z - Player.transform.position.z) < 2f)
             {
                     AttackPlayer(); // lo attacca
                     //Debug.Log("chase pplayer");
