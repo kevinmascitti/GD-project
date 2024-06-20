@@ -1019,7 +1019,22 @@ PrefabInstance:
       objectReference: {fileID: 343207750}
     - target: {fileID: 8166586310705985429, guid: 8b59635cd0adb41f1ba8fbc68f23c4c3,
         type: 3}
+      propertyPath: speed.x
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 8166586310705985429, guid: 8b59635cd0adb41f1ba8fbc68f23c4c3,
+        type: 3}
+      propertyPath: speed.y
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 8166586310705985429, guid: 8b59635cd0adb41f1ba8fbc68f23c4c3,
+        type: 3}
       propertyPath: isGrounded
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8166586310705985429, guid: 8b59635cd0adb41f1ba8fbc68f23c4c3,
+        type: 3}
+      propertyPath: isController
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8166586310705985429, guid: 8b59635cd0adb41f1ba8fbc68f23c4c3,

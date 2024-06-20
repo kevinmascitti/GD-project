@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class GroundEntryState : MeleeBaseState
 {
+    private PlayerController controls;
     public override void OnEnter(StateMachine _stateMachine)
     {
         base.OnEnter(_stateMachine);
@@ -14,8 +15,11 @@ public class GroundEntryState : MeleeBaseState
         
         animator.SetTrigger("Attack" + attackIndex);
         Debug.Log("Player Attack " + attackIndex + " Fired!");
+       
     }
-
+   
+    
+  
     public override void OnUpdate()
     {
         base.OnUpdate();

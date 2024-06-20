@@ -1,0 +1,74 @@
+{
+    "name": "Player Controller",
+    "maps": [
+        {
+            "name": "Gameplay",
+            "id": "749e8ec6-d69f-4c85-90fe-8cdfec47c010",
+            "actions": [
+                {
+                    "name": "Move",
+                    "type": "Value",
+                    "id": "ffdf916b-1ea7-40ea-b67a-21274bc8bbb4",
+                    "expectedControlType": "Stick",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                },
+                {
+                    "name": "Rotate",
+                    "type": "Button",
+                    "id": "4d80b80a-5b5b-4834-bdc8-c133e56bca96",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Attack",
+                    "type": "Button",
+                    "id": "3dea37b8-ee44-4d5d-98a1-8a5df4fed930",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "77bbac32-3da0-4cd2-875f-664f43826331",
+                    "path": "<Gamepad>/leftStick",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Move",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "dd133270-eca0-4bc6-8fba-eaf56a62a1a5",
+                    "path": "<DualShockGamepad>/rightStickPress",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Rotate",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "d7174836-a5c5-4b46-969b-f7c3890e64be",
+                    "path": "<Gamepad>/buttonSouth",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Attack",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        }
+    ],
+    "controlSchemes": []
+}
