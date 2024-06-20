@@ -207,14 +207,15 @@ public class PlayerCharacter : Character
             {
                 if (grabbedItem.GetThrowState())
                 {
-                    grabbedItem.GetComponent<Grabbable>().outline.OutlineColor=Color.green;
+                    // disattivo outiline quando lancio 
+                    grabbedItem.GetComponent<Grabbable>().outline.enabled = false;
                     grabbedItem.Throw();
                     grabbedItem = null;
                 }
                 else
                 {
-                    grabbedItem.GetComponent<Grabbable>().outline.OutlineColor=Color.yellow;
                     // non cambia per ora
+                    grabbedItem.GetComponent<Grabbable>().outline.enabled = false;
                     grabbedItem.Use(transform.forward);
                     grabbedItem = null;
                 }
@@ -500,6 +501,18 @@ public class PlayerCharacter : Character
             // PRENDO L'OGGETTO PIU VICINO
             grabbableItem = nearGrabbables[0];
             grabbableItem.outline.enabled = true;
+            if (grabbableItem.hasToBeThrown)
+            {
+                //lanciabile
+                grabbableItem.outline.OutlineColor=Color.green;
+            }
+            else
+            {
+                //picchiabile
+                grabbableItem.outline.OutlineColor=Color.yellow;
+            }
+
+            
         }
 
         OnComputedNearestGrabbable?.Invoke(this, new GrabbableArgs(grabbableItem));

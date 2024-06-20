@@ -27,7 +27,7 @@ public class Grabbable : MonoBehaviour
     [SerializeField] private Vector3 grabEulerRotation;
     [SerializeField] private float throwForce;
     [SerializeField] private float rotationSpeed;
-    [SerializeField] private bool hasToBeThrown;
+    [SerializeField] public  bool hasToBeThrown;
     [SerializeField] private float atk;
     [SerializeField] private float startAnimationSeconds;
     [SerializeField] private float hitSeconds;
@@ -117,6 +117,7 @@ public class Grabbable : MonoBehaviour
     public void Grab()
     {
         state = GrabbableState.GRABBED;
+        outline.enabled = false;
         hint.gameObject.SetActive(false);
         GetComponent<Rigidbody>().useGravity = false;
         GetComponent<BoxCollider>().enabled = false;

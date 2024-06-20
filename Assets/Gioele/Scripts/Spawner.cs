@@ -178,7 +178,7 @@ public class Spawner : MonoBehaviour
                     Vector3 spawnPosition = plane.transform.position + randomPosition;
                     spawnCount++;
                     // oggetto istanziato su un punto random del piano
-                    spawnedEnemies.Add(Instantiate(selectedObject, spawnPosition, Quaternion.identity));
+                    spawnedEnemies.Add(Instantiate(selectedObject, spawnPosition, Quaternion.Euler(0, 180, 0)));
                 }
             }
         }
