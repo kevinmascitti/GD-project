@@ -17,6 +17,7 @@ public class ShootingTower : MonoBehaviour
     [SerializeField] private float _shootFrequency;
 
     private GameObject _target;
+    private int sign;
     private bool _targetInSight = false;
     private bool _isShooting = false;
 
@@ -27,6 +28,15 @@ public class ShootingTower : MonoBehaviour
 
     void Update()
     {
+        if (_target.transform.position.x > this.transform.position.x)
+        {
+            sign = 1;
+        }
+        else
+        {
+            sign = -1;
+        }
+
         // Constantly Rotate Tower if Target is NOT in Sight
         //Check if Target is visible to the tower
         Vector3 directionToTarget = _target.transform.position - transform.position;
@@ -40,7 +50,6 @@ public class ShootingTower : MonoBehaviour
             //Start Shooting, if already started Shooting don't invoke again
             if (!_isShooting)
             {
-                
                 Shoot();
                 _isShooting = true;
                 Invoke(nameof(ResetAttack),_shootFrequency);// cosi do la temporizzazione per gli attacchi
@@ -59,12 +68,31 @@ public class ShootingTower : MonoBehaviour
 
     private void Shoot()
     {
+        /*
         GetComponent<Animator>().SetBool("shot",true);
         Vector3 targetHead = _target.transform.position + Vector3.up ;
         Vector3 shootingDirection = (targetHead - _gunPivot.position).normalized;
         GameObject newbullet = Instantiate(bullet, _gunPivot.position, Quaternion.identity);
         bullet.transform.forward = shootingDirection;
-        
+        */
+        if (sign == 1)
+        {
+            Vector3 direction_player = _target.transform.position - _gunPivot.position;
+            GetComponent<Animator>().SetBool("shot", true);
+            GameObject rb = Instantiate(bullet, _gunPivot.position, Quaternion.identity);
+            rb.transform.forward = new Vector3(direction_player.x, direction_player.y + 1.5f, direction_player.z);
+            rb.GetComponent<projectile>().barrel = true;
+            // trovo lla direzine del player
+        }
+        else
+        {
+            Vector3 direction_player = _target.transform.position - _gunPivot.position;
+            GetComponent<Animator>().SetBool("shot", true);
+            GameObject rb = Instantiate(bullet, _gunPivot.position, Quaternion.identity);
+            rb.transform.forward = new Vector3(direction_player.x, direction_player.y + 1.5f, direction_player.z);
+            rb.GetComponent<projectile>().barrel = true;
+        }
+
     }
 
     private bool IsTargetVisible(Vector3 directionToTarget)

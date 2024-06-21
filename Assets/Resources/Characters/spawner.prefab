@@ -47,11 +47,11 @@ MonoBehaviour:
   spawnableObjects:
   - {fileID: 7897149327893079946, guid: 86decf478d7f44de6ba6c659c541a018, type: 3}
   - {fileID: 3809045795639903075, guid: d7ca263a9200ff245826591feba32a6a, type: 3}
-  - {fileID: 845877483370869507, guid: a36135325f2986d4fb5c840426a26ae1, type: 3}
+  - {fileID: 1624770139296793340, guid: 85994b222cb550d41aefd74071b5c0d9, type: 3}
   EnemyObjects:
   - {fileID: 7897149327893079946, guid: 86decf478d7f44de6ba6c659c541a018, type: 3}
   - {fileID: 3809045795639903075, guid: d7ca263a9200ff245826591feba32a6a, type: 3}
-  - {fileID: 845877483370869507, guid: a36135325f2986d4fb5c840426a26ae1, type: 3}
+  - {fileID: 1624770139296793340, guid: 85994b222cb550d41aefd74071b5c0d9, type: 3}
   spawnOrder: []
   spawnProbability:
   - 0.8
