@@ -15,7 +15,6 @@ public class ShootingTower : MonoBehaviour
 
     public GameObject bullet;
     [SerializeField] private float _shootFrequency;
-    public float _shootForce=5f;
 
     private GameObject _target;
     private bool _targetInSight = false;
@@ -24,7 +23,6 @@ public class ShootingTower : MonoBehaviour
     void Start()
     {
         _target = GameObject.FindGameObjectWithTag("Player");
-        
     }
 
     void Update()
@@ -40,21 +38,28 @@ public class ShootingTower : MonoBehaviour
             PointTarget(directionToTarget);
             
             //Start Shooting, if already started Shooting don't invoke again
-            if(!_isShooting)
-                InvokeRepeating("Shoot", 0f, _shootFrequency);
+            if (!_isShooting)
+            {
+                
+                Shoot();
+                _isShooting = true;
+                Invoke(nameof(ResetAttack),_shootFrequency);// cosi do la temporizzazione per gli attacchi
+            }
 
-            return;
         }
+        
+    }
+    private void ResetAttack()
+    {
+        _isShooting= false;
+        GetComponent<Animator>().SetBool("shot",false);
+        // posso attaccare di nuovo 
 
-        //Target is NOT visible to the tower
-        CancelInvoke("Shoot");
-        _isShooting = false;
-        _targetInSight = false;
     }
 
     private void Shoot()
     {
-        _isShooting = true;
+        GetComponent<Animator>().SetBool("shot",true);
         Vector3 targetHead = _target.transform.position + Vector3.up ;
         Vector3 shootingDirection = (targetHead - _gunPivot.position).normalized;
         GameObject newbullet = Instantiate(bullet, _gunPivot.position, Quaternion.identity);
