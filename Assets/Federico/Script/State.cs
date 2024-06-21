@@ -6,8 +6,11 @@ public abstract class State
     protected float fixedtime { get; set; }
     protected float latetime { get; set; }
 
+    private PlayerController controls;
     public StateMachine stateMachine;
 
+    
+    
     public virtual void OnEnter(StateMachine _stateMachine)
     {
         stateMachine = _stateMachine;

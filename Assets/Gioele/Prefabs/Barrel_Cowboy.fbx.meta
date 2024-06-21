@@ -1,14 +1,9 @@
 fileFormatVersion: 2
-guid: abebfcadba37ab7458ee274a04cd0b61
+guid: e2e1d9829d32f1141a1142a72d648021
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
-  externalObjects:
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: VHS_material
-    second: {fileID: 2100000, guid: 09946ddc233eee748b8210c28ef03821, type: 2}
+  externalObjects: {}
   materials:
     materialImportMode: 2
     materialName: 0

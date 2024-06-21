@@ -17,9 +17,22 @@ public class ComboCharacterWithDamage : MonoBehaviour
     public GameObject parentObject; // Assegna l'oggetto padre via Inspector
     public string boneName; // Nome dell'osso che vuoi trovare
     public GameObject handBone;
-
+    private PlayerController controls;
     public static EventHandler OnDashExecuted;
+
+    private void OnEnable()
+    {
+        Debug.Log("OnEnable: Enabling controls");
+        controls.Enable();
+    }
     
+    private void Awake()
+    {
+        controls = new PlayerController();
+        controls.Gameplay.Attack.performed += ctx => LaunchFirstAttack();
+        
+    }
+
     void Start()
     {
         meleeStateMachine = GetComponent<StateMachine>();
@@ -56,12 +69,8 @@ public class ComboCharacterWithDamage : MonoBehaviour
         {
             if (Input.GetMouseButton(0) && meleeStateMachine.CurrentState.GetType() == typeof(IdleCombatState))
             {
-                isAttacking = true;
-                Vector3 contactPoint = handBone.transform.position;
-                GetComponent<Animator>().SetBool("InvalidateMoving", true);
-                meleeStateMachine.SetNextState(new GroundEntryState());
-                // hitEffectPrefabTemp = GameObject.Instantiate(HitEffectPrefab, contactPoint, Quaternion.identity);
-                //   StartCoroutine("KillHitEffect");
+                LaunchFirstAttack();
+                
             }
 
             if (Input.GetKeyDown(KeyCode.O) && meleeStateMachine.CurrentState.GetType() == typeof(IdleCombatState))
@@ -80,6 +89,16 @@ public class ComboCharacterWithDamage : MonoBehaviour
         }
     }
 
+     void LaunchFirstAttack()
+     {
+         Debug.Log("ho lanciato il primo attacco");
+        isAttacking = true;
+        Vector3 contactPoint = handBone.transform.position;
+        GetComponent<Animator>().SetBool("InvalidateMoving", true);
+      //  controls.Disable();
+        meleeStateMachine.SetNextState(new GroundEntryState());
+  
+    }
     private void ValidateMovingNow(object sender, EventArgs args)
     {
         StartCoroutine(ValidateMoving(0));
