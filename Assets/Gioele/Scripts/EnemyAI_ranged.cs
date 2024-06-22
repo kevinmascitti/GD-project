@@ -66,7 +66,7 @@ public class EnemyAI : Enemy
         {
             agent.SetDestination(walkPoint);
             // evito che vada a seguire un punto per troppo tempo
-            StartCoroutine(NewTarget(3f));
+            StartCoroutine(NewTarget(4f));
         }
 
         Vector3 distanceToWalkPoint = transform.position - walkPoint;
@@ -118,18 +118,21 @@ public class EnemyAI : Enemy
        Player = GameObject.FindGameObjectWithTag("Player").transform;
        //float randomz = Random.Range(-walkPointRange, walkPointRange);
        float randomx;
+       float randomz;
        if (Random.value < 0.5f)
        {
            // Genera un valore casuale tra walkpoint range e -6
            randomx = Random.Range(-walkPointRange, -6f);
+           randomz = Random.Range(-walkPointRange, -4f);
        }
        else
        {
            // Genera un valore casuale tra walkpoint range e 8
            randomx = Random.Range(6f, walkPointRange);
+           randomz = Random.Range(-walkPointRange, -4f);
        }
        walkPoint = new Vector3(Player.transform.position.x + randomx, Player.transform.position.y,
-               Player.transform.position.z);
+               Player.transform.position.z+randomz);
       
        if (Physics.Raycast(walkPoint, -transform.up, 2f, ground))
        {

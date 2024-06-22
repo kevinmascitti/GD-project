@@ -148,6 +148,7 @@ public class PlayerCharacter : Character
     void Update()
     {
         base.Update();
+        Debug.Log("limit: "+GameObject.FindGameObjectWithTag("Spawner").name);
         if (enemy_killed == GameObject.FindGameObjectWithTag("Spawner").GetComponent<Spawner>().spawnLimit)
         {
             // test per vedere se correttamente di aprono le porte
