@@ -81,7 +81,6 @@ public class ShootingTower : MonoBehaviour
             GetComponent<Animator>().SetBool("shot", true);
             GameObject rb = Instantiate(bullet, _gunPivot.position, Quaternion.identity);
             rb.transform.forward = new Vector3(direction_player.x, direction_player.y + 1.5f, direction_player.z);
-            rb.GetComponent<projectile>().barrel = true;
             // trovo lla direzine del player
         }
         else
@@ -90,7 +89,6 @@ public class ShootingTower : MonoBehaviour
             GetComponent<Animator>().SetBool("shot", true);
             GameObject rb = Instantiate(bullet, _gunPivot.position, Quaternion.identity);
             rb.transform.forward = new Vector3(direction_player.x, direction_player.y + 1.5f, direction_player.z);
-            rb.GetComponent<projectile>().barrel = true;
         }
 
     }
