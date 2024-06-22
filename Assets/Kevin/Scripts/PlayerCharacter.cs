@@ -148,13 +148,11 @@ public class PlayerCharacter : Character
     void Update()
     {
         base.Update();
-        Debug.Log("limit: "+GameObject.FindGameObjectWithTag("Spawner").name);
         if (enemy_killed == GameObject.FindGameObjectWithTag("Spawner").GetComponent<Spawner>().spawnLimit)
         {
-            // test per vedere se correttamente di aprono le porte
-            Debug.Log("door open");
             GameObject.FindGameObjectWithTag("Spawner").GetComponent<Spawner>().OpenExit();
             //OnEndRoom?.Invoke(this,new RoomArgs(on));
+            enemy_killed = 0;
             // questa cosa non so se sia giusta :(
 
         }
