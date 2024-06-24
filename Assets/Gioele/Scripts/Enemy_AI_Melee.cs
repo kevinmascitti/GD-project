@@ -22,7 +22,7 @@ public class Enemy_AI_Melee : Enemy
     public float walkPointRange;
     private Quaternion initialRotation;
     // attacco
-    public float timeBetweenAttacks = 2f;
+    private float timeBetweenAttacks;
     public bool alreadyAttacked;
 
     public float damage;
@@ -46,6 +46,7 @@ public class Enemy_AI_Melee : Enemy
         initialRotation = transform.rotation;
         agent = GetComponent<NavMeshAgent>();
         _animator = GetComponent<Animator>();
+        timeBetweenAttacks = 0.7f;// frame/framerate corretto
 
     }
     
@@ -100,11 +101,11 @@ public class Enemy_AI_Melee : Enemy
         //transform.LookAt(Player);
         if (!alreadyAttacked)
         {
+            alreadyAttacked = true;
             // voglio animazione di attacco 
             _animator.SetBool("attack",true);
             // setto a true perche sto attaccando 
-            alreadyAttacked = true;
-            Invoke(nameof(ResetAttack),timeBetweenAttacks);// cosi do la temporizzazione per gli attacchi
+            Invoke(nameof(ResetAttack),timeBetweenAttacks*Time.deltaTime);// cosi do la temporizzazione per gli attacchi
         }
     }
 
