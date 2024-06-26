@@ -74,7 +74,7 @@ public class EnemyCollision : MonoBehaviour
         if (enemy != null && oggetto!=null && oggetto.isAttacking)
         {
             oggetto.isAttacking = false;
-            Debug.Log("OnTriggerEnter called with: " + other.name + " FROM "+ this);
+//            Debug.Log("OnTriggerEnter called with: " + other.name + " FROM "+ this);
             Vector3 effectPosition = other.transform.position + new Vector3(0, +1.5f, 0);
             hitEffectPrefabTemp = GameObject.Instantiate(HitEffectPrefab, effectPosition, Quaternion.identity);
             StartCoroutine(KillHitEffect(hitEffectPrefabTemp));

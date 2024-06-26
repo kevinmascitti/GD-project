@@ -123,9 +123,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7c491ad9ca6bd0a40a1c05604fbf205a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentHP: 0
+  currentHP: 3
   isPlayer: 0
-  atk: 0
+  atk: 2
   damageReducer: 1
   agent: {fileID: 6063792246491597428}
   Player: {fileID: 0}
@@ -138,7 +138,6 @@ MonoBehaviour:
   walkPoint: {x: 0, y: 0, z: 0}
   walkPointSet: 0
   walkPointRange: 1
-  timeBetweenAttacks: 2
   alreadyAttacked: 0
   damage: 5
   sightRange: 0.8
