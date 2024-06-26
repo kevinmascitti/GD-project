@@ -11787,11 +11787,6 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 7
       objectReference: {fileID: 0}
-    - target: {fileID: 5099222684434290025, guid: a629d78297fc1a84fa173b1a061b3e09,
-        type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0.347
-      objectReference: {fileID: 0}
     - target: {fileID: 5226088071590983942, guid: a629d78297fc1a84fa173b1a061b3e09,
         type: 3}
       propertyPath: m_TagString
@@ -11990,11 +11985,6 @@ PrefabInstance:
       propertyPath: m_LocalPosition.y
       value: 151.841
       objectReference: {fileID: 0}
-    - target: {fileID: 9129755634165848963, guid: a629d78297fc1a84fa173b1a061b3e09,
-        type: 3}
-      propertyPath: m_TagString
-      value: Wall
-      objectReference: {fileID: 0}
     - target: {fileID: 9145500680642380009, guid: a629d78297fc1a84fa173b1a061b3e09,
         type: 3}
       propertyPath: m_TagString
@@ -12021,21 +12011,10 @@ PrefabInstance:
     - {fileID: 5873440526770150539, guid: a629d78297fc1a84fa173b1a061b3e09, type: 3}
     - {fileID: 6977902295547022119, guid: a629d78297fc1a84fa173b1a061b3e09, type: 3}
     - {fileID: 6455777469622759621, guid: a629d78297fc1a84fa173b1a061b3e09, type: 3}
-    - {fileID: 6807905507936767882, guid: a629d78297fc1a84fa173b1a061b3e09, type: 3}
-    - {fileID: 5696845072263406435, guid: a629d78297fc1a84fa173b1a061b3e09, type: 3}
-    - {fileID: 7921725643900312698, guid: a629d78297fc1a84fa173b1a061b3e09, type: 3}
-    - {fileID: 3334966259482221408, guid: a629d78297fc1a84fa173b1a061b3e09, type: 3}
-    - {fileID: 7987195007848239218, guid: a629d78297fc1a84fa173b1a061b3e09, type: 3}
-    - {fileID: 3799834647782304402, guid: a629d78297fc1a84fa173b1a061b3e09, type: 3}
-    - {fileID: 8146532457665872644, guid: a629d78297fc1a84fa173b1a061b3e09, type: 3}
-    - {fileID: 5796891326809024992, guid: a629d78297fc1a84fa173b1a061b3e09, type: 3}
-    - {fileID: 6266344293711404159, guid: a629d78297fc1a84fa173b1a061b3e09, type: 3}
-    - {fileID: 2527642838880233724, guid: a629d78297fc1a84fa173b1a061b3e09, type: 3}
-    - {fileID: 371969868523464022, guid: a629d78297fc1a84fa173b1a061b3e09, type: 3}
     m_AddedGameObjects:
     - targetCorrespondingSourceObject: {fileID: 4254801836525136900, guid: a629d78297fc1a84fa173b1a061b3e09,
         type: 3}
-      insertIndex: -1
+      insertIndex: 0
       addedObject: {fileID: 1793433142}
     - targetCorrespondingSourceObject: {fileID: 4179294270718789701, guid: a629d78297fc1a84fa173b1a061b3e09,
         type: 3}

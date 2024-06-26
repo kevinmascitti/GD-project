@@ -969,6 +969,8 @@ MonoBehaviour:
   maxDepthBound: 7
   fede: 0
   isGrounded: 0
+  isController: 0
+  speed: {x: 0, y: 0}
 --- !u!65 &4431608583946681021
 BoxCollider:
   m_ObjectHideFlags: 0

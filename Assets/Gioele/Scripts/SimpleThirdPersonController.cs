@@ -53,6 +53,7 @@ public class SimpleThirdPersonController : MonoBehaviour
     
     void OnCollisionEnter(Collision collision)
     {
+        
         if (collision.gameObject.CompareTag("Ground"))
         {
             isGrounded = true;
@@ -67,8 +68,10 @@ public class SimpleThirdPersonController : MonoBehaviour
         // Adjusted to use the magnitude of the movement vector for the ray length
         if (Physics.Raycast(transform.position, direction, out hit, boundingBoxWidth))
         {
+            Debug.Log("Il raggio ha con un oggetto ora vediamo se è un muro "+ hit.collider.gameObject.tag);
             if (hit.collider.CompareTag("Wall"))
             {
+                Debug.Log("HAI COLPITO IL MURO");
                 return false;
             }
         }
