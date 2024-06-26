@@ -461,7 +461,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   outlineColor: {r: 0.18555383, g: 0.96981126, b: 0.07136336, a: 1}
-  outlineWidth: 3
+  outlineWidth: 4.2
   precomputeOutline: 0
   bakeKeys: []
   bakeValues: []
