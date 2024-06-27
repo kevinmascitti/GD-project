@@ -192,10 +192,7 @@ public class Spawner : MonoBehaviour
         while (canSpawn && isdeterministic)
         {
             yield return new WaitForSeconds(spawnTime); //  2 secondi--> da decidere/ modificare , Fede divertiti :)
-            if (spawnCount == spawnLimit)
-            {
-                StopSpawn();
-            }
+            
             // Troviamo l'oggetto da spawnare in base alla probabilit
             if (canSpawn)
             {
@@ -209,6 +206,7 @@ public class Spawner : MonoBehaviour
                 {
                     selectedObject = null;
                     canSpawn = false;
+                    StopSpawn();
                 }
 
                 // Se abbiamo selezionato un oggetto, lo spawniamo
