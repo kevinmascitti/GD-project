@@ -126,7 +126,7 @@ MonoBehaviour:
   timeBetweenAttacks: 3
   projectile: {fileID: 2868518990019339048, guid: f1d7bdf9be3cde74aad04d3735805190,
     type: 3}
-  projectileSpeed: 20
+  projectileSpeed: 0
   projectileUPSpeed: 1.5
   gunpivot: {fileID: 1515036099962704634}
   sightRange: 2
