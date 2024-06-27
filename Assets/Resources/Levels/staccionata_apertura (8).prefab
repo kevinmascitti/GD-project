@@ -10,18 +10,33 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: -8679921383154817045, guid: 58634a68ea2c84840aae8bdd6ba77c16,
         type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1.4369026
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 58634a68ea2c84840aae8bdd6ba77c16,
+        type: 3}
+      propertyPath: m_LocalScale.y
+      value: 2.045852
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 58634a68ea2c84840aae8bdd6ba77c16,
+        type: 3}
+      propertyPath: m_LocalScale.z
+      value: 1.4369026
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 58634a68ea2c84840aae8bdd6ba77c16,
+        type: 3}
       propertyPath: m_LocalPosition.x
-      value: 2.4580078
+      value: 2.26
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 58634a68ea2c84840aae8bdd6ba77c16,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.66000366
+      value: 1.6000061
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 58634a68ea2c84840aae8bdd6ba77c16,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 22.831024
+      value: 22.983002
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 58634a68ea2c84840aae8bdd6ba77c16,
         type: 3}
@@ -63,6 +78,11 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 7
       objectReference: {fileID: 0}
+    - target: {fileID: -5477749408508380018, guid: 58634a68ea2c84840aae8bdd6ba77c16,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.42
+      objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 58634a68ea2c84840aae8bdd6ba77c16,
         type: 3}
       propertyPath: m_Name
@@ -76,7 +96,7 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: 58634a68ea2c84840aae8bdd6ba77c16,
         type: 3}
       propertyPath: m_TagString
-      value: Wall
+      value: Exit
       objectReference: {fileID: 0}
     - target: {fileID: 5866666021909216657, guid: 58634a68ea2c84840aae8bdd6ba77c16,
         type: 3}
@@ -117,5 +137,5 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1, y: 1, z: 3.0506382}
-  m_Center: {x: 0, y: 0, z: -1.0253191}
+  m_Size: {x: 1.0788754, y: 1.4015032, z: 3.0506382}
+  m_Center: {x: 0.039437346, y: 0.20075306, z: -1.0253191}
