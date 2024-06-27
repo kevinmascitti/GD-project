@@ -68,6 +68,16 @@ PrefabInstance:
       propertyPath: m_Name
       value: ponte_elevatoio
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 22a6b1f61efe8f5459420773344ea984,
+        type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 22a6b1f61efe8f5459420773344ea984,
+        type: 3}
+      propertyPath: m_TagString
+      value: Exit
+      objectReference: {fileID: 0}
     - target: {fileID: 5866666021909216657, guid: 22a6b1f61efe8f5459420773344ea984,
         type: 3}
       propertyPath: m_Controller
