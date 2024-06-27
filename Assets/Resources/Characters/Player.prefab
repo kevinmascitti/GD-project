@@ -962,7 +962,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Camera: {fileID: 0}
-  Speed: 5
+  Speed: 4
   RotationSpeed: 3.04
   PlayerAnim: {fileID: 8223310538124421006}
   minDepthBound: 7
