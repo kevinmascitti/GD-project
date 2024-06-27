@@ -526,7 +526,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ba0d73cfe787745cf84e09f5c2306e1f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentHP: 5
+  currentHP: 1
   isPlayer: 0
   atk: 5
   damageReducer: 1

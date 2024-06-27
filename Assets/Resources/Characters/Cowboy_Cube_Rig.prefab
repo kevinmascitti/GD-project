@@ -167,7 +167,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 733bb09504aa7af42b901d870697e644, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentHP: 0
+  currentHP: 2
   isPlayer: 0
   atk: 0
   damageReducer: 1
@@ -185,7 +185,7 @@ MonoBehaviour:
   timeBetweenAttacks: 3
   projectile: {fileID: 862695047321393832, guid: f722f05d07330644d91c75efb46a6d37,
     type: 3}
-  projectileSpeed: 20
+  projectileSpeed: 10
   projectileUPSpeed: 1.5
   gunpivot: {fileID: 5479345050920022295}
   sightRange: 2

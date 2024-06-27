@@ -108,7 +108,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 733bb09504aa7af42b901d870697e644, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentHP: 0
+  currentHP: 2
   isPlayer: 0
   atk: 0
   damageReducer: 1
