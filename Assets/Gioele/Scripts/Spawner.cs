@@ -94,7 +94,6 @@ public class Spawner : MonoBehaviour
             {
                 animator.SetBool("open", true);
             }
-
         }
     }
 
