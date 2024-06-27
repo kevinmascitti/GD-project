@@ -92,12 +92,9 @@ public class Spawner : MonoBehaviour
 
             if (animator != null)
             {
-                animator.SetBool("open",true);
+                animator.SetBool("open", true);
             }
-            
         }
-
-        StartCoroutine(CloseExit(3f));
     }
 
     public void StartSpawn()
