@@ -105,7 +105,7 @@ public class Enemy_AI_Melee : Enemy
             // voglio animazione di attacco 
             _animator.SetBool("attack",true);
             // setto a true perche sto attaccando 
-            Invoke(nameof(ResetAttack),timeBetweenAttacks*Time.deltaTime);// cosi do la temporizzazione per gli attacchi
+            Invoke(nameof(ResetAttack),timeBetweenAttacks);// cosi do la temporizzazione per gli attacchi
         }
     }
 
