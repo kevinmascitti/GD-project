@@ -16,7 +16,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &5019942434850239748
 Transform:
   m_ObjectHideFlags: 0
@@ -25,7 +25,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 175647347285890481}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 712.7002, y: 964.036, z: 436.19098}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -48,20 +48,23 @@ MonoBehaviour:
   - {fileID: 7897149327893079946, guid: 86decf478d7f44de6ba6c659c541a018, type: 3}
   - {fileID: 3809045795639903075, guid: d7ca263a9200ff245826591feba32a6a, type: 3}
   - {fileID: 1624770139296793340, guid: 85994b222cb550d41aefd74071b5c0d9, type: 3}
+  - {fileID: 1172552055829091318, guid: 3d32ff33526df3b4ea06c209ca614fff, type: 3}
   EnemyObjects:
   - {fileID: 7897149327893079946, guid: 86decf478d7f44de6ba6c659c541a018, type: 3}
   - {fileID: 3809045795639903075, guid: d7ca263a9200ff245826591feba32a6a, type: 3}
+  - {fileID: 1172552055829091318, guid: 3d32ff33526df3b4ea06c209ca614fff, type: 3}
   - {fileID: 1624770139296793340, guid: 85994b222cb550d41aefd74071b5c0d9, type: 3}
   spawnOrder: []
   spawnProbability:
-  - 0.8
-  - 0.3
+  - 0.4
+  - 0.2
+  - 0.2
   - 0.2
   spawnedEnemies: []
   plane: {fileID: 0}
-  spawnTime: 2
-  canSpawn: 1
-  spawnCount: 0
-  spawnLimit: 7
+  spawnTime: 5
+  canSpawn: 0
+  spawnCount: 2
+  spawnLimit: 3
   levelPlane: {fileID: 0}
   isdeterministic: 0

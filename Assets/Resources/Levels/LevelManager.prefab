@@ -23864,11 +23864,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: spawner
       objectReference: {fileID: 0}
-    - target: {fileID: 175647347285890481, guid: de00ae07b8cf922479031c620b23c0ab,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 3812463333637228162, guid: de00ae07b8cf922479031c620b23c0ab,
         type: 3}
       propertyPath: plane
@@ -23876,24 +23871,9 @@ PrefabInstance:
       objectReference: {fileID: 6952207763567380223}
     - target: {fileID: 3812463333637228162, guid: de00ae07b8cf922479031c620b23c0ab,
         type: 3}
-      propertyPath: canSpawn
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3812463333637228162, guid: de00ae07b8cf922479031c620b23c0ab,
-        type: 3}
       propertyPath: levelPlane
       value: 
       objectReference: {fileID: 6952207763567380223}
-    - target: {fileID: 3812463333637228162, guid: de00ae07b8cf922479031c620b23c0ab,
-        type: 3}
-      propertyPath: spawnCount
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 3812463333637228162, guid: de00ae07b8cf922479031c620b23c0ab,
-        type: 3}
-      propertyPath: spawnLimit
-      value: 3
-      objectReference: {fileID: 0}
     - target: {fileID: 5019942434850239748, guid: de00ae07b8cf922479031c620b23c0ab,
         type: 3}
       propertyPath: m_LocalPosition.x
