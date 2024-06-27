@@ -69,7 +69,7 @@ public class SimpleThirdPersonController : MonoBehaviour
         if (Physics.Raycast(transform.position, direction, out hit, boundingBoxWidth))
         {
          //   Debug.Log("Il raggio ha con un oggetto ora vediamo se è un muro "+ hit.collider.gameObject.tag);
-            if (hit.collider.CompareTag("Wall"))
+            if (hit.collider.CompareTag("Wall") || hit.collider.CompareTag("Exit") )
             {
            //     Debug.Log("HAI COLPITO IL MURO");
                 return false;
