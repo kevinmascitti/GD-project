@@ -302,7 +302,7 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: e2e1d9829d32f1141a1142a72d648021,
         type: 3}
       propertyPath: m_TagString
-      value: enemy
+      value: EnemyObj
       objectReference: {fileID: 0}
     - target: {fileID: 1358531409486900021, guid: e2e1d9829d32f1141a1142a72d648021,
         type: 3}
@@ -488,7 +488,7 @@ Rigidbody:
     m_Bits: 0
   m_ImplicitCom: 1
   m_ImplicitTensor: 1
-  m_UseGravity: 0
+  m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 0
@@ -509,7 +509,7 @@ BoxCollider:
     m_Bits: 0
   m_LayerOverridePriority: 0
   m_IsTrigger: 1
-  m_ProvidesContacts: 0
+  m_ProvidesContacts: 1
   m_Enabled: 1
   serializedVersion: 3
   m_Size: {x: 1.6320134, y: 4.181423, z: 2.5731566}

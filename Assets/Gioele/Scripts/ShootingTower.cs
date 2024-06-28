@@ -20,6 +20,7 @@ public class ShootingTower : MonoBehaviour
     private int sign;
     private bool _targetInSight = false;
     private bool _isShooting = false;
+    private bool grounded=true;
 
     void Start()
     {
@@ -64,6 +65,16 @@ public class ShootingTower : MonoBehaviour
         GetComponent<Animator>().SetBool("shot",false);
         // posso attaccare di nuovo 
 
+    }
+    private void OnCollisionEnter(Collision collision)
+    {
+        
+        if (collision.collider.CompareTag("Ground"))
+        {
+            GetComponent<Rigidbody>().useGravity = false;
+            grounded = true;
+        }
+        
     }
 
     private void Shoot()
