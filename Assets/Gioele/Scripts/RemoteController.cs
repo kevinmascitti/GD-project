@@ -443,7 +443,7 @@ public class RemoteController : MonoBehaviour
                 isUIVisible = false;
                 isStaminaFull = false;
             }
-            else if (Input.GetKeyDown(KeyCode.O))
+            else if (Input.GetKeyDown(KeyCode.J))
             {
                 playerTransform.GetComponent<PlayerCharacter>().UpdateStamina(0);
                 StartChMinus("Enemy");

@@ -65,7 +65,6 @@ public class AntiOverlap : MonoBehaviour
             {
                 Ray ray = new Ray(origin, direction);
                 RaycastHit[] hits = Physics.RaycastAll(ray, detectionRadius, enemyLayer);
-                Debug.Log("numero di nemici intersacati prodotti"+hits.Length);
                 if(hits.Length!=0)
                 {
                         Debug.Log("sei stato colpito dal nemico ho lanciato l'evento");

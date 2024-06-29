@@ -19,7 +19,7 @@ public class PopupSpawner : MonoBehaviour
     private Dictionary<int, bool> isPopupSpawned = new Dictionary<int, bool>();
     private int lastCounter;
     private Vector3 spawningDirection = Vector3.forward;
-    private Quaternion spawningRotation = Quaternion.Euler(270, 0, 180);
+    private Quaternion spawningRotation = Quaternion.Euler(0, 0, 0);
 
     void Start()
     {
@@ -59,7 +59,7 @@ public class PopupSpawner : MonoBehaviour
     private void SpawnPopup(string comboName)
     {
         Vector3 spawningPosition = player.transform.position;
-        Rigidbody rb = Instantiate(Resources.Load(comboName), spawningPosition, spawningRotation).GetComponent<Rigidbody>();
+        Rigidbody rb = Instantiate(Resources.Load("Popup/"+comboName), spawningPosition, spawningRotation).GameObject().transform.GetChild(0).GetComponent<Rigidbody>();
         rb.AddForce(spawningDirection * popupSpeed, ForceMode.Impulse);
     }
     

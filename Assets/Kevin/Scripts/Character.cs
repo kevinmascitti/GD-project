@@ -18,14 +18,6 @@ public abstract class Character : MonoBehaviour
     // Update is called once per frame
     public void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            Debug.Log("Damage " + atk);
-            if (isPlayer)
-            {
-                gameObject.GetComponent<PlayerCharacter>().UpdateHP(currentHP-atk);
-            }
-        }
     }
     
     public virtual void TakeDamage(float damage)
