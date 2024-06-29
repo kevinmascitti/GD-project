@@ -19,7 +19,7 @@ public class PlayerCharacter : Character
     public int def_life = 4;
     public int enemy_killed = 0;
     [NonSerialized] public bool isInputEnabled = false;
-    public bool isInvincible = true; // player invincibile quando riceve danno
+    public bool isInvincible; // player invincibile quando riceve danno
     public Slider sliderHP;
     public Slider sliderStamina;
     public GameObject UIExtraLife;
@@ -120,6 +120,7 @@ public class PlayerCharacter : Character
     {
         dieAnimation = false;
         isPlayer = true;
+        isInvincible = false;
         sliderHP = GameObject.Find("HPBar").GetComponent<Slider>();
         sliderStamina = GameObject.Find("StaminaBar").GetComponent<Slider>();
         UIExtraLife = GameObject.Find("ExtraLife");
@@ -307,10 +308,10 @@ public class PlayerCharacter : Character
     
     public override void TakeDamage(float damage)
     {
-        // Player-specific logic
         if (isInvincible) return;
 
         base.TakeDamage(damage);
+        UpdateHPUI(currentHP);
     }
     
     // FINESTRA DI INVINCIBILITA DEL GIOCATORE 

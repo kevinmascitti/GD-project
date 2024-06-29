@@ -117,21 +117,21 @@ public class Enemy_AI_Melee : Enemy
 
     }
 
-    private void OnCollisionEnter(Collision collision)
-    {
-
-        if (collision.collider.CompareTag("Player"))
-        {
-            OnAttack = true;
-            Invoke("ChangeState", 1.2f);
-        }
-        if (collision.collider.CompareTag("Ground"))
-        {
-            //GetComponent<Rigidbody>().isKinematic = true;
-            grounded = true;
-        }
-        
-    }
+    // private void OnCollisionEnter(Collision collision)
+    // {
+    //
+    //     if (collision.collider.CompareTag("Player"))
+    //     {
+    //         OnAttack = true;
+    //         Invoke("ChangeState", 1.2f);
+    //     }
+    //     if (collision.collider.CompareTag("Ground"))
+    //     {
+    //         //GetComponent<Rigidbody>().isKinematic = true;
+    //         grounded = true;
+    //     }
+    //     
+    // }
    
     private void ChangeState()
     {
@@ -213,7 +213,7 @@ public class Enemy_AI_Melee : Enemy
     {
         if (other.CompareTag("Player"))
         {
-            other.GetComponent<PlayerCharacter>().TakeDamage(0);
+            other.GetComponent<PlayerCharacter>().TakeDamage(atk);
         }
 
         
