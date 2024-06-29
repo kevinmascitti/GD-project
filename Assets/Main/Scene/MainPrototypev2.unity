@@ -2760,6 +2760,16 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4360313706594449128, guid: a629d78297fc1a84fa173b1a061b3e09,
         type: 3}
+      propertyPath: m_Convex
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4360313706594449128, guid: a629d78297fc1a84fa173b1a061b3e09,
+        type: 3}
+      propertyPath: m_IsTrigger
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4360313706594449128, guid: a629d78297fc1a84fa173b1a061b3e09,
+        type: 3}
       propertyPath: m_ProvidesContacts
       value: 1
       objectReference: {fileID: 0}
