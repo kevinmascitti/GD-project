@@ -15,20 +15,29 @@ public class ShootingTower : MonoBehaviour
 
     public GameObject bullet;
     [SerializeField] private float _shootFrequency;
-    public float _shootForce=5f;
 
     private GameObject _target;
+    private int sign;
     private bool _targetInSight = false;
     private bool _isShooting = false;
+    private bool grounded=true;
 
     void Start()
     {
         _target = GameObject.FindGameObjectWithTag("Player");
-        
     }
 
     void Update()
     {
+        if (_target.transform.position.x > this.transform.position.x)
+        {
+            sign = 1;
+        }
+        else
+        {
+            sign = -1;
+        }
+
         // Constantly Rotate Tower if Target is NOT in Sight
         //Check if Target is visible to the tower
         Vector3 directionToTarget = _target.transform.position - transform.position;
@@ -40,26 +49,59 @@ public class ShootingTower : MonoBehaviour
             PointTarget(directionToTarget);
             
             //Start Shooting, if already started Shooting don't invoke again
-            if(!_isShooting)
-                InvokeRepeating("Shoot", 0f, _shootFrequency);
+            if (!_isShooting)
+            {
+                Shoot();
+                _isShooting = true;
+                Invoke(nameof(ResetAttack),_shootFrequency);// cosi do la temporizzazione per gli attacchi
+            }
 
-            return;
         }
+        
+    }
+    private void ResetAttack()
+    {
+        _isShooting= false;
+        GetComponent<Animator>().SetBool("shot",false);
+        // posso attaccare di nuovo 
 
-        //Target is NOT visible to the tower
-        CancelInvoke("Shoot");
-        _isShooting = false;
-        _targetInSight = false;
+    }
+    private void OnCollisionEnter(Collision collision)
+    {
+        
+        if (collision.collider.CompareTag("Ground"))
+        {
+            GetComponent<Rigidbody>().useGravity = false;
+            grounded = true;
+        }
+        
     }
 
     private void Shoot()
     {
-        _isShooting = true;
+        /*
+        GetComponent<Animator>().SetBool("shot",true);
         Vector3 targetHead = _target.transform.position + Vector3.up ;
         Vector3 shootingDirection = (targetHead - _gunPivot.position).normalized;
         GameObject newbullet = Instantiate(bullet, _gunPivot.position, Quaternion.identity);
         bullet.transform.forward = shootingDirection;
-        
+        */
+        if (sign == 1)
+        {
+            Vector3 direction_player = _target.transform.position - _gunPivot.position;
+            GetComponent<Animator>().SetBool("shot", true);
+            GameObject rb = Instantiate(bullet, _gunPivot.position, Quaternion.identity);
+            rb.transform.forward = new Vector3(direction_player.x, direction_player.y + 1.5f, direction_player.z);
+            // trovo lla direzine del player
+        }
+        else
+        {
+            Vector3 direction_player = _target.transform.position - _gunPivot.position;
+            GetComponent<Animator>().SetBool("shot", true);
+            GameObject rb = Instantiate(bullet, _gunPivot.position, Quaternion.identity);
+            rb.transform.forward = new Vector3(direction_player.x, direction_player.y + 1.5f, direction_player.z);
+        }
+
     }
 
     private bool IsTargetVisible(Vector3 directionToTarget)

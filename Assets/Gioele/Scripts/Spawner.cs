@@ -17,13 +17,12 @@ public class Spawner : MonoBehaviour
     public float spawnTime = 2f;
     public bool canSpawn = true;
     [SerializeField] private int spawnCount = 0;
-    public int spawnLimit = 7;
+    [SerializeField] public int spawnLimit;
     [SerializeField] public GameObject levelPlane;
     public static EventHandler OnDoorOpen;
-    public bool isdeterministic;
+    [SerializeField] public bool isdeterministic;
     void Start()
     {
-        isdeterministic = false;
         //somma delle probabilità totali
         _totalProbability = 0f;
         for (int i = 0; i < spawnableObjects.Count; i++)
@@ -93,12 +92,9 @@ public class Spawner : MonoBehaviour
 
             if (animator != null)
             {
-                animator.SetBool("open",true);
+                animator.SetBool("open", true);
             }
-            
         }
-
-        StartCoroutine(CloseExit(3f));
     }
 
     public void StartSpawn()
@@ -162,53 +158,82 @@ public class Spawner : MonoBehaviour
                 {
                     // aggiungo altezza
                     float addedEight = 0;
-                    if (selectedObject.tag.CompareTo("EnemyObj") == 0)
-                    {
-                        addedEight = 4f;
-                    }
 
                     MeshRenderer planeRenderer = plane.GetComponent<MeshRenderer>();
                     Vector3 planeSize = planeRenderer.bounds.size;
 
                     //posizione casuale all'interno delle dimensioni del piano
-                    Vector3 randomPosition = new Vector3(Random.Range(-planeSize.x / 2f, planeSize.x / 2f), 5f + addedEight,
+                    Vector3 randomPosition = new Vector3(Random.Range(-planeSize.x / 2f, planeSize.x / 2f),
+                        5f + addedEight,
                         Random.Range(-planeSize.z / 2f, planeSize.z / 2f));
                     //inserito una y =10 in modo che in nemico cada dal cielo 
                     // Aggiunta la posizione del piano per mantenere il punto random nel contesto del piano e non fuori
                     Vector3 spawnPosition = plane.transform.position + randomPosition;
                     spawnCount++;
                     // oggetto istanziato su un punto random del piano
-                    spawnedEnemies.Add(Instantiate(selectedObject, spawnPosition, Quaternion.identity));
+                    if (selectedObject.GetComponent<EnemyAI>()!=null)
+                    {
+                        spawnedEnemies.Add(Instantiate(selectedObject, spawnPosition, Quaternion.Euler(0, 110, 0)));
+                    }
+                    if (selectedObject.GetComponent<Enemy_AI_Melee>()!=null)
+                    {
+                        spawnedEnemies.Add(Instantiate(selectedObject, spawnPosition, Quaternion.Euler(0, 180, 0)));
+                    }
+                    if (selectedObject.tag.CompareTo("EnemyObj") == 0)
+                    {
+                        spawnedEnemies.Add(Instantiate(selectedObject, spawnPosition, Quaternion.identity));
+                    }
                 }
             }
         }
         while (canSpawn && isdeterministic)
         {
             yield return new WaitForSeconds(spawnTime); //  2 secondi--> da decidere/ modificare , Fede divertiti :)
-            if (spawnCount == spawnLimit)
-            {
-                StopSpawn();
-            }
+            
             // Troviamo l'oggetto da spawnare in base alla probabilit
             if (canSpawn)
             {
-                GameObject selectedObject = spawnOrder[0];
-                spawnOrder.RemoveAt(0);
+                GameObject selectedObject = null;
+                if (spawnOrder.Count != 0)
+                {
+                    selectedObject = spawnOrder[0];
+                    spawnOrder.RemoveAt(0);
+                }
+                else
+                {
+                    selectedObject = null;
+                    canSpawn = false;
+                    StopSpawn();
+                }
+
                 // Se abbiamo selezionato un oggetto, lo spawniamo
                 if (selectedObject != null)
                 {
+                    float addedEight = 0;
+                    
                     MeshRenderer planeRenderer = plane.GetComponent<MeshRenderer>();
                     Vector3 planeSize = planeRenderer.bounds.size;
-
                     //posizione casuale all'interno delle dimensioni del piano
-                    Vector3 randomPosition = new Vector3(Random.Range(-planeSize.x / 2f, planeSize.x / 2f), 5f,
+                    Vector3 randomPosition = new Vector3(Random.Range(-planeSize.x / 2f, planeSize.x / 2f), 5f+addedEight,
                         Random.Range(-planeSize.z / 2f, planeSize.z / 2f));
                     //inserito una y =10 in modo che in nemico cada dal cielo 
                     // Aggiunta la posizione del piano per mantenere il punto random nel contesto del piano e non fuori
                     Vector3 spawnPosition = plane.transform.position + randomPosition;
                     spawnCount++;
                     // oggetto istanziato su un punto random del piano
-                    spawnedEnemies.Add(Instantiate(selectedObject, spawnPosition, Quaternion.identity));
+                    if (selectedObject.GetComponent<EnemyAI>()!=null)
+                    {
+                        spawnedEnemies.Add(Instantiate(selectedObject, spawnPosition, Quaternion.Euler(0, 110, 0)));
+                    }
+                    if (selectedObject.GetComponent<Enemy_AI_Melee>()!=null)
+                    {
+                        spawnedEnemies.Add(Instantiate(selectedObject, spawnPosition, Quaternion.Euler(0, 180, 0)));
+                    }
+
+                    if (selectedObject.tag.CompareTo("EnemyObj") == 0)
+                    {
+                        spawnedEnemies.Add(Instantiate(selectedObject, spawnPosition, Quaternion.identity));
+                    }
                 }
             }
         }

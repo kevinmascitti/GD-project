@@ -84,6 +84,12 @@ public class Outline : MonoBehaviour {
 
     // Cache renderers
     renderers = GetComponentsInChildren<Renderer>();
+        
+    // escludo "Hint"
+    Renderer[] filteredRenderers = renderers.Where(renderer => renderer.gameObject.name != "Hint").ToArray();
+
+    renderers = filteredRenderers;
+    
 
     // Instantiate outline materials
     outlineMaskMaterial = Instantiate(Resources.Load<Material>(@"Materials/OutlineMask"));
@@ -102,7 +108,7 @@ public class Outline : MonoBehaviour {
 
   void OnEnable() {
     foreach (var renderer in renderers) {
-
+      
       // Append outline shaders
       var materials = renderer.sharedMaterials.ToList();
 
@@ -140,7 +146,7 @@ public class Outline : MonoBehaviour {
 
   void OnDisable() {
     foreach (var renderer in renderers) {
-
+      
       // Remove outline shaders
       var materials = renderer.sharedMaterials.ToList();
 

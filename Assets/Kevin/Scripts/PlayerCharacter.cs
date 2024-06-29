@@ -19,7 +19,7 @@ public class PlayerCharacter : Character
     public int def_life = 4;
     public int enemy_killed = 0;
     [NonSerialized] public bool isInputEnabled = false;
-    public bool isInvincible = true; // player invincibile quando riceve danno
+    public bool isInvincible; // player invincibile quando riceve danno
     public Slider sliderHP;
     public Slider sliderStamina;
     public GameObject UIExtraLife;
@@ -120,6 +120,7 @@ public class PlayerCharacter : Character
     {
         dieAnimation = false;
         isPlayer = true;
+        isInvincible = false;
         sliderHP = GameObject.Find("HPBar").GetComponent<Slider>();
         sliderStamina = GameObject.Find("StaminaBar").GetComponent<Slider>();
         UIExtraLife = GameObject.Find("ExtraLife");
@@ -150,10 +151,9 @@ public class PlayerCharacter : Character
         base.Update();
         if (enemy_killed == GameObject.FindGameObjectWithTag("Spawner").GetComponent<Spawner>().spawnLimit)
         {
-            // test per vedere se correttamente di aprono le porte
-            Debug.Log("door open");
             GameObject.FindGameObjectWithTag("Spawner").GetComponent<Spawner>().OpenExit();
             //OnEndRoom?.Invoke(this,new RoomArgs(on));
+            enemy_killed = 0;
             // questa cosa non so se sia giusta :(
 
         }
@@ -207,14 +207,15 @@ public class PlayerCharacter : Character
             {
                 if (grabbedItem.GetThrowState())
                 {
-                    grabbedItem.GetComponent<Grabbable>().outline.OutlineColor=Color.green;
+                    // disattivo outiline quando lancio 
+                    grabbedItem.GetComponent<Grabbable>().outline.enabled = false;
                     grabbedItem.Throw();
                     grabbedItem = null;
                 }
                 else
                 {
-                    grabbedItem.GetComponent<Grabbable>().outline.OutlineColor=Color.yellow;
                     // non cambia per ora
+                    grabbedItem.GetComponent<Grabbable>().outline.enabled = false;
                     grabbedItem.Use(transform.forward);
                     grabbedItem = null;
                 }
@@ -307,10 +308,10 @@ public class PlayerCharacter : Character
     
     public override void TakeDamage(float damage)
     {
-        // Player-specific logic
         if (isInvincible) return;
 
         base.TakeDamage(damage);
+        UpdateHPUI(currentHP);
     }
     
     // FINESTRA DI INVINCIBILITA DEL GIOCATORE 
@@ -500,6 +501,18 @@ public class PlayerCharacter : Character
             // PRENDO L'OGGETTO PIU VICINO
             grabbableItem = nearGrabbables[0];
             grabbableItem.outline.enabled = true;
+            if (grabbableItem.hasToBeThrown)
+            {
+                //lanciabile
+                grabbableItem.outline.OutlineColor=Color.green;
+            }
+            else
+            {
+                //picchiabile
+                grabbableItem.outline.OutlineColor=Color.yellow;
+            }
+
+            
         }
 
         OnComputedNearestGrabbable?.Invoke(this, new GrabbableArgs(grabbableItem));

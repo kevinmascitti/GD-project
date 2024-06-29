@@ -3,7 +3,12 @@ guid: abebfcadba37ab7458ee274a04cd0b61
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: VHS_material
+    second: {fileID: 2100000, guid: 09946ddc233eee748b8210c28ef03821, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0

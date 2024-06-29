@@ -33,7 +33,7 @@ public class CameraMovement : MonoBehaviour
 
     private void Update()
     {
-        if (isLevelInitialized)
+        if (isLevelInitialized && player.currentRoom)
         {
             float distanceMin = Math.Abs(target.transform.position.x - player.currentRoom.enterWall.transform.position.x);
             float distanceMax = Math.Abs(target.transform.position.x - player.currentRoom.exitWall.transform.position.x);

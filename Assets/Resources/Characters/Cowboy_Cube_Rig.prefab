@@ -57,32 +57,32 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: 321a1e033d7ee03439b7a5f0b701e36b,
         type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.57539755
+      value: 0.7071068
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 321a1e033d7ee03439b7a5f0b701e36b,
         type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0.0026867536
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 321a1e033d7ee03439b7a5f0b701e36b,
         type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0.81786054
+      value: 0.7071068
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 321a1e033d7ee03439b7a5f0b701e36b,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0.0038189073
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 321a1e033d7ee03439b7a5f0b701e36b,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
-      value: 0.535
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 321a1e033d7ee03439b7a5f0b701e36b,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
-      value: 109.744
+      value: 90
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 321a1e033d7ee03439b7a5f0b701e36b,
         type: 3}
@@ -167,7 +167,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 733bb09504aa7af42b901d870697e644, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentHP: 0
+  currentHP: 2
   isPlayer: 0
   atk: 0
   damageReducer: 1
@@ -185,7 +185,7 @@ MonoBehaviour:
   timeBetweenAttacks: 3
   projectile: {fileID: 862695047321393832, guid: f722f05d07330644d91c75efb46a6d37,
     type: 3}
-  projectileSpeed: 20
+  projectileSpeed: 0.5
   projectileUPSpeed: 1.5
   gunpivot: {fileID: 5479345050920022295}
   sightRange: 2
@@ -238,8 +238,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Size: {x: 1, y: 3.6082687, z: 1.7600093}
+  m_Center: {x: -1.7052332e-15, y: 1.3041344, z: 0.38000476}
 --- !u!4 &7394771532563286351 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -2413196377332254851, guid: 321a1e033d7ee03439b7a5f0b701e36b,

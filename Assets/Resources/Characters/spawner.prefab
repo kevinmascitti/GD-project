@@ -1,0 +1,70 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &175647347285890481
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5019942434850239748}
+  - component: {fileID: 3812463333637228162}
+  m_Layer: 0
+  m_Name: spawner
+  m_TagString: Spawner
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5019942434850239748
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 175647347285890481}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 712.7002, y: 964.036, z: 436.19098}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &3812463333637228162
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 175647347285890481}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d278e862cc6d46541a83724cde9a66e8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  spawnableObjects:
+  - {fileID: 7897149327893079946, guid: 86decf478d7f44de6ba6c659c541a018, type: 3}
+  - {fileID: 3809045795639903075, guid: d7ca263a9200ff245826591feba32a6a, type: 3}
+  - {fileID: 1624770139296793340, guid: 85994b222cb550d41aefd74071b5c0d9, type: 3}
+  - {fileID: 1172552055829091318, guid: 3d32ff33526df3b4ea06c209ca614fff, type: 3}
+  EnemyObjects:
+  - {fileID: 7897149327893079946, guid: 86decf478d7f44de6ba6c659c541a018, type: 3}
+  - {fileID: 3809045795639903075, guid: d7ca263a9200ff245826591feba32a6a, type: 3}
+  - {fileID: 1172552055829091318, guid: 3d32ff33526df3b4ea06c209ca614fff, type: 3}
+  - {fileID: 1624770139296793340, guid: 85994b222cb550d41aefd74071b5c0d9, type: 3}
+  spawnOrder: []
+  spawnProbability:
+  - 0.4
+  - 0.2
+  - 0.2
+  - 0.2
+  spawnedEnemies: []
+  plane: {fileID: 0}
+  spawnTime: 5
+  canSpawn: 0
+  spawnCount: 2
+  spawnLimit: 3
+  levelPlane: {fileID: 0}
+  isdeterministic: 0

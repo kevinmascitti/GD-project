@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class MeleeBaseState : State
 {
@@ -17,28 +18,31 @@ public class MeleeBaseState : State
     
     private GameObject HitEffectPrefab;
 
+    private PlayerController controls;
     // Input buffer Timer
-    private float AttackPressedTimer = 0;
+    protected float AttackPressedTimer = 0;
 
+    
+    
     public override void OnEnter(StateMachine _stateMachine)
     {
         base.OnEnter(_stateMachine);
         animator = GetComponent<Animator>(); 
     //    HitEffectPrefab = GetComponent<ComboCharacterWithDamage>().Hiteffect;
+    controls = new PlayerController();
+    controls.Gameplay.Attack.performed += ctx => ResetAttackPressedTimer();
+    controls.Enable();
+    
     }
-
+    void ResetAttackPressedTimer()
+    {
+        Debug.Log("Ho chiamato la resetAttack da joycon");
+        AttackPressedTimer = 2;
+    }
     public override void OnUpdate()
     {
         base.OnUpdate();
         AttackPressedTimer -= Time.deltaTime;
-        /*
-        if (animator.GetFloat("Weapon.Active") > 0f)
-        {
-           // Attack();
-        }
-        */
-        
-   
         
         if (Input.GetMouseButtonDown(0))
         {
@@ -49,9 +53,14 @@ public class MeleeBaseState : State
         {
             shouldCombo = true;
         }
+        else
+        {
+            shouldCombo = false;
+        }
         
     }
-    
+
+  
     public override void OnExit()
     {
         base.OnExit();

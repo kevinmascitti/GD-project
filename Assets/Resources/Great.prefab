@@ -383,7 +383,7 @@ MonoBehaviour:
   rotationAmplitude: 0
   rotationOscillations: 0
   courrentColor: {r: 0, g: 1, b: 0, a: 1}
-  outline: {fileID: 0}
+  outline: {fileID: 9009324165592460480}
 --- !u!54 &6753128158604427262
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -461,7 +461,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   outlineColor: {r: 0.18555383, g: 0.96981126, b: 0.07136336, a: 1}
-  outlineWidth: 2
+  outlineWidth: 4.2
   precomputeOutline: 0
   bakeKeys: []
   bakeValues: []

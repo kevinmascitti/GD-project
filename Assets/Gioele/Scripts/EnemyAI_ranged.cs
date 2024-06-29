@@ -66,7 +66,7 @@ public class EnemyAI : Enemy
         {
             agent.SetDestination(walkPoint);
             // evito che vada a seguire un punto per troppo tempo
-            StartCoroutine(NewTarget(3f));
+            StartCoroutine(NewTarget(4f));
         }
 
         Vector3 distanceToWalkPoint = transform.position - walkPoint;
@@ -118,18 +118,21 @@ public class EnemyAI : Enemy
        Player = GameObject.FindGameObjectWithTag("Player").transform;
        //float randomz = Random.Range(-walkPointRange, walkPointRange);
        float randomx;
+       float randomz;
        if (Random.value < 0.5f)
        {
            // Genera un valore casuale tra walkpoint range e -6
            randomx = Random.Range(-walkPointRange, -6f);
+           randomz = Random.Range(-walkPointRange, -4f);
        }
        else
        {
            // Genera un valore casuale tra walkpoint range e 8
            randomx = Random.Range(6f, walkPointRange);
+           randomz = Random.Range(-walkPointRange, -4f);
        }
        walkPoint = new Vector3(Player.transform.position.x + randomx, Player.transform.position.y,
-               Player.transform.position.z);
+               Player.transform.position.z+randomz);
       
        if (Physics.Raycast(walkPoint, -transform.up, 2f, ground))
        {
@@ -160,7 +163,7 @@ public class EnemyAI : Enemy
             if (sign == -1)
             {
                 GameObject rb = Instantiate(projectile, new Vector3(gunpivot.transform.position.x-1.5f,gunpivot.transform.position.y,gunpivot.transform.position.z+0.4f), Quaternion.identity);
-                rb.GetComponent<projectile>().sign = sign;
+                projectile.GetComponent<projectile>().speed = projectileSpeed;
                 // trovo lla direzine del player
                 Vector3 direction_player = Player.position - gunpivot.position;
                 rb.transform.forward = new Vector3(direction_player.x,direction_player.y+1.5f,direction_player.z);
@@ -170,7 +173,7 @@ public class EnemyAI : Enemy
             else
             {
                 GameObject rb = Instantiate(projectile, gunpivot.transform.position, Quaternion.identity);
-                rb.GetComponent<projectile>().sign = sign;
+                projectile.GetComponent<projectile>().speed = projectileSpeed;
                 // trovo lla direzine del player
                 Vector3 direction_player = Player.position - gunpivot.position;
                 rb.transform.forward = new Vector3(direction_player.x,direction_player.y+1.5f,direction_player.z);

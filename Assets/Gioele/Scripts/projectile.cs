@@ -7,12 +7,15 @@ public class projectile : MonoBehaviour
 {
     public int damage = 2;
     public float destroyTime = 5.0f;
-    public int sign;
+    private Vector3 direction_player;
+    public float speed;
     public void Start()
     {
+        speed = 1f;
         StartCoroutine(DestroyAfterDelay(destroyTime));
         transform.Rotate(0, 90, 0, Space.Self);
         //transform.forward = new Vector3(-1, 0, 0);
+        direction_player = GameObject.FindGameObjectWithTag("Player").transform.position - transform.position;
     }
 
     void OnTriggerEnter(Collider other)
@@ -21,10 +24,10 @@ public class projectile : MonoBehaviour
         {
             // il danno del projectile è damage e lo sottraggo alla vita del player
             // vado a diminuire la vita al player che viene colpito 
-            other.GetComponent<PlayerCharacter>().currentHP -= 5;
+            other.GetComponent<PlayerCharacter>().TakeDamage(damage);
+            Destroy(gameObject);
         }
-
-        Destroy(gameObject);
+        
     }
 
     private IEnumerator DestroyAfterDelay(float delay)
@@ -37,11 +40,8 @@ public class projectile : MonoBehaviour
 
     private void Update()
     {
-        // fino a che non collide
-        // sign mi da la direzione corretta di shooting 
+        // spara nella direzione del player
+        transform.position += new Vector3(direction_player.x,0,direction_player.z) * speed * Time.deltaTime;
         
-
-        transform.position += new Vector3(sign,0,0) * 3.5f * Time.deltaTime;
-        // devo inserire la rotazione
     }
 }

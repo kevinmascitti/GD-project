@@ -22,7 +22,7 @@ public class Enemy_AI_Melee : Enemy
     public float walkPointRange;
     private Quaternion initialRotation;
     // attacco
-    public float timeBetweenAttacks = 2f;
+    private float timeBetweenAttacks;
     public bool alreadyAttacked;
 
     public float damage;
@@ -35,6 +35,10 @@ public class Enemy_AI_Melee : Enemy
     [NonSerialized]public bool OnAttack;
     public Plane levelPlane;
     public Animator _animator;
+    private Vector3 forwardVector = new Vector3(-1, 0, 0);
+    private Vector3 forwardScaleVector = new Vector3(1, 1, 1);
+    private Vector3 backwardVector = new Vector3(1, 0, 0);
+    private Vector3 backwardScaleVector = new Vector3(-1, 1, 1);
     
     private void Awake()
     {
@@ -42,6 +46,7 @@ public class Enemy_AI_Melee : Enemy
         initialRotation = transform.rotation;
         agent = GetComponent<NavMeshAgent>();
         _animator = GetComponent<Animator>();
+        timeBetweenAttacks = 0.7f;// frame/framerate corretto
 
     }
     
@@ -96,11 +101,10 @@ public class Enemy_AI_Melee : Enemy
         //transform.LookAt(Player);
         if (!alreadyAttacked)
         {
+            alreadyAttacked = true;
             // voglio animazione di attacco 
-            Debug.Log("attaccoooooooo");
             _animator.SetBool("attack",true);
             // setto a true perche sto attaccando 
-            alreadyAttacked = true;
             Invoke(nameof(ResetAttack),timeBetweenAttacks);// cosi do la temporizzazione per gli attacchi
         }
     }
@@ -113,21 +117,21 @@ public class Enemy_AI_Melee : Enemy
 
     }
 
-    private void OnCollisionEnter(Collision collision)
-    {
-
-        if (collision.collider.CompareTag("Player"))
-        {
-            OnAttack = true;
-            Invoke("ChangeState", 1.2f);
-        }
-        if (collision.collider.CompareTag("Ground"))
-        {
-            //GetComponent<Rigidbody>().isKinematic = true;
-            grounded = true;
-        }
-        
-    }
+    // private void OnCollisionEnter(Collision collision)
+    // {
+    //
+    //     if (collision.collider.CompareTag("Player"))
+    //     {
+    //         OnAttack = true;
+    //         Invoke("ChangeState", 1.2f);
+    //     }
+    //     if (collision.collider.CompareTag("Ground"))
+    //     {
+    //         //GetComponent<Rigidbody>().isKinematic = true;
+    //         grounded = true;
+    //     }
+    //     
+    // }
    
     private void ChangeState()
     {
@@ -156,6 +160,21 @@ public class Enemy_AI_Melee : Enemy
     // Update is called once per frame
     void Update()
     {
+         if(Player.transform.position.x > this.transform.position.x){
+            //player davanti e enemy dietro
+            // Imposta i vettori forward per transform e gunpivot
+            transform.forward = forwardVector;
+            // Modifica la scala locale
+            transform.localScale = forwardScaleVector;
+            
+        }
+        else if (Player.transform.position.x < this.transform.position.x){
+            //player davanti e enemy dietro
+            // Imposta i vettori forward per transform e gunpivot
+            transform.forward = backwardVector;
+            // Modifica la scala locale
+            transform.localScale = backwardScaleVector;
+        }
         if (grounded)// solo se l'enemy è a terra
         {
             // reset rotation
@@ -194,7 +213,7 @@ public class Enemy_AI_Melee : Enemy
     {
         if (other.CompareTag("Player"))
         {
-            other.GetComponent<PlayerCharacter>().TakeDamage(0);
+            other.GetComponent<PlayerCharacter>().TakeDamage(atk);
         }
 
         

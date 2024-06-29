@@ -37,7 +37,7 @@ public class ButtonHoverEffect : MonoBehaviour, IPointerEnterHandler, IPointerEx
         if (isHovered)
         {
             // Apply rotation effect
-            float rotation = Mathf.Sin(Time.time * rotationSpeed) * rotationAmount;
+            float rotation = Mathf.Sin(Time.unscaledTime * rotationSpeed) * rotationAmount;
             transform.rotation = Quaternion.Euler(0, 0, rotation);
         }
     }
@@ -93,7 +93,7 @@ public class ButtonHoverEffect : MonoBehaviour, IPointerEnterHandler, IPointerEx
         while (elapsed < duration)
         {
             transform.localScale = Vector3.Lerp(initialScale, targetScale, elapsed / duration);
-            elapsed += Time.deltaTime;
+            elapsed += Time.unscaledDeltaTime;
             yield return null;
         }
 
@@ -108,7 +108,7 @@ public class ButtonHoverEffect : MonoBehaviour, IPointerEnterHandler, IPointerEx
         while (elapsed < duration)
         {
             transform.rotation = Quaternion.Lerp(initialRotation, targetRotation, elapsed / duration);
-            elapsed += Time.deltaTime;
+            elapsed += Time.unscaledDeltaTime;
             yield return null;
         }
 
