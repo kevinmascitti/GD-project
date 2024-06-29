@@ -250,8 +250,7 @@ public class RemoteController : MonoBehaviour
         if (Physics.Raycast(startPoint, direction, out hit, 2f))
         {
             // Se c'è una collisione, fai qualcosa con l'oggetto colpito
-            if (hit.collider.gameObject.CompareTag("enemy"))
-            {
+            if (hit.collider.gameObject.CompareTag("enemy") || hit.collider.gameObject.CompareTag("EnemyObj")){
                 // se ho colpito un enemy allora gli faccio un po di danno
                 // mantengo il time delta time ? non sono sicuro di questa cosa;
                 laserDamage += 0.1f*Time.deltaTime;

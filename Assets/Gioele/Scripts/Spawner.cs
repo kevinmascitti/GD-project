@@ -158,6 +158,10 @@ public class Spawner : MonoBehaviour
                 {
                     // aggiungo altezza
                     float addedEight = 0;
+                    if (selectedObject.tag.CompareTo("EnemyObj")==0)
+                    {
+                        addedEight = -5f;
+                    }
 
                     MeshRenderer planeRenderer = plane.GetComponent<MeshRenderer>();
                     Vector3 planeSize = planeRenderer.bounds.size;
@@ -210,7 +214,10 @@ public class Spawner : MonoBehaviour
                 if (selectedObject != null)
                 {
                     float addedEight = 0;
-                    
+                    if (selectedObject.tag.CompareTo("EnemyObj")==0)
+                    {
+                        addedEight = -5f;
+                    }
                     MeshRenderer planeRenderer = plane.GetComponent<MeshRenderer>();
                     Vector3 planeSize = planeRenderer.bounds.size;
                     //posizione casuale all'interno delle dimensioni del piano
