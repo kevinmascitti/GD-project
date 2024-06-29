@@ -815,6 +815,10 @@ PrefabInstance:
         type: 3}
       insertIndex: -1
       addedObject: {fileID: 7072010469048583293}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 2ba6f97fc0ac2fe409ec11d121577fa8,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 7359481562921649154}
     - targetCorrespondingSourceObject: {fileID: 6298610011326526923, guid: 2ba6f97fc0ac2fe409ec11d121577fa8,
         type: 3}
       insertIndex: -1
@@ -1281,6 +1285,21 @@ MonoBehaviour:
   enemyLayer:
     serializedVersion: 2
     m_Bits: 1024
+--- !u!114 &7359481562921649154
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3437633161199904590}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3147d8e81034f47f485270222852e0a6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  player: {fileID: 3437633161199904590}
+  totalFlickerDuration: 1
+  flickerInterval: 0.2
 --- !u!1 &7237955793452121194 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 5118312966169618037, guid: 2ba6f97fc0ac2fe409ec11d121577fa8,
