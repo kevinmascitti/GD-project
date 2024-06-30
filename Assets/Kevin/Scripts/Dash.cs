@@ -1,7 +1,9 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using Unity.VisualScripting;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 
 public class Dash : MonoBehaviour
@@ -26,7 +28,15 @@ public class Dash : MonoBehaviour
     {
         if(VFX)
             VFX.SetActive(true);
-        StartCoroutine(DashNow());
+        bool isPlayerOnBorder = false;
+        RaycastHit[] checkWallsList = Physics.SphereCastAll(new Ray(), 3f, distance, LayerMask.NameToLayer("Wall"));
+        foreach (RaycastHit hit in checkWallsList)
+        {
+            if (hit.transform.gameObject.layer == LayerMask.NameToLayer("Wall"))
+                isPlayerOnBorder = true;
+        }
+        if(!isPlayerOnBorder)
+            StartCoroutine(DashNow());
     }
 
     IEnumerator DashNow()
