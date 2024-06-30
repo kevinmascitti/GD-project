@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18386948, g: 0.22901604, b: 0.30311152, a: 1}
+  m_IndirectSpecularColor: {r: 0.18386978, g: 0.2290168, b: 0.30311278, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -2088,6 +2088,11 @@ PrefabInstance:
       propertyPath: distanceFromLevelLimit
       value: 4
       objectReference: {fileID: 0}
+    - target: {fileID: 1687306021900477079, guid: 9adc1987ea14359428136b91cfe4ee34,
+        type: 3}
+      propertyPath: m_RenderPostProcessing
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1840078293411070424, guid: 9adc1987ea14359428136b91cfe4ee34,
         type: 3}
       propertyPath: far clip plane
@@ -2106,12 +2111,12 @@ PrefabInstance:
     - target: {fileID: 7383448636936296328, guid: 9adc1987ea14359428136b91cfe4ee34,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 196
+      value: 160.9
       objectReference: {fileID: 0}
     - target: {fileID: 7383448636936296328, guid: 9adc1987ea14359428136b91cfe4ee34,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 60
+      value: 22.7
       objectReference: {fileID: 0}
     - target: {fileID: 7383448636936296328, guid: 9adc1987ea14359428136b91cfe4ee34,
         type: 3}
@@ -2459,6 +2464,55 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0ea1025426b304be098f0d3194de17b0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &1393486769
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1393486771}
+  - component: {fileID: 1393486770}
+  m_Layer: 0
+  m_Name: RenderingVolume
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1393486770
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1393486769}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 172515602e62fb746b5d573b38a5fe58, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_IsGlobal: 1
+  priority: 0
+  blendDistance: 0
+  weight: 1
+  sharedProfile: {fileID: 11400000, guid: 2ace45f2c5a661d4f8b9eb0c07d45bfd, type: 2}
+--- !u!4 &1393486771
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1393486769}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 16.775944, y: 23.377018, z: 88.90401}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &1458441609 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8499191450984056692, guid: 86decf478d7f44de6ba6c659c541a018,
@@ -5374,3 +5428,4 @@ SceneRoots:
   - {fileID: 1180815341}
   - {fileID: 901334816}
   - {fileID: 1534987047}
+  - {fileID: 1393486771}
