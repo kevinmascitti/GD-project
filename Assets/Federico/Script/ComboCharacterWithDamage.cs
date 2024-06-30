@@ -18,7 +18,8 @@ public class ComboCharacterWithDamage : MonoBehaviour
     public string boneName; // Nome dell'osso che vuoi trovare
     public GameObject handBone;
     private PlayerController controls;
-    public static EventHandler OnDashExecuted;
+    public static EventHandler OnDashRequested;
+    public static EventHandler<float> OnDashLaunched;
 
     private void OnEnable()
     {
@@ -59,6 +60,7 @@ public class ComboCharacterWithDamage : MonoBehaviour
             Debug.Log("Osso non trovato.");
         }
 
+        Dash.OnCheckedDash += LaunchDash;
         Dash.OnDashEnded += ValidateMovingNow;
     }
 
@@ -75,9 +77,7 @@ public class ComboCharacterWithDamage : MonoBehaviour
 
             if (Input.GetKeyDown(KeyCode.O) && meleeStateMachine.CurrentState.GetType() == typeof(IdleCombatState))
             {
-                GetComponent<Animator>().SetBool("InvalidateMoving", true);
-                meleeStateMachine.SetNextState(new DashState());
-                OnDashExecuted?.Invoke(this, EventArgs.Empty);
+                OnDashRequested?.Invoke(this, EventArgs.Empty);
             }
 
             if (Input.GetKeyDown(KeyCode.K) && meleeStateMachine.CurrentState.GetType() == typeof(IdleCombatState))
@@ -103,7 +103,7 @@ public class ComboCharacterWithDamage : MonoBehaviour
     {
         StartCoroutine(ValidateMoving(0));
     }
-    
+
     IEnumerator ValidateMoving(float validationTime)
     { 
        yield return new WaitForSeconds(validationTime);
@@ -116,6 +116,13 @@ public class ComboCharacterWithDamage : MonoBehaviour
         yield return new WaitForSeconds(0.1f);
 
         GameObject.Destroy(hitEffectPrefabTemp);
+    }
+
+    private void LaunchDash(object sender, float distance)
+    {
+        GetComponent<Animator>().SetBool("InvalidateMoving", true);
+        meleeStateMachine.SetNextState(new DashState());
+        OnDashLaunched?.Invoke(this, distance);
     }
 
 }
