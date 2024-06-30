@@ -19,7 +19,7 @@ public class ComboCharacterWithDamage : MonoBehaviour
     public GameObject handBone;
     private PlayerController controls;
     public static EventHandler OnDashRequested;
-    public static EventHandler OnDashLaunched;
+    public static EventHandler<float> OnDashLaunched;
 
     private void OnEnable()
     {
@@ -118,11 +118,11 @@ public class ComboCharacterWithDamage : MonoBehaviour
         GameObject.Destroy(hitEffectPrefabTemp);
     }
 
-    private void LaunchDash(object sender, EventArgs args)
+    private void LaunchDash(object sender, float distance)
     {
         GetComponent<Animator>().SetBool("InvalidateMoving", true);
         meleeStateMachine.SetNextState(new DashState());
-        OnDashLaunched?.Invoke(this, EventArgs.Empty);
+        OnDashLaunched?.Invoke(this, distance);
     }
 
 }

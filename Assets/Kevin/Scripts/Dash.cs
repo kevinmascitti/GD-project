@@ -16,7 +16,7 @@ public class Dash : MonoBehaviour
     [SerializeField] private GameObject VFX;
 
     public static EventHandler<EnemyCollisionArgs> OnAttackLended;
-    public static EventHandler OnCheckedDash;
+    public static EventHandler<float> OnCheckedDash;
 
     public static EventHandler OnDashEnded;
     
@@ -29,32 +29,43 @@ public class Dash : MonoBehaviour
     public void CheckDash(object sender, EventArgs args)
     {
         bool isPlayerOnBorder = false;
-        RaycastHit[] checkWallsList = Physics.RaycastAll(transform.position, Vector3.right, distance);
+        float distanceFromWall = 0;
+        RaycastHit[] checkWallsList;
+        if(GetComponent<SimpleThirdPersonController>().isForward)
+            checkWallsList = Physics.RaycastAll(transform.position, Vector3.left, distance);
+        else
+            checkWallsList = Physics.RaycastAll(transform.position, Vector3.right, distance);
+        
         foreach (RaycastHit hit in checkWallsList)
         {
             if (hit.transform.gameObject.layer == LayerMask.NameToLayer("Wall"))
             {
                 isPlayerOnBorder = true;
+                distanceFromWall = Math.Abs(hit.transform.position.x - transform.position.x);
                 break;
             }
         }
         if (!isPlayerOnBorder)
-            OnCheckedDash?.Invoke(this, EventArgs.Empty);
+            OnCheckedDash?.Invoke(this, distance);
+        else if (isPlayerOnBorder && distanceFromWall - 1f > 0)
+            OnCheckedDash?.Invoke(this, distanceFromWall - 1f);
+        else if (isPlayerOnBorder && distanceFromWall - 1f <= 0)
+            OnCheckedDash?.Invoke(this, 0);
     }
 
-    public void ExecuteDash(object sender, EventArgs args)
+    public void ExecuteDash(object sender, float distance)
     {
         if(VFX)
             VFX.SetActive(true);
-        StartCoroutine(DashNow());
+        StartCoroutine(DashNow(distance));
     }
 
-    IEnumerator DashNow()
+    IEnumerator DashNow(float distanceVar)
     {
         yield return new WaitForSeconds(dashPreparationTime);
         float elapsedTime = 0f;
-        Vector3 newPosition = transform.position + transform.forward * distance;
-        RaycastHit[] hits = Physics.SphereCastAll(transform.position, damageRadius, transform.forward, distance, GetComponent<AntiOverlap>().enemyLayer);
+        Vector3 newPosition = transform.position + transform.forward * distanceVar;
+        RaycastHit[] hits = Physics.SphereCastAll(transform.position, damageRadius, transform.forward, distanceVar, GetComponent<AntiOverlap>().enemyLayer);
 
         foreach (RaycastHit hit in hits)
         {
