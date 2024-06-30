@@ -17,7 +17,6 @@ public class Enemy : Character
         // TO DO animazione e morte
         OnEnemyDeath?.Invoke(this,EventArgs.Empty);
         // agigungo la kill al player
-        GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerCharacter>().enemy_killed++;
         Destroy(gameObject);
     }
 

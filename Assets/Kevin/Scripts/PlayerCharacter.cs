@@ -17,7 +17,6 @@ public class PlayerCharacter : Character
     public float def_increase_STAMINA = 5;
     public int MAX_LIFE = 4;
     public int def_life = 4;
-    public int enemy_killed = 0;
     [NonSerialized] public bool isInputEnabled = false;
     public bool isInvincible; // player invincibile quando riceve danno
     public Slider sliderHP;
@@ -149,14 +148,6 @@ public class PlayerCharacter : Character
     void Update()
     {
         base.Update();
-        if (enemy_killed == GameObject.FindGameObjectWithTag("Spawner").GetComponent<Spawner>().spawnLimit)
-        {
-            GameObject.FindGameObjectWithTag("Spawner").GetComponent<Spawner>().OpenExit();
-            //OnEndRoom?.Invoke(this,new RoomArgs(on));
-            enemy_killed = 0;
-            // questa cosa non so se sia giusta :(
-
-        }
 
         if (isInputEnabled)
         {
@@ -272,8 +263,8 @@ public class PlayerCharacter : Character
 
     public override void Die()
     {
-        OnEndRoom?.Invoke(this, new RoomArgs(currentRoom));
-        OnEndLevel?.Invoke(this, new RoomManagerArgs(currentLevel));
+        // OnEndRoom?.Invoke(this, new RoomArgs(currentRoom));
+        OnEndLevel?.Invoke(this, new RoomManagerArgs(currentLevel, currentRoom));
 
         isInputEnabled = false;
 
@@ -338,9 +329,9 @@ public class PlayerCharacter : Character
         }
 
         currentLevel = args;
-        OnStartLevel?.Invoke(this, new RoomManagerArgs(currentLevel));
         currentRoom = currentLevel.firstRoom;
-        OnStartRoom?.Invoke(this, new RoomArgs(currentRoom));
+        OnStartLevel?.Invoke(this, new RoomManagerArgs(currentLevel, currentRoom));
+        // OnStartRoom?.Invoke(this, new RoomArgs(currentRoom));
         isInvincible = false;
         dieAnimation = false;
         
@@ -351,8 +342,8 @@ public class PlayerCharacter : Character
 
     private void RequestNewLevel(object sender, EventArgs args)
     {
-        OnEndRoom?.Invoke(this, new RoomArgs(currentRoom));
-        OnEndLevel?.Invoke(this, new RoomManagerArgs(currentLevel));
+        // OnEndRoom?.Invoke(this, new RoomArgs(currentRoom));
+        OnEndLevel?.Invoke(this, new RoomManagerArgs(currentLevel, currentRoom));
         isInputEnabled = false;
         isInvincible = true;
         OnRequestLevel?.Invoke(this, currentLevel);
@@ -360,17 +351,16 @@ public class PlayerCharacter : Character
 
     public void GameOver()
     {
-        OnEndRoom?.Invoke(this, new RoomArgs(currentRoom));
-        OnEndLevel?.Invoke(this, new RoomManagerArgs(currentLevel));
+        // OnEndRoom?.Invoke(this, new RoomArgs(currentRoom));
+        OnEndLevel?.Invoke(this, new RoomManagerArgs(currentLevel, currentRoom));
         isInputEnabled = false;
         OnGameOver?.Invoke(this, EventArgs.Empty);
     }
     
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.layer == LayerMask.NameToLayer("Wall") && !currentRoom.isLocked)
+        if (collision.gameObject.layer == LayerMask.NameToLayer("ChangeLevel") && !currentRoom.isLocked)
         {
-            OnEndRoom?.Invoke(this, new RoomArgs(currentRoom));
             OnNextRoom?.Invoke(this, new RoomArgs(currentRoom));
             
             GetComponent<Rigidbody>().useGravity = false;
@@ -378,6 +368,7 @@ public class PlayerCharacter : Character
 
             if (currentRoom.nextRoom.level == currentLevel) // CAMBIO STANZA
             {
+                OnEndRoom?.Invoke(this, new RoomArgs(currentRoom));
                 gameObject.GetComponent<LerpAnimation>().StartAnimation(transform.position, currentRoom.nextRoom.spawnPoint);
                 camera.GetComponent<LerpAnimation>().StartAnimation(camera.transform.position, currentRoom.nextRoom.cameraPosition);
                 currentRoom = currentRoom.nextRoom;
@@ -385,16 +376,21 @@ public class PlayerCharacter : Character
             else // CAMBIO LIVELLO
             {
                 // VFX o animazione cambio livello
+                OnEndRoom?.Invoke(this, new RoomArgs(currentRoom));
                 gameObject.transform.position = currentRoom.nextRoom.spawnPoint;
                 camera.transform.position = currentRoom.nextRoom.cameraPosition;
                 currentRoom = currentRoom.nextRoom;
-                NewLevel();
+                
+                OnStartLevel?.Invoke(this, new RoomManagerArgs(currentRoom.level, currentRoom));
+        
+                GetComponent<Rigidbody>().useGravity = true;
+                GetComponent<Rigidbody>().isKinematic = false;
             }
             
             if (currentRoom.level != currentLevel)
             {
                 currentLevel = currentRoom.level;
-                OnEndLevel?.Invoke(this, new RoomManagerArgs(currentLevel));
+                OnEndLevel?.Invoke(this, new RoomManagerArgs(currentLevel, currentRoom));
             }
         }
         else if (collision.gameObject.layer == LayerMask.NameToLayer("DeathGround"))
@@ -437,34 +433,19 @@ public class PlayerCharacter : Character
         
         transform.position = currentRoom.spawnPoint;
         
-        OnStartRoom?.Invoke(this, new RoomArgs(currentRoom));
-        OnStartLevel?.Invoke(this, new RoomManagerArgs(currentLevel));
+        // OnStartRoom?.Invoke(this, new RoomArgs(currentRoom));
+        OnStartLevel?.Invoke(this, new RoomManagerArgs(currentLevel, currentRoom));
     }
 
     private void EndPlayerAnimation(object sender, AnimationArgs args)
     {
         if (args.Obj == gameObject)
         {
-            NewRoom();
-        }
-    }
-
-    private void NewLevel()
-    {
-        OnStartLevel?.Invoke(this, new RoomManagerArgs(currentRoom.level));
-        Debug.Log("NEW LEVEL");
-        
-        NewRoom();
-    }
-
-    private void NewRoom()
-    {
-        OnStartRoom?.Invoke(this, new RoomArgs(currentRoom));
-        Debug.Log("NEW ROOM");
-        enemy_killed = 0;
+            OnStartRoom?.Invoke(this, new RoomArgs(currentRoom));
             
-        GetComponent<Rigidbody>().useGravity = true;
-        GetComponent<Rigidbody>().isKinematic = false;
+            GetComponent<Rigidbody>().useGravity = true;
+            GetComponent<Rigidbody>().isKinematic = false;
+        }
     }
 
     private void AddGrabbableInRange(object sender, GrabbableArgs args)
@@ -602,12 +583,14 @@ public class RoomArgs : EventArgs
 
 public class RoomManagerArgs : EventArgs
 {
-    public RoomManagerArgs(RoomManager a)
+    public RoomManagerArgs(RoomManager a, Room b)
     {
         level = a;
+        room = b;
     }
 
     public RoomManager level;
+    public Room room;
 }
 
 public class LevelManagerArgs : EventArgs
