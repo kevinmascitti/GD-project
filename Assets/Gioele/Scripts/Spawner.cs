@@ -19,8 +19,8 @@ public class Spawner : MonoBehaviour
     [SerializeField] private int spawnCount = 0;
     [SerializeField] public int spawnLimit;
     [SerializeField] public GameObject levelPlane;
-    public static EventHandler OnDoorOpen;
     [SerializeField] public bool isdeterministic;
+
     void Start()
     {
         //somma delle probabilità totali
@@ -33,6 +33,9 @@ public class Spawner : MonoBehaviour
         //setto i nemici del primo livello
         ChangePrefabs(0);
 
+        PlayerCharacter.OnEndRoom += OpenExit;
+        LevelManager.OnEndRoom += OpenExit;
+        Room.OnEndRoom += OpenExit;
     }
 
     IEnumerator CloseExit(float delay)
@@ -72,12 +75,10 @@ public class Spawner : MonoBehaviour
             {
                 animator.SetBool("open",false);
             }
-            
         }
-        
-        
     }
-    public void OpenExit()
+    
+    public void OpenExit(object sender, EventArgs args)
     {
         // attivare animazione
         GameObject[] exitObjects = GameObject.FindGameObjectsWithTag("Exit");

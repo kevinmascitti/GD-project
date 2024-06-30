@@ -50,7 +50,11 @@ public class EntertainmentBar : MonoBehaviour
         EnemyCollision.OnAttackLended += AttackPerfomed;
         PlayerCharacter.OnStartRoom += ResetEntertainmentBar;
         PlayerCharacter.OnStartRoom += StartBar;
+        LevelManager.OnStartRoom += ResetEntertainmentBar;
+        LevelManager.OnStartRoom += StartBar;
         PlayerCharacter.OnEndRoom += StopBar;
+        LevelManager.OnEndRoom += StopBar;
+        Room.OnEndRoom += StopBar;
         PlayerCharacter.OnNextRoom += ResetEntertainmentBar;
     }
 

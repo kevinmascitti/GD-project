@@ -2496,7 +2496,7 @@ PrefabInstance:
     - target: {fileID: 240327080455090251, guid: a629d78297fc1a84fa173b1a061b3e09,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 3095.32
+      value: 3094.28
       objectReference: {fileID: 0}
     - target: {fileID: 276659268539993897, guid: a629d78297fc1a84fa173b1a061b3e09,
         type: 3}
@@ -2831,11 +2831,6 @@ PrefabInstance:
       propertyPath: m_TagString
       value: Untagged
       objectReference: {fileID: 0}
-    - target: {fileID: 4609623683449241078, guid: a629d78297fc1a84fa173b1a061b3e09,
-        type: 3}
-      propertyPath: m_Layer
-      value: 11
-      objectReference: {fileID: 0}
     - target: {fileID: 4704528152549924640, guid: a629d78297fc1a84fa173b1a061b3e09,
         type: 3}
       propertyPath: m_TagString
@@ -2945,11 +2940,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_ApplyRootMotion
       value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6216202756939900830, guid: a629d78297fc1a84fa173b1a061b3e09,
-        type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 2586.5
       objectReference: {fileID: 0}
     - target: {fileID: 6236764719839266083, guid: a629d78297fc1a84fa173b1a061b3e09,
         type: 3}
@@ -3158,6 +3148,11 @@ PrefabInstance:
       propertyPath: m_LocalScale.z
       value: 1.149188
       objectReference: {fileID: 0}
+    - target: {fileID: 7484135043098030872, guid: a629d78297fc1a84fa173b1a061b3e09,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 2940.88
+      objectReference: {fileID: 0}
     - target: {fileID: 7559394988092222327, guid: a629d78297fc1a84fa173b1a061b3e09,
         type: 3}
       propertyPath: m_NavMeshData
@@ -3260,6 +3255,11 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 23800000, guid: 4473801394ad04dac95badc78707a4bf,
         type: 2}
+    - target: {fileID: 9210921522955485819, guid: a629d78297fc1a84fa173b1a061b3e09,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 2522.28
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects:
     - {fileID: 1106347862795893536, guid: a629d78297fc1a84fa173b1a061b3e09, type: 3}
@@ -3288,6 +3288,9 @@ PrefabInstance:
     - {fileID: 371969868523464022, guid: a629d78297fc1a84fa173b1a061b3e09, type: 3}
     - {fileID: 749526705732806379, guid: a629d78297fc1a84fa173b1a061b3e09, type: 3}
     - {fileID: 3900744458238328225, guid: a629d78297fc1a84fa173b1a061b3e09, type: 3}
+    - {fileID: 4224148784148062781, guid: a629d78297fc1a84fa173b1a061b3e09, type: 3}
+    - {fileID: 7703722847400782371, guid: a629d78297fc1a84fa173b1a061b3e09, type: 3}
+    - {fileID: 7310480817586271607, guid: a629d78297fc1a84fa173b1a061b3e09, type: 3}
     m_AddedGameObjects:
     - targetCorrespondingSourceObject: {fileID: 4179294270718789701, guid: a629d78297fc1a84fa173b1a061b3e09,
         type: 3}
