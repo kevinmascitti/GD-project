@@ -32,8 +32,6 @@ public class Spawner : MonoBehaviour
 
         //setto i nemici del primo livello
         ChangePrefabs(0);
-        //PlayerCharacter.OnEndRoom += OpenExit;
-        //PlayerCharacter.OnStartRoom += CloseExit;
 
     }
 
