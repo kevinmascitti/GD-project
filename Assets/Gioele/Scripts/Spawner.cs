@@ -160,7 +160,7 @@ public class Spawner : MonoBehaviour
                     float addedEight = 0;
                     if (selectedObject.tag.CompareTo("EnemyObj")==0)
                     {
-                        addedEight = -5f;
+                        addedEight = -4.7f;
                     }
 
                     MeshRenderer planeRenderer = plane.GetComponent<MeshRenderer>();
@@ -216,7 +216,7 @@ public class Spawner : MonoBehaviour
                     float addedEight = 0;
                     if (selectedObject.tag.CompareTo("EnemyObj")==0)
                     {
-                        addedEight = -5f;
+                        addedEight = -4.7f;
                     }
                     MeshRenderer planeRenderer = plane.GetComponent<MeshRenderer>();
                     Vector3 planeSize = planeRenderer.bounds.size;

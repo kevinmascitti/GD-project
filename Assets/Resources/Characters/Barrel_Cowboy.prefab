@@ -466,7 +466,7 @@ MonoBehaviour:
   _viewAngle: 360
   bullet: {fileID: 862695047321393832, guid: f722f05d07330644d91c75efb46a6d37, type: 3}
   _shootFrequency: 3
-  atk: 0
+  atk: 5
 --- !u!54 &3894470055014328496
 Rigidbody:
   m_ObjectHideFlags: 0
