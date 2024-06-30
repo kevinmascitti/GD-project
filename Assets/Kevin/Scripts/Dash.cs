@@ -10,8 +10,10 @@ public class Dash : MonoBehaviour
     [SerializeField] private float dashDuration = 1f;
     [SerializeField] private float distance = 3f;
     [SerializeField] private float damageRadius = 1f;
-    [SerializeField] private float damage = 5;
+    [SerializeField] private float damage = 1;
     [SerializeField] private GameObject VFX;
+
+    public static EventHandler<EnemyCollisionArgs> OnAttackLended;
 
     public static EventHandler OnDashEnded;
     
@@ -39,6 +41,7 @@ public class Dash : MonoBehaviour
             if (hit.collider.GetComponent<Enemy>())
             {
                 hit.collider.GetComponent<Enemy>().TakeDamage(damage);
+                OnAttackLended?.Invoke(this, new EnemyCollisionArgs(1));
             }
         }
 
