@@ -32,7 +32,9 @@ public class PlayerDamageReceived : MonoBehaviour
     {
         if (!isFlickering)
         {
-           Debug.Log("coroutine chiamata");
+          
+            Debug.Log("coroutine chiamata");
+            player.GetComponent<PlayerCharacter>().TakeDamage(5);
             StartCoroutine(DisappearAndReappear());
         }
         else
