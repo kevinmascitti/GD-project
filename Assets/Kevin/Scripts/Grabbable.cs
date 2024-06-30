@@ -55,6 +55,8 @@ public class Grabbable : MonoBehaviour
     public static EventHandler<GrabbableArgs> OnThrow;
     public static EventHandler<GrabbableArgs> OnUse;
 
+    public static EventHandler<EnemyCollisionArgs> OnAttackLended;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -268,6 +270,7 @@ public class Grabbable : MonoBehaviour
         {
             other.GetComponent<Enemy>().TakeDamage(atk);
             // VFX
+            OnAttackLended?.Invoke(this, new EnemyCollisionArgs(1));
             Destroy(gameObject);
         }
     }

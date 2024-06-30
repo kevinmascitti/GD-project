@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -21,6 +22,7 @@ public class ShootingTower : MonoBehaviour
     private bool _targetInSight = false;
     private bool _isShooting = false;
     private bool grounded=true;
+    public int atk;
 
     void Start()
     {
@@ -77,6 +79,15 @@ public class ShootingTower : MonoBehaviour
         
     }
 
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Ground"))
+        {
+            GetComponent<Rigidbody>().useGravity = false;
+            grounded = true;
+        }
+    }
+
     private void Shoot()
     {
         /*
@@ -91,6 +102,8 @@ public class ShootingTower : MonoBehaviour
             Vector3 direction_player = _target.transform.position - _gunPivot.position;
             GetComponent<Animator>().SetBool("shot", true);
             GameObject rb = Instantiate(bullet, _gunPivot.position, Quaternion.identity);
+            //do valore di attacco corretto 
+            bullet.GetComponent<projectile>().damage = atk;
             rb.transform.forward = new Vector3(direction_player.x, direction_player.y + 1.5f, direction_player.z);
             // trovo lla direzine del player
         }
@@ -99,6 +112,8 @@ public class ShootingTower : MonoBehaviour
             Vector3 direction_player = _target.transform.position - _gunPivot.position;
             GetComponent<Animator>().SetBool("shot", true);
             GameObject rb = Instantiate(bullet, _gunPivot.position, Quaternion.identity);
+            //do valore di attacco corretto 
+            bullet.GetComponent<projectile>().damage = atk;
             rb.transform.forward = new Vector3(direction_player.x, direction_player.y + 1.5f, direction_player.z);
         }
 
