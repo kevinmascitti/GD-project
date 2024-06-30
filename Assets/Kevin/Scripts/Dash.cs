@@ -16,27 +16,37 @@ public class Dash : MonoBehaviour
     [SerializeField] private GameObject VFX;
 
     public static EventHandler<EnemyCollisionArgs> OnAttackLended;
+    public static EventHandler OnCheckedDash;
 
     public static EventHandler OnDashEnded;
     
     void Start()
     {
-        ComboCharacterWithDamage.OnDashExecuted += ExecuteDash;
+        ComboCharacterWithDamage.OnDashRequested += CheckDash;
+        ComboCharacterWithDamage.OnDashLaunched += ExecuteDash;
+    }
+
+    public void CheckDash(object sender, EventArgs args)
+    {
+        bool isPlayerOnBorder = false;
+        RaycastHit[] checkWallsList = Physics.RaycastAll(transform.position, Vector3.right, distance);
+        foreach (RaycastHit hit in checkWallsList)
+        {
+            if (hit.transform.gameObject.layer == LayerMask.NameToLayer("Wall"))
+            {
+                isPlayerOnBorder = true;
+                break;
+            }
+        }
+        if (!isPlayerOnBorder)
+            OnCheckedDash?.Invoke(this, EventArgs.Empty);
     }
 
     public void ExecuteDash(object sender, EventArgs args)
     {
         if(VFX)
             VFX.SetActive(true);
-        bool isPlayerOnBorder = false;
-        RaycastHit[] checkWallsList = Physics.SphereCastAll(new Ray(), 3f, distance, LayerMask.NameToLayer("Wall"));
-        foreach (RaycastHit hit in checkWallsList)
-        {
-            if (hit.transform.gameObject.layer == LayerMask.NameToLayer("Wall"))
-                isPlayerOnBorder = true;
-        }
-        if(!isPlayerOnBorder)
-            StartCoroutine(DashNow());
+        StartCoroutine(DashNow());
     }
 
     IEnumerator DashNow()
