@@ -55,14 +55,12 @@ public class RemoteController : MonoBehaviour
         if(controllerUI)
             controllerUI.SetActive(false);
         isUIVisible = false;
-        /*
         UnlockChPlus = true;
         UnlockChminus = true;
         UnlockLaser = true;
         UnlockPause = true;
         UnlockVolumeMinus = true;
         UnlockVolumePlus = true;
-        */
         PlayerCharacter.OnStaminaFull += SetStaminaFull;
     }
 
@@ -178,7 +176,7 @@ public class RemoteController : MonoBehaviour
         {
             RechargeButtonVolumePlusEnabled = true;
             // moltiplicatore di combo
-            moltiplicatoreCombo = 1.5f;
+            moltiplicatoreCombo = 2f;
             StartTimer(timerDuration, StopVolumePlus);
             StartTimer(2*timerDuration,RechargeVolumePlus);
         }
@@ -252,8 +250,7 @@ public class RemoteController : MonoBehaviour
         if (Physics.Raycast(startPoint, direction, out hit, 2f))
         {
             // Se c'è una collisione, fai qualcosa con l'oggetto colpito
-            if (hit.collider.gameObject.CompareTag("enemy"))
-            {
+            if (hit.collider.gameObject.CompareTag("enemy") || hit.collider.gameObject.CompareTag("EnemyObj")){
                 // se ho colpito un enemy allora gli faccio un po di danno
                 // mantengo il time delta time ? non sono sicuro di questa cosa;
                 laserDamage += 0.1f*Time.deltaTime;
@@ -301,19 +298,25 @@ public class RemoteController : MonoBehaviour
             {
                 if (obj.GetComponent<Enemy_AI_Melee>())
                 {
-                    meleeTransform = obj.transform.localScale;
-                    obj.transform.localScale *= 0.7f;
+                    var localScale = obj.transform.localScale;
+                    meleeTransform = localScale;
+                    localScale *= 0.7f;
+                    obj.transform.localScale = localScale;
                 }
 
-                if (obj.GetComponent<Enemy_AI_LongRanged>()){
-                    longRangedTransform = obj.transform.localScale;
-                    obj.transform.localScale *= 0.7f;
+                if (obj.GetComponent<ShootingTower>()){
+                    var localScale = obj.transform.localScale;
+                    longRangedTransform = localScale;
+                    localScale *= 0.7f;
+                    obj.transform.localScale = localScale;
                 }
 
                 if (obj.GetComponent<EnemyAI>())
                 {
-                    rangedTransform = obj.transform.localScale;
-                    obj.transform.localScale *= 0.7f;
+                    var localScale = obj.transform.localScale;
+                    rangedTransform = localScale;
+                    localScale *= 0.7f;
+                    obj.transform.localScale = localScale;
                 }
 
                 
@@ -342,7 +345,7 @@ public class RemoteController : MonoBehaviour
                 // torna alla local scale orginale
             }
 
-            if (obj.GetComponent<Enemy_AI_LongRanged>()){
+            if (obj.GetComponent<ShootingTower>()){
                 obj.transform.localScale=longRangedTransform ;
             }
 
@@ -370,12 +373,24 @@ public class RemoteController : MonoBehaviour
             // Disattiva il componente NavMeshAgent su ciascun oggetto trovato
             foreach (GameObject obj in objectsInLayer)
             {
-                if(obj.GetComponent<Enemy_AI_Melee>())
+                if (obj.GetComponent<Enemy_AI_Melee>())
+                {
                     obj.GetComponent<Enemy_AI_Melee>().enabled = false;
-                if(obj.GetComponent<Enemy_AI_LongRanged>())
-                    obj.GetComponent<Enemy_AI_LongRanged>().enabled = false;
-                if(obj.GetComponent<EnemyAI>())
+                    obj.GetComponent<Animator>().enabled = false;
+                }
+
+                if (obj.GetComponent<ShootingTower>())
+                {
+                    obj.GetComponent<ShootingTower>().enabled = false;
+                    obj.GetComponent<Animator>().enabled = false;
+                }
+
+                if (obj.GetComponent<EnemyAI>())
+                {
                     obj.GetComponent<EnemyAI>().enabled = false;
+                    obj.GetComponent<Animator>().enabled = false;
+                }
+
                 NavMeshAgent agent = obj.GetComponent<NavMeshAgent>();
                 if (agent != null)
                 {
@@ -397,12 +412,23 @@ public class RemoteController : MonoBehaviour
         // Disattiva il componente NavMeshAgent su ciascun oggetto trovato
         foreach (GameObject obj in objectsInLayer)
         {
-            if(obj.GetComponent<Enemy_AI_Melee>())
+            if (obj.GetComponent<Enemy_AI_Melee>())
+            {
                 obj.GetComponent<Enemy_AI_Melee>().enabled = true;
-            if(obj.GetComponent<Enemy_AI_LongRanged>())
-                obj.GetComponent<Enemy_AI_LongRanged>().enabled = true;
-            if(obj.GetComponent<EnemyAI>())
+                obj.GetComponent<Animator>().enabled = true;
+            }
+
+            if (obj.GetComponent<ShootingTower>())
+            {
+                obj.GetComponent<ShootingTower>().enabled = true;
+                obj.GetComponent<Animator>().enabled = true;
+            }
+
+            if (obj.GetComponent<EnemyAI>())
+            {
                 obj.GetComponent<EnemyAI>().enabled = true;
+                obj.GetComponent<Animator>().enabled = true;
+            }
             NavMeshAgent agent = obj.GetComponent<NavMeshAgent>();
             if (agent != null)
             {

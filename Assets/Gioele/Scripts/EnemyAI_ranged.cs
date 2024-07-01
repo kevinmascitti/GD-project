@@ -163,6 +163,8 @@ public class EnemyAI : Enemy
             if (sign == -1)
             {
                 GameObject rb = Instantiate(projectile, new Vector3(gunpivot.transform.position.x-1.5f,gunpivot.transform.position.y,gunpivot.transform.position.z+0.4f), Quaternion.identity);
+                //do valore di attacco corretto 
+                projectile.GetComponent<projectile>().damage = atk;
                 projectile.GetComponent<projectile>().speed = projectileSpeed;
                 // trovo lla direzine del player
                 Vector3 direction_player = Player.position - gunpivot.position;
@@ -173,6 +175,8 @@ public class EnemyAI : Enemy
             else
             {
                 GameObject rb = Instantiate(projectile, gunpivot.transform.position, Quaternion.identity);
+                //do valore di attacco corretto 
+                projectile.GetComponent<projectile>().damage = atk;
                 projectile.GetComponent<projectile>().speed = projectileSpeed;
                 // trovo lla direzine del player
                 Vector3 direction_player = Player.position - gunpivot.position;

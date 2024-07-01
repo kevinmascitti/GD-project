@@ -21,8 +21,7 @@ public class Enemy_AI_LongRanged : Enemy
     [NonSerialized]public float timeBetweenAttacks;
     [NonSerialized]public bool alreadyAttacked;
     public GameObject projectile;
-    //public float projectileSpeed=25f;
-    //public float projectileUPSpeed=1.2f;
+    
     // stati
     public float sightRange, attackRange;
     [NonSerialized]public bool playerInSightRange, playerInAttackRange;

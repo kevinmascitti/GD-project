@@ -1,7 +1,9 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using Unity.VisualScripting;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 
 public class Dash : MonoBehaviour
@@ -10,35 +12,67 @@ public class Dash : MonoBehaviour
     [SerializeField] private float dashDuration = 1f;
     [SerializeField] private float distance = 3f;
     [SerializeField] private float damageRadius = 1f;
-    [SerializeField] private float damage = 5;
+    [SerializeField] private float damage = 1;
     [SerializeField] private GameObject VFX;
+
+    public static EventHandler<EnemyCollisionArgs> OnAttackLended;
+    public static EventHandler<float> OnCheckedDash;
 
     public static EventHandler OnDashEnded;
     
     void Start()
     {
-        ComboCharacterWithDamage.OnDashExecuted += ExecuteDash;
+        ComboCharacterWithDamage.OnDashRequested += CheckDash;
+        ComboCharacterWithDamage.OnDashLaunched += ExecuteDash;
     }
 
-    public void ExecuteDash(object sender, EventArgs args)
+    public void CheckDash(object sender, EventArgs args)
+    {
+        bool isPlayerOnBorder = false;
+        float distanceFromWall = 0;
+        RaycastHit[] checkWallsList;
+        if(GetComponent<SimpleThirdPersonController>().isForward)
+            checkWallsList = Physics.RaycastAll(transform.position, Vector3.left, distance);
+        else
+            checkWallsList = Physics.RaycastAll(transform.position, Vector3.right, distance);
+        
+        foreach (RaycastHit hit in checkWallsList)
+        {
+            if (hit.transform.gameObject.layer == LayerMask.NameToLayer("Wall"))
+            {
+                isPlayerOnBorder = true;
+                distanceFromWall = Math.Abs(hit.transform.position.x - transform.position.x);
+                break;
+            }
+        }
+        if (!isPlayerOnBorder)
+            OnCheckedDash?.Invoke(this, distance);
+        else if (isPlayerOnBorder && distanceFromWall - 1f > 0)
+            OnCheckedDash?.Invoke(this, distanceFromWall - 1f);
+        else if (isPlayerOnBorder && distanceFromWall - 1f <= 0)
+            OnCheckedDash?.Invoke(this, 0);
+    }
+
+    public void ExecuteDash(object sender, float distance)
     {
         if(VFX)
             VFX.SetActive(true);
-        StartCoroutine(DashNow());
+        StartCoroutine(DashNow(distance));
     }
 
-    IEnumerator DashNow()
+    IEnumerator DashNow(float distanceVar)
     {
         yield return new WaitForSeconds(dashPreparationTime);
         float elapsedTime = 0f;
-        Vector3 newPosition = transform.position + transform.forward * distance;
-        RaycastHit[] hits = Physics.SphereCastAll(transform.position, damageRadius, transform.forward, distance, GetComponent<AntiOverlap>().enemyLayer);
+        Vector3 newPosition = transform.position + transform.forward * distanceVar;
+        RaycastHit[] hits = Physics.SphereCastAll(transform.position, damageRadius, transform.forward, distanceVar, GetComponent<AntiOverlap>().enemyLayer);
 
         foreach (RaycastHit hit in hits)
         {
             if (hit.collider.GetComponent<Enemy>())
             {
                 hit.collider.GetComponent<Enemy>().TakeDamage(damage);
+                OnAttackLended?.Invoke(this, new EnemyCollisionArgs(1));
             }
         }
 

@@ -6,7 +6,7 @@ using UnityEngine.SceneManagement;
 
 public class Room : MonoBehaviour
 {
-    public bool isLocked = false;
+    public bool isLocked = true;
     
     [NonSerialized] public int ID;
     [NonSerialized] public GameObject plane;
@@ -17,9 +17,11 @@ public class Room : MonoBehaviour
     [NonSerialized] public RoomManager level;
     [NonSerialized] public BoxCollider enterWall;
     [NonSerialized] public BoxCollider exitWall;
-
-    private Spawner spawner;
+    [NonSerialized] public Spawner spawner;
+    private int killedEnemies = 0;
     [SerializeField] private bool isBossRoom = false;
+    
+    public static EventHandler<RoomArgs> OnEndRoom;
 
     public void Awake()
     {
@@ -27,22 +29,16 @@ public class Room : MonoBehaviour
         spawner = transform.Find("spawner").GetComponent<Spawner>();
         
         PlayerCharacter.OnStartRoom += EnableRoom;
-        PlayerCharacter.OnEndRoom += DisableRoom;
+        LevelManager.OnStartRoom += EnableRoom;
+        Enemy.OnEnemyDeath += KillAndCheckEnemyCount;
     }
 
     private void EnableRoom(object sender, RoomArgs args)
     {
         if (args.room == this && spawner)
         {
+            spawner.enabled = true;
             spawner.SetEnable(true);
-        }
-    }
-    
-    private void DisableRoom(object sender, RoomArgs args)
-    {
-        if (args.room == this && spawner)
-        {
-            spawner.SetEnable(false);
         }
     }
 
@@ -55,4 +51,18 @@ public class Room : MonoBehaviour
     {
         exitWall.gameObject.layer = 0;
     }
+    
+    private void KillAndCheckEnemyCount(object sender, EventArgs args)
+    {
+        killedEnemies++;
+        if (killedEnemies == spawner.spawnLimit)
+        {
+            // GameObject.FindGameObjectWithTag("Spawner").GetComponent<Spawner>().OpenExit();
+            spawner.SetEnable(false);
+            isLocked = false;
+            OnEndRoom?.Invoke(this,new RoomArgs(this));
+            killedEnemies = 0;
+        }
+    }
+
 }

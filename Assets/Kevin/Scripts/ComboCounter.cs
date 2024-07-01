@@ -19,6 +19,8 @@ public class ComboCounter : MonoBehaviour
         comboTimer = GetComponent<ComboTimer>();
         
         EnemyCollision.OnAttackLended += IncreaseCounter;
+        Grabbable.OnAttackLended += IncreaseCounter;
+        Dash.OnAttackLended += IncreaseCounter;
         ComboTimer.Elapsed += ElapsedTimer;
     }
 

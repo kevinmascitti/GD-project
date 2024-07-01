@@ -16,7 +16,9 @@ public class LevelManager : MonoBehaviour
     [NonSerialized] public List<RoomManager> levels = new List<RoomManager>();
     [NonSerialized] public RoomManager firstLevel;
 
-    public static EventHandler<LevelManagerArgs> OnInitializedLevels; 
+    public static EventHandler<LevelManagerArgs> OnInitializedLevels;
+    public static EventHandler<RoomArgs> OnStartRoom;
+    public static EventHandler<RoomArgs> OnEndRoom;
     public static EventHandler<RoomManager> OnShuffleLevel; 
 
     public void Awake()
@@ -42,6 +44,8 @@ public class LevelManager : MonoBehaviour
         RoomManager.OnInitializedLevel += LinkLevels;
         PlayerCharacter.OnRequestLevel += ChooseNextLevel;
         MainMenu.OnNewGame += NewGame;
+        PlayerCharacter.OnStartLevel += StartLevel;
+        PlayerCharacter.OnEndLevel += EndLevel;
     }
 
     private void LinkLevels(object sender, EventArgs args)
@@ -110,4 +114,16 @@ public class LevelManager : MonoBehaviour
         
         OnShuffleLevel?.Invoke(this, levelToChoose);
     }
+
+    private void StartLevel(object sender, RoomManagerArgs args)
+    {
+        OnStartRoom?.Invoke(this, new RoomArgs(args.room));
+    }
+    
+    private void EndLevel(object sender, RoomManagerArgs args)
+    {
+        args.room.spawner.SetEnable(false);
+        OnEndRoom?.Invoke(this, new RoomArgs(args.room));
+    }
+    
 }

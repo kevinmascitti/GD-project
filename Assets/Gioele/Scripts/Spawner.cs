@@ -19,8 +19,8 @@ public class Spawner : MonoBehaviour
     [SerializeField] private int spawnCount = 0;
     [SerializeField] public int spawnLimit;
     [SerializeField] public GameObject levelPlane;
-    public static EventHandler OnDoorOpen;
     [SerializeField] public bool isdeterministic;
+
     void Start()
     {
         //somma delle probabilità totali
@@ -32,9 +32,10 @@ public class Spawner : MonoBehaviour
 
         //setto i nemici del primo livello
         ChangePrefabs(0);
-        //PlayerCharacter.OnEndRoom += OpenExit;
-        //PlayerCharacter.OnStartRoom += CloseExit;
 
+        PlayerCharacter.OnEndRoom += OpenExit;
+        LevelManager.OnEndRoom += OpenExit;
+        Room.OnEndRoom += OpenExit;
     }
 
     IEnumerator CloseExit(float delay)
@@ -74,13 +75,12 @@ public class Spawner : MonoBehaviour
             {
                 animator.SetBool("open",false);
             }
-            
         }
-        
-        
     }
-    public void OpenExit()
+    
+    public void OpenExit(object sender, EventArgs args)
     {
+        StopSpawn();
         // attivare animazione
         GameObject[] exitObjects = GameObject.FindGameObjectsWithTag("Exit");
 
@@ -158,6 +158,10 @@ public class Spawner : MonoBehaviour
                 {
                     // aggiungo altezza
                     float addedEight = 0;
+                    if (selectedObject.tag.CompareTo("EnemyObj")==0)
+                    {
+                        addedEight = -4.8f;
+                    }
 
                     MeshRenderer planeRenderer = plane.GetComponent<MeshRenderer>();
                     Vector3 planeSize = planeRenderer.bounds.size;
@@ -210,7 +214,10 @@ public class Spawner : MonoBehaviour
                 if (selectedObject != null)
                 {
                     float addedEight = 0;
-                    
+                    if (selectedObject.tag.CompareTo("EnemyObj")==0)
+                    {
+                        addedEight = -4.8f;
+                    }
                     MeshRenderer planeRenderer = plane.GetComponent<MeshRenderer>();
                     Vector3 planeSize = planeRenderer.bounds.size;
                     //posizione casuale all'interno delle dimensioni del piano
@@ -252,6 +259,7 @@ public class Spawner : MonoBehaviour
                 if(obj)
                     Destroy(obj);
             spawnedEnemies.Clear();
+            gameObject.SetActive(false);
         }
     }
     

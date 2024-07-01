@@ -29,10 +29,12 @@ public class SimpleThirdPersonController : MonoBehaviour
     private Vector3 forwardScaleVector = new Vector3(1, 1, 1);
     private Vector3 backwardVector = new Vector3(1, 0, 0);
     private Vector3 backwardScaleVector = new Vector3(-1, 1, 1);
+    [NonSerialized] public bool isForward = true;
     public PlayerController controls;
     [SerializeField] private Vector2 speed;
     private Vector2 move;
     private Vector2 depthMovement;
+
     public void Awake()
     {
         Debug.Log("controlli abilitati, siamo pronti a partire ");
@@ -90,11 +92,13 @@ public class SimpleThirdPersonController : MonoBehaviour
             {
                 transform.forward = forwardVector;
                 transform.localScale = forwardScaleVector;
+                isForward = true;
             }
             else
             {
                 transform.forward = backwardVector;
                 transform.localScale = backwardScaleVector;
+                isForward = false;
             }
             // parte che abilità l'animazione della camminata 
             if(move.x!=0 || move.y!=0 || depthMovement.y!=0) 
@@ -121,11 +125,13 @@ public class SimpleThirdPersonController : MonoBehaviour
             {
                 transform.forward = forwardVector;
                 transform.localScale = forwardScaleVector;
+                isForward = true;
             }
             else if (h < 0)
             {
                 transform.forward = backwardVector;
                 transform.localScale = backwardScaleVector;
+                isForward = false;
             }
 
             if (fede) // To remove fede variable if-cases

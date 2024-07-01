@@ -49,13 +49,14 @@ public class RoomManager : MonoBehaviour
         firstRoom = rooms[0];
         lastRoom = rooms[rooms.Count-1];
 
-        PlayerCharacter.OnStartRoom += ClosePrevDoors;
-        PlayerCharacter.OnNextRoom += OpenNextDoors;
+        PlayerCharacter.OnStartRoom += ClosePrevWalls;
+        LevelManager.OnStartRoom += ClosePrevWalls;
+        PlayerCharacter.OnNextRoom += OpenNextWalls;
         
         OnInitializedLevel?.Invoke(this, EventArgs.Empty);
     }
 
-    public void OpenNextDoors(object sender, RoomArgs args)
+    public void OpenNextWalls(object sender, RoomArgs args)
     {
         if (args != null)
         {
@@ -64,7 +65,7 @@ public class RoomManager : MonoBehaviour
         }
     }
 
-    public void ClosePrevDoors(object sender, RoomArgs args)
+    public void ClosePrevWalls(object sender, RoomArgs args)
     {
         if (args != null && args.room.prevRoom)
         {
@@ -72,7 +73,5 @@ public class RoomManager : MonoBehaviour
             args.room.enterWall.isTrigger = false;
         }
     }
-    
-    
 }
 
