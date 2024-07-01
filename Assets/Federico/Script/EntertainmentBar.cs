@@ -134,7 +134,7 @@ public class EntertainmentBar : MonoBehaviour
             slider.value = currEntertainmentValue / maxEntertainmentValue;
             if (fill != null)
             {
-                fill.color = gradient.Evaluate(slider.normalizedValue);
+               fill.color = gradient.Evaluate(slider.normalizedValue);
             }
         }
 
