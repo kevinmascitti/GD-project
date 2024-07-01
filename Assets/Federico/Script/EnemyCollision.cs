@@ -74,7 +74,9 @@ public class EnemyCollision : MonoBehaviour
         //enemy!=null && anim.GetFloat("Weapon.Active")>0.0
         if (enemy != null && oggetto!=null && oggetto.isAttacking)
         {
-            enemyHit.Play();
+            if(!enemyHit.isPlaying)
+                enemyHit.Play();
+            
             oggetto.isAttacking = false;
 //            Debug.Log("OnTriggerEnter called with: " + other.name + " FROM "+ this);
             Vector3 effectPosition = other.transform.position + new Vector3(0, +1.5f, 0);

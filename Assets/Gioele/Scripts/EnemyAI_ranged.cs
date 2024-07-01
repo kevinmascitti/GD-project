@@ -43,6 +43,9 @@ public class EnemyAI : Enemy
     private bool destinationReached = false;
     private int sign;
     
+    // [Header("Sound Settings")]
+    private AudioSource shotSource;
+    // [SerializeField] private AudioClip shotSound;
     
     private void Awake()
     {
@@ -56,6 +59,8 @@ public class EnemyAI : Enemy
         Player = GameObject.FindGameObjectWithTag("Player").transform;
         initialRotation = transform.rotation;
         agent = GetComponent<NavMeshAgent>();
+
+        shotSource = GetComponent<AudioSource>();
     }
 
     private void Patroling()
@@ -159,6 +164,7 @@ public class EnemyAI : Enemy
         transform.LookAt(Player.position);
         if (!alreadyAttacked )
         {
+            shotSource.Play();
             // attacco ranged/long ranged
             if (sign == -1)
             {

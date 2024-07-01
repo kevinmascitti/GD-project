@@ -14,17 +14,23 @@ public class PlayerSound : MonoBehaviour
     void Start()
     {
         PlayerDamageReceived.OnDamageReceived += PlayHitSound;
+        PlayerDamageReceived.OnDamageReceivedFinish += StopHitSound;
     }
 
     public void PlayHitSound(object sender, System.EventArgs e)
     {
         hitAudioSource.clip = hitSounds[Random.Range(0, hitSounds.Length)];
-        if (!hitAudioSource.isPlaying)
-            hitAudioSource.Play();
+        hitAudioSource.Play();
+    }
+
+    public void StopHitSound(object sender, System.EventArgs e)
+    {
+        hitAudioSource.Stop();
     }
 
     void OnDestroy()
     {
         PlayerDamageReceived.OnDamageReceived -= PlayHitSound;
+        PlayerDamageReceived.OnDamageReceivedFinish -= StopHitSound;
     }
 }

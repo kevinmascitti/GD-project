@@ -21,6 +21,10 @@ public class PopupSpawner : MonoBehaviour
     private Vector3 spawningDirection = Vector3.forward;
     private Quaternion spawningRotation = Quaternion.Euler(0, 0, 0);
 
+    [Header("Sound Settings")]
+    [SerializeField] private AudioClip[] spawnAudioClips;
+    private AudioSource audioSource;
+
     void Start()
     {
         for (int i = 0; i < thresholdList.Count; i++)
@@ -31,6 +35,7 @@ public class PopupSpawner : MonoBehaviour
 
         ComboCounter.OnCounterIncreased += CheckCounter;
         ComboCounter.OnCounterInitialized += InitializePopup;
+        audioSource = GetComponent<AudioSource>();
     }
 
     private void CheckCounter(object sender, int args)
@@ -58,6 +63,8 @@ public class PopupSpawner : MonoBehaviour
 
     private void SpawnPopup(string comboName)
     {
+        audioSource.clip = spawnAudioClips[UnityEngine.Random.Range(0, spawnAudioClips.Length)];
+        audioSource.Play();
         Vector3 spawningPosition = player.transform.position;
         Rigidbody rb = Instantiate(Resources.Load("Popup/"+comboName), spawningPosition, spawningRotation).GameObject().transform.GetChild(0).GetComponent<Rigidbody>();
         rb.AddForce(spawningDirection * popupSpeed, ForceMode.Impulse);
