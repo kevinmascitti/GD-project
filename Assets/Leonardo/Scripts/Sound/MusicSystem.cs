@@ -40,10 +40,6 @@ public class MusicSystem : MonoBehaviour
             audioSource.clip = musicClips[2];
             currentLevelIndex = 2;
         }
-
-        if(audioSource.isPlaying == false)
-        {
-            audioSource.Play();
-        }
     }
 }
+
