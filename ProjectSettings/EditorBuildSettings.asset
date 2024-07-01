@@ -12,6 +12,6 @@ EditorBuildSettings:
     path: Assets/Chiara/Scenes/Menu_TestScene.unity
     guid: 5cfcb7bc6f1c8644a9503e29f1ab0494
   - enabled: 1
-    path: Assets/Main/Scene/MainPrototypeLevel.unity
-    guid: ecfb8332edd17964bae27c7bba411eef
+    path: Assets/Main/Scene/MainPrototypev2.unity
+    guid: ca5e50524fe54400998b03d4a557a003
   m_configObjects: {}

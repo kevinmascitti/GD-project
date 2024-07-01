@@ -300,7 +300,7 @@ public class PlayerCharacter : Character
     public override void TakeDamage(float damage)
     {
         if (isInvincible) return;
-
+        
         base.TakeDamage(damage);
         UpdateHPUI(currentHP);
     }

@@ -15,6 +15,7 @@ public class EnemyCollision : MonoBehaviour
     
     public static EventHandler<EnemyCollisionArgs> OnAttackLended;
 
+    [SerializeField] private AudioSource enemyHit;
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.I))
@@ -73,6 +74,7 @@ public class EnemyCollision : MonoBehaviour
         //enemy!=null && anim.GetFloat("Weapon.Active")>0.0
         if (enemy != null && oggetto!=null && oggetto.isAttacking)
         {
+            enemyHit.Play();
             oggetto.isAttacking = false;
 //            Debug.Log("OnTriggerEnter called with: " + other.name + " FROM "+ this);
             Vector3 effectPosition = other.transform.position + new Vector3(0, +1.5f, 0);
@@ -85,7 +87,7 @@ public class EnemyCollision : MonoBehaviour
             canCollide = false; // Disabilita ulteriori collisioni per la durata del cooldown
             StartCoroutine(CollisionCooldown());
         }
-
+        
         enemy = null;
     }
 
