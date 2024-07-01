@@ -48,14 +48,14 @@ public class EntertainmentBar : MonoBehaviour
         }
 
         EnemyCollision.OnAttackLended += AttackPerfomed;
+        Dash.OnAttackLended += AttackPerfomed;
         PlayerCharacter.OnStartRoom += ResetEntertainmentBar;
         PlayerCharacter.OnStartRoom += StartBar;
         LevelManager.OnStartRoom += ResetEntertainmentBar;
         LevelManager.OnStartRoom += StartBar;
-        PlayerCharacter.OnEndRoom += StopBar;
         LevelManager.OnEndRoom += StopBar;
         Room.OnEndRoom += StopBar;
-        PlayerCharacter.OnNextRoom += ResetEntertainmentBar;
+        // PlayerCharacter.OnNextRoom += ResetEntertainmentBar;
     }
 
     private void StartBar(object sender, EventArgs args)
@@ -78,7 +78,7 @@ public class EntertainmentBar : MonoBehaviour
     // FUNZIONE DI ATTACCO EFFETTUATO
     public void AttackPerfomed(object sender, EventArgs args)
     {
-        Debug.Log("hey la barra d'intrattenimento ha rilevato l'attacco");
+        // Debug.Log("hey la barra d'intrattenimento ha rilevato l'attacco");
         if(isZero)
             isZero = false;
         currEntertainmentValue += IncreaseSpeed * comboCounter.counter;

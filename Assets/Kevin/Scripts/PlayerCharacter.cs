@@ -55,7 +55,6 @@ public class PlayerCharacter : Character
     public static EventHandler OnStaminaFull;
 
     public static EventHandler<RoomArgs> OnStartRoom;
-    public static EventHandler<RoomArgs> OnEndRoom;
     public static EventHandler<RoomArgs> OnNextRoom;
     public static EventHandler<RoomManagerArgs> OnStartLevel;
     public static EventHandler<RoomManagerArgs> OnEndLevel;
@@ -173,14 +172,14 @@ public class PlayerCharacter : Character
 
                 UpdateStaminaUI(currentStamina);
             } // SBLOCCO LIVELLO SUCCESSIVO
-            else if (Input.GetKeyDown(KeyCode.L))
-            {
-                if (currentRoom.isLocked)
-                {
-                    currentRoom.isLocked = false;
-                    Debug.Log("NEXT ROOM UNLOCKED");
-                }
-            }
+            // else if (Input.GetKeyDown(KeyCode.L))
+            // {
+            //     if (currentRoom.isLocked)
+            //     {
+            //         currentRoom.isLocked = false;
+            //         Debug.Log("NEXT ROOM UNLOCKED");
+            //     }
+            // }
 
             if (dieAnimation)
             {
@@ -188,7 +187,6 @@ public class PlayerCharacter : Character
                 {
                     // Fai qualcosa quando l'animazione è terminata
                     this.gameObject.SetActive(false);
-                    Debug.Log("L'animazione è terminata!");
                 }
             }
 
@@ -385,7 +383,6 @@ public class PlayerCharacter : Character
             if (currentRoom.nextRoom.level == currentLevel) // CAMBIO STANZA
             {
                 currentRoom.spawner.SetEnable(false);
-                // OnEndRoom?.Invoke(this, new RoomArgs(currentRoom));
                 gameObject.GetComponent<LerpAnimation>().StartAnimation(transform.position, currentRoom.nextRoom.spawnPoint);
                 camera.GetComponent<LerpAnimation>().StartAnimation(camera.transform.position, currentRoom.nextRoom.cameraPosition);
                 currentRoom = currentRoom.nextRoom;
@@ -394,7 +391,6 @@ public class PlayerCharacter : Character
             {
                 // VFX o animazione cambio livello
                 currentRoom.spawner.SetEnable(false);
-                // OnEndRoom?.Invoke(this, new RoomArgs(currentRoom));
                 gameObject.transform.position = currentRoom.nextRoom.spawnPoint;
                 camera.transform.position = currentRoom.nextRoom.cameraPosition;
                 currentRoom = currentRoom.nextRoom;
@@ -451,7 +447,6 @@ public class PlayerCharacter : Character
         
         transform.position = currentRoom.spawnPoint;
         
-        // OnStartRoom?.Invoke(this, new RoomArgs(currentRoom));
         OnStartLevel?.Invoke(this, new RoomManagerArgs(currentLevel, currentRoom));
     }
 

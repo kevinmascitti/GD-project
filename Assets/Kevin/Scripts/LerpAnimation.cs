@@ -7,7 +7,7 @@ using UnityEngine;
 
 public class LerpAnimation : MonoBehaviour
 {
-    public float animationSpeed = 100.0f; // La velocità di animazione
+    public float animationSpeed = 50.0f; // La velocità di animazione
     
     private float startTime; // Il tempo iniziale dell'animazione
     private Vector3 startPosition; // La posizione iniziale dell'oggetto
