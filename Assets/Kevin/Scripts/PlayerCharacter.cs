@@ -49,6 +49,7 @@ public class PlayerCharacter : Character
     [Header("Sound Settings")]
     private AudioSource audioSource;
     [SerializeField] private AudioClip deathClip;
+    [SerializeField] private AudioClip hitClip;
 
     public static EventHandler OnGameOver;
     public static EventHandler OnStaminaFull;
@@ -312,6 +313,9 @@ public class PlayerCharacter : Character
     {
         if (isInvincible) return;
         
+        audioSource.Stop();
+        audioSource.clip = hitClip;
+        audioSource.Play();
         base.TakeDamage(damage);
         UpdateHPUI(currentHP);
     }

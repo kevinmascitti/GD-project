@@ -672,11 +672,7 @@ PrefabInstance:
       objectReference: {fileID: 8300000, guid: 699bac4b64237cb42bfa1887db45894b, type: 3}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
-    m_AddedGameObjects:
-    - targetCorrespondingSourceObject: {fileID: 292128327879344127, guid: 487b0de3aa24823469c4ac8d0ba20af5,
-        type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 879624557}
+    m_AddedGameObjects: []
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 866837580233319008, guid: 487b0de3aa24823469c4ac8d0ba20af5,
         type: 3}
@@ -2056,6 +2052,11 @@ PrefabInstance:
       objectReference: {fileID: 343207750}
     - target: {fileID: 7009421023773219503, guid: 8b59635cd0adb41f1ba8fbc68f23c4c3,
         type: 3}
+      propertyPath: hitClip
+      value: 
+      objectReference: {fileID: 8300000, guid: b46b40631002c554d9d5aa2b02041a3e, type: 3}
+    - target: {fileID: 7009421023773219503, guid: 8b59635cd0adb41f1ba8fbc68f23c4c3,
+        type: 3}
       propertyPath: sliderHP
       value: 
       objectReference: {fileID: 2052740094}
@@ -2162,12 +2163,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 879624556}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 2060429401}
+  m_Father: {fileID: 2110897995}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!82 &879624558
 AudioSource:
@@ -3086,7 +3087,11 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects:
     - {fileID: 2306393397315528993, guid: 514d19576c19fcc4ca44c9fa4d9d5951, type: 3}
-    m_AddedGameObjects: []
+    m_AddedGameObjects:
+    - targetCorrespondingSourceObject: {fileID: 4471139300121070449, guid: 514d19576c19fcc4ca44c9fa4d9d5951,
+        type: 3}
+      insertIndex: 0
+      addedObject: {fileID: 879624557}
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 2063417228676739759, guid: 514d19576c19fcc4ca44c9fa4d9d5951,
         type: 3}
@@ -3096,10 +3101,6 @@ PrefabInstance:
         type: 3}
       insertIndex: -1
       addedObject: {fileID: 2110897994}
-    - targetCorrespondingSourceObject: {fileID: 2063417228676739759, guid: 514d19576c19fcc4ca44c9fa4d9d5951,
-        type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 2110897996}
   m_SourcePrefab: {fileID: 100100000, guid: 514d19576c19fcc4ca44c9fa4d9d5951, type: 3}
 --- !u!82 &1180815342 stripped
 AudioSource:
@@ -3273,7 +3274,8 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 3583975870489679096, guid: 9adc1987ea14359428136b91cfe4ee34, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
@@ -6182,12 +6184,6 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 169189499}
   m_PrefabAsset: {fileID: 0}
---- !u!4 &2060429401 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 292128327879344127, guid: 487b0de3aa24823469c4ac8d0ba20af5,
-    type: 3}
-  m_PrefabInstance: {fileID: 169189499}
-  m_PrefabAsset: {fileID: 0}
 --- !u!82 &2060429402
 AudioSource:
   m_ObjectHideFlags: 0
@@ -6704,18 +6700,12 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!114 &2110897996
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
+--- !u!4 &2110897995 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 4471139300121070449, guid: 514d19576c19fcc4ca44c9fa4d9d5951,
+    type: 3}
+  m_PrefabInstance: {fileID: 1180815341}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2110897991}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f9e20d3ff87a2fa4f8834dace2682363, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &2139915841
 GameObject:
   m_ObjectHideFlags: 0
