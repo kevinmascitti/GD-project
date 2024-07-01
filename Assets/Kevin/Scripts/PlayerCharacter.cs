@@ -357,9 +357,9 @@ public class PlayerCharacter : Character
         OnGameOver?.Invoke(this, EventArgs.Empty);
     }
     
-    private void OnCollisionEnter(Collision collision)
+    private void OnTriggerEnter(Collider collider)
     {
-        if (collision.gameObject.layer == LayerMask.NameToLayer("ChangeLevel") && !currentRoom.isLocked)
+        if (collider.gameObject.layer == LayerMask.NameToLayer("ChangeRoom") && !currentRoom.isLocked)
         {
             OnNextRoom?.Invoke(this, new RoomArgs(currentRoom));
             
@@ -368,6 +368,7 @@ public class PlayerCharacter : Character
 
             if (currentRoom.nextRoom.level == currentLevel) // CAMBIO STANZA
             {
+                currentRoom.spawner.SetEnable(false);
                 OnEndRoom?.Invoke(this, new RoomArgs(currentRoom));
                 gameObject.GetComponent<LerpAnimation>().StartAnimation(transform.position, currentRoom.nextRoom.spawnPoint);
                 camera.GetComponent<LerpAnimation>().StartAnimation(camera.transform.position, currentRoom.nextRoom.cameraPosition);
@@ -376,6 +377,7 @@ public class PlayerCharacter : Character
             else // CAMBIO LIVELLO
             {
                 // VFX o animazione cambio livello
+                currentRoom.spawner.SetEnable(false);
                 OnEndRoom?.Invoke(this, new RoomArgs(currentRoom));
                 gameObject.transform.position = currentRoom.nextRoom.spawnPoint;
                 camera.transform.position = currentRoom.nextRoom.cameraPosition;
@@ -393,7 +395,7 @@ public class PlayerCharacter : Character
                 OnEndLevel?.Invoke(this, new RoomManagerArgs(currentLevel, currentRoom));
             }
         }
-        else if (collision.gameObject.layer == LayerMask.NameToLayer("DeathGround"))
+        else if (collider.gameObject.layer == LayerMask.NameToLayer("DeathGround"))
         {
             Die();
         }

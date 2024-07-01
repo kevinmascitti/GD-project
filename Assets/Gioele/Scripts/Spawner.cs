@@ -80,6 +80,7 @@ public class Spawner : MonoBehaviour
     
     public void OpenExit(object sender, EventArgs args)
     {
+        StopSpawn();
         // attivare animazione
         GameObject[] exitObjects = GameObject.FindGameObjectsWithTag("Exit");
 
@@ -258,6 +259,7 @@ public class Spawner : MonoBehaviour
                 if(obj)
                     Destroy(obj);
             spawnedEnemies.Clear();
+            gameObject.SetActive(false);
         }
     }
     

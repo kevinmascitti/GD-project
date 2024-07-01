@@ -6,7 +6,7 @@ using UnityEngine.SceneManagement;
 
 public class Room : MonoBehaviour
 {
-    public bool isLocked = false;
+    public bool isLocked = true;
     
     [NonSerialized] public int ID;
     [NonSerialized] public GameObject plane;
@@ -37,6 +37,7 @@ public class Room : MonoBehaviour
     {
         if (args.room == this && spawner)
         {
+            spawner.enabled = true;
             spawner.SetEnable(true);
         }
     }
@@ -58,6 +59,7 @@ public class Room : MonoBehaviour
         {
             // GameObject.FindGameObjectWithTag("Spawner").GetComponent<Spawner>().OpenExit();
             spawner.SetEnable(false);
+            isLocked = false;
             OnEndRoom?.Invoke(this,new RoomArgs(this));
             killedEnemies = 0;
         }
