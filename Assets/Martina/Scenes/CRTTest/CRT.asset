@@ -34,7 +34,7 @@ MonoBehaviour:
   active: 1
   intensity:
     m_OverrideState: 1
-    m_Value: 0.32
+    m_Value: 0.17
 --- !u!114 &-1682655452785100111
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -53,13 +53,13 @@ MonoBehaviour:
     m_Value: 10
   intensity:
     m_OverrideState: 1
-    m_Value: 0.028
+    m_Value: 0.059
   response:
     m_OverrideState: 1
-    m_Value: 0.8
+    m_Value: 0.685
   texture:
     m_OverrideState: 1
-    m_Value: {fileID: 2800000, guid: 2a3c1b0e6dece6c4a9a188e265ec2859, type: 3}
+    m_Value: {fileID: 2800000, guid: ea483acecf2426d4fad7731a05db0d4b, type: 3}
 --- !u!114 &-1585716099855566807
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -81,10 +81,10 @@ MonoBehaviour:
     m_Value: {x: 0.5, y: 0.5}
   intensity:
     m_OverrideState: 1
-    m_Value: 0.435
+    m_Value: 0.449
   smoothness:
     m_OverrideState: 1
-    m_Value: 0.174
+    m_Value: 0.341
   rounded:
     m_OverrideState: 1
     m_Value: 0
@@ -119,6 +119,9 @@ MonoBehaviour:
   m_Name: Bloom
   m_EditorClassIdentifier: 
   active: 1
+  skipIterations:
+    m_OverrideState: 0
+    m_Value: 1
   threshold:
     m_OverrideState: 1
     m_Value: 0.9
@@ -137,9 +140,12 @@ MonoBehaviour:
   highQualityFiltering:
     m_OverrideState: 0
     m_Value: 0
-  skipIterations:
+  downscale:
     m_OverrideState: 0
-    m_Value: 1
+    m_Value: 0
+  maxIterations:
+    m_OverrideState: 0
+    m_Value: 6
   dirtTexture:
     m_OverrideState: 0
     m_Value: {fileID: 0}
