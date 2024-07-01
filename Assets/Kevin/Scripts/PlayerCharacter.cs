@@ -46,6 +46,10 @@ public class PlayerCharacter : Character
     // [SerializeField] private GameObject hand;
     // [SerializeField] private GameObject knuckles;
 
+    [Header("Sound Settings")]
+    private AudioSource audioSource;
+    [SerializeField] private AudioClip deathClip;
+
     public static EventHandler OnGameOver;
     public static EventHandler OnStaminaFull;
 
@@ -123,6 +127,8 @@ public class PlayerCharacter : Character
         sliderHP = GameObject.Find("HPBar").GetComponent<Slider>();
         sliderStamina = GameObject.Find("StaminaBar").GetComponent<Slider>();
         UIExtraLife = GameObject.Find("ExtraLife");
+
+        audioSource = GetComponent<AudioSource>();
 
         if (sliderHP && sliderStamina)
         {
@@ -267,6 +273,11 @@ public class PlayerCharacter : Character
         OnEndLevel?.Invoke(this, new RoomManagerArgs(currentLevel, currentRoom));
 
         isInputEnabled = false;
+
+        //play death sound\
+        audioSource.Stop();
+        audioSource.clip = deathClip;
+        audioSource.Play();
 
         // animazione personaggio che muore
 

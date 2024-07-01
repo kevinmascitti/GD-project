@@ -24,9 +24,13 @@ public class ShootingTower : MonoBehaviour
     private bool grounded=true;
     public int atk;
 
+    // Sound Settings
+    private AudioSource _audioSource;
+
     void Start()
     {
         _target = GameObject.FindGameObjectWithTag("Player");
+        _audioSource = GetComponent<AudioSource>();
     }
 
     void Update()
@@ -97,6 +101,8 @@ public class ShootingTower : MonoBehaviour
         GameObject newbullet = Instantiate(bullet, _gunPivot.position, Quaternion.identity);
         bullet.transform.forward = shootingDirection;
         */
+        _audioSource.Play();
+
         if (sign == 1)
         {
             Vector3 direction_player = _target.transform.position - _gunPivot.position;

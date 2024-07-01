@@ -16,6 +16,7 @@ GameObject:
   - component: {fileID: 7369354529107647035}
   - component: {fileID: 2570180440800264085}
   - component: {fileID: -3138700131983262467}
+  - component: {fileID: 7620461217866259377}
   m_Layer: 10
   m_Name: enemy_melee
   m_TagString: enemy
@@ -216,6 +217,103 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!82 &7620461217866259377
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7897149327893079946}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: -6103741614662613158, guid: 2d73892442fca9244a868d39598045d7,
+    type: 2}
+  m_audioClip: {fileID: 8300000, guid: 32f942c21dd640648b5504c69a77098a, type: 3}
+  m_PlayOnAwake: 1
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 1
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 0
+  MinDistance: 7
+  MaxDistance: 20
+  Pan2D: 0
+  rolloffMode: 1
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0.0005
+      value: 1
+      inSlope: 0.007664253
+      outSlope: 0.007664253
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0.3290542
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: -2.2828057
+      outSlope: -2.2828057
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.08302906
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1.0061111
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!1001 &8172173815790460404
 PrefabInstance:
   m_ObjectHideFlags: 0
