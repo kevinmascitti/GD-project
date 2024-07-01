@@ -21,6 +21,8 @@ public class PlayerCharacter : Character
     public bool isInvincible; // player invincibile quando riceve danno
     public Slider sliderHP;
     public Slider sliderStamina;
+
+    public Image HpBar;
     public GameObject UIExtraLife;
     private float currentStamina;
     private float staminaUp = 5;
@@ -127,7 +129,7 @@ public class PlayerCharacter : Character
         sliderHP = GameObject.Find("HPBar").GetComponent<Slider>();
         sliderStamina = GameObject.Find("StaminaBar").GetComponent<Slider>();
         UIExtraLife = GameObject.Find("ExtraLife");
-
+        
         audioSource = GetComponent<AudioSource>();
 
         if (sliderHP && sliderStamina)
