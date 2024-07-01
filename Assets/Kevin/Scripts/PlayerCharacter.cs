@@ -357,10 +357,11 @@ public class PlayerCharacter : Character
         OnGameOver?.Invoke(this, EventArgs.Empty);
     }
     
-    private void OnTriggerEnter(Collider collider)
+    public void OnTriggerEnter(Collider collision)
     {
-        if (collider.gameObject.layer == LayerMask.NameToLayer("ChangeRoom") && !currentRoom.isLocked)
+        if (collision.gameObject == currentRoom.exitWall.gameObject && !currentRoom.isLocked)
         {
+            collision.isTrigger = false;
             OnNextRoom?.Invoke(this, new RoomArgs(currentRoom));
             
             GetComponent<Rigidbody>().useGravity = false;
@@ -369,7 +370,7 @@ public class PlayerCharacter : Character
             if (currentRoom.nextRoom.level == currentLevel) // CAMBIO STANZA
             {
                 currentRoom.spawner.SetEnable(false);
-                OnEndRoom?.Invoke(this, new RoomArgs(currentRoom));
+                // OnEndRoom?.Invoke(this, new RoomArgs(currentRoom));
                 gameObject.GetComponent<LerpAnimation>().StartAnimation(transform.position, currentRoom.nextRoom.spawnPoint);
                 camera.GetComponent<LerpAnimation>().StartAnimation(camera.transform.position, currentRoom.nextRoom.cameraPosition);
                 currentRoom = currentRoom.nextRoom;
@@ -378,7 +379,7 @@ public class PlayerCharacter : Character
             {
                 // VFX o animazione cambio livello
                 currentRoom.spawner.SetEnable(false);
-                OnEndRoom?.Invoke(this, new RoomArgs(currentRoom));
+                // OnEndRoom?.Invoke(this, new RoomArgs(currentRoom));
                 gameObject.transform.position = currentRoom.nextRoom.spawnPoint;
                 camera.transform.position = currentRoom.nextRoom.cameraPosition;
                 currentRoom = currentRoom.nextRoom;
@@ -395,7 +396,7 @@ public class PlayerCharacter : Character
                 OnEndLevel?.Invoke(this, new RoomManagerArgs(currentLevel, currentRoom));
             }
         }
-        else if (collider.gameObject.layer == LayerMask.NameToLayer("DeathGround"))
+        else if (collision.gameObject.layer == LayerMask.NameToLayer("DeathGround"))
         {
             Die();
         }

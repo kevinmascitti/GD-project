@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using TreeEditor;
 using UnityEngine;
 using Object = System.Object;
 using Random = UnityEngine.Random;
@@ -18,10 +19,9 @@ public class Spawner : MonoBehaviour
     public bool canSpawn = true;
     [SerializeField] private int spawnCount = 0;
     [SerializeField] public int spawnLimit;
-    [SerializeField] public GameObject levelPlane;
     [SerializeField] public bool isdeterministic;
 
-    void Start()
+    void Awake()
     {
         //somma delle probabilità totali
         _totalProbability = 0f;
@@ -29,6 +29,7 @@ public class Spawner : MonoBehaviour
         {
             _totalProbability += spawnProbability[i];
         }
+        plane = transform.parent.Find("Plane").gameObject;
 
         //setto i nemici del primo livello
         ChangePrefabs(0);
@@ -100,6 +101,7 @@ public class Spawner : MonoBehaviour
     public void StartSpawn()
     {
         canSpawn = true;
+        Debug.Log("state spawner active: " + gameObject.activeSelf);
         StartCoroutine(SpawnObjects());
     }
 
@@ -250,6 +252,8 @@ public class Spawner : MonoBehaviour
     {
         if (state)
         {
+            if(!gameObject.activeSelf)
+                gameObject.SetActive(true);
             StartSpawn();
         }
         else

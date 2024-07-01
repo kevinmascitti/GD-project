@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18386978, g: 0.2290168, b: 0.30311278, a: 1}
+  m_IndirectSpecularColor: {r: 0.18386948, g: 0.22901604, b: 0.30311152, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -2476,6 +2476,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0ea1025426b304be098f0d3194de17b0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!4 &1383009249 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 2665917163245420020, guid: 8b59635cd0adb41f1ba8fbc68f23c4c3,
+    type: 3}
+  m_PrefabInstance: {fileID: 783679762}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1393486769
 GameObject:
   m_ObjectHideFlags: 0
@@ -2573,6 +2579,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_TagString
       value: Untagged
+      objectReference: {fileID: 0}
+    - target: {fileID: 431455104856275880, guid: a629d78297fc1a84fa173b1a061b3e09,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 8.26
       objectReference: {fileID: 0}
     - target: {fileID: 608599238111354900, guid: a629d78297fc1a84fa173b1a061b3e09,
         type: 3}
@@ -3007,6 +3018,11 @@ PrefabInstance:
       propertyPath: m_ApplyRootMotion
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 6077795147198383079, guid: a629d78297fc1a84fa173b1a061b3e09,
+        type: 3}
+      propertyPath: isLocked
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6236764719839266083, guid: a629d78297fc1a84fa173b1a061b3e09,
         type: 3}
       propertyPath: m_TagString
@@ -3020,26 +3036,6 @@ PrefabInstance:
     - target: {fileID: 6455777469622759621, guid: a629d78297fc1a84fa173b1a061b3e09,
         type: 3}
       propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6683810452736750464, guid: a629d78297fc1a84fa173b1a061b3e09,
-        type: 3}
-      propertyPath: spawnTime
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 6683810452736750464, guid: a629d78297fc1a84fa173b1a061b3e09,
-        type: 3}
-      propertyPath: spawnCount
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 6683810452736750464, guid: a629d78297fc1a84fa173b1a061b3e09,
-        type: 3}
-      propertyPath: spawnLimit
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 6683810452736750464, guid: a629d78297fc1a84fa173b1a061b3e09,
-        type: 3}
-      propertyPath: isdeterministic
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6683810452736750464, guid: a629d78297fc1a84fa173b1a061b3e09,
@@ -3289,11 +3285,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_TagString
       value: Untagged
-      objectReference: {fileID: 0}
-    - target: {fileID: 8945799105321168379, guid: a629d78297fc1a84fa173b1a061b3e09,
-        type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 2577.3
       objectReference: {fileID: 0}
     - target: {fileID: 9035313647116339455, guid: a629d78297fc1a84fa173b1a061b3e09,
         type: 3}

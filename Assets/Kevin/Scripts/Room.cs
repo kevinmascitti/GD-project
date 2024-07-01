@@ -27,6 +27,7 @@ public class Room : MonoBehaviour
     {
         ID = Int32.Parse(gameObject.name.Substring("Room".Length));
         spawner = transform.Find("spawner").GetComponent<Spawner>();
+        spawner.enabled = false;
         
         PlayerCharacter.OnStartRoom += EnableRoom;
         LevelManager.OnStartRoom += EnableRoom;
@@ -37,7 +38,6 @@ public class Room : MonoBehaviour
     {
         if (args.room == this && spawner)
         {
-            spawner.enabled = true;
             spawner.SetEnable(true);
         }
     }
