@@ -17,7 +17,7 @@ public class Spawner : MonoBehaviour
     public GameObject plane;
     public float spawnTime = 2f;
     public bool canSpawn = true;
-    [SerializeField] private int spawnCount = 0;
+    [SerializeField] public int spawnCount = 0;
     [SerializeField] public int spawnLimit;
     [SerializeField] public bool isdeterministic;
     private Transform roomTransform;
@@ -81,16 +81,17 @@ public class Spawner : MonoBehaviour
         //     }
         // }
 
-        foreach (Transform child in args.room.prevRoom.transform.Find("EnvAssets").transform)
-        {
-            foreach (Transform grandchild in child)
+        if(args.room.prevRoom)
+            foreach (Transform child in args.room.prevRoom.transform.Find("EnvAssets").transform)
             {
-                if (grandchild.CompareTag("Exit"))
+                foreach (Transform grandchild in child)
                 {
-                    grandchild.gameObject.SetActive(true);
+                    if (grandchild.CompareTag("Exit"))
+                    {
+                        grandchild.gameObject.SetActive(true);
+                    }
                 }
             }
-        }
     }
     
     public void OpenExit(object sender, RoomArgs args)

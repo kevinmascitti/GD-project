@@ -121,7 +121,7 @@ public class EntertainmentBar : MonoBehaviour
         if (!isZero && isActive)
         {
             currEntertainmentValue -= decreaseSpeed * Time.deltaTime;
-            Debug.Log("ho decrementato il valore del fill");
+            // Debug.Log("ho decrementato il valore del fill");
             if (currEntertainmentValue < 0)
             {
                 currEntertainmentValue = 0;
@@ -132,7 +132,7 @@ public class EntertainmentBar : MonoBehaviour
 
         if (fill != null)
         {
-            Debug.Log("ho aggiornato il valore del fill");
+            // Debug.Log("ho aggiornato il valore del fill");
             fill.fillAmount = currEntertainmentValue / maxEntertainmentValue;
         }
 
