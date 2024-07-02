@@ -9,6 +9,8 @@ public class projectile : MonoBehaviour
     public float destroyTime = 5.0f;
     private Vector3 direction_player;
     public float speed;
+    [NonSerialized] public Room currentRoom;
+    
     public void Start()
     {
         speed = 1f;
@@ -16,6 +18,15 @@ public class projectile : MonoBehaviour
         transform.Rotate(0, 90, 0, Space.Self);
         //transform.forward = new Vector3(-1, 0, 0);
         direction_player = GameObject.FindGameObjectWithTag("Player").transform.position - transform.position;
+        
+        LevelManager.OnEndRoom += DestroyGameObject;
+        Room.OnEndRoom += DestroyGameObject;
+    }
+
+    public void OnDestroy()
+    {
+        LevelManager.OnEndRoom -= DestroyGameObject;
+        Room.OnEndRoom -= DestroyGameObject;
     }
 
     void OnTriggerEnter(Collider other)
@@ -43,5 +54,13 @@ public class projectile : MonoBehaviour
         // spara nella direzione del player
         transform.position += new Vector3(direction_player.x,0,direction_player.z) * speed * Time.deltaTime;
         
+    }
+
+    private void DestroyGameObject(object sender, RoomArgs args)
+    {
+        if (args.room == currentRoom)
+        {
+            Destroy(gameObject);
+        }
     }
 }

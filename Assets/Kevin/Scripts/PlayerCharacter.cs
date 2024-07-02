@@ -390,6 +390,7 @@ public class PlayerCharacter : Character
             if (currentRoom.nextRoom.level == currentLevel) // CAMBIO STANZA
             {
                 currentRoom.spawner.SetEnable(false);
+                currentRoom.spawner.spawnCount = 0;
                 gameObject.GetComponent<LerpAnimation>().StartAnimation(transform.position, currentRoom.nextRoom.spawnPoint);
                 camera.GetComponent<LerpAnimation>().StartAnimation(camera.transform.position, currentRoom.nextRoom.cameraPosition);
                 currentRoom = currentRoom.nextRoom;
@@ -398,6 +399,7 @@ public class PlayerCharacter : Character
             {
                 // VFX o animazione cambio livello
                 currentRoom.spawner.SetEnable(false);
+                currentRoom.spawner.spawnCount = 0;
                 gameObject.transform.position = currentRoom.nextRoom.spawnPoint;
                 camera.transform.position = currentRoom.nextRoom.cameraPosition;
                 currentRoom = currentRoom.nextRoom;

@@ -62,6 +62,7 @@ public class Dash : MonoBehaviour
 
     IEnumerator DashNow(float distanceVar)
     {
+        GetComponent<PlayerCharacter>().isInvincible = true;
         yield return new WaitForSeconds(dashPreparationTime);
         float elapsedTime = 0f;
         Vector3 newPosition = transform.position + transform.forward * distanceVar;
@@ -88,6 +89,7 @@ public class Dash : MonoBehaviour
         if(VFX)
             VFX.SetActive(false);
 
+        GetComponent<PlayerCharacter>().isInvincible = false;
         OnDashEnded?.Invoke(this, EventArgs.Empty);
     }
 }

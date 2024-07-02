@@ -107,7 +107,8 @@ public class EntertainmentBar : MonoBehaviour
         if (!isZero && isActive)
         {
             currEntertainmentValue -= decreaseSpeed * Time.deltaTime;
-            if (currEntertainmentValue <= 0)
+            // Debug.Log("ho decrementato il valore del fill");
+            if (currEntertainmentValue < 0)
             {
                 currEntertainmentValue = 0;
                 isZero = true;

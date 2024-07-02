@@ -123,6 +123,7 @@ public class LevelManager : MonoBehaviour
     private void EndLevel(object sender, RoomManagerArgs args)
     {
         args.room.spawner.SetEnable(false);
+        args.room.spawner.spawnCount = 0;
         OnEndRoom?.Invoke(this, new RoomArgs(args.room));
     }
     

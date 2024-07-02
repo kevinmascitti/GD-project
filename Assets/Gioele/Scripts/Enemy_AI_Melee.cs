@@ -42,12 +42,18 @@ public class Enemy_AI_Melee : Enemy
     
     private void Awake()
     {
+        base.Awake();
         Player = GameObject.FindGameObjectWithTag("Player").transform;
         initialRotation = transform.rotation;
         agent = GetComponent<NavMeshAgent>();
         _animator = GetComponent<Animator>();
         timeBetweenAttacks = 0.7f;// frame/framerate corretto
 
+    }
+    
+    private void OnDestroy()
+    {
+        base.OnDestroy();
     }
     
     private void Patroling()

@@ -12,14 +12,15 @@ public class Spawner : MonoBehaviour
     public List<GameObject> EnemyObjects;
     public List<GameObject> spawnOrder;
     public List<float> spawnProbability;
-    [SerializeField] private List<GameObject> spawnedEnemies = new List<GameObject>();
+    // [SerializeField] private List<GameObject> spawnedEnemies = new List<GameObject>();
     [NonSerialized] private float _totalProbability = 0f;
     public GameObject plane;
     public float spawnTime = 2f;
     public bool canSpawn = true;
-    [SerializeField] private int spawnCount = 0;
+    [SerializeField] public int spawnCount = 0;
     [SerializeField] public int spawnLimit;
     [SerializeField] public bool isdeterministic;
+    private Transform roomTransform;
 
     void Awake()
     {
@@ -33,20 +34,23 @@ public class Spawner : MonoBehaviour
 
         //setto i nemici del primo livello
         ChangePrefabs(0);
+        roomTransform = transform.parent;
 
         LevelManager.OnEndRoom += OpenExit;
         Room.OnEndRoom += OpenExit;
+        LevelManager.OnStartRoom += CloseExit;
+        PlayerCharacter.OnStartRoom += CloseExit;
     }
 
-    IEnumerator CloseExit(float delay)
-    {
-        // Attendi per il numero di secondi specificato
-        yield return new WaitForSeconds(delay);
-
-        // Chiama il metodo desiderato
-        CloseExit();
-        
-    }
+    // IEnumerator CloseExit(float delay)
+    // {
+    //     // Attendi per il numero di secondi specificato
+    //     yield return new WaitForSeconds(delay);
+    //
+    //     // Chiama il metodo desiderato
+    //     CloseExit();
+    //     
+    // }
 
     public void ChangeSpawnTime(float time)
     {
@@ -60,39 +64,62 @@ public class Spawner : MonoBehaviour
         canSpawn = false;
     }
 
-    public void CloseExit()
+    public void CloseExit(object sender, RoomArgs args)
     {
-        // attivare animazione
-        GameObject[] exitObjects = GameObject.FindGameObjectsWithTag("Exit");
+        // // attivare animazione
+        // GameObject[] exitObjects = GameObject.FindGameObjectsWithTag("Exit");
+        //
+        // // Itera attraverso tutti gli oggetti trovati
+        // foreach (GameObject exitObject in exitObjects)
+        // {
+        //     // Prendi il componente Animator
+        //     Animator animator = exitObject.GetComponent<Animator>();
+        //
+        //     if (animator != null)
+        //     {
+        //         animator.SetBool("open",false);
+        //     }
+        // }
 
-        // Itera attraverso tutti gli oggetti trovati
-        foreach (GameObject exitObject in exitObjects)
-        {
-            // Prendi il componente Animator
-            Animator animator = exitObject.GetComponent<Animator>();
-
-            if (animator != null)
+        if(args.room.prevRoom)
+            foreach (Transform child in args.room.prevRoom.transform.Find("EnvAssets").transform)
             {
-                animator.SetBool("open",false);
+                foreach (Transform grandchild in child)
+                {
+                    if (grandchild.CompareTag("Exit"))
+                    {
+                        grandchild.gameObject.SetActive(true);
+                    }
+                }
             }
-        }
     }
     
-    public void OpenExit(object sender, EventArgs args)
+    public void OpenExit(object sender, RoomArgs args)
     {
         StopSpawn();
-        // attivare animazione
-        GameObject[] exitObjects = GameObject.FindGameObjectsWithTag("Exit");
-
-        // Itera attraverso tutti gli oggetti trovati
-        foreach (GameObject exitObject in exitObjects)
+        // // attivare animazione
+        // GameObject[] exitObjects = GameObject.FindGameObjectsWithTag("Exit");
+        //
+        // // Itera attraverso tutti gli oggetti trovati
+        // foreach (GameObject exitObject in exitObjects)
+        // {
+        //     // Prendi il componente Animator
+        //     Animator animator = exitObject.GetComponent<Animator>();
+        //
+        //     if (animator != null)
+        //     {
+        //         animator.SetBool("open", true);
+        //     }
+        // }
+        
+        foreach (Transform child in args.room.transform.Find("EnvAssets").transform)
         {
-            // Prendi il componente Animator
-            Animator animator = exitObject.GetComponent<Animator>();
-
-            if (animator != null)
+            foreach (Transform grandchild in child)
             {
-                animator.SetBool("open", true);
+                if (grandchild.CompareTag("Exit"))
+                {
+                    grandchild.gameObject.SetActive(false);
+                }
             }
         }
     }
@@ -178,15 +205,21 @@ public class Spawner : MonoBehaviour
                     // oggetto istanziato su un punto random del piano
                     if (selectedObject.GetComponent<EnemyAI>()!=null)
                     {
-                        spawnedEnemies.Add(Instantiate(selectedObject, spawnPosition, Quaternion.Euler(0, 110, 0)));
+                        // spawnedEnemies.Add(Instantiate(selectedObject, spawnPosition, Quaternion.Euler(0, 110, 0)));
+                        Instantiate(selectedObject, spawnPosition, Quaternion.Euler(0, 110, 0)).transform.parent = roomTransform;
+                        // spawnedEnemies[spawnedEnemies.Count - 1].transform.parent = roomTransform;
                     }
                     if (selectedObject.GetComponent<Enemy_AI_Melee>()!=null)
                     {
-                        spawnedEnemies.Add(Instantiate(selectedObject, spawnPosition, Quaternion.Euler(0, 180, 0)));
+                        // spawnedEnemies.Add(Instantiate(selectedObject, spawnPosition, Quaternion.Euler(0, 180, 0)));
+                        Instantiate(selectedObject, spawnPosition, Quaternion.Euler(0, 180, 0)).transform.parent = roomTransform;
+                        // spawnedEnemies[spawnedEnemies.Count - 1].transform.parent = roomTransform;
                     }
                     if (selectedObject.tag.CompareTo("EnemyObj") == 0)
                     {
-                        spawnedEnemies.Add(Instantiate(selectedObject, spawnPosition, Quaternion.identity));
+                        // spawnedEnemies.Add(Instantiate(selectedObject, spawnPosition, Quaternion.identity));
+                        Instantiate(selectedObject, spawnPosition, Quaternion.identity).transform.parent = roomTransform;
+                        // spawnedEnemies[spawnedEnemies.Count - 1].transform.parent = roomTransform;
                     }
                 }
             }
@@ -231,16 +264,22 @@ public class Spawner : MonoBehaviour
                     // oggetto istanziato su un punto random del piano
                     if (selectedObject.GetComponent<EnemyAI>()!=null)
                     {
-                        spawnedEnemies.Add(Instantiate(selectedObject, spawnPosition, Quaternion.Euler(0, 110, 0)));
+                        // spawnedEnemies.Add(Instantiate(selectedObject, spawnPosition, Quaternion.Euler(0, 110, 0)));
+                        Instantiate(selectedObject, spawnPosition, Quaternion.Euler(0, 110, 0)).transform.parent = roomTransform;
+                        // spawnedEnemies[spawnedEnemies.Count - 1].transform.parent = roomTransform;
                     }
                     if (selectedObject.GetComponent<Enemy_AI_Melee>()!=null)
                     {
-                        spawnedEnemies.Add(Instantiate(selectedObject, spawnPosition, Quaternion.Euler(0, 180, 0)));
+                        // spawnedEnemies.Add(Instantiate(selectedObject, spawnPosition, Quaternion.Euler(0, 180, 0)));
+                        Instantiate(selectedObject, spawnPosition, Quaternion.Euler(0, 180, 0)).transform.parent = roomTransform;
+                        // spawnedEnemies[spawnedEnemies.Count - 1].transform.parent = roomTransform;
                     }
 
                     if (selectedObject.tag.CompareTo("EnemyObj") == 0)
                     {
-                        spawnedEnemies.Add(Instantiate(selectedObject, spawnPosition, Quaternion.identity));
+                        // spawnedEnemies.Add(Instantiate(selectedObject, spawnPosition, Quaternion.identity));
+                        Instantiate(selectedObject, spawnPosition, Quaternion.identity).transform.parent = roomTransform;
+                        // spawnedEnemies[spawnedEnemies.Count - 1].transform.parent = roomTransform;
                     }
                 }
             }
@@ -258,10 +297,10 @@ public class Spawner : MonoBehaviour
         else
         {
             StopSpawn();
-            foreach(GameObject obj in spawnedEnemies)
-                if(obj)
-                    Destroy(obj);
-            spawnedEnemies.Clear();
+            // foreach(GameObject obj in spawnedEnemies)
+            //     if(obj)
+            //         Destroy(obj);
+            // spawnedEnemies.Clear();
             gameObject.SetActive(false);
         }
     }

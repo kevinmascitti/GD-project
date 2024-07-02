@@ -42,13 +42,14 @@ public class EnemyAI : Enemy
     private Vector3 backwardScaleVector = new Vector3(1, 1, -1);
     private bool destinationReached = false;
     private int sign;
-    
+
     // [Header("Sound Settings")]
     private AudioSource shotSource;
     // [SerializeField] private AudioClip shotSound;
     
     private void Awake()
     {
+        base.Awake();
         timeBetweenAttacks = 0.58f;
         if (gameObject.name.CompareTo("sushiChefUnriggedKnife") == 0)
         {
@@ -61,6 +62,11 @@ public class EnemyAI : Enemy
         agent = GetComponent<NavMeshAgent>();
 
         shotSource = GetComponent<AudioSource>();
+    }
+
+    private void OnDestroy()
+    {
+        base.OnDestroy();
     }
 
     private void Patroling()
@@ -172,6 +178,7 @@ public class EnemyAI : Enemy
                 //do valore di attacco corretto 
                 projectile.GetComponent<projectile>().damage = atk;
                 projectile.GetComponent<projectile>().speed = projectileSpeed;
+                rb.GetComponent<projectile>().currentRoom = currentRoom;
                 // trovo lla direzine del player
                 Vector3 direction_player = Player.position - gunpivot.position;
                 rb.transform.forward = new Vector3(direction_player.x,direction_player.y+1.5f,direction_player.z);
@@ -184,6 +191,7 @@ public class EnemyAI : Enemy
                 //do valore di attacco corretto 
                 projectile.GetComponent<projectile>().damage = atk;
                 projectile.GetComponent<projectile>().speed = projectileSpeed;
+                rb.GetComponent<projectile>().currentRoom = currentRoom;
                 // trovo lla direzine del player
                 Vector3 direction_player = Player.position - gunpivot.position;
                 rb.transform.forward = new Vector3(direction_player.x,direction_player.y+1.5f,direction_player.z);
