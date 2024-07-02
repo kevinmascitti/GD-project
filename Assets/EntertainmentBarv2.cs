@@ -73,7 +73,7 @@ public class EntertainmentBarv2 : MonoBehaviour
 
         if (comboCounter != null)
         {
-           Debug.Log("ho in crementato il currEntertainmentValue");
+           Debug.Log("ho in incrementato il currEntertainmentValue");
             currEntertainmentValue += IncreaseSpeed*comboCounter.counter;
         }
         else
@@ -83,12 +83,13 @@ public class EntertainmentBarv2 : MonoBehaviour
 
         if (currEntertainmentValue > 100) 
             currEntertainmentValue = 100;
-
+/* CREDO SIA INUTILE DA RIMUOVERE SE NON VENGONO SEGNALATI BUG  
         if (fill != null)
         {
-            Debug.Log("ho incrementato il fill amount");
+        //    Debug.Log("ho incrementato il fill amount");
        //     fill.fillAmount += currEntertainmentValue/maxEntertainmentValue;
         }
+  */
     }
 
     public void ChangeEntertainmentBarParameter(float decreaseSpeed, float IncreaseSpeed)
@@ -99,6 +100,10 @@ public class EntertainmentBarv2 : MonoBehaviour
 
     public void ResetEntertainmentBar(object sender, EventArgs args)
     {
+        if (isZero)
+        {
+            isZero = false;
+        }
         currEntertainmentValue = maxEntertainmentValue;
     }
 
@@ -116,6 +121,7 @@ public class EntertainmentBarv2 : MonoBehaviour
         if (!isZero && isActive)
         {
             currEntertainmentValue -= decreaseSpeed * Time.deltaTime;
+            Debug.Log("ho decrementato il valore del fill");
             if (currEntertainmentValue < 0)
             {
                 currEntertainmentValue = 0;
@@ -126,7 +132,7 @@ public class EntertainmentBarv2 : MonoBehaviour
 
         if (fill != null)
         {
-            Debug.Log("ho decrementato il valore del fill");
+            Debug.Log("ho aggiornato il valore del fill");
             fill.fillAmount = currEntertainmentValue / maxEntertainmentValue;
         }
 
