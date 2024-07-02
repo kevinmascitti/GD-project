@@ -1,50 +1,40 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 public class EntertainmentBar : MonoBehaviour
 {
-    // oggetti della Barra non dovrebbero cambiare mai 
-    [SerializeField] private Slider slider;
     [SerializeField] private Image fill;
     [SerializeField] private Gradient gradient;
-
-    /*
-     * SIGNIFICATO:
-     * MAXENTERTAINMENTVALUE= MASSIMO VALORE DELLA BARRA
-     * DECREASESPEED = VELOCITà DI DECRESCITò DELLA BARRA
-     * INCREASPEED= VELOCITà DI CRESCITà DELLA BARRA
-     * COMBO COUNTER= VALORE CORRENTE DELLA COMBO CHE INFLUENZERà IL QUANTITATIVO DI CRESCITà DELLA BARRA
-     * CURRENTERTAINMENTVALUE= VALORE CORRENTE DELLA BARRA QUANDO SI GIOCA
-     */
+    
     [Header("Parametri per manipolare la Barra ")]
     [SerializeField] float maxEntertainmentValue = 100;
     [SerializeField] float decreaseSpeed = 10f;
     [SerializeField] private float IncreaseSpeed = 10f;
-    // [SerializeField] float comboCounter = 1f;
     [SerializeField] private ComboCounter comboCounter;
+
     private float currEntertainmentValue = 100;
     private bool isZero = false;
     private bool isActive = false;
-    
-    private float speed = 1.0f; //how fast it shakes
-    private float amount = 1.0f; //how much it shakes
 
     public static EventHandler OnZeroedEnterteinmentBar;
 
-    // Start is called before the first frame update
     void Start()
     {
-        if (slider != null)
+        // Aggiungi un controllo di nullità per fill
+        if (fill == null)
         {
-            slider.value = currEntertainmentValue / maxEntertainmentValue;
-            if (fill != null)
-            {
-                fill.color = gradient.Evaluate(slider.normalizedValue);
-            }
+            Debug.LogError("L'immagine 'fill' non è assegnata!");
+        }
+        else
+        {
+            fill.fillAmount = currEntertainmentValue / maxEntertainmentValue;
+        }
+
+        // Aggiungi un controllo di nullità per comboCounter
+        if (comboCounter == null)
+        {
+            Debug.LogError("Il 'comboCounter' non è assegnato!");
         }
 
         EnemyCollision.OnAttackLended += AttackPerfomed;
@@ -55,7 +45,6 @@ public class EntertainmentBar : MonoBehaviour
         LevelManager.OnStartRoom += StartBar;
         LevelManager.OnEndRoom += StopBar;
         Room.OnEndRoom += StopBar;
-        // PlayerCharacter.OnNextRoom += ResetEntertainmentBar;
     }
 
     private void StartBar(object sender, EventArgs args)
@@ -67,48 +56,54 @@ public class EntertainmentBar : MonoBehaviour
     {
         isActive = false;
     }
-    
-    //INCREMENTO FLAT DELLA BARRA DI INTRATTENIMENTO TEST 1 
+
     public void IncreaseEnterntaiment()
     {
-        slider.value += 0.2f;
-        fill.color = gradient.Evaluate(slider.normalizedValue);
-    }
-
-    // FUNZIONE DI ATTACCO EFFETTUATO
-    public void AttackPerfomed(object sender, EventArgs args)
-    {
-        // Debug.Log("hey la barra d'intrattenimento ha rilevato l'attacco");
-        if(isZero)
-            isZero = false;
-        currEntertainmentValue += IncreaseSpeed * comboCounter.counter;
-        if (currEntertainmentValue > 100) 
-            currEntertainmentValue = 100;
-
-
-        if (slider != null)
+        if (fill != null)
         {
-            slider.value = currEntertainmentValue / maxEntertainmentValue;
-            if (fill != null)
-            {
-                fill.color = gradient.Evaluate(slider.normalizedValue);
-            }
+            fill.fillAmount += 0.2f;
         }
     }
 
-    //QUESTA FUNZIONE VERRà CHIAMATA QUANDO SI ENTRERà IN UNA NUOVA PARTE DEL LIVELLO E CAMBIERà
-    // I PARAMETRI DELLA BARRA PER PERMETTERE UNA DECRESCITà MENO RAPIDA A SECONDA DELLE PARTI DELLO SCENARIO
+    public void AttackPerfomed(object sender, EventArgs args)
+    {
+        // Debug.Log("hey la barra d'intrattenimento ha rilevato l'attacco");
+        if (isZero)
+            isZero = false;
+
+        if (comboCounter != null)
+        {
+           Debug.Log("ho in incrementato il currEntertainmentValue");
+            currEntertainmentValue += IncreaseSpeed*comboCounter.counter;
+        }
+        else
+        {
+            Debug.LogError("Il 'comboCounter' è null!");
+        }
+
+        if (currEntertainmentValue > 100) 
+            currEntertainmentValue = 100;
+/* CREDO SIA INUTILE DA RIMUOVERE SE NON VENGONO SEGNALATI BUG  
+        if (fill != null)
+        {
+        //    Debug.Log("ho incrementato il fill amount");
+       //     fill.fillAmount += currEntertainmentValue/maxEntertainmentValue;
+        }
+  */
+    }
+
     public void ChangeEntertainmentBarParameter(float decreaseSpeed, float IncreaseSpeed)
     {
         this.decreaseSpeed = decreaseSpeed;
         this.IncreaseSpeed = IncreaseSpeed;
     }
 
-    //RESET DELLA BARRA DI INTRATTENIMENTO A SEGUITO DI UN CAMBIO LIVELLO 
     public void ResetEntertainmentBar(object sender, EventArgs args)
     {
         if (isZero)
+        {
             isZero = false;
+        }
         currEntertainmentValue = maxEntertainmentValue;
     }
 
@@ -117,12 +112,16 @@ public class EntertainmentBar : MonoBehaviour
         // TO REMOVE solo ai fini di debugging 
         if (Input.GetKeyDown(KeyCode.C))
         {
-            comboCounter.counter += 2;
+            if (comboCounter != null)
+            {
+                comboCounter.counter += 2;
+            }
         }
 
         if (!isZero && isActive)
         {
             currEntertainmentValue -= decreaseSpeed * Time.deltaTime;
+            Debug.Log("ho decrementato il valore del fill");
             if (currEntertainmentValue < 0)
             {
                 currEntertainmentValue = 0;
@@ -131,15 +130,11 @@ public class EntertainmentBar : MonoBehaviour
             }
         }
 
-        if (slider != null)
+        if (fill != null)
         {
-            slider.value = currEntertainmentValue / maxEntertainmentValue;
-            if (fill != null)
-            {
-               fill.color = gradient.Evaluate(slider.normalizedValue);
-            }
+            Debug.Log("ho aggiornato il valore del fill");
+            fill.fillAmount = currEntertainmentValue / maxEntertainmentValue;
         }
-
 
         if (Input.GetKeyDown(KeyCode.U))
         {

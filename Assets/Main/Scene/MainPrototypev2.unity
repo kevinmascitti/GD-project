@@ -2130,6 +2130,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5727485148647357899, guid: 57590039e811f444286daecef307cbc7,
         type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5727485148647357899, guid: 57590039e811f444286daecef307cbc7,
+        type: 3}
       propertyPath: comboCounter
       value: 
       objectReference: {fileID: 2060429405}
@@ -7092,6 +7097,8 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects:
     - {fileID: 8516201259677699755, guid: 03552866a0cad59479b1468956722dfe, type: 3}
+    - {fileID: 5115766210325195311, guid: 03552866a0cad59479b1468956722dfe, type: 3}
+    - {fileID: 8254312616320196275, guid: 03552866a0cad59479b1468956722dfe, type: 3}
     m_AddedGameObjects:
     - targetCorrespondingSourceObject: {fileID: 4145531126524381781, guid: 03552866a0cad59479b1468956722dfe,
         type: 3}
