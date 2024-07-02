@@ -107,6 +107,8 @@ public class EntertainmentBar : MonoBehaviour
     //RESET DELLA BARRA DI INTRATTENIMENTO A SEGUITO DI UN CAMBIO LIVELLO 
     public void ResetEntertainmentBar(object sender, EventArgs args)
     {
+        if (isZero)
+            isZero = false;
         currEntertainmentValue = maxEntertainmentValue;
     }
 
