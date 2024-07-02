@@ -13,7 +13,7 @@ public class EntertainmentBar : MonoBehaviour
     [SerializeField] private float IncreaseSpeed = 10f;
     [SerializeField] private ComboCounter comboCounter;
 
-    private float currEntertainmentValue = 100;
+    public float currEntertainmentValue = 100;
     private bool isZero = false;
     private bool isActive = false;
 
@@ -21,7 +21,6 @@ public class EntertainmentBar : MonoBehaviour
 
     void Start()
     {
-        // Aggiungi un controllo di nullità per fill
         if (fill == null)
         {
             Debug.LogError("L'immagine 'fill' non è assegnata!");
@@ -31,7 +30,6 @@ public class EntertainmentBar : MonoBehaviour
             fill.fillAmount = currEntertainmentValue / maxEntertainmentValue;
         }
 
-        // Aggiungi un controllo di nullità per comboCounter
         if (comboCounter == null)
         {
             Debug.LogError("Il 'comboCounter' non è assegnato!");
@@ -61,35 +59,31 @@ public class EntertainmentBar : MonoBehaviour
     {
         if (fill != null)
         {
-            fill.fillAmount += 0.2f;
+            currEntertainmentValue += 0.2f * maxEntertainmentValue;
+            if (currEntertainmentValue > maxEntertainmentValue)
+                currEntertainmentValue = maxEntertainmentValue;
+            UpdateFillAmount();
         }
     }
 
     public void AttackPerfomed(object sender, EventArgs args)
     {
-        // Debug.Log("hey la barra d'intrattenimento ha rilevato l'attacco");
         if (isZero)
             isZero = false;
 
         if (comboCounter != null)
         {
-           Debug.Log("ho in incrementato il currEntertainmentValue");
-            currEntertainmentValue += IncreaseSpeed*comboCounter.counter;
+            currEntertainmentValue += IncreaseSpeed * comboCounter.counter;
         }
         else
         {
             Debug.LogError("Il 'comboCounter' è null!");
         }
 
-        if (currEntertainmentValue > 100) 
-            currEntertainmentValue = 100;
-/* CREDO SIA INUTILE DA RIMUOVERE SE NON VENGONO SEGNALATI BUG  
-        if (fill != null)
-        {
-        //    Debug.Log("ho incrementato il fill amount");
-       //     fill.fillAmount += currEntertainmentValue/maxEntertainmentValue;
-        }
-  */
+        if (currEntertainmentValue > maxEntertainmentValue)
+            currEntertainmentValue = maxEntertainmentValue;
+        Debug.Log("ho chiamato l'update dell'entertainment bar a seguito di un attacco");
+        UpdateFillAmount();
     }
 
     public void ChangeEntertainmentBarParameter(float decreaseSpeed, float IncreaseSpeed)
@@ -105,40 +99,39 @@ public class EntertainmentBar : MonoBehaviour
             isZero = false;
         }
         currEntertainmentValue = maxEntertainmentValue;
+        UpdateFillAmount();
     }
 
     void Update()
     {
-        // TO REMOVE solo ai fini di debugging 
-        if (Input.GetKeyDown(KeyCode.C))
-        {
-            if (comboCounter != null)
-            {
-                comboCounter.counter += 2;
-            }
-        }
-
         if (!isZero && isActive)
         {
             currEntertainmentValue -= decreaseSpeed * Time.deltaTime;
-            Debug.Log("ho decrementato il valore del fill");
-            if (currEntertainmentValue < 0)
+            if (currEntertainmentValue <= 0)
             {
                 currEntertainmentValue = 0;
                 isZero = true;
+                Debug.LogError("Current Entertainment Value is Zero, fill.fillAmount: " + fill.fillAmount);
                 OnZeroedEnterteinmentBar?.Invoke(this, EventArgs.Empty);
             }
-        }
-
-        if (fill != null)
-        {
-            Debug.Log("ho aggiornato il valore del fill");
-            fill.fillAmount = currEntertainmentValue / maxEntertainmentValue;
+            UpdateFillAmount();
         }
 
         if (Input.GetKeyDown(KeyCode.U))
         {
             AttackPerfomed(null, EventArgs.Empty);
+        }
+    }
+
+    private void UpdateFillAmount()
+    {
+        if (fill != null)
+        {
+            fill.fillAmount = currEntertainmentValue / maxEntertainmentValue;
+            Debug.Log("UpdateFillAmount: currEntertainmentValue=" + currEntertainmentValue + ", fill.fillAmount=" + fill.fillAmount);
+
+            // Forza l'aggiornamento del canvas
+            Canvas.ForceUpdateCanvases();
         }
     }
 }
