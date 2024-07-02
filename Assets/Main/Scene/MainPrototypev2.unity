@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18386978, g: 0.2290168, b: 0.30311278, a: 1}
+  m_IndirectSpecularColor: {r: 0.18386948, g: 0.22901604, b: 0.30311152, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -807,13 +807,13 @@ Transform:
   m_GameObject: {fileID: 327618868}
   serializedVersion: 2
   m_LocalRotation: {x: -4.3297806e-17, y: 0.7071068, z: 0.7071068, w: -4.3297806e-17}
-  m_LocalPosition: {x: -31.2, y: 3.2363434, z: 2.7884064}
-  m_LocalScale: {x: 22.323204, y: 24.951761, z: 22.323196}
+  m_LocalPosition: {x: -31.199951, y: 3.2363434, z: 2.7884064}
+  m_LocalScale: {x: 22.323204, y: 24.951763, z: 22.323195}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 413823655}
   - {fileID: 890653920}
-  m_Father: {fileID: 2087315725}
+  m_Father: {fileID: 2076956808}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &327838599
 GameObject:
@@ -1537,6 +1537,12 @@ Transform:
   - {fileID: 410555133}
   m_Father: {fileID: 1417358238}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &541119516 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7897149327893079946, guid: 86decf478d7f44de6ba6c659c541a018,
+    type: 3}
+  m_PrefabInstance: {fileID: 1528564941}
+  m_PrefabAsset: {fileID: 0}
 --- !u!114 &544969645 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 6413920143000898294, guid: b1084cf71d686f14d9bea381e725541f,
@@ -4462,6 +4468,11 @@ PrefabInstance:
       propertyPath: spawnLimit
       value: 7
       objectReference: {fileID: 0}
+    - target: {fileID: 3438429441744467633, guid: a629d78297fc1a84fa173b1a061b3e09,
+        type: 3}
+      propertyPath: m_Name
+      value: EnvAssets
+      objectReference: {fileID: 0}
     - target: {fileID: 3457777987694606668, guid: a629d78297fc1a84fa173b1a061b3e09,
         type: 3}
       propertyPath: m_TagString
@@ -5006,6 +5017,11 @@ PrefabInstance:
       propertyPath: m_LocalPosition.y
       value: 1023.3
       objectReference: {fileID: 0}
+    - target: {fileID: 5743388614637997116, guid: a629d78297fc1a84fa173b1a061b3e09,
+        type: 3}
+      propertyPath: m_Name
+      value: EnvAssets
+      objectReference: {fileID: 0}
     - target: {fileID: 5819477615648489027, guid: a629d78297fc1a84fa173b1a061b3e09,
         type: 3}
       propertyPath: m_Materials.Array.size
@@ -5070,11 +5086,6 @@ PrefabInstance:
         type: 3}
       propertyPath: spawnCount
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6683810452736750464, guid: a629d78297fc1a84fa173b1a061b3e09,
-        type: 3}
-      propertyPath: spawnLimit
-      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 6683810452736750464, guid: a629d78297fc1a84fa173b1a061b3e09,
         type: 3}
@@ -5194,6 +5205,21 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6683810452736750464, guid: a629d78297fc1a84fa173b1a061b3e09,
         type: 3}
+      propertyPath: spawnedEnemies.Array.data[0]
+      value: 
+      objectReference: {fileID: 1971024972}
+    - target: {fileID: 6683810452736750464, guid: a629d78297fc1a84fa173b1a061b3e09,
+        type: 3}
+      propertyPath: spawnedEnemies.Array.data[1]
+      value: 
+      objectReference: {fileID: 541119516}
+    - target: {fileID: 6683810452736750464, guid: a629d78297fc1a84fa173b1a061b3e09,
+        type: 3}
+      propertyPath: spawnedEnemies.Array.data[2]
+      value: 
+      objectReference: {fileID: 541119516}
+    - target: {fileID: 6683810452736750464, guid: a629d78297fc1a84fa173b1a061b3e09,
+        type: 3}
       propertyPath: spawnProbability.Array.data[0]
       value: 0.4
       objectReference: {fileID: 0}
@@ -5302,6 +5328,11 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 23800000, guid: 05c8448c15da99443ab89c0298789317,
         type: 2}
+    - target: {fileID: 7596564380974522049, guid: a629d78297fc1a84fa173b1a061b3e09,
+        type: 3}
+      propertyPath: m_Name
+      value: EnvAssets
+      objectReference: {fileID: 0}
     - target: {fileID: 7663221484881158323, guid: a629d78297fc1a84fa173b1a061b3e09,
         type: 3}
       propertyPath: m_Name
@@ -5738,9 +5769,9 @@ PrefabInstance:
         type: 3}
       insertIndex: 4
       addedObject: {fileID: 1196587648}
-    - targetCorrespondingSourceObject: {fileID: 7415213688385423256, guid: a629d78297fc1a84fa173b1a061b3e09,
+    - targetCorrespondingSourceObject: {fileID: 8683250844109984273, guid: a629d78297fc1a84fa173b1a061b3e09,
         type: 3}
-      insertIndex: 6
+      insertIndex: -1
       addedObject: {fileID: 327618869}
     - targetCorrespondingSourceObject: {fileID: 5151940803303588991, guid: a629d78297fc1a84fa173b1a061b3e09,
         type: 3}
@@ -7618,6 +7649,11 @@ PrefabInstance:
       propertyPath: currentHP
       value: 3
       objectReference: {fileID: 0}
+    - target: {fileID: 6508631950434962066, guid: 86decf478d7f44de6ba6c659c541a018,
+        type: 3}
+      propertyPath: currentRoom
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 7897149327893079946, guid: 86decf478d7f44de6ba6c659c541a018,
         type: 3}
       propertyPath: m_Name
@@ -7829,6 +7865,12 @@ MonoBehaviour:
   channelTransitionVideo: {fileID: 1627780818}
   transitionTime: 1
   musicSource: {fileID: 2110897994}
+--- !u!1 &1971024972 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7897149327893079946, guid: 86decf478d7f44de6ba6c659c541a018,
+    type: 3}
+  m_PrefabInstance: {fileID: 472589597}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1980319606
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -8344,6 +8386,12 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 090d12b552e7c52439372693ece0bbf7, type: 3}
+--- !u!4 &2076956808 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 8683250844109984273, guid: a629d78297fc1a84fa173b1a061b3e09,
+    type: 3}
+  m_PrefabInstance: {fileID: 1469753543}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &2087315725 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7415213688385423256, guid: a629d78297fc1a84fa173b1a061b3e09,

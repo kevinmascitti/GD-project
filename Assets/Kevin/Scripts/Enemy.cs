@@ -5,8 +5,25 @@ using UnityEngine;
 
 public class Enemy : Character
 {
-    public static EventHandler OnEnemyDeath;
-    
+    public Room currentRoom;
+    public static EventHandler<Room> OnEnemyDeath;
+
+    public void Awake()
+    {
+        currentRoom = GameObject.Find("Player").GetComponent<PlayerCharacter>().currentRoom;
+        if (currentRoom == null)
+            currentRoom = transform.parent.GetComponent<Room>();
+
+        LevelManager.OnEndRoom += DestroyGameObject;
+        Room.OnEndRoom += DestroyGameObject;
+    }
+
+    public void OnDestroy()
+    { 
+        LevelManager.OnEndRoom -= DestroyGameObject;
+        Room.OnEndRoom -= DestroyGameObject;
+    }
+
     public void Update()
     {
         base.Update();
@@ -15,9 +32,17 @@ public class Enemy : Character
     public override void Die()
     {
         // TO DO animazione e morte
-        OnEnemyDeath?.Invoke(this,EventArgs.Empty);
+        OnEnemyDeath?.Invoke(this, currentRoom);
         // agigungo la kill al player
         Destroy(gameObject);
+    }
+
+    private void DestroyGameObject(object sender, RoomArgs args)
+    {
+        if (args.room == currentRoom)
+        {
+            Destroy(gameObject);
+        }
     }
 
 }

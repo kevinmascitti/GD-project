@@ -52,10 +52,10 @@ public class Room : MonoBehaviour
         exitWall.gameObject.layer = 0;
     }
     
-    private void KillAndCheckEnemyCount(object sender, EventArgs args)
+    private void KillAndCheckEnemyCount(object sender, Room args)
     {
         killedEnemies++;
-        if (killedEnemies == spawner.spawnLimit)
+        if (args == this && killedEnemies == spawner.spawnLimit)
         {
             // GameObject.FindGameObjectWithTag("Spawner").GetComponent<Spawner>().OpenExit();
             spawner.SetEnable(false);

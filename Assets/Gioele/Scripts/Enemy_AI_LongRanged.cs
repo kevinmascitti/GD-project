@@ -35,13 +35,19 @@ public class Enemy_AI_LongRanged : Enemy
     private Vector3 forwardScaleVector = new Vector3(1, 1, 1);
     private Vector3 backwardVector = new Vector3(1, 0, 0);
     private Vector3 backwardScaleVector = new Vector3(-1, 1, 1);
+    
     private void Awake()
     {
-      
+        base.Awake();
         Player = GameObject.FindGameObjectWithTag("Player").transform;
         initialRotation = transform.rotation;
         agent = GetComponent<NavMeshAgent>();
        
+    }
+    
+    private void OnDestroy()
+    {
+        base.OnDestroy();
     }
     
     private void OnCollisionEnter(Collision collision)

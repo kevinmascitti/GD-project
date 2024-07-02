@@ -23,6 +23,7 @@ public class ShootingTower : MonoBehaviour
     private bool _isShooting = false;
     private bool grounded=true;
     public int atk;
+    private Room currentRoom;
 
     // Sound Settings
     private AudioSource _audioSource;
@@ -31,6 +32,19 @@ public class ShootingTower : MonoBehaviour
     {
         _target = GameObject.FindGameObjectWithTag("Player");
         _audioSource = GetComponent<AudioSource>();
+        
+        currentRoom = GameObject.Find("Player").GetComponent<PlayerCharacter>().currentRoom;
+        if (currentRoom == null)
+            currentRoom = transform.parent.GetComponent<Room>();
+
+        LevelManager.OnEndRoom += DestroyGameObject;
+        Room.OnEndRoom += DestroyGameObject;
+    }
+    
+    private void OnDestroy()
+    {
+        LevelManager.OnEndRoom -= DestroyGameObject;
+        Room.OnEndRoom -= DestroyGameObject;
     }
 
     void Update()
@@ -108,6 +122,7 @@ public class ShootingTower : MonoBehaviour
             Vector3 direction_player = _target.transform.position - _gunPivot.position;
             GetComponent<Animator>().SetBool("shot", true);
             GameObject rb = Instantiate(bullet, _gunPivot.position, Quaternion.identity);
+            rb.GetComponent<projectile>().currentRoom = currentRoom;
             //do valore di attacco corretto 
             bullet.GetComponent<projectile>().damage = atk;
             rb.transform.forward = new Vector3(direction_player.x, direction_player.y + 1.5f, direction_player.z);
@@ -118,6 +133,7 @@ public class ShootingTower : MonoBehaviour
             Vector3 direction_player = _target.transform.position - _gunPivot.position;
             GetComponent<Animator>().SetBool("shot", true);
             GameObject rb = Instantiate(bullet, _gunPivot.position, Quaternion.identity);
+            rb.GetComponent<projectile>().currentRoom = currentRoom;
             //do valore di attacco corretto 
             bullet.GetComponent<projectile>().damage = atk;
             rb.transform.forward = new Vector3(direction_player.x, direction_player.y + 1.5f, direction_player.z);
@@ -159,5 +175,13 @@ public class ShootingTower : MonoBehaviour
 
         Vector3 newDir = Vector3.RotateTowards(transform.forward, directionToTarget, _targetFoundRotationSpeed * Time.deltaTime, 0f);
         transform.rotation = Quaternion.LookRotation(newDir);
+    }
+    
+    private void DestroyGameObject(object sender, RoomArgs args)
+    {
+        if (args.room == currentRoom)
+        {
+            Destroy(gameObject);
+        }
     }
 }
