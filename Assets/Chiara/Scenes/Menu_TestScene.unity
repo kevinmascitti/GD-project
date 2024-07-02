@@ -955,10 +955,11 @@ AudioSource:
   m_GameObject: {fileID: 1333991331}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: 2543467163520557968, guid: 2d73892442fca9244a868d39598045d7,
+    type: 2}
+  m_audioClip: {fileID: 8300000, guid: fcf82fdebdf735d4c84039183548ae7d, type: 3}
   m_PlayOnAwake: 1
-  m_Volume: 0.729
+  m_Volume: 0.3
   m_Pitch: 1
   Loop: 1
   Mute: 0
@@ -1223,14 +1224,14 @@ RectTransform:
   m_GameObject: {fileID: 1499804411}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1.2497132, y: 1.2497132, z: 1.2497132}
-  m_ConstrainProportionsScale: 1
+  m_LocalScale: {x: 1, y: 1.2497132, z: 1.2497132}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1416341897}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -172, y: 354}
+  m_AnchoredPosition: {x: -172, y: 341.6}
   m_SizeDelta: {x: 1041, y: 158}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1499804413
@@ -1253,7 +1254,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: b0254c1507aec9b459e904ce6b4fb3f3, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 5a62b2527bc792a4a810c8dfa0eca500, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -1703,6 +1704,12 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1473452422754610880, guid: 514d19576c19fcc4ca44c9fa4d9d5951,
+        type: 3}
+      propertyPath: mixer
+      value: 
+      objectReference: {fileID: 24100000, guid: 2d73892442fca9244a868d39598045d7,
+        type: 2}
     - target: {fileID: 1473452422754610880, guid: 514d19576c19fcc4ca44c9fa4d9d5951,
         type: 3}
       propertyPath: musicSlider
