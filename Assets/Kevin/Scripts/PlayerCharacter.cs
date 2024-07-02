@@ -21,6 +21,8 @@ public class PlayerCharacter : Character
     public bool isInvincible; // player invincibile quando riceve danno
     public Slider sliderHP;
     public Slider sliderStamina;
+
+    public Image HpBar;
     public GameObject UIExtraLife;
     private float currentStamina;
     private float staminaUp = 5;
@@ -124,15 +126,20 @@ public class PlayerCharacter : Character
         dieAnimation = false;
         isPlayer = true;
         isInvincible = false;
-        sliderHP = GameObject.Find("HPBar").GetComponent<Slider>();
+        //sliderHP = GameObject.Find("HPBar").GetComponent<Slider>();
         sliderStamina = GameObject.Find("StaminaBar").GetComponent<Slider>();
         UIExtraLife = GameObject.Find("ExtraLife");
-
+     //   HpBar = GameObject.Find("HPBarv2").GetComponentInChildren<Image>();
+        /*
+        if (HpBar)
+            Debug.Log("vita trovata");
+        */
         audioSource = GetComponent<AudioSource>();
-
-        if (sliderHP && sliderStamina)
+        //sliderHP && .. 
+        if (HpBar && sliderStamina)
         {
-            sliderHP.maxValue = MAX_HP;
+            HpBar.fillAmount = MAX_HP;
+            //sliderHP.maxValue = MAX_HP;
             sliderStamina.maxValue = MAX_STAMINA;
         }
 
@@ -415,8 +422,15 @@ public class PlayerCharacter : Character
 
     private void UpdateHPUI(float HP)
     {
+       /*
         if(sliderHP)
             sliderHP.value = HP;
+        */
+       if (HpBar)
+       {
+            Debug.Log("barra della saluta aggiornata a seguito della ricezione del danno");
+           HpBar.fillAmount = HP/MAX_HP;
+       }
     }
 
     private void UpdateStaminaUI(float stamina)
