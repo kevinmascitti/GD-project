@@ -3,76 +3,121 @@ using UnityEngine;
 public class StateMachine : MonoBehaviour
 {
     public string customName;
-
     private State mainStateType;
-
     public State CurrentState { get; private set; }
     private State nextState;
 
-    // Update is called once per frame
-    void Update()
+    private void Awake()
     {
+        // Imposta lo stato principale in base al nome personalizzato
+        if (string.IsNullOrEmpty(customName))
+        {
+            Debug.LogError("customName is null or empty.");
+        }
+        else
+        {
+            SetMainState(customName);
+        }
+        
+        // Inizializza lo stato corrente con lo stato principale se non già impostato
+        if (CurrentState == null)
+        {
+            SetState(mainStateType);
+        }
+    }
+
+    private void OnValidate()
+    {
+        // Imposta lo stato principale in base al nome personalizzato
+        if (string.IsNullOrEmpty(customName))
+        {
+            Debug.LogError("customName is null or empty.");
+        }
+        else
+        {
+            SetMainState(customName);
+        }
+    }
+
+    private void SetMainState(string stateName)
+    {
+        switch (stateName)
+        {
+            case "Combat":
+                mainStateType = new IdleCombatState();
+                break;
+            default:
+                Debug.LogError("Unknown state name: " + stateName);
+                break;
+        }
+    }
+
+    private void Start()
+    {
+        // Inizializza lo stato corrente con lo stato principale se non già impostato
+        if (CurrentState == null)
+        {
+            SetState(mainStateType);
+        }
+    }
+
+    private void Update()
+    {
+        // Gestisci la transizione dello stato
         if (nextState != null)
         {
             SetState(nextState);
         }
 
+        // Esegui l'aggiornamento dello stato corrente
         if (CurrentState != null)
+        {
             CurrentState.OnUpdate();
+        }
     }
 
-    private void SetState(State _newState)
+    private void LateUpdate()
+    {
+        // Esegui l'aggiornamento tardivo dello stato corrente
+        if (CurrentState != null)
+        {
+            CurrentState.OnLateUpdate();
+        }
+    }
+
+    private void FixedUpdate()
+    {
+        // Esegui l'aggiornamento fisso dello stato corrente
+        if (CurrentState != null)
+        {
+            CurrentState.OnFixedUpdate();
+        }
+    }
+
+    private void SetState(State newState)
     {
         nextState = null;
         if (CurrentState != null)
         {
             CurrentState.OnExit();
         }
-        CurrentState = _newState;
-        CurrentState.OnEnter(this);
-    }
-
-    public void SetNextState(State _newState)
-    {
-        if (_newState != null)
+        CurrentState = newState;
+        if (CurrentState != null)
         {
-            nextState = _newState;
+            CurrentState.OnEnter(this);
         }
     }
 
-    private void LateUpdate()
+    public void SetNextState(State newState)
     {
-        if (CurrentState != null)
-            CurrentState.OnLateUpdate();
-    }
-
-    private void FixedUpdate()
-    {
-        if (CurrentState != null)
-            CurrentState.OnFixedUpdate();
+        if (newState != null)
+        {
+            nextState = newState;
+        }
     }
 
     public void SetNextStateToMain()
     {
         nextState = mainStateType;
-    }
-
-    private void Awake()
-    {
-       // mainStateType = new IdleCombatState();
-        SetNextStateToMain();
-        
-    }
-
-
-    private void OnValidate()
-    {
-        if (mainStateType == null)
-        {
-            if (customName == "Combat")
-            {
-                mainStateType = new IdleCombatState();
-            }
-        }
     }
 }
