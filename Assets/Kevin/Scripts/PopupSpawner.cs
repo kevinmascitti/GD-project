@@ -32,10 +32,16 @@ public class PopupSpawner : MonoBehaviour
             popupList.Add(new Tuple<int, string>(thresholdList[i], popupNamesList[i]));
             isPopupSpawned.Add(thresholdList[i], false);
         }
+        audioSource = GetComponent<AudioSource>();
 
         ComboCounter.OnCounterIncreased += CheckCounter;
         ComboCounter.OnCounterInitialized += InitializePopup;
-        audioSource = GetComponent<AudioSource>();
+    }
+
+    private void OnDestroy()
+    {
+        ComboCounter.OnCounterIncreased -= CheckCounter;
+        ComboCounter.OnCounterInitialized -= InitializePopup;
     }
 
     private void CheckCounter(object sender, int args)
