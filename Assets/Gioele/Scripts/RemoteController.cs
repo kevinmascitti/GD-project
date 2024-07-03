@@ -14,6 +14,8 @@ public class RemoteController : MonoBehaviour
     private bool isUIVisible = false;
     private bool isStaminaFull = false;
     [SerializeField] private GameObject controllerUI;
+    [SerializeField] private GameObject disabledButtons;
+    [SerializeField] private GameObject enabledButtons;
     [SerializeField] private float moltiplicatoreCombo = 1f;
     [SerializeField] private float moltiplicatoreDanniNemici = 1f;
     [SerializeField] private LineRenderer laser;
@@ -51,6 +53,12 @@ public class RemoteController : MonoBehaviour
         originalScale = transform.localScale;
         if(squashAndStress)
             squashAndStress.SetActive(false);
+        disabledButtons = GameObject.Find("DisabledButtons");
+        if(controllerUI)
+            disabledButtons.SetActive(false);
+        enabledButtons = GameObject.Find("EnabledButtons");
+        if(controllerUI)
+            enabledButtons.SetActive(false);
         controllerUI = GameObject.Find("ControllerUI");
         if(controllerUI)
             controllerUI.SetActive(false);
@@ -63,6 +71,7 @@ public class RemoteController : MonoBehaviour
         UnlockVolumePlus = true;
         
         PlayerCharacter.OnStaminaFull += SetStaminaFull;
+        PlayerCharacter.OnStaminaFull += SetUI;
     }
 
     private void OnDestroy()
@@ -74,7 +83,11 @@ public class RemoteController : MonoBehaviour
     {
         isStaminaFull = true;
     }
-    
+    private void SetUI(object sender, EventArgs args)
+    {
+        disabledButtons.SetActive(false);
+        enabledButtons.SetActive(true);
+    }
     // enable dei bottoni
     public void UnlockChPlusButton()
     {
@@ -448,14 +461,29 @@ public class RemoteController : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.LeftControl) && !isUIVisible)
         {
+            Debug.Log("attivata ui");
             controllerUI.SetActive(true);
             isUIVisible = true;
+            if (isStaminaFull)
+            {
+                // mostro i tasti abilitati
+                disabledButtons.SetActive(false);
+                enabledButtons.SetActive(true);
+            }
+            else
+            {
+                // mostro i tasti disabilitati 
+                enabledButtons.SetActive(false);
+                disabledButtons.SetActive(true);
+            }
         }
         else if (Input.GetKeyUp(KeyCode.LeftControl) && isUIVisible)
         {
             controllerUI.SetActive(false);
             isUIVisible = false;
+            
         }
+        
 
         if (Input.GetKey(KeyCode.LeftControl) && isStaminaFull)
         {
@@ -463,7 +491,8 @@ public class RemoteController : MonoBehaviour
             {
                 playerTransform.GetComponent<PlayerCharacter>().UpdateStamina(0);
                 StartLaser();
-                controllerUI.SetActive(false);
+                enabledButtons.SetActive(false);
+                disabledButtons.SetActive(true);
                 isUIVisible = false;
                 isStaminaFull = false;
             }
@@ -471,7 +500,8 @@ public class RemoteController : MonoBehaviour
             {
                 playerTransform.GetComponent<PlayerCharacter>().UpdateStamina(0);
                 StartPause("Enemy");
-                controllerUI.SetActive(false);
+                enabledButtons.SetActive(false);
+                disabledButtons.SetActive(true);
                 isUIVisible = false;
                 isStaminaFull = false;
             }
@@ -479,7 +509,8 @@ public class RemoteController : MonoBehaviour
             {
                 playerTransform.GetComponent<PlayerCharacter>().UpdateStamina(0);
                 StartChMinus("Enemy");
-                controllerUI.SetActive(false);
+                enabledButtons.SetActive(false);
+                disabledButtons.SetActive(true);
                 isUIVisible = false;
                 isStaminaFull = false;
             }
@@ -487,7 +518,8 @@ public class RemoteController : MonoBehaviour
             {
                 playerTransform.GetComponent<PlayerCharacter>().UpdateStamina(0);
                 StartVolumePlus();
-                controllerUI.SetActive(false);
+                enabledButtons.SetActive(false);
+                disabledButtons.SetActive(true);
                 isUIVisible = false;
                 isStaminaFull = false;
             }
@@ -495,7 +527,8 @@ public class RemoteController : MonoBehaviour
             {
                 playerTransform.GetComponent<PlayerCharacter>().UpdateStamina(0);
                 StartChPlus();
-                controllerUI.SetActive(false);
+                enabledButtons.SetActive(false);
+                disabledButtons.SetActive(true);
                 isUIVisible = false;
                 isStaminaFull = false;
             }
@@ -503,7 +536,8 @@ public class RemoteController : MonoBehaviour
             {
                 playerTransform.GetComponent<PlayerCharacter>().UpdateStamina(0);
                 StartVolumeMinus();
-                controllerUI.SetActive(false);
+                enabledButtons.SetActive(false);
+                disabledButtons.SetActive(true);
                 isUIVisible = false;
                 OnControllerAbility?.Invoke(this, EventArgs.Empty);
                 isStaminaFull = false;
