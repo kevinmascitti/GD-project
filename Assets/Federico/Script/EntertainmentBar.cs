@@ -113,7 +113,6 @@ public class EntertainmentBar : MonoBehaviour
             {
                 currEntertainmentValue = 0;
                 isZero = true;
-                Debug.LogError("Current Entertainment Value is Zero, fill.fillAmount: " + fill.fillAmount);
                 OnZeroedEnterteinmentBar?.Invoke(this, EventArgs.Empty);
             }
             UpdateFillAmount();

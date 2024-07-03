@@ -75,7 +75,7 @@ public class ComboCharacterWithDamage : MonoBehaviour
                 
             }
 
-            if (Input.GetKeyDown(KeyCode.O) && meleeStateMachine.CurrentState.GetType() == typeof(IdleCombatState))
+            if (Input.GetKeyDown(KeyCode.LeftShift) && meleeStateMachine.CurrentState.GetType() == typeof(IdleCombatState))
             {
                 OnDashRequested?.Invoke(this, EventArgs.Empty);
             }

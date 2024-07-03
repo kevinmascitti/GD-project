@@ -440,18 +440,18 @@ public class RemoteController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Alpha1) && !isUIVisible)
+        if (Input.GetKeyDown(KeyCode.LeftControl) && !isUIVisible)
         {
             controllerUI.SetActive(true);
             isUIVisible = true;
         }
-        else if (Input.GetKeyUp(KeyCode.Alpha1) && isUIVisible)
+        else if (Input.GetKeyUp(KeyCode.LeftControl) && isUIVisible)
         {
             controllerUI.SetActive(false);
             isUIVisible = false;
         }
 
-        if (Input.GetKey(KeyCode.Alpha1) && isStaminaFull)
+        if (Input.GetKey(KeyCode.LeftControl) && isStaminaFull)
         {
             if (Input.GetKeyDown(KeyCode.I))
             {
