@@ -13,6 +13,10 @@ public class RemoteController : MonoBehaviour
     private Vector3 originalScale;
     private bool isUIVisible = false;
     private bool isStaminaFull = false;
+    private bool ButtonAnimation = false;
+    private Vector3 scala;
+    private float rescalefactor = 1;
+    float scalefactor = 1.005f;
     [SerializeField] private GameObject controllerUI;
     [SerializeField] private GameObject disabledButtons;
     [SerializeField] private GameObject enabledButtons;
@@ -57,8 +61,12 @@ public class RemoteController : MonoBehaviour
         if(controllerUI)
             disabledButtons.SetActive(false);
         enabledButtons = GameObject.Find("EnabledButtons");
-        if(controllerUI)
+        if (controllerUI)
+        {
+            scala = enabledButtons.transform.localScale;
             enabledButtons.SetActive(false);
+        }
+
         controllerUI = GameObject.Find("ControllerUI");
         if(controllerUI)
             controllerUI.SetActive(false);
@@ -85,7 +93,9 @@ public class RemoteController : MonoBehaviour
     }
     private void SetUI(object sender, EventArgs args)
     {
+        disabledButtons.transform.localScale = new Vector3(1, 1, 1);
         disabledButtons.SetActive(false);
+        enabledButtons.transform.localScale = new Vector3(1, 1, 1);
         enabledButtons.SetActive(true);
     }
     // enable dei bottoni
@@ -459,7 +469,7 @@ public class RemoteController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.LeftControl) && !isUIVisible)
+        if (Input.GetKeyDown(KeyCode.LeftControl) && !isUIVisible && !ButtonAnimation)
         {
             Debug.Log("attivata ui");
             controllerUI.SetActive(true);
@@ -477,7 +487,7 @@ public class RemoteController : MonoBehaviour
                 disabledButtons.SetActive(true);
             }
         }
-        else if (Input.GetKeyUp(KeyCode.LeftControl) && isUIVisible)
+        else if (Input.GetKeyUp(KeyCode.LeftControl) && isUIVisible && !ButtonAnimation)
         {
             controllerUI.SetActive(false);
             isUIVisible = false;
@@ -491,56 +501,70 @@ public class RemoteController : MonoBehaviour
             {
                 playerTransform.GetComponent<PlayerCharacter>().UpdateStamina(0);
                 StartLaser();
-                enabledButtons.SetActive(false);
-                disabledButtons.SetActive(true);
-                isUIVisible = false;
                 isStaminaFull = false;
+                ButtonAnimation = true;
             }
             else if (Input.GetKeyDown(KeyCode.U))
             {
                 playerTransform.GetComponent<PlayerCharacter>().UpdateStamina(0);
                 StartPause("Enemy");
-                enabledButtons.SetActive(false);
-                disabledButtons.SetActive(true);
-                isUIVisible = false;
                 isStaminaFull = false;
+                ButtonAnimation = true;
             }
             else if (Input.GetKeyDown(KeyCode.J))
             {
                 playerTransform.GetComponent<PlayerCharacter>().UpdateStamina(0);
                 StartChMinus("Enemy");
-                enabledButtons.SetActive(false);
-                disabledButtons.SetActive(true);
-                isUIVisible = false;
                 isStaminaFull = false;
+                ButtonAnimation = true;
             }
             else if (Input.GetKeyDown(KeyCode.P))
             {
                 playerTransform.GetComponent<PlayerCharacter>().UpdateStamina(0);
                 StartVolumePlus();
-                enabledButtons.SetActive(false);
-                disabledButtons.SetActive(true);
-                isUIVisible = false;
                 isStaminaFull = false;
+                ButtonAnimation = true;
             }
             else if (Input.GetKeyDown(KeyCode.L))
             {
                 playerTransform.GetComponent<PlayerCharacter>().UpdateStamina(0);
                 StartChPlus();
-                enabledButtons.SetActive(false);
-                disabledButtons.SetActive(true);
-                isUIVisible = false;
                 isStaminaFull = false;
+                ButtonAnimation = true;
             }
             else if (Input.GetKeyDown(KeyCode.K))
             {
                 playerTransform.GetComponent<PlayerCharacter>().UpdateStamina(0);
                 StartVolumeMinus();
-                enabledButtons.SetActive(false);
-                disabledButtons.SetActive(true);
-                isUIVisible = false;
                 OnControllerAbility?.Invoke(this, EventArgs.Empty);
                 isStaminaFull = false;
+                ButtonAnimation = true;
+            }
+        }
+
+        if (ButtonAnimation)
+        {
+            
+            enabledButtons.transform.localScale*=scalefactor;
+            if (Mathf.Abs(enabledButtons.transform.localScale.x) > 1.2f &&
+                Mathf.Abs(enabledButtons.transform.localScale.y) > 1.2f &&
+                Mathf.Abs(enabledButtons.transform.localScale.z) > 1.2f)
+            {
+                //ButtonAnimation = false;
+                disabledButtons.SetActive(true);
+                disabledButtons.transform.localScale = enabledButtons.transform.localScale;
+                enabledButtons.SetActive(false);
+                enabledButtons.transform.localScale = new Vector3(1,1,1);
+                rescalefactor = 0.995f;
+                scalefactor = 1f;
+            }
+            disabledButtons.transform.localScale*=rescalefactor;
+            if (Mathf.Abs(disabledButtons.transform.localScale.x) < 1f &&
+                Mathf.Abs(disabledButtons.transform.localScale.y) < 1f &&
+                Mathf.Abs(disabledButtons.transform.localScale.z) < 1f)
+            {
+                ButtonAnimation = false;
+                disabledButtons.transform.localScale = new Vector3(1,1,1);
             }
         }
 
@@ -548,5 +572,9 @@ public class RemoteController : MonoBehaviour
         {
             DetectHit();
         }
+    }
+    IEnumerator WaitAndPrint()
+    {
+        yield return new WaitForSeconds(0.25f); 
     }
 }
