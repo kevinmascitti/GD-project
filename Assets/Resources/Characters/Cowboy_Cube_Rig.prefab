@@ -440,6 +440,7 @@ MonoBehaviour:
   isPlayer: 0
   atk: 5
   damageReducer: 1
+  currentRoom: {fileID: 0}
   agent: {fileID: 4709013081580493079, guid: ad9f4c9032e2f32419f565b38ae08fb6, type: 3}
   Player: {fileID: 0}
   ground:
@@ -503,7 +504,7 @@ BoxCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3

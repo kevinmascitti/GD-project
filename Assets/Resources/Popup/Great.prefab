@@ -349,6 +349,18 @@ PrefabInstance:
         type: 3}
       insertIndex: -1
       addedObject: {fileID: 2641698099682742751}
+    - targetCorrespondingSourceObject: {fileID: 8164078558771037576, guid: 80a18498148b346ef83f726c706660ca,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 4162527089719119390}
+    - targetCorrespondingSourceObject: {fileID: 8164078558771037576, guid: 80a18498148b346ef83f726c706660ca,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 6698656562174511445}
+    - targetCorrespondingSourceObject: {fileID: 8164078558771037576, guid: 80a18498148b346ef83f726c706660ca,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2524164460276336015}
   m_SourcePrefab: {fileID: 100100000, guid: 80a18498148b346ef83f726c706660ca, type: 3}
 --- !u!4 &20970322310088993 stripped
 Transform:
@@ -512,6 +524,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eb0ae8807a5244a3b8bda6c4d5e05fef, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  destroyTime: 13
+  flickTime: 8
   destroyThrowTimer: 5
   destroyUsedTimer: 5
   transitionDuration: 0.5
@@ -610,3 +624,42 @@ MonoBehaviour:
   precomputeOutline: 0
   bakeKeys: []
   bakeValues: []
+--- !u!114 &4162527089719119390
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9150381076659591706}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 160a9d59bbed448b2bd834d82de0c5b0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Interval: 0
+--- !u!114 &6698656562174511445
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9150381076659591706}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 160a9d59bbed448b2bd834d82de0c5b0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Interval: 0
+--- !u!114 &2524164460276336015
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9150381076659591706}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 132569580ffa841459745e13a5e3cda8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  flickerInterval: 0.3

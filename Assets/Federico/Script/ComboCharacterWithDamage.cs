@@ -23,7 +23,7 @@ public class ComboCharacterWithDamage : MonoBehaviour
 
     private void OnEnable()
     {
-        Debug.Log("OnEnable: Enabling controls");
+        //Debug.Log("OnEnable: Enabling controls");
         controls.Enable();
     }
     

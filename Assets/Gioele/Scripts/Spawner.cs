@@ -82,13 +82,16 @@ public class Spawner : MonoBehaviour
         if(args.room.prevRoom)
             foreach (Transform child in args.room.prevRoom.transform.Find("EnvAssets").transform)
             {
+                bool found = false;
                 foreach (Transform grandchild in child)
                 {
                     if (grandchild.CompareTag("Exit"))
                     {
                         grandchild.gameObject.SetActive(true);
+                        found = true;
                     }
                 }
+                if (found) break;
             }
     }
     
@@ -112,20 +115,23 @@ public class Spawner : MonoBehaviour
         
         foreach (Transform child in args.room.transform.Find("EnvAssets").transform)
         {
+            bool found = false;
             foreach (Transform grandchild in child)
             {
                 if (grandchild.CompareTag("Exit"))
                 {
                     grandchild.gameObject.SetActive(false);
+                    found = true;
                 }
             }
+            if (found) break;
         }
     }
 
     public void StartSpawn()
     {
         canSpawn = true;
-        Debug.Log("state spawner active: " + gameObject.activeSelf);
+        Debug.Log("state spawner active Level: " + roomTransform.GetComponent<Room>().level.ID + " - Room: " + roomTransform.GetComponent<Room>().ID);
         StartCoroutine(SpawnObjects());
     }
 

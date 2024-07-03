@@ -18,7 +18,7 @@ public class Room : MonoBehaviour
     [NonSerialized] public BoxCollider enterWall;
     [NonSerialized] public BoxCollider exitWall;
     [NonSerialized] public Spawner spawner;
-    private int killedEnemies = 0;
+    [SerializeField] private int killedEnemies = 0;
     [SerializeField] private bool isBossRoom = false;
     
     public static EventHandler<RoomArgs> OnEndRoom;
@@ -26,7 +26,7 @@ public class Room : MonoBehaviour
     public void Awake()
     {
         ID = Int32.Parse(gameObject.name.Substring("Room".Length));
-        spawner = transform.Find("spawner").GetComponent<Spawner>();
+        spawner = gameObject.transform.Find("spawner").GetComponent<Spawner>();
         spawner.enabled = false;
         
         PlayerCharacter.OnStartRoom += EnableRoom;
@@ -54,15 +54,18 @@ public class Room : MonoBehaviour
     
     private void KillAndCheckEnemyCount(object sender, Room room)
     {
-        killedEnemies++;
-        if (room == this && killedEnemies == spawner.spawnLimit)
+        if (room == this)
         {
-            // GameObject.FindGameObjectWithTag("Spawner").GetComponent<Spawner>().OpenExit();
-            spawner.SetEnable(false);
-            room.spawner.spawnCount = 0;
-            isLocked = false;
-            OnEndRoom?.Invoke(this,new RoomArgs(this));
-            killedEnemies = 0;
+            killedEnemies++;
+            if (!spawner.canSpawn && killedEnemies == spawner.spawnLimit)
+            {
+                // GameObject.FindGameObjectWithTag("Spawner").GetComponent<Spawner>().OpenExit();
+                spawner.SetEnable(false);
+                room.spawner.spawnCount = 0;
+                isLocked = false;
+                OnEndRoom?.Invoke(this, new RoomArgs(this));
+                killedEnemies = 0;
+            }
         }
     }
 

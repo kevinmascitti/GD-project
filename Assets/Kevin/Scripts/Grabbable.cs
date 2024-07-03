@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using Unity.VisualScripting;
+using UnityEditor.PackageManager;
 using UnityEngine;
 using UnityEngine.Video;
 using Object = UnityEngine.Object;
@@ -20,6 +21,7 @@ public enum GrabbableState
 
 public class Grabbable : MonoBehaviour
 {
+    [SerializeField] private float flickTime;
     [SerializeField] private float destroyThrowTimer;
     [SerializeField] private float destroyUsedTimer;
     [SerializeField] private float transitionDuration;
@@ -36,8 +38,9 @@ public class Grabbable : MonoBehaviour
     [SerializeField] private float rotationAmplitude; // Ampiezza massima della rotazione
     [SerializeField] private int rotationOscillations; // Numero di oscillazioni complete
     
-     
-
+    private float destroyTime;
+    private MyTimer destroyTimer;
+    private MyTimer flickTimer;
     private bool isInRange = false;
     private GrabbableState state = GrabbableState.INACTIVE;
     private GameObject player;
@@ -45,7 +48,8 @@ public class Grabbable : MonoBehaviour
     private Vector3 rotationAxis = Vector3.forward;
     private GameObject centerOfRotation;
     private Transform mainCamera;
-    
+
+    [NonSerialized] public Room room;
     public Color courrentColor=Color.green;
     public Outline outline;
 
@@ -68,8 +72,28 @@ public class Grabbable : MonoBehaviour
         mainCamera = GameObject.Find("Main Camera").transform;
         StartCoroutine(AnimateObject(transform.position, transform.rotation));
         outline = GetComponent<Outline>();
+
+        destroyTime = flickTime + 4.5f;
+        destroyTimer = gameObject.GetComponents<MyTimer>()[0];
+        flickTimer = gameObject.GetComponents<MyTimer>()[1];
+        destroyTimer.Interval = destroyTime;
+        flickTimer.Interval = flickTime;
+        destroyTimer.Begin();
+        flickTimer.Begin();
+
+            PlayerCharacter.OnComputedNearestGrabbable += SetGrabbable;
+        PlayerCharacter.OnEndLevel += DestroyGameObject;
+        PlayerCharacter.OnStartLevel += DestroyGameObject;
         
-        PlayerCharacter.OnComputedNearestGrabbable += SetGrabbable;
+        destroyTimer.Elapsed += DestroyItem;
+        flickTimer.Elapsed += StartFlickRender;
+    }
+    
+    public void OnDestroy()
+    {
+        PlayerCharacter.OnComputedNearestGrabbable -= SetGrabbable;
+        PlayerCharacter.OnEndLevel -= DestroyGameObject;
+        PlayerCharacter.OnStartLevel -= DestroyGameObject;
     }
 
     // Update is called once per frame
@@ -126,6 +150,10 @@ public class Grabbable : MonoBehaviour
         GetComponent<BoxCollider>().enabled = false;
         GetComponent<MeshCollider>().enabled = true;
         
+        destroyTimer.Begin();
+        flickTimer.Begin();
+        GetComponent<Flicker>().StopFlick();
+
         transform.SetParent(player.GetComponent<PlayerCharacter>().grabbingHand.transform);
         
         StartCoroutine(MoveAndRotateToTarget());
@@ -273,6 +301,10 @@ public class Grabbable : MonoBehaviour
             OnAttackLended?.Invoke(this, new EnemyCollisionArgs(1));
             Destroy(gameObject);
         }
+        else if(other.gameObject.layer == LayerMask.NameToLayer("Wall") && (state == GrabbableState.USED || state == GrabbableState.THROWN))
+        {
+            Destroy(gameObject);
+        }
     }
     
     IEnumerator AnimateObject(Vector3 initialPosition, Quaternion initialRotation)
@@ -317,5 +349,28 @@ public class Grabbable : MonoBehaviour
         }
         transform.position = initialPosition;
         state = GrabbableState.UNGRABBABLE;
+    }
+    
+    private void DestroyGameObject(object sender, RoomManagerArgs args)
+    {
+        if (state == GrabbableState.GRABBED)
+            player.GetComponent<PlayerCharacter>().grabbedItem = null;
+        isInRange = false;
+        OnOutsideRange?.Invoke(this, new GrabbableArgs(this));
+        Destroy(gameObject);
+    }
+
+    private void DestroyItem()
+    {
+        if (state == GrabbableState.GRABBED)
+            player.GetComponent<PlayerCharacter>().grabbedItem = null;
+        isInRange = false;
+        OnOutsideRange?.Invoke(this, new GrabbableArgs(this));
+        Destroy(gameObject);
+    }
+
+    private void StartFlickRender()
+    {
+        GetComponent<Flicker>().StartFlick();
     }
 }

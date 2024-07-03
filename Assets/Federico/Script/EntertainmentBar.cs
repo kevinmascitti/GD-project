@@ -129,7 +129,7 @@ public class EntertainmentBar : MonoBehaviour
         if (fill != null)
         {
             fill.fillAmount = currEntertainmentValue / maxEntertainmentValue;
-            Debug.Log("UpdateFillAmount: currEntertainmentValue=" + currEntertainmentValue + ", fill.fillAmount=" + fill.fillAmount);
+            // Debug.Log("UpdateFillAmount: currEntertainmentValue=" + currEntertainmentValue + ", fill.fillAmount=" + fill.fillAmount);
 
             // Forza l'aggiornamento del canvas
             Canvas.ForceUpdateCanvases();

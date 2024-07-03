@@ -9,19 +9,21 @@ public class ComboCounter : MonoBehaviour
 {
     [NonSerialized] public int counter = 0;
     
-    private ComboTimer comboTimer;
+    private MyTimer comboTimer;
 
     public static EventHandler<int> OnCounterIncreased;
     public static EventHandler OnCounterInitialized;
 
     void Start()
     {
-        comboTimer = GetComponent<ComboTimer>();
+        comboTimer = GetComponent<MyTimer>();
         
         EnemyCollision.OnAttackLended += IncreaseCounter;
         Grabbable.OnAttackLended += IncreaseCounter;
         Dash.OnAttackLended += IncreaseCounter;
-        ComboTimer.Elapsed += ElapsedTimer;
+        PlayerCharacter.OnStartLevel += ResetCounter;
+        PlayerCharacter.OnGameOver += ResetCounter;
+        comboTimer.Elapsed += ElapsedTimer;
     }
 
     private void IncreaseCounter(object sender, EnemyCollisionArgs args)
@@ -32,9 +34,14 @@ public class ComboCounter : MonoBehaviour
         Debug.Log("Combo counter is " + counter);
     }
 
-    private void ElapsedTimer(object sender, EventArgs args)
+    private void ElapsedTimer()
     {
         counter = 0;
         OnCounterInitialized?.Invoke(this, EventArgs.Empty);
+    }
+
+    private void ResetCounter(object sender, EventArgs args)
+    {
+        ElapsedTimer();
     }
 }

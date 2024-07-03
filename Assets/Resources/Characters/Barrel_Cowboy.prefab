@@ -513,8 +513,8 @@ BoxCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 1
-  m_ProvidesContacts: 1
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
   m_Size: {x: 1.6320134, y: 4.181423, z: 2.5731566}
@@ -535,6 +535,7 @@ MonoBehaviour:
   isPlayer: 0
   atk: 5
   damageReducer: 1
+  currentRoom: {fileID: 0}
 --- !u!82 &4017091050067938982
 AudioSource:
   m_ObjectHideFlags: 0

@@ -3,17 +3,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ComboTimer : MonoBehaviour
+public class MyTimer : MonoBehaviour
 {
     public double Interval;
-    
-    [NonSerialized] public bool Enabled;
-
+    private bool Enabled;
     private double passedTime;
 
-    static public EventHandler Elapsed;
+    public event Action Elapsed;
     
-    public ComboTimer(double seconds, bool enabled)
+    public MyTimer(double seconds, bool enabled)
     {
         Interval = seconds;
         Enabled = enabled;
@@ -39,7 +37,7 @@ public class ComboTimer : MonoBehaviour
             passedTime -= Time.deltaTime;
             if (passedTime <= 0)
             {
-                Elapsed?.Invoke(this, EventArgs.Empty);
+                Elapsed?.Invoke();
                 Enabled = false;
             }
         }

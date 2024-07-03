@@ -158,7 +158,6 @@ public class PlayerCharacter : Character
     // Update is called once per frame
     void Update()
     {
-        base.Update();
 
         if (isInputEnabled)
         {

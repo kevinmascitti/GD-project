@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Numerics;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using Quaternion = System.Numerics.Quaternion;
 // using Vector2 = System.Numerics.Vector2;
 using Vector3 = UnityEngine.Vector3;
 using Vector2 = UnityEngine.Vector2;
@@ -44,8 +45,9 @@ public class SimpleThirdPersonController : MonoBehaviour
     }
     private void OnEnable()
     {
-      //  Debug.Log("OnEnable: Enabling controls");
-        controls.Enable();
+        //  Debug.Log("OnEnable: Enabling controls");
+        if(controls != null)
+            controls.Enable();
     }
     
     public void Start()
@@ -92,13 +94,21 @@ public class SimpleThirdPersonController : MonoBehaviour
             {
                 transform.forward = forwardVector;
                 transform.localScale = forwardScaleVector;
-                isForward = true;
+                if (!isForward)
+                {
+                    GetComponent<PlayerCharacter>().grabbedItem.gameObject.transform.localRotation = GetComponent<PlayerCharacter>().grabbedItem.gameObject.transform.localRotation * UnityEngine.Quaternion.Euler(180f, 0, 0);
+                    isForward = true;
+                }
             }
             else
             {
                 transform.forward = backwardVector;
                 transform.localScale = backwardScaleVector;
-                isForward = false;
+                if (isForward)
+                {
+                    GetComponent<PlayerCharacter>().grabbedItem.gameObject.transform.localRotation = GetComponent<PlayerCharacter>().grabbedItem.gameObject.transform.localRotation * UnityEngine.Quaternion.Euler(180f, 0, 0);
+                    isForward = false;
+                }
             }
             // parte che abilità l'animazione della camminata 
             if(move.x!=0 || move.y!=0 || depthMovement.y!=0) 

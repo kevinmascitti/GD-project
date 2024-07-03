@@ -24,11 +24,6 @@ public class Enemy : Character
         Room.OnEndRoom -= DestroyGameObject;
     }
 
-    public void Update()
-    {
-        base.Update();
-    }
-
     public override void Die()
     {
         // TO DO animazione e morte

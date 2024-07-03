@@ -66,8 +66,9 @@ public class PopupSpawner : MonoBehaviour
         audioSource.clip = spawnAudioClips[UnityEngine.Random.Range(0, spawnAudioClips.Length)];
         audioSource.Play();
         Vector3 spawningPosition = player.transform.position;
-        Rigidbody rb = Instantiate(Resources.Load("Popup/"+comboName), spawningPosition, spawningRotation).GameObject().transform.GetChild(0).GetComponent<Rigidbody>();
-        rb.AddForce(spawningDirection * popupSpeed, ForceMode.Impulse);
+        GameObject popup = Instantiate(Resources.Load("Popup/" + comboName), spawningPosition, spawningRotation).GameObject().transform.GetChild(0).gameObject;
+        popup.GetComponent<Rigidbody>().AddForce(spawningDirection * popupSpeed, ForceMode.Impulse);
+        popup.GetComponent<Grabbable>().room = player.GetComponent<PlayerCharacter>().currentRoom;
     }
     
 }

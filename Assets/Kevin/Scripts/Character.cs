@@ -15,10 +15,6 @@ public abstract class Character : MonoBehaviour
     private float hurtAnimationDuration;
     private float hurtAnimationStartTime;
     private AnimatorStateInfo stateInfo;
-    // Update is called once per frame
-    public void Update()
-    {
-    }
     
     public virtual void TakeDamage(float damage)
     {
