@@ -18,6 +18,8 @@ public class MainMenu : MonoBehaviour
                 OnNewGame -= (EventHandler)d;
             }
         }
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
         //transitionCanvas.GetComponent<LevelLoader>().LoadNextLevel(SceneManager.GetActiveScene().buildIndex - 1);
         StopAllCoroutines();
         SceneManager.LoadScene(1, LoadSceneMode.Single);

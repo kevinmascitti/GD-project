@@ -69,10 +69,17 @@ public class ComboCharacterWithDamage : MonoBehaviour
     {
         if (GetComponent<PlayerCharacter>().isInputEnabled)
         {
-            if (Input.GetMouseButton(0) && meleeStateMachine.CurrentState.GetType() == typeof(IdleCombatState))
+            if (Input.GetMouseButton(0))
             {
-                LaunchFirstAttack();
+              
                 
+                if (meleeStateMachine == null)
+                {
+                    Debug.LogError("StateMachine component not found!");
+                    return;
+                }
+                if( meleeStateMachine.CurrentState.GetType() == typeof(IdleCombatState))
+                    LaunchFirstAttack();
             }
 
             if (Input.GetKeyDown(KeyCode.LeftShift) && meleeStateMachine.CurrentState.GetType() == typeof(IdleCombatState))
