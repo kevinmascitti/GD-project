@@ -2,7 +2,9 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.UIElements;
+using Image = UnityEngine.UI.Image;
 
 public class RoomManager : MonoBehaviour
 {
@@ -14,6 +16,8 @@ public class RoomManager : MonoBehaviour
     [NonSerialized] public Room firstRoom;
     [NonSerialized] public Room lastRoom;
     [NonSerialized] public bool isCompleted = false;
+    [SerializeField] private List<Sprite> layers;
+    private GameObject background;
 
     public static EventHandler OnInitializedLevel;
 
@@ -23,6 +27,7 @@ public class RoomManager : MonoBehaviour
         player = GameObject.Find("Player");
         ID = Int32.Parse(gameObject.name.Substring("Level".Length));
         deathGround = transform.Find("DeathGround").gameObject;
+        background = GameObject.Find("BackgroundCanvas");
         
         for(int i = 0; i < transform.childCount; i++)
         {
@@ -52,8 +57,17 @@ public class RoomManager : MonoBehaviour
         PlayerCharacter.OnStartRoom += ClosePrevWalls;
         LevelManager.OnStartRoom += ClosePrevWalls;
         PlayerCharacter.OnNextRoom += OpenNextWalls;
+        PlayerCharacter.OnStartLevel += ChangeBackground;
         
         OnInitializedLevel?.Invoke(this, EventArgs.Empty);
+    }
+
+    private void OnDestroy()
+    {
+        PlayerCharacter.OnStartRoom -= ClosePrevWalls;
+        LevelManager.OnStartRoom -= ClosePrevWalls;
+        PlayerCharacter.OnNextRoom -= OpenNextWalls;
+        PlayerCharacter.OnStartLevel -= ChangeBackground;
     }
 
     public void OpenNextWalls(object sender, RoomArgs args)
@@ -71,6 +85,26 @@ public class RoomManager : MonoBehaviour
         {
             args.room.prevRoom.exitWall.isTrigger = false;
             args.room.enterWall.isTrigger = false;
+        }
+    }
+
+    private void ChangeBackground(object sender, RoomManagerArgs args)
+    {
+        if (args.level == this)
+        {
+            int layerNumber = 0;
+            foreach (Transform layer in background.transform)
+            {
+                if (layers.Count > layerNumber)
+                {
+                    foreach (Transform bgX in layer)
+                    {
+                        if (layers[layerNumber])
+                            bgX.gameObject.GetComponent<Image>().sprite = layers[layerNumber];
+                    }
+                    layerNumber++;
+                }
+            }
         }
     }
 }

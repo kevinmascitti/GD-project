@@ -24,7 +24,8 @@ public class ComboCharacterWithDamage : MonoBehaviour
     private void OnEnable()
     {
         //Debug.Log("OnEnable: Enabling controls");
-        controls.Enable();
+        if(controls != null)
+            controls.Enable();
     }
     
     private void Awake()
@@ -62,6 +63,12 @@ public class ComboCharacterWithDamage : MonoBehaviour
 
         Dash.OnCheckedDash += LaunchDash;
         Dash.OnDashEnded += ValidateMovingNow;
+    }
+
+    private void OnDestroy()
+    {
+        Dash.OnCheckedDash -= LaunchDash;
+        Dash.OnDashEnded -= ValidateMovingNow;
     }
 
     // Update is called once per frame

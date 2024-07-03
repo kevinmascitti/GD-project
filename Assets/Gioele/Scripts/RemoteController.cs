@@ -61,7 +61,13 @@ public class RemoteController : MonoBehaviour
         UnlockPause = true;
         UnlockVolumeMinus = true;
         UnlockVolumePlus = true;
+        
         PlayerCharacter.OnStaminaFull += SetStaminaFull;
+    }
+
+    private void OnDestroy()
+    {
+        PlayerCharacter.OnStaminaFull -= SetStaminaFull;
     }
 
     private void SetStaminaFull(object sender, EventArgs args)

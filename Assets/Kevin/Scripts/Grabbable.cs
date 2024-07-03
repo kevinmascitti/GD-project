@@ -81,7 +81,7 @@ public class Grabbable : MonoBehaviour
         destroyTimer.Begin();
         flickTimer.Begin();
 
-            PlayerCharacter.OnComputedNearestGrabbable += SetGrabbable;
+        PlayerCharacter.OnComputedNearestGrabbable += SetGrabbable;
         PlayerCharacter.OnEndLevel += DestroyGameObject;
         PlayerCharacter.OnStartLevel += DestroyGameObject;
         
@@ -94,6 +94,9 @@ public class Grabbable : MonoBehaviour
         PlayerCharacter.OnComputedNearestGrabbable -= SetGrabbable;
         PlayerCharacter.OnEndLevel -= DestroyGameObject;
         PlayerCharacter.OnStartLevel -= DestroyGameObject;
+        
+        destroyTimer.Elapsed -= DestroyItem;
+        flickTimer.Elapsed -= StartFlickRender;
     }
 
     // Update is called once per frame

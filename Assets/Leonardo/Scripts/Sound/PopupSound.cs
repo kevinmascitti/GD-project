@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -14,6 +15,12 @@ public class PopupSound : MonoBehaviour
         audioSource = GetComponent<AudioSource>();
         PlayerCharacter.OnGrabbed += PlayGrabbedSound;
         PlayerCharacter.OnUsed += PlayUsedSound;
+    }
+
+    private void OnDestroy()
+    {
+        PlayerCharacter.OnGrabbed -= PlayGrabbedSound;
+        PlayerCharacter.OnUsed -= PlayUsedSound;
     }
 
     private void PlayGrabbedSound(object sender, System.EventArgs e)

@@ -22,6 +22,12 @@ public class Dash : MonoBehaviour
         ComboCharacterWithDamage.OnDashLaunched += ExecuteDash;
     }
 
+    private void OnDestroy()
+    {
+        ComboCharacterWithDamage.OnDashRequested -= CheckDash;
+        ComboCharacterWithDamage.OnDashLaunched -= ExecuteDash;
+    }
+
     public void CheckDash(object sender, EventArgs args)
     {
         bool isPlayerOnBorder = false;

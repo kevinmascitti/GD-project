@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class UICounterHit : MonoBehaviour
@@ -35,6 +36,12 @@ public class UICounterHit : MonoBehaviour
 
         ComboCounter.OnCounterIncreased += ShowCounterHit;
         ComboCounter.OnCounterInitialized += HideCounterHit;
+    }
+
+    private void OnDestroy()
+    {
+        ComboCounter.OnCounterIncreased -= ShowCounterHit;
+        ComboCounter.OnCounterInitialized -= HideCounterHit;
     }
 
     private void ShowCounterHit(object sender, int args)

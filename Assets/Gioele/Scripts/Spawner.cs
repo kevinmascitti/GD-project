@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -38,6 +39,14 @@ public class Spawner : MonoBehaviour
         Room.OnEndRoom += OpenExit;
         LevelManager.OnStartRoom += CloseExit;
         PlayerCharacter.OnStartRoom += CloseExit;
+    }
+
+    private void OnDestroy()
+    {
+        LevelManager.OnEndRoom -= OpenExit;
+        Room.OnEndRoom -= OpenExit;
+        LevelManager.OnStartRoom -= CloseExit;
+        PlayerCharacter.OnStartRoom -= CloseExit;
     }
 
     // IEnumerator CloseExit(float delay)
@@ -131,7 +140,7 @@ public class Spawner : MonoBehaviour
     public void StartSpawn()
     {
         canSpawn = true;
-        Debug.Log("state spawner active Level: " + roomTransform.GetComponent<Room>().level.ID + " - Room: " + roomTransform.GetComponent<Room>().ID);
+        // Debug.Log("state spawner active Level: " + roomTransform.GetComponent<Room>().level.ID + " - Room: " + roomTransform.GetComponent<Room>().ID);
         StartCoroutine(SpawnObjects());
     }
 

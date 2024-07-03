@@ -47,6 +47,15 @@ public class LevelManager : MonoBehaviour
         PlayerCharacter.OnEndLevel += EndLevel;
     }
 
+    private void OnDestroy()
+    {
+        RoomManager.OnInitializedLevel -= LinkLevels;
+        PlayerCharacter.OnRequestLevel -= ChooseNextLevel;
+        MainMenu.OnNewGame -= NewGame;
+        PlayerCharacter.OnStartLevel -= StartLevel;
+        PlayerCharacter.OnEndLevel -= EndLevel;
+    }
+
     private void LinkLevels(object sender, EventArgs args)
     {
         initializedLevels++;

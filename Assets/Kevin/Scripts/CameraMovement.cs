@@ -25,6 +25,12 @@ public class CameraMovement : MonoBehaviour
         PlayerCharacter.OnGameOver += StopUpdate;
     }
 
+    private void OnDestroy()
+    {
+        LevelManager.OnInitializedLevels -= StartUpdate;
+        PlayerCharacter.OnGameOver -= StopUpdate;
+    }
+
     private void FollowTarget()
     {
         Vector3 targetPosition = new Vector3(target.position.x, transform.position.y, transform.position.z);

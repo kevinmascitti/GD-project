@@ -26,6 +26,16 @@ public class ComboCounter : MonoBehaviour
         comboTimer.Elapsed += ElapsedTimer;
     }
 
+    private void OnDestroy()
+    {
+        EnemyCollision.OnAttackLended -= IncreaseCounter;
+        Grabbable.OnAttackLended -= IncreaseCounter;
+        Dash.OnAttackLended -= IncreaseCounter;
+        PlayerCharacter.OnStartLevel -= ResetCounter;
+        PlayerCharacter.OnGameOver -= ResetCounter;
+        comboTimer.Elapsed -= ElapsedTimer;
+    }
+
     private void IncreaseCounter(object sender, EnemyCollisionArgs args)
     {
         comboTimer.Begin();

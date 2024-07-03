@@ -1,5 +1,7 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class ComboCounterSound : MonoBehaviour
@@ -14,6 +16,12 @@ public class ComboCounterSound : MonoBehaviour
         audioSource = GetComponent<AudioSource>();
         ComboCounter.OnCounterIncreased += PlaySound;
         ComboCounter.OnCounterInitialized += ResetPitch;    
+    }
+
+    private void OnDestroy()
+    {
+        ComboCounter.OnCounterIncreased -= PlaySound;
+        ComboCounter.OnCounterInitialized -= ResetPitch;    
     }
 
     private void PlaySound(object sender, int counter)

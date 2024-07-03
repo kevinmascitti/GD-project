@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -16,6 +17,11 @@ public class ControllerButton : MonoBehaviour
     void Start()
     {
         Boss.OnBossDeath += AnimateButton;
+    }
+
+    private void OnDestroy()
+    {
+        Boss.OnBossDeath -= AnimateButton;
     }
 
     private void AnimateButton(object sender, ControllerButton button)

@@ -16,6 +16,11 @@ public class MenuManager : MonoBehaviour
         PlayerCharacter.OnGameOver += ActivateGameOverMenu;
     }
 
+    private void OnDestroy()
+    {
+        PlayerCharacter.OnGameOver -= ActivateGameOverMenu;
+    }
+
     void Update()
     {
         // // DEATH LOGIC

@@ -928,6 +928,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d93aa32d6cfc04c28b74b237412c3870, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  layers:
+  - {fileID: 21300000, guid: 0cf6ccc986d581847aa0aee1ce47dc47, type: 3}
+  - {fileID: 21300000, guid: 54f8c2657ae6e8641945a62367fdd51f, type: 3}
+  - {fileID: 21300000, guid: 3589e6ade802cde42aac0b783272b5d1, type: 3}
+  - {fileID: 21300000, guid: cdae56052d0cd004290f09258ec1f9d8, type: 3}
 --- !u!1 &281731406031476065
 GameObject:
   m_ObjectHideFlags: 0
@@ -12647,6 +12652,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d93aa32d6cfc04c28b74b237412c3870, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  layers:
+  - {fileID: 21300000, guid: 944c1255423e0154d98e13165792c03a, type: 3}
+  - {fileID: 21300000, guid: 3c50437289ce80445995180f48974270, type: 3}
+  - {fileID: 21300000, guid: 2560d9cc0b663704fa4670ea89300fde, type: 3}
 --- !u!1 &5946653058512308069
 GameObject:
   m_ObjectHideFlags: 0
@@ -20172,6 +20181,35 @@ PrefabInstance:
       propertyPath: m_LocalPosition.z
       value: 10.79
       objectReference: {fileID: 0}
+    - target: {fileID: 7355324402569847500, guid: 82ed22e43e8ae4770a6c2377f00a9173,
+        type: 3}
+      propertyPath: layers.Array.size
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 7355324402569847500, guid: 82ed22e43e8ae4770a6c2377f00a9173,
+        type: 3}
+      propertyPath: layers.Array.data[0]
+      value: 
+      objectReference: {fileID: 21300000, guid: 28441fc68606cf340aa11153b498ae7d,
+        type: 3}
+    - target: {fileID: 7355324402569847500, guid: 82ed22e43e8ae4770a6c2377f00a9173,
+        type: 3}
+      propertyPath: layers.Array.data[1]
+      value: 
+      objectReference: {fileID: 21300000, guid: 7e66d09ff1bf85e4cbabf7608cd2d9a1,
+        type: 3}
+    - target: {fileID: 7355324402569847500, guid: 82ed22e43e8ae4770a6c2377f00a9173,
+        type: 3}
+      propertyPath: layers.Array.data[2]
+      value: 
+      objectReference: {fileID: 21300000, guid: 58865835d12995544ae854afd0f91953,
+        type: 3}
+    - target: {fileID: 7355324402569847500, guid: 82ed22e43e8ae4770a6c2377f00a9173,
+        type: 3}
+      propertyPath: layers.Array.data[3]
+      value: 
+      objectReference: {fileID: 21300000, guid: 676ee22c9980dda41a3b531c7ae4a2e2,
+        type: 3}
     - target: {fileID: 7640087628278296378, guid: 82ed22e43e8ae4770a6c2377f00a9173,
         type: 3}
       propertyPath: m_LocalPosition.x

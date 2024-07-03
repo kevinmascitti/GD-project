@@ -1,4 +1,5 @@
 using System;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -15,7 +16,7 @@ public class EntertainmentBar : MonoBehaviour
 
     public float currEntertainmentValue = 100;
     private bool isZero = false;
-    private bool isActive = false;
+    private bool isActive = true;
 
     public static EventHandler OnZeroedEnterteinmentBar;
 
@@ -30,6 +31,7 @@ public class EntertainmentBar : MonoBehaviour
             fill.fillAmount = currEntertainmentValue / maxEntertainmentValue;
         }
 
+        comboCounter = GameObject.Find("ComboCounter").GetComponent<ComboCounter>();
         if (comboCounter == null)
         {
             Debug.LogError("Il 'comboCounter' non è assegnato!");
@@ -44,6 +46,19 @@ public class EntertainmentBar : MonoBehaviour
         LevelManager.OnStartRoom += StartBar;
         LevelManager.OnEndRoom += StopBar;
         Room.OnEndRoom += StopBar;
+    }
+
+    private void OnDestroy()
+    {
+        EnemyCollision.OnAttackLended -= AttackPerfomed;
+        Dash.OnAttackLended -= AttackPerfomed;
+        Grabbable.OnAttackLended -= AttackPerfomed;
+        PlayerCharacter.OnStartRoom -= ResetEntertainmentBar;
+        PlayerCharacter.OnStartRoom -= StartBar;
+        LevelManager.OnStartRoom -= ResetEntertainmentBar;
+        LevelManager.OnStartRoom -= StartBar;
+        LevelManager.OnEndRoom -= StopBar;
+        Room.OnEndRoom -= StopBar;
     }
 
     private void StartBar(object sender, EventArgs args)
