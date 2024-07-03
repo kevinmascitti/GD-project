@@ -27,15 +27,23 @@ public class PopupSpawner : MonoBehaviour
 
     void Start()
     {
+        if(thresholdList.Count != popupNamesList.Count)
+            Debug.LogError("ERROR in PopupSpawner: c'è bisogno di corrispondenza nelle liste thresholdList e popupNamesList!");
         for (int i = 0; i < thresholdList.Count; i++)
         {
             popupList.Add(new Tuple<int, string>(thresholdList[i], popupNamesList[i]));
             isPopupSpawned.Add(thresholdList[i], false);
         }
+        audioSource = GetComponent<AudioSource>();
 
         ComboCounter.OnCounterIncreased += CheckCounter;
         ComboCounter.OnCounterInitialized += InitializePopup;
-        audioSource = GetComponent<AudioSource>();
+    }
+
+    private void OnDestroy()
+    {
+        ComboCounter.OnCounterIncreased -= CheckCounter;
+        ComboCounter.OnCounterInitialized -= InitializePopup;
     }
 
     private void CheckCounter(object sender, int args)

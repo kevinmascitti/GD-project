@@ -193,6 +193,9 @@ public class Grabbable : MonoBehaviour
     public void Use(Vector3 forward)
     {
         state = GrabbableState.USED;
+        destroyTimer.Stop();
+        flickTimer.Stop();
+        GetComponent<Flicker>().StopFlick();
         OnUse?.Invoke(this, new GrabbableArgs(this));
         if(forward.x >= 0)
             StartCoroutine(Hit(hitRotation, hitSeconds, true));

@@ -400,8 +400,9 @@ public class PlayerCharacter : Character
                 gameObject.transform.position = currentRoom.nextRoom.spawnPoint;
                 camera.transform.position = currentRoom.nextRoom.cameraPosition;
                 currentRoom = currentRoom.nextRoom;
+                currentLevel = currentRoom.level;
                 
-                OnStartLevel?.Invoke(this, new RoomManagerArgs(currentRoom.level, currentRoom));
+                OnStartLevel?.Invoke(this, new RoomManagerArgs(currentLevel, currentRoom));
         
                 GetComponent<Rigidbody>().useGravity = true;
                 GetComponent<Rigidbody>().isKinematic = false;

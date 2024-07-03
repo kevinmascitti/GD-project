@@ -61,10 +61,19 @@ MonoBehaviour:
   player: {fileID: 0}
   comboCounter: {fileID: 3288879567937045116}
   popupSpeed: 10
-  thresholdList: 050000000f000000
+  thresholdList: 050000000a0000000f00000019000000230000002d000000
   popupNamesList:
   - Wow
   - Great
+  - Wow
+  - Great
+  - Wow
+  - Great
+  spawnAudioClips:
+  - {fileID: 8300000, guid: 4ad5a567628c35944b216405e9edfdd8, type: 3}
+  - {fileID: 8300000, guid: 666201ef465376d46b2884aa77c2149e, type: 3}
+  - {fileID: 8300000, guid: a43dee64167451d4e87c05a615f0eaff, type: 3}
+  - {fileID: 8300000, guid: 699bac4b64237cb42bfa1887db45894b, type: 3}
 --- !u!114 &6201562856487515731
 MonoBehaviour:
   m_ObjectHideFlags: 0
