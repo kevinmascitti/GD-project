@@ -13,11 +13,12 @@ public class RemoteController : MonoBehaviour
     private Vector3 originalScale;
     private bool isUIVisible = false;
     private bool isStaminaFull = false;
-    private bool isButtonAnimationOn = false;
-    private Vector3 scala;
-    private float rescalefactor = 1;
-    float scalefactor = 1.005f;
+    // private bool isButtonAnimationOn = false;
+    // private Vector3 scala;
+    // private float rescalefactor = 1;
+    // float scalefactor = 1.005f;
     [SerializeField] private GameObject controllerUI;
+    private Vector3 standardUIPosition;
     [SerializeField] private GameObject disabledButtons;
     [SerializeField] private GameObject enabledButtons;
     [SerializeField] private float moltiplicatoreCombo = 1f;
@@ -63,13 +64,12 @@ public class RemoteController : MonoBehaviour
         enabledButtons = GameObject.Find("EnabledButtons");
         if (controllerUI)
         {
-            scala = enabledButtons.transform.localScale;
+            // scala = enabledButtons.transform.localScale;
             enabledButtons.SetActive(false);
         }
 
         controllerUI = GameObject.Find("ControllerUI");
-        if(controllerUI)
-            controllerUI.SetActive(false);
+        standardUIPosition = controllerUI.transform.position;
         isUIVisible = false;
         UnlockChPlus = true;
         UnlockChminus = true;
@@ -77,9 +77,8 @@ public class RemoteController : MonoBehaviour
         UnlockPause = true;
         UnlockVolumeMinus = true;
         UnlockVolumePlus = true;
-        
+
         PlayerCharacter.OnStaminaFull += SetStaminaFull;
-        PlayerCharacter.OnStaminaFull += SetUI;
     }
 
     private void OnDestroy()
@@ -90,14 +89,10 @@ public class RemoteController : MonoBehaviour
     private void SetStaminaFull(object sender, EventArgs args)
     {
         isStaminaFull = true;
+        disabledButtons.SetActive(true);
+        enabledButtons.SetActive(false);
     }
-    private void SetUI(object sender, EventArgs args)
-    {
-        disabledButtons.transform.localScale = new Vector3(1, 1, 1);
-        disabledButtons.SetActive(false);
-        enabledButtons.transform.localScale = new Vector3(1, 1, 1);
-        enabledButtons.SetActive(true);
-    }
+    
     // enable dei bottoni
     public void UnlockChPlusButton()
     {
@@ -469,29 +464,29 @@ public class RemoteController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.LeftControl) && !isUIVisible && !isButtonAnimationOn)
+        if (isStaminaFull)
+        {
+            // mostro i tasti abilitati
+            disabledButtons.SetActive(false);
+            enabledButtons.SetActive(true);
+        }
+        else
+        {
+            // mostro i tasti disabilitati 
+            enabledButtons.SetActive(false);
+            disabledButtons.SetActive(true);
+        }
+        
+        if (Input.GetKeyDown(KeyCode.LeftControl) && !isUIVisible)
         {
             Debug.Log("attivata ui");
-            controllerUI.SetActive(true);
             isUIVisible = true;
-            if (isStaminaFull)
-            {
-                // mostro i tasti abilitati
-                disabledButtons.SetActive(false);
-                enabledButtons.SetActive(true);
-            }
-            else
-            {
-                // mostro i tasti disabilitati 
-                enabledButtons.SetActive(false);
-                disabledButtons.SetActive(true);
-            }
+            StartCoroutine(ShowUIButtons());
         }
-        else if (Input.GetKeyUp(KeyCode.LeftControl) && isUIVisible && !isButtonAnimationOn)
+        else if (Input.GetKeyUp(KeyCode.LeftControl) && isUIVisible)
         {
-            controllerUI.SetActive(false);
             isUIVisible = false;
-            
+            StartCoroutine(HideUIButtons());
         }
         
 
@@ -501,36 +496,36 @@ public class RemoteController : MonoBehaviour
             {
                 playerTransform.GetComponent<PlayerCharacter>().UpdateStamina(0);
                 StartLaser();
+                OnControllerAbility?.Invoke(this, EventArgs.Empty);
                 isStaminaFull = false;
-                isButtonAnimationOn = true;
             }
             else if (Input.GetKeyDown(KeyCode.U))
             {
                 playerTransform.GetComponent<PlayerCharacter>().UpdateStamina(0);
                 StartPause("Enemy");
+                OnControllerAbility?.Invoke(this, EventArgs.Empty);
                 isStaminaFull = false;
-                isButtonAnimationOn = true;
             }
             else if (Input.GetKeyDown(KeyCode.J))
             {
                 playerTransform.GetComponent<PlayerCharacter>().UpdateStamina(0);
                 StartChMinus("Enemy");
+                OnControllerAbility?.Invoke(this, EventArgs.Empty);
                 isStaminaFull = false;
-                isButtonAnimationOn = true;
             }
             else if (Input.GetKeyDown(KeyCode.P))
             {
                 playerTransform.GetComponent<PlayerCharacter>().UpdateStamina(0);
                 StartVolumePlus();
+                OnControllerAbility?.Invoke(this, EventArgs.Empty);
                 isStaminaFull = false;
-                isButtonAnimationOn = true;
             }
             else if (Input.GetKeyDown(KeyCode.L))
             {
                 playerTransform.GetComponent<PlayerCharacter>().UpdateStamina(0);
                 StartChPlus();
+                OnControllerAbility?.Invoke(this, EventArgs.Empty);
                 isStaminaFull = false;
-                isButtonAnimationOn = true;
             }
             else if (Input.GetKeyDown(KeyCode.K))
             {
@@ -538,43 +533,73 @@ public class RemoteController : MonoBehaviour
                 StartVolumeMinus();
                 OnControllerAbility?.Invoke(this, EventArgs.Empty);
                 isStaminaFull = false;
-                isButtonAnimationOn = true;
             }
         }
 
-        if (isButtonAnimationOn)
-        {
-            
-            enabledButtons.transform.localScale*=scalefactor;
-            if (Mathf.Abs(enabledButtons.transform.localScale.x) > 1.2f &&
-                Mathf.Abs(enabledButtons.transform.localScale.y) > 1.2f &&
-                Mathf.Abs(enabledButtons.transform.localScale.z) > 1.2f)
-            {
-                //isButtonAnimationOn = false;
-                disabledButtons.SetActive(true);
-                disabledButtons.transform.localScale = enabledButtons.transform.localScale;
-                enabledButtons.SetActive(false);
-                enabledButtons.transform.localScale = new Vector3(1,1,1);
-                rescalefactor = 0.995f;
-                scalefactor = 1f;
-            }
-            disabledButtons.transform.localScale*=rescalefactor;
-            if (Mathf.Abs(disabledButtons.transform.localScale.x) < 1f &&
-                Mathf.Abs(disabledButtons.transform.localScale.y) < 1f &&
-                Mathf.Abs(disabledButtons.transform.localScale.z) < 1f)
-            {
-                isButtonAnimationOn = false;
-                disabledButtons.transform.localScale = new Vector3(1,1,1);
-            }
-        }
+        // if (isButtonAnimationOn)
+        // {
+        //     
+        //     enabledButtons.transform.localScale*=scalefactor;
+        //     if (Mathf.Abs(enabledButtons.transform.localScale.x) > 1.2f &&
+        //         Mathf.Abs(enabledButtons.transform.localScale.y) > 1.2f &&
+        //         Mathf.Abs(enabledButtons.transform.localScale.z) > 1.2f)
+        //     {
+        //         //isButtonAnimationOn = false;
+        //         disabledButtons.SetActive(true);
+        //         disabledButtons.transform.localScale = enabledButtons.transform.localScale;
+        //         enabledButtons.SetActive(false);
+        //         enabledButtons.transform.localScale = new Vector3(1,1,1);
+        //         rescalefactor = 0.995f;
+        //         scalefactor = 1f;
+        //     }
+        //     disabledButtons.transform.localScale*=rescalefactor;
+        //     if (Mathf.Abs(disabledButtons.transform.localScale.x) < 1f &&
+        //         Mathf.Abs(disabledButtons.transform.localScale.y) < 1f &&
+        //         Mathf.Abs(disabledButtons.transform.localScale.z) < 1f)
+        //     {
+        //         isButtonAnimationOn = false;
+        //         disabledButtons.transform.localScale = new Vector3(1,1,1);
+        //     }
+        // }
 
         if (laser.enabled)
         {
             DetectHit();
         }
     }
-    IEnumerator WaitAndPrint()
+
+    IEnumerator ShowUIButtons()
     {
-        yield return new WaitForSeconds(0.25f); 
+        Vector3 startPosition = standardUIPosition;
+        Vector3 endPosition = startPosition + new Vector3(200, 250, 0);
+        float elapsedTime = 0f;
+
+        while (elapsedTime < 0.1f)
+        {
+            controllerUI.transform.position = Vector3.Lerp(startPosition, endPosition, elapsedTime / 0.1f);
+            elapsedTime += Time.deltaTime;
+            yield return null;
+        }
+
+        // Assicurati che la posizione finale sia esattamente quella desiderata
+        controllerUI.transform.position = endPosition;
+    }
+
+    IEnumerator HideUIButtons()
+    {
+        
+        Vector3 startPosition = controllerUI.transform.position;
+        Vector3 endPosition = standardUIPosition;
+        float elapsedTime = 0f;
+
+        while (elapsedTime < 0.2f)
+        {
+            controllerUI.transform.position = Vector3.Lerp(startPosition, endPosition, elapsedTime / 0.2f);
+            elapsedTime += Time.deltaTime;
+            yield return null;
+        }
+
+        // Assicurati che la posizione finale sia esattamente quella desiderata
+        controllerUI.transform.position = endPosition;
     }
 }
