@@ -278,7 +278,12 @@ public class RemoteController : MonoBehaviour
                 // se ho colpito un enemy allora gli faccio un po di danno
                 // mantengo il time delta time ? non sono sicuro di questa cosa;
                 laserDamage += 0.1f*Time.deltaTime;
-                hit.collider.GameObject().GetComponent<Enemy>().currentHP -= 0.1f;
+                if(hit.collider.GameObject().GetComponent<Enemy_AI_Melee>())
+                    hit.collider.GameObject().GetComponent<Enemy_AI_Melee>().TakeDamage(laserDamage);
+                if(hit.collider.GameObject().GetComponent<EnemyAI>())
+                    hit.collider.GameObject().GetComponent<EnemyAI>().TakeDamage(laserDamage);
+                if(hit.collider.GameObject().GetComponent<ShootingTower>())
+                    hit.collider.GameObject().GetComponent<Enemy>().TakeDamage(laserDamage);
                 // non serve credo in laser damage
             }
         }
