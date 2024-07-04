@@ -479,7 +479,6 @@ public class RemoteController : MonoBehaviour
         
         if (Input.GetKeyDown(KeyCode.LeftControl) && !isUIVisible)
         {
-            Debug.Log("attivata ui");
             isUIVisible = true;
             StartCoroutine(ShowUIButtons());
         }
