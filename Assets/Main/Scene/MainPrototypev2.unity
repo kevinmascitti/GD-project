@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18386978, g: 0.2290168, b: 0.30311278, a: 1}
+  m_IndirectSpecularColor: {r: 0.18386948, g: 0.22901604, b: 0.30311152, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -1880,6 +1880,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: EnabledButtons
+      objectReference: {fileID: 0}
+    - target: {fileID: 6426343216993026835, guid: 22d0a3bcb006a41f4b692f9ba60e8fec,
+        type: 3}
+      propertyPath: m_Layer
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 6426343216993026835, guid: 22d0a3bcb006a41f4b692f9ba60e8fec,
         type: 3}
@@ -7909,6 +7914,11 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.x
       value: -510
       objectReference: {fileID: 0}
+    - target: {fileID: 4081186786623116081, guid: 03552866a0cad59479b1468956722dfe,
+        type: 3}
+      propertyPath: m_Layer
+      value: 5
+      objectReference: {fileID: 0}
     - target: {fileID: 4145531126524381781, guid: 03552866a0cad59479b1468956722dfe,
         type: 3}
       propertyPath: m_Pivot.x
@@ -8014,6 +8024,11 @@ PrefabInstance:
       propertyPath: comboCounter
       value: 
       objectReference: {fileID: 2060429405}
+    - target: {fileID: 5290115767448246118, guid: 03552866a0cad59479b1468956722dfe,
+        type: 3}
+      propertyPath: m_Layer
+      value: 5
+      objectReference: {fileID: 0}
     - target: {fileID: 5565437217799349950, guid: 03552866a0cad59479b1468956722dfe,
         type: 3}
       propertyPath: m_AnchoredPosition.x
@@ -9548,6 +9563,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: DisabledButtons
+      objectReference: {fileID: 0}
+    - target: {fileID: 6426343216993026835, guid: 22d0a3bcb006a41f4b692f9ba60e8fec,
+        type: 3}
+      propertyPath: m_Layer
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 6426343216993026835, guid: 22d0a3bcb006a41f4b692f9ba60e8fec,
         type: 3}

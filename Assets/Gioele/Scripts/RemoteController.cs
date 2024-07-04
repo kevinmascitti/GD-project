@@ -13,7 +13,7 @@ public class RemoteController : MonoBehaviour
     private Vector3 originalScale;
     private bool isUIVisible = false;
     private bool isStaminaFull = false;
-    private bool ButtonAnimation = false;
+    private bool isButtonAnimationOn = false;
     private Vector3 scala;
     private float rescalefactor = 1;
     float scalefactor = 1.005f;
@@ -469,7 +469,7 @@ public class RemoteController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.LeftControl) && !isUIVisible && !ButtonAnimation)
+        if (Input.GetKeyDown(KeyCode.LeftControl) && !isUIVisible && !isButtonAnimationOn)
         {
             Debug.Log("attivata ui");
             controllerUI.SetActive(true);
@@ -487,7 +487,7 @@ public class RemoteController : MonoBehaviour
                 disabledButtons.SetActive(true);
             }
         }
-        else if (Input.GetKeyUp(KeyCode.LeftControl) && isUIVisible && !ButtonAnimation)
+        else if (Input.GetKeyUp(KeyCode.LeftControl) && isUIVisible && !isButtonAnimationOn)
         {
             controllerUI.SetActive(false);
             isUIVisible = false;
@@ -502,35 +502,35 @@ public class RemoteController : MonoBehaviour
                 playerTransform.GetComponent<PlayerCharacter>().UpdateStamina(0);
                 StartLaser();
                 isStaminaFull = false;
-                ButtonAnimation = true;
+                isButtonAnimationOn = true;
             }
             else if (Input.GetKeyDown(KeyCode.U))
             {
                 playerTransform.GetComponent<PlayerCharacter>().UpdateStamina(0);
                 StartPause("Enemy");
                 isStaminaFull = false;
-                ButtonAnimation = true;
+                isButtonAnimationOn = true;
             }
             else if (Input.GetKeyDown(KeyCode.J))
             {
                 playerTransform.GetComponent<PlayerCharacter>().UpdateStamina(0);
                 StartChMinus("Enemy");
                 isStaminaFull = false;
-                ButtonAnimation = true;
+                isButtonAnimationOn = true;
             }
             else if (Input.GetKeyDown(KeyCode.P))
             {
                 playerTransform.GetComponent<PlayerCharacter>().UpdateStamina(0);
                 StartVolumePlus();
                 isStaminaFull = false;
-                ButtonAnimation = true;
+                isButtonAnimationOn = true;
             }
             else if (Input.GetKeyDown(KeyCode.L))
             {
                 playerTransform.GetComponent<PlayerCharacter>().UpdateStamina(0);
                 StartChPlus();
                 isStaminaFull = false;
-                ButtonAnimation = true;
+                isButtonAnimationOn = true;
             }
             else if (Input.GetKeyDown(KeyCode.K))
             {
@@ -538,11 +538,11 @@ public class RemoteController : MonoBehaviour
                 StartVolumeMinus();
                 OnControllerAbility?.Invoke(this, EventArgs.Empty);
                 isStaminaFull = false;
-                ButtonAnimation = true;
+                isButtonAnimationOn = true;
             }
         }
 
-        if (ButtonAnimation)
+        if (isButtonAnimationOn)
         {
             
             enabledButtons.transform.localScale*=scalefactor;
@@ -550,7 +550,7 @@ public class RemoteController : MonoBehaviour
                 Mathf.Abs(enabledButtons.transform.localScale.y) > 1.2f &&
                 Mathf.Abs(enabledButtons.transform.localScale.z) > 1.2f)
             {
-                //ButtonAnimation = false;
+                //isButtonAnimationOn = false;
                 disabledButtons.SetActive(true);
                 disabledButtons.transform.localScale = enabledButtons.transform.localScale;
                 enabledButtons.SetActive(false);
@@ -563,7 +563,7 @@ public class RemoteController : MonoBehaviour
                 Mathf.Abs(disabledButtons.transform.localScale.y) < 1f &&
                 Mathf.Abs(disabledButtons.transform.localScale.z) < 1f)
             {
-                ButtonAnimation = false;
+                isButtonAnimationOn = false;
                 disabledButtons.transform.localScale = new Vector3(1,1,1);
             }
         }
