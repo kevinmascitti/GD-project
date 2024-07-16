@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18386948, g: 0.22901604, b: 0.30311152, a: 1}
+  m_IndirectSpecularColor: {r: 0.18386978, g: 0.2290168, b: 0.30311278, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -9353,7 +9353,7 @@ PrefabInstance:
     - target: {fileID: 2195858865233111617, guid: 79cbaaf6378eae748b4431fdea5a6874,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3393583666950311559, guid: 79cbaaf6378eae748b4431fdea5a6874,
         type: 3}
@@ -9563,7 +9563,7 @@ PrefabInstance:
     - target: {fileID: 5107185317548331724, guid: 79cbaaf6378eae748b4431fdea5a6874,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
-      value: GoToMainMenu
+      value: QuitGame
       objectReference: {fileID: 0}
     - target: {fileID: 5107185317548331724, guid: 79cbaaf6378eae748b4431fdea5a6874,
         type: 3}
