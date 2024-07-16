@@ -17,7 +17,7 @@ public class EntertainmentBar : MonoBehaviour
     public float currEntertainmentValue = 100;
     private bool isZero = false;
     private bool isActive = true;
-
+    public CheatCode cheatManager = null;
     public static EventHandler OnZeroedEnterteinmentBar;
 
     void Start()
@@ -36,7 +36,7 @@ public class EntertainmentBar : MonoBehaviour
         {
             Debug.LogError("Il 'comboCounter' non è assegnato!");
         }
-
+        
         EnemyCollision.OnAttackLended += AttackPerfomed;
         Dash.OnAttackLended += AttackPerfomed;
         Grabbable.OnAttackLended += AttackPerfomed;
@@ -46,6 +46,7 @@ public class EntertainmentBar : MonoBehaviour
         LevelManager.OnStartRoom += StartBar;
         LevelManager.OnEndRoom += StopBar;
         Room.OnEndRoom += StopBar;
+        
     }
 
     private void OnDestroy()
@@ -86,7 +87,7 @@ public class EntertainmentBar : MonoBehaviour
     {
         if (isZero)
             isZero = false;
-
+            
         if (comboCounter != null)
         {
             currEntertainmentValue += IncreaseSpeed * comboCounter.counter;
@@ -133,7 +134,7 @@ public class EntertainmentBar : MonoBehaviour
             UpdateFillAmount();
         }
 
-        if (Input.GetKeyDown(KeyCode.U))
+        if (Input.GetKeyDown(KeyCode.U) && cheatManager.cheat)
         {
             AttackPerfomed(null, EventArgs.Empty);
         }

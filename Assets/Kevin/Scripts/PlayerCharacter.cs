@@ -40,6 +40,7 @@ public class PlayerCharacter : Character
     public GameObject grabbingHand;
     [NonSerialized] private List<Grabbable> nearGrabbables = new List<Grabbable>();
 
+    public CheatCode cheatManager = null;
     // [SerializeField] private GameObject shoulder;
     // [SerializeField] private GameObject upperArm;
     // [SerializeField] private GameObject mediumArm;
@@ -91,6 +92,7 @@ public class PlayerCharacter : Character
         PlayerDamageReceived.OnDamageReceived += PlayerSetInvincibleTrue;
 
         MainMenu.OnNewGame += NewGame;
+      
     }
     
     private void OnDestroy()
@@ -127,7 +129,7 @@ public class PlayerCharacter : Character
         //sliderHP = GameObject.Find("HPBar").GetComponent<Slider>();
         sliderStamina = GameObject.Find("StaminaBar").GetComponent<Slider>();
         UIExtraLife = GameObject.Find("ExtraLife");
-     //   HpBar = GameObject.Find("HPBarv2").GetComponentInChildren<Image>();
+        //   HpBar = GameObject.Find("HPBarv2").GetComponentInChildren<Image>();
         /*
         if (HpBar)
             Debug.Log("vita trovata");
@@ -153,6 +155,11 @@ public class PlayerCharacter : Character
         UpdateHP(def_HP);
         UpdateStamina(0);
         UpdateExtraLife(def_life);
+        
+        if (cheatManager == null)
+        {
+            Debug.Log("Cheat Manager non trovato");
+        }
     }
 
     // Update is called once per frame
@@ -162,7 +169,7 @@ public class PlayerCharacter : Character
         if (isInputEnabled)
         {
             // AUMENTO STAMINA
-            if (Input.GetKeyDown(KeyCode.E))
+            if (Input.GetKeyDown(KeyCode.E) && cheatManager.cheat)
             {
                 Debug.Log("Stamina++ " + staminaUp);
                 if (currentStamina + staminaUp <= MAX_STAMINA)
@@ -175,7 +182,8 @@ public class PlayerCharacter : Character
                 }
 
                 UpdateStaminaUI(currentStamina);
-            } // SBLOCCO LIVELLO SUCCESSIVO
+            } 
+            // SBLOCCO LIVELLO SUCCESSIVO
             // else if (Input.GetKeyDown(KeyCode.L))
             // {
             //     if (currentRoom.isLocked)

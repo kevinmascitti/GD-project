@@ -12,13 +12,19 @@ public class EnemyCollision : MonoBehaviour
     public ComboCharacterWithDamage oggetto;
     private bool canCollide = true;
     private float collisionCooldown = 0.1f; // Cooldown di 0.1 secondi
-    
+    public CheatCode cheatManager;
     public static EventHandler<EnemyCollisionArgs> OnAttackLended;
 
     [SerializeField] private AudioSource enemyHit;
+
+    void Awake()
+    {
+       
+       
+    }
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.I))
+        if (Input.GetKeyDown(KeyCode.I) && cheatManager.cheat )
         {
             OnAttackLended?.Invoke(this, new EnemyCollisionArgs(comboValue));
         }
