@@ -20,7 +20,7 @@ public class ComboCharacterWithDamage : MonoBehaviour
     private PlayerController controls;
     public static EventHandler OnDashRequested;
     public static EventHandler<float> OnDashLaunched;
-
+    public CheatCode cheatManager;
     private void OnEnable()
     {
         //Debug.Log("OnEnable: Enabling controls");
@@ -76,7 +76,7 @@ public class ComboCharacterWithDamage : MonoBehaviour
     {
         if (GetComponent<PlayerCharacter>().isInputEnabled)
         {
-            if (Input.GetMouseButton(0))
+            if (Input.GetKeyDown(KeyCode.Space))
             {
               
                 
@@ -94,7 +94,7 @@ public class ComboCharacterWithDamage : MonoBehaviour
                 OnDashRequested?.Invoke(this, EventArgs.Empty);
             }
 
-            if (Input.GetKeyDown(KeyCode.K) && meleeStateMachine.CurrentState.GetType() == typeof(IdleCombatState))
+            if (Input.GetKeyDown(KeyCode.K) && meleeStateMachine.CurrentState.GetType() == typeof(IdleCombatState) && cheatManager.cheat)
             {
                 GetComponent<Animator>().SetBool("InvalidateMoving", true);
                 StartCoroutine(ValidateMoving(0.5f));

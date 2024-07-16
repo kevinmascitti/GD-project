@@ -44,7 +44,7 @@ public class MeleeBaseState : State
         base.OnUpdate();
         AttackPressedTimer -= Time.deltaTime;
         
-        if (Input.GetMouseButtonDown(0))
+        if (Input.GetKeyDown(KeyCode.Space))
         {
             AttackPressedTimer = 2;
         }

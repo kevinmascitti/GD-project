@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18386978, g: 0.2290168, b: 0.30311278, a: 1}
+  m_IndirectSpecularColor: {r: 0.18386948, g: 0.22901604, b: 0.30311152, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -1314,6 +1314,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bb8c7d45b741c46758132c81c00177c8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &343207756
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 256639306}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0c3952ea9f3444f4e97cedcde6a4d625, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cheat: 0
+  buffer: 
 --- !u!1 &355077644
 GameObject:
   m_ObjectHideFlags: 0
@@ -3260,6 +3274,11 @@ PrefabInstance:
         type: 2}
     - target: {fileID: 2227164382493448751, guid: 8b59635cd0adb41f1ba8fbc68f23c4c3,
         type: 3}
+      propertyPath: laserDamage
+      value: 0.4
+      objectReference: {fileID: 0}
+    - target: {fileID: 2227164382493448751, guid: 8b59635cd0adb41f1ba8fbc68f23c4c3,
+        type: 3}
       propertyPath: controllerUI
       value: 
       objectReference: {fileID: 0}
@@ -3398,6 +3417,11 @@ PrefabInstance:
       propertyPath: enemyHit
       value: 
       objectReference: {fileID: 342677471}
+    - target: {fileID: 3305752133941219901, guid: 8b59635cd0adb41f1ba8fbc68f23c4c3,
+        type: 3}
+      propertyPath: cheatManager
+      value: 
+      objectReference: {fileID: 343207756}
     - target: {fileID: 3436087847710924267, guid: 8b59635cd0adb41f1ba8fbc68f23c4c3,
         type: 3}
       propertyPath: m_LocalRotation.y
@@ -3448,6 +3472,11 @@ PrefabInstance:
       propertyPath: m_LocalRotation.z
       value: 0.49999997
       objectReference: {fileID: 0}
+    - target: {fileID: 4758515125926589319, guid: 8b59635cd0adb41f1ba8fbc68f23c4c3,
+        type: 3}
+      propertyPath: cheatManager
+      value: 
+      objectReference: {fileID: 343207756}
     - target: {fileID: 4786466054160126041, guid: 8b59635cd0adb41f1ba8fbc68f23c4c3,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -3513,6 +3542,16 @@ PrefabInstance:
       propertyPath: m_LocalRotation.z
       value: -0.000000053385097
       objectReference: {fileID: 0}
+    - target: {fileID: 6003294177262467841, guid: 8b59635cd0adb41f1ba8fbc68f23c4c3,
+        type: 3}
+      propertyPath: oggetto
+      value: 
+      objectReference: {fileID: 1383009235}
+    - target: {fileID: 6003294177262467841, guid: 8b59635cd0adb41f1ba8fbc68f23c4c3,
+        type: 3}
+      propertyPath: cheatManager
+      value: 
+      objectReference: {fileID: 343207756}
     - target: {fileID: 6429222574528750147, guid: 8b59635cd0adb41f1ba8fbc68f23c4c3,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -3600,8 +3639,18 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7009421023773219503, guid: 8b59635cd0adb41f1ba8fbc68f23c4c3,
         type: 3}
+      propertyPath: cheatManager
+      value: 
+      objectReference: {fileID: 343207756}
+    - target: {fileID: 7009421023773219503, guid: 8b59635cd0adb41f1ba8fbc68f23c4c3,
+        type: 3}
       propertyPath: sliderStamina
       value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 7009421023773219503, guid: 8b59635cd0adb41f1ba8fbc68f23c4c3,
+        type: 3}
+      propertyPath: def_increase_STAMINA
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 7072010469048583293, guid: 8b59635cd0adb41f1ba8fbc68f23c4c3,
         type: 3}
@@ -3708,6 +3757,16 @@ PrefabInstance:
       propertyPath: m_LocalRotation.y
       value: -0.00017202622
       objectReference: {fileID: 0}
+    - target: {fileID: 9201287873940550012, guid: 8b59635cd0adb41f1ba8fbc68f23c4c3,
+        type: 3}
+      propertyPath: oggetto
+      value: 
+      objectReference: {fileID: 1383009235}
+    - target: {fileID: 9201287873940550012, guid: 8b59635cd0adb41f1ba8fbc68f23c4c3,
+        type: 3}
+      propertyPath: cheatManager
+      value: 
+      objectReference: {fileID: 343207756}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -6057,6 +6116,10 @@ PrefabInstance:
         type: 3}
       insertIndex: -1
       addedObject: {fileID: 343207751}
+    - targetCorrespondingSourceObject: {fileID: 2013374539092055706, guid: 9adc1987ea14359428136b91cfe4ee34,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 343207756}
   m_SourcePrefab: {fileID: 100100000, guid: 9adc1987ea14359428136b91cfe4ee34, type: 3}
 --- !u!1 &1333282301
 GameObject:
@@ -8503,6 +8566,11 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: -37.3
       objectReference: {fileID: 0}
+    - target: {fileID: 7230435065483203281, guid: 03552866a0cad59479b1468956722dfe,
+        type: 3}
+      propertyPath: cheatManager
+      value: 
+      objectReference: {fileID: 343207756}
     - target: {fileID: 7230435065483203281, guid: 03552866a0cad59479b1468956722dfe,
         type: 3}
       propertyPath: comboCounter
