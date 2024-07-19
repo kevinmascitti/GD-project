@@ -11681,6 +11681,12 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!224 &1968017551 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 4145531126524381781, guid: 03552866a0cad59479b1468956722dfe,
+    type: 3}
+  m_PrefabInstance: {fileID: 1499688991}
+  m_PrefabAsset: {fileID: 0}
 --- !u!114 &1968017552
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11697,12 +11703,6 @@ MonoBehaviour:
   channelTransitionVideo: {fileID: 1627780818}
   transitionTime: 1
   musicSource: {fileID: 2110897994}
---- !u!224 &1968017551 stripped
-RectTransform:
-  m_CorrespondingSourceObject: {fileID: 4145531126524381781, guid: 03552866a0cad59479b1468956722dfe,
-    type: 3}
-  m_PrefabInstance: {fileID: 1499688991}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1971024972 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 7897149327893079946, guid: 86decf478d7f44de6ba6c659c541a018,
@@ -12316,7 +12316,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &2098081251
 MonoBehaviour:
   m_ObjectHideFlags: 0

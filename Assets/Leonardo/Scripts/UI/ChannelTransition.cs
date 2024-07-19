@@ -16,18 +16,20 @@ public class ChannelTransition : MonoBehaviour
 
     void Start()
     {
-        Debug.Log("ChannelTransition Start");
-        PlayerCharacter.OnStartLevel += StartTransition;
         audioSource = GetComponent<AudioSource>();
+        StartCoroutine(Transition());
+        PlayerCharacter.OnStartLevel += StartTransition;
     }
 
     public void StartTransition(object sender, EventArgs args)
     {
+        Debug.Log("ChannelTransition StartTransition");
         StartCoroutine(Transition());
     }
 
     public IEnumerator Transition()
     {
+        Debug.Log("ChannelTransition Transition");
         musicSource.Stop();
         audioSource.Play();
         channelTransitionImage.gameObject.SetActive(true);
