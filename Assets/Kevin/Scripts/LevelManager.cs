@@ -14,7 +14,7 @@ public class LevelManager : MonoBehaviour
     
     [NonSerialized] public List<RoomManager> levels = new List<RoomManager>();
     [NonSerialized] public RoomManager firstLevel;
-
+    
     public static EventHandler<LevelManagerArgs> OnInitializedLevels;
     public static EventHandler<RoomArgs> OnStartRoom;
     public static EventHandler<RoomArgs> OnEndRoom;

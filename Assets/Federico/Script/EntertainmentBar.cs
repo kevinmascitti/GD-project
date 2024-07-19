@@ -13,7 +13,7 @@ public class EntertainmentBar : MonoBehaviour
     [SerializeField] float decreaseSpeed = 10f;
     [SerializeField] private float IncreaseSpeed = 10f;
     [SerializeField] private ComboCounter comboCounter;
-
+    public CheatCode CheatManager;
     public float currEntertainmentValue = 100;
     private bool isZero = false;
     private bool isActive = true;
@@ -133,7 +133,7 @@ public class EntertainmentBar : MonoBehaviour
             }
             UpdateFillAmount();
         }
-
+        
         if (Input.GetKeyDown(KeyCode.U) && cheatManager.cheat)
         {
             AttackPerfomed(null, EventArgs.Empty);

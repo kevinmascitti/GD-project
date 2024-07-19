@@ -16,6 +16,8 @@ public class RoomManager : MonoBehaviour
     [NonSerialized] public Room firstRoom;
     [NonSerialized] public Room lastRoom;
     [NonSerialized] public bool isCompleted = false;
+    [NonSerialized] public Transform inizio;
+    [NonSerialized] public Transform fine;
     [SerializeField] private List<Sprite> layers;
     private GameObject background;
 
@@ -28,7 +30,12 @@ public class RoomManager : MonoBehaviour
         ID = Int32.Parse(gameObject.name.Substring("Level".Length));
         deathGround = transform.Find("DeathGround").gameObject;
         background = GameObject.Find("BackgroundCanvas");
-        
+        inizio = transform.Find("Inizio");
+        fine = transform.Find("Fine");
+        if (inizio == null || fine==null )
+        {
+            Debug.Log("non ho trovato inizio o fine");
+        }
         for(int i = 0; i < transform.childCount; i++)
         {
             if(transform.GetChild(i).GetComponent<Room>())
