@@ -16,6 +16,7 @@ public class ChannelTransition : MonoBehaviour
 
     void Start()
     {
+        Debug.Log("ChannelTransition Start");
         PlayerCharacter.OnStartLevel += StartTransition;
         audioSource = GetComponent<AudioSource>();
     }
@@ -29,11 +30,11 @@ public class ChannelTransition : MonoBehaviour
     {
         musicSource.Stop();
         audioSource.Play();
-        channelTransitionVideo.Play();
         channelTransitionImage.gameObject.SetActive(true);
+        channelTransitionVideo.Play();
         yield return new WaitForSeconds(transitionTime);
-        channelTransitionImage.gameObject.SetActive(false);
         channelTransitionVideo.Stop();
+        channelTransitionImage.gameObject.SetActive(false);
         audioSource.Stop(); 
         musicSource.Play();
     }
