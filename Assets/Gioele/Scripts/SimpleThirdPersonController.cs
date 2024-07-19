@@ -35,7 +35,7 @@ public class SimpleThirdPersonController : MonoBehaviour
     [SerializeField] private Vector2 speed;
     private Vector2 move;
     private Vector2 depthMovement;
-
+    public CheatCode CheatManager;
     public void Awake()
     {
         Debug.Log("controlli abilitati, siamo pronti a partire ");
@@ -73,20 +73,27 @@ public class SimpleThirdPersonController : MonoBehaviour
         if (Physics.Raycast(transform.position, direction, out hit, boundingBoxWidth))
         {
          //   Debug.Log("Il raggio ha con un oggetto ora vediamo se è un muro "+ hit.collider.gameObject.tag);
-            if (hit.collider.CompareTag("Wall") || hit.collider.CompareTag("Exit") )
+            if((hit.collider.CompareTag("Wall") || hit.collider.CompareTag("Exit")) && (!CheatManager.goFast))
             {
            //     Debug.Log("HAI COLPITO IL MURO");
                 return false;
             }
         }
 
+        Debug.Log("Avendo abilitato i cheat ora puoi attraversare il muro");
         return true;
     }
 
 
      void Update()
     {
-//        Debug.Log($"Update: Current move vector: {move}");
+        if (CheatManager.goFast)
+        {
+            this.speed = new Vector2(15f, 15f);
+            this.Speed = 30f;
+        }
+        
+        //        Debug.Log($"Update: Current move vector: {move}");
         if (isController)
         {
             // parte che si occupa di specchiare l'animazione
