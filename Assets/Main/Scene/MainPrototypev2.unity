@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18386978, g: 0.2290168, b: 0.30311278, a: 1}
+  m_IndirectSpecularColor: {r: 0.18386948, g: 0.22901604, b: 0.30311152, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -4011,7 +4011,7 @@ PrefabInstance:
     - target: {fileID: 7072010469048583293, guid: 8b59635cd0adb41f1ba8fbc68f23c4c3,
         type: 3}
       propertyPath: m_Enabled
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7072010469048583293, guid: 8b59635cd0adb41f1ba8fbc68f23c4c3,
         type: 3}
@@ -4063,6 +4063,11 @@ PrefabInstance:
       propertyPath: isGrounded
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8166586310705985429, guid: 8b59635cd0adb41f1ba8fbc68f23c4c3,
+        type: 3}
+      propertyPath: CheatManager
+      value: 
+      objectReference: {fileID: 343207756}
     - target: {fileID: 8166586310705985429, guid: 8b59635cd0adb41f1ba8fbc68f23c4c3,
         type: 3}
       propertyPath: isController
@@ -9089,6 +9094,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7230435065483203281, guid: 03552866a0cad59479b1468956722dfe,
         type: 3}
+      propertyPath: CheatManager
+      value: 
+      objectReference: {fileID: 343207756}
+    - target: {fileID: 7230435065483203281, guid: 03552866a0cad59479b1468956722dfe,
+        type: 3}
       propertyPath: cheatManager
       value: 
       objectReference: {fileID: 343207756}
@@ -11681,6 +11691,12 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!224 &1968017551 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 4145531126524381781, guid: 03552866a0cad59479b1468956722dfe,
+    type: 3}
+  m_PrefabInstance: {fileID: 1499688991}
+  m_PrefabAsset: {fileID: 0}
 --- !u!114 &1968017552
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11697,12 +11713,6 @@ MonoBehaviour:
   channelTransitionVideo: {fileID: 1627780818}
   transitionTime: 1
   musicSource: {fileID: 2110897994}
---- !u!224 &1968017551 stripped
-RectTransform:
-  m_CorrespondingSourceObject: {fileID: 4145531126524381781, guid: 03552866a0cad59479b1468956722dfe,
-    type: 3}
-  m_PrefabInstance: {fileID: 1499688991}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1971024972 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 7897149327893079946, guid: 86decf478d7f44de6ba6c659c541a018,
@@ -12316,7 +12326,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &2098081251
 MonoBehaviour:
   m_ObjectHideFlags: 0

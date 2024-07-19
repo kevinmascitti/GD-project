@@ -44,9 +44,7 @@ public class CheatCode : MonoBehaviour
             addToBuffer("F");
         if (Input.GetKeyDown(KeyCode.S))
             addToBuffer("S");
-        if (Input.GetKeyDown(KeyCode.S))
-            addToBuffer("E");
-        if (Input.GetKeyDown(KeyCode.S))
+        if (Input.GetKeyDown(KeyCode.N))
             addToBuffer("N");
         
         checkPattern();
@@ -63,20 +61,21 @@ public class CheatCode : MonoBehaviour
     {
         if (buffer.EndsWith("CHEAT"))
         {
-            cheat = true;
+            cheat = !cheat;
             Debug.Log("Trucchi Attivati");
             
         }
         else if (buffer.EndsWith("FAST"))
         {
-            goFast = true;
+            goFast = !goFast;
             Debug.Log("Rapidità Attivata");
         }
         else if (buffer.EndsWith("ENT"))
         {
-            entCheat = true;
+            entCheat = !entCheat;
             Debug.Log("Trucco barra d'intrattenimento attivato");
         }
+        
     }
 
 }

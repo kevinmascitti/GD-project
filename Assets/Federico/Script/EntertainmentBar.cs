@@ -123,6 +123,7 @@ public class EntertainmentBar : MonoBehaviour
     {
         if (!isZero && isActive)
         {
+            if(!CheatManager.entCheat)
             currEntertainmentValue -= decreaseSpeed * Time.deltaTime;
             // Debug.Log("ho decrementato il valore del fill");
             if (currEntertainmentValue < 0)
