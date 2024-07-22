@@ -11,9 +11,16 @@ public class ProgressionBarManager : MonoBehaviour
     public Vector3 playerPosition;
 
     public GameObject player;
+
+    public Sprite play;
+    public Sprite pause;
+    public Sprite rewind;
+    
     
     [SerializeField] private Image fill;
+    [SerializeField] private Image statusBar;
     public float currlvlprogression;
+    public float prevlvlprogression;
     // Start is called before the first frame update
     void Awake()
     {
@@ -35,6 +42,22 @@ public class ProgressionBarManager : MonoBehaviour
     {
         playerPosition = player.transform.position;
         currlvlprogression =1-(Mathf.Abs( exitPoint.x - playerPosition.x )/ Mathf.Abs(exitPoint.x - spawnPoint.x));
+        if (prevlvlprogression - currlvlprogression < 0)
+        {
+            prevlvlprogression = currlvlprogression;
+            statusBar.sprite = play;
+            
+        }
+        else if (prevlvlprogression - currlvlprogression == 0)
+        {
+            prevlvlprogression = currlvlprogression;
+            statusBar.sprite = pause;
+        }
+        else
+        {
+            prevlvlprogression = currlvlprogression;
+            statusBar.sprite = rewind;
+        }
         fill.fillAmount = currlvlprogression;
         Debug.Log(currlvlprogression);
     }
