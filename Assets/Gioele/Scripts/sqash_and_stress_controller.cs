@@ -24,7 +24,7 @@ public class sqash_and_stress_controller : MonoBehaviour
     void OnTriggerEnter(Collider other)
     {
         // Check if the collided object's layer is "Enemy"
-        if (other.gameObject.layer == enemyLayer)
+        if (String.Compare(other.gameObject.tag, "enemy", StringComparison.Ordinal)==0 || String.Compare(other.gameObject.tag, "EnemyObj", StringComparison.Ordinal)==0)
         {
             // Destroy the enemy game object
             other.gameObject.GetComponent<Enemy>().currentHP = 0f;
@@ -48,7 +48,6 @@ public class sqash_and_stress_controller : MonoBehaviour
         {
             // Fai qualcosa quando l'animazione è terminata
             this.gameObject.SetActive(false);
-            Debug.Log("L'animazione è terminata!");
         }
     }
 }

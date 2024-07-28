@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Threading;
+using Unity.Mathematics;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
@@ -33,6 +34,7 @@ public class RemoteController : MonoBehaviour
     [SerializeField] private GameObject squashAndStress;
     [SerializeField] private LayerMask layerLaserMask;
     [SerializeField] private float laserDamage = 0.1f;
+    [SerializeField] public GameObject spawnPoint;
     
     // tutti i timer sono attivi non devono ricaricarsi
     private bool RechargeButtonChPlusEnabled = false;
@@ -225,7 +227,13 @@ public class RemoteController : MonoBehaviour
     public void StopVolumeMinus()
     {
         // blocco dall’alto che li “schiaccia” o appiattisce
-        squashAndStress.SetActive(true);
+        Vector3 position = squashAndStress.transform.localPosition;
+        Quaternion rotation = squashAndStress.transform.rotation;
+
+        // Duplica l'oggetto nella posizione e rotazione specificate
+        GameObject duplicatedObject = Instantiate(squashAndStress);
+        duplicatedObject.SetActive(true);
+        duplicatedObject.transform.position = squashAndStress.transform.localPosition;
         //Vector3 newPosition = player.transform.position;
 
         // Set the position of squashAndStress
@@ -538,6 +546,14 @@ public class RemoteController : MonoBehaviour
                 OnControllerAbility?.Invoke(this, EventArgs.Empty);
                 isStaminaFull = false;
             }
+        }
+        if (Input.GetKeyDown(KeyCode.K))
+        {
+            playerTransform.GetComponent<PlayerCharacter>().UpdateStamina(0);
+            StartVolumeMinus();
+            Debug.Log("sono quiiii");
+            OnControllerAbility?.Invoke(this, EventArgs.Empty);
+            isStaminaFull = false;
         }
 
         // if (isButtonAnimationOn)
