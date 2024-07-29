@@ -20,7 +20,7 @@ public class Room : MonoBehaviour
     [NonSerialized] public Spawner spawner;
     [SerializeField] private int killedEnemies = 0;
     [SerializeField] private bool isBossRoom = false;
-    
+    public GameObject arrow;
     public static EventHandler<RoomArgs> OnEndRoom;
 
     public void Awake()
@@ -39,6 +39,8 @@ public class Room : MonoBehaviour
         if (args.room == this && spawner)
         {
             spawner.SetEnable(true);
+            arrow.SetActive(false);
+            arrow.GetComponentInChildren<Blink>().blinking=false;
         }
     }
 
@@ -63,6 +65,7 @@ public class Room : MonoBehaviour
                 spawner.SetEnable(false);
                 room.spawner.spawnCount = 0;
                 isLocked = false;
+                arrow.SetActive(true);
                 OnEndRoom?.Invoke(this, new RoomArgs(this));
                 killedEnemies = 0;
             }
