@@ -547,14 +547,6 @@ public class RemoteController : MonoBehaviour
                 isStaminaFull = false;
             }
         }
-        if (Input.GetKeyDown(KeyCode.K))
-        {
-            playerTransform.GetComponent<PlayerCharacter>().UpdateStamina(0);
-            StartVolumeMinus();
-            Debug.Log("sono quiiii");
-            OnControllerAbility?.Invoke(this, EventArgs.Empty);
-            isStaminaFull = false;
-        }
 
         // if (isButtonAnimationOn)
         // {

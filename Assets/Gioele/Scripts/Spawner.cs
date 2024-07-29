@@ -228,13 +228,10 @@ public class Spawner : MonoBehaviour
                         {
                             Instantiate(selectedObject, spawnPosition, Quaternion.Euler(0, 90, 0)).transform.parent =
                                 roomTransform;
-                            selectedObject.GetComponent<Enemy_AI_Melee>().knight = true;
+                            //selectedObject.GetComponent<Enemy_AI_Melee>().knight = true;
                         }
                         else
                         {
-                            Instantiate(selectedObject, spawnPosition, Quaternion.Euler(0, 90, 0)).transform.parent =
-                                roomTransform;
-                            selectedObject.GetComponent<Enemy_AI_Melee>().knight = true;
                             // spawnedEnemies.Add(Instantiate(selectedObject, spawnPosition, Quaternion.Euler(0, 180, 0)));
                             Instantiate(selectedObject, spawnPosition, Quaternion.Euler(0, 180, 0)).transform.parent =
                                 roomTransform;

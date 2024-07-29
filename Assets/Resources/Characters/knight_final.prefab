@@ -457,6 +457,7 @@ MonoBehaviour:
   vita: 5
   grounded: 1
   _animator: {fileID: 1927805496205636127}
+  knight: 1
 --- !u!65 &9135075774955268890
 BoxCollider:
   m_ObjectHideFlags: 0
