@@ -224,17 +224,21 @@ public class Spawner : MonoBehaviour
                     }
                     if (selectedObject.GetComponent<Enemy_AI_Melee>()!=null)
                     {
-                        if (selectedObject.name.CompareTo("knight_final") != 0)
+                        if (selectedObject.name.CompareTo("knight_final")==0)
                         {
-                            // spawnedEnemies.Add(Instantiate(selectedObject, spawnPosition, Quaternion.Euler(0, 180, 0)));
-                            Instantiate(selectedObject, spawnPosition, Quaternion.Euler(0, 180, 0)).transform.parent =
+                            Instantiate(selectedObject, spawnPosition, Quaternion.Euler(0, 90, 0)).transform.parent =
                                 roomTransform;
-                            // spawnedEnemies[spawnedEnemies.Count - 1].transform.parent = roomTransform;
+                            selectedObject.GetComponent<Enemy_AI_Melee>().knight = true;
                         }
                         else
                         {
                             Instantiate(selectedObject, spawnPosition, Quaternion.Euler(0, 90, 0)).transform.parent =
                                 roomTransform;
+                            selectedObject.GetComponent<Enemy_AI_Melee>().knight = true;
+                            // spawnedEnemies.Add(Instantiate(selectedObject, spawnPosition, Quaternion.Euler(0, 180, 0)));
+                            Instantiate(selectedObject, spawnPosition, Quaternion.Euler(0, 180, 0)).transform.parent =
+                                roomTransform;
+                            // spawnedEnemies[spawnedEnemies.Count - 1].transform.parent = roomTransform;
                         }
                     }
                     if (selectedObject.tag.CompareTo("EnemyObj") == 0)

@@ -39,7 +39,7 @@ public class Enemy_AI_Melee : Enemy
     private Vector3 forwardScaleVector = new Vector3(1, 1, 1);
     private Vector3 backwardVector = new Vector3(1, 0, 0);
     private Vector3 backwardScaleVector = new Vector3(-1, 1, 1);
-    
+    public  bool knight=false;
     private void Awake()
     {
         base.Awake();
@@ -174,12 +174,25 @@ public class Enemy_AI_Melee : Enemy
             transform.localScale = forwardScaleVector;
             
         }
-        else if (Player.transform.position.x < this.transform.position.x){
+        else if (Player.transform.position.x < this.transform.position.x)
+        {
             //player davanti e enemy dietro
             // Imposta i vettori forward per transform e gunpivot
-            transform.forward = backwardVector;
-            // Modifica la scala locale
-            transform.localScale = backwardScaleVector;
+            
+            if (knight){
+                Vector3 backwardVector_knight = new Vector3(0, 0, 1);
+                Vector3 backwardScaleVector_knight = new Vector3(1, 1, -1);
+                transform.forward = backwardVector_knight;
+                // Modifica la scala locale
+                transform.localScale = backwardScaleVector_knight;
+            }
+            else
+            {
+
+                transform.forward = backwardVector;
+                // Modifica la scala locale
+                transform.localScale = backwardScaleVector;
+            }
         }
         if (grounded)// solo se l'enemy è a terra
         {
