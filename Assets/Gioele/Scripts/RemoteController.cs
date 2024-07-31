@@ -416,18 +416,21 @@ public class RemoteController : MonoBehaviour
                 {
                     obj.GetComponent<Enemy_AI_Melee>().enabled = false;
                     obj.GetComponent<Animator>().enabled = false;
+                    obj.GetComponent<Rigidbody>().isKinematic = true;
                 }
 
                 if (obj.GetComponent<ShootingTower>())
                 {
                     obj.GetComponent<ShootingTower>().enabled = false;
                     obj.GetComponent<Animator>().enabled = false;
+                    obj.GetComponent<Rigidbody>().isKinematic = true;
                 }
 
                 if (obj.GetComponent<EnemyAI>())
                 {
                     obj.GetComponent<EnemyAI>().enabled = false;
                     obj.GetComponent<Animator>().enabled = false;
+                    obj.GetComponent<Rigidbody>().isKinematic = true;
                 }
 
                 NavMeshAgent agent = obj.GetComponent<NavMeshAgent>();
@@ -455,18 +458,21 @@ public class RemoteController : MonoBehaviour
             {
                 obj.GetComponent<Enemy_AI_Melee>().enabled = true;
                 obj.GetComponent<Animator>().enabled = true;
+                obj.GetComponent<Rigidbody>().isKinematic = false;
             }
 
             if (obj.GetComponent<ShootingTower>())
             {
                 obj.GetComponent<ShootingTower>().enabled = true;
                 obj.GetComponent<Animator>().enabled = true;
+                obj.GetComponent<Rigidbody>().isKinematic = false;
             }
 
             if (obj.GetComponent<EnemyAI>())
             {
                 obj.GetComponent<EnemyAI>().enabled = true;
                 obj.GetComponent<Animator>().enabled = true;
+                obj.GetComponent<Rigidbody>().isKinematic = false;
             }
             NavMeshAgent agent = obj.GetComponent<NavMeshAgent>();
             if (agent != null)
@@ -513,7 +519,7 @@ public class RemoteController : MonoBehaviour
                 OnControllerAbility?.Invoke(this, EventArgs.Empty);
                 isStaminaFull = false;
             }
-            else if (Input.GetKeyDown(KeyCode.U))
+            else if (Input.GetKeyDown(KeyCode.H))
             {
                 playerTransform.GetComponent<PlayerCharacter>().UpdateStamina(0);
                 StartPause("Enemy");
