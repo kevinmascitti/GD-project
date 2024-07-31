@@ -47,7 +47,7 @@ public class sqash_and_stress_controller : MonoBehaviour
         if (stateInfo.normalizedTime >= 1.0f && !GetComponent<Animator>().IsInTransition(0))
         {
             // Fai qualcosa quando l'animazione è terminata
-            this.gameObject.SetActive(false);
+            DestroySelf();
         }
     }
 }

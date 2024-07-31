@@ -3844,6 +3844,11 @@ PrefabInstance:
         type: 2}
     - target: {fileID: 2227164382493448751, guid: 8b59635cd0adb41f1ba8fbc68f23c4c3,
         type: 3}
+      propertyPath: spawnPoint
+      value: 
+      objectReference: {fileID: 783679763}
+    - target: {fileID: 2227164382493448751, guid: 8b59635cd0adb41f1ba8fbc68f23c4c3,
+        type: 3}
       propertyPath: laserDamage
       value: 0.4
       objectReference: {fileID: 0}
@@ -3852,6 +3857,12 @@ PrefabInstance:
       propertyPath: controllerUI
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 2227164382493448751, guid: 8b59635cd0adb41f1ba8fbc68f23c4c3,
+        type: 3}
+      propertyPath: squashAndStress
+      value: 
+      objectReference: {fileID: 1027246523902153772, guid: 4f85c48fc42a3f44887bd2fb2f098df8,
+        type: 3}
     - target: {fileID: 2523708086587550056, guid: 8b59635cd0adb41f1ba8fbc68f23c4c3,
         type: 3}
       propertyPath: m_LocalPosition.y
@@ -4361,6 +4372,12 @@ PrefabInstance:
       insertIndex: -1
       addedObject: {fileID: 1383009264}
   m_SourcePrefab: {fileID: 100100000, guid: 8b59635cd0adb41f1ba8fbc68f23c4c3, type: 3}
+--- !u!4 &783679763 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 1404841620339578643, guid: 8b59635cd0adb41f1ba8fbc68f23c4c3,
+    type: 3}
+  m_PrefabInstance: {fileID: 783679762}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &820747934
 PrefabInstance:
   m_ObjectHideFlags: 0

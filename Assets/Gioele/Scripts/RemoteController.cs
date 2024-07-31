@@ -34,12 +34,12 @@ public class RemoteController : MonoBehaviour
     [SerializeField] private GameObject squashAndStress;
     [SerializeField] private LayerMask layerLaserMask;
     [SerializeField] private float laserDamage = 0.1f;
-    [SerializeField] public GameObject spawnPoint;
+    [SerializeField] public Transform spawnPoint;
     
     // tutti i timer sono attivi non devono ricaricarsi
     private bool RechargeButtonChPlusEnabled = false;
     private bool RechargeButtonVolumePlusEnabled = false;
-    private bool RechargeButtonVolumeMinusEnabled = false;
+    public bool RechargeButtonVolumeMinusEnabled = false;
     private bool RechargeButtonLaserEnabled = false;
     private bool RechargeButtonChminusEnabled = false;
     private bool RechargeButtonPauseEnabled = false;
@@ -47,7 +47,7 @@ public class RemoteController : MonoBehaviour
     // tutte le abilità sono da sbloccare
     private bool UnlockChPlus = false;
     private bool UnlockVolumePlus = false;
-    private bool UnlockVolumeMinus = false;
+    public bool UnlockVolumeMinus = false;
     private bool UnlockLaser = false;
     private bool UnlockChminus = false;
     private bool UnlockPause = false;
@@ -58,8 +58,6 @@ public class RemoteController : MonoBehaviour
     {
         playerTransform = GetComponent<Transform>();
         originalScale = transform.localScale;
-        if(squashAndStress)
-            squashAndStress.SetActive(false);
         disabledButtons = GameObject.Find("DisabledButtons");
         if(controllerUI)
             disabledButtons.SetActive(false);
@@ -220,6 +218,10 @@ public class RemoteController : MonoBehaviour
         {
             RechargeButtonVolumeMinusEnabled = true;
             // blocco dall’alto che li “schiaccia” o appiattisce
+            GameObject duplicatedObject = Instantiate(squashAndStress, spawnPoint.position, Quaternion.identity);
+            duplicatedObject.transform.parent = null;
+            // Attiva l'oggetto duplicato
+            Debug.Log("ciao");
             StartTimer(timerDuration, StopVolumeMinus);
             StartTimer(2*timerDuration,RechargeVolumeMinus);
         }
@@ -227,15 +229,15 @@ public class RemoteController : MonoBehaviour
     public void StopVolumeMinus()
     {
         // blocco dall’alto che li “schiaccia” o appiattisce
-        Vector3 position = squashAndStress.transform.localPosition;
-        Quaternion rotation = squashAndStress.transform.rotation;
+        //Vector3 position = squashAndStress.transform.localPosition;
+        //Quaternion rotation = squashAndStress.transform.rotation;
 
         // Duplica l'oggetto nella posizione e rotazione specificate
-        GameObject duplicatedObject = Instantiate(squashAndStress);
-        duplicatedObject.SetActive(true);
-        duplicatedObject.transform.position = squashAndStress.transform.localPosition;
+        ///GameObject duplicatedObject = Instantiate(squashAndStress);
+        //duplicatedObject.SetActive(true);
+        //duplicatedObject.transform.position = squashAndStress.transform.localPosition;
         //Vector3 newPosition = player.transform.position;
-
+        RechargeButtonVolumeMinusEnabled = false;
         // Set the position of squashAndStress
         //squashAndStress.transform.position = newPosition;
     }
@@ -539,7 +541,7 @@ public class RemoteController : MonoBehaviour
                 OnControllerAbility?.Invoke(this, EventArgs.Empty);
                 isStaminaFull = false;
             }
-            else if (Input.GetKeyDown(KeyCode.K))
+            else if (Input.GetKeyDown(KeyCode.M))
             {
                 playerTransform.GetComponent<PlayerCharacter>().UpdateStamina(0);
                 StartVolumeMinus();
