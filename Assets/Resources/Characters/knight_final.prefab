@@ -450,8 +450,8 @@ MonoBehaviour:
   walkPointRange: 1
   alreadyAttacked: 0
   damage: 5
-  sightRange: 1.5
-  attackRange: 1.7
+  sightRange: 1.3
+  attackRange: 1.45
   playerInSightRange: 0
   playerInAttackRange: 0
   vita: 5

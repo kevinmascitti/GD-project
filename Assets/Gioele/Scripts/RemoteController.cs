@@ -71,12 +71,12 @@ public class RemoteController : MonoBehaviour
         controllerUI = GameObject.Find("ControllerUI");
         standardUIPosition = controllerUI.transform.position;
         isUIVisible = false;
-        UnlockChPlus = true;
-        UnlockChminus = true;
+        UnlockChPlus = false;
+        UnlockChminus = false;
         UnlockLaser = true;
         UnlockPause = true;
         UnlockVolumeMinus = true;
-        UnlockVolumePlus = true;
+        UnlockVolumePlus = false;
 
         PlayerCharacter.OnStaminaFull += SetStaminaFull;
     }
