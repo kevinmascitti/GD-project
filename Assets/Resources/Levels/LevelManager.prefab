@@ -1311,6 +1311,7 @@ MonoBehaviour:
   isLocked: 1
   killedEnemies: 0
   isBossRoom: 0
+  arrow: {fileID: 0}
 --- !u!1 &393978456771232135
 GameObject:
   m_ObjectHideFlags: 0
@@ -7113,6 +7114,7 @@ MonoBehaviour:
   isLocked: 1
   killedEnemies: 0
   isBossRoom: 0
+  arrow: {fileID: 0}
 --- !u!1 &3099295305925038817
 GameObject:
   m_ObjectHideFlags: 0
@@ -8235,6 +8237,7 @@ MonoBehaviour:
   isLocked: 0
   killedEnemies: 0
   isBossRoom: 0
+  arrow: {fileID: 0}
 --- !u!1 &3576116112872564542
 GameObject:
   m_ObjectHideFlags: 0
@@ -11841,6 +11844,7 @@ MonoBehaviour:
   isLocked: 1
   killedEnemies: 0
   isBossRoom: 0
+  arrow: {fileID: 0}
 --- !u!1 &5632629947559913454
 GameObject:
   m_ObjectHideFlags: 0
@@ -13442,6 +13446,7 @@ MonoBehaviour:
   isLocked: 1
   killedEnemies: 0
   isBossRoom: 0
+  arrow: {fileID: 0}
 --- !u!1 &6420464481129857844
 GameObject:
   m_ObjectHideFlags: 0
@@ -15045,6 +15050,7 @@ MonoBehaviour:
   isLocked: 1
   killedEnemies: 0
   isBossRoom: 0
+  arrow: {fileID: 0}
 --- !u!1 &7104423817826607502
 GameObject:
   m_ObjectHideFlags: 0
@@ -24236,6 +24242,11 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 3812463333637228162, guid: de00ae07b8cf922479031c620b23c0ab,
+        type: 3}
+      propertyPath: spawnableObjects.Array.data[4]
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 5019942434850239748, guid: de00ae07b8cf922479031c620b23c0ab,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -25422,6 +25433,16 @@ PrefabInstance:
     - target: {fileID: 3812463333637228162, guid: de00ae07b8cf922479031c620b23c0ab,
         type: 3}
       propertyPath: EnemyObjects.Array.data[3]
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 3812463333637228162, guid: de00ae07b8cf922479031c620b23c0ab,
+        type: 3}
+      propertyPath: EnemyObjects.Array.data[4]
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 3812463333637228162, guid: de00ae07b8cf922479031c620b23c0ab,
+        type: 3}
+      propertyPath: spawnableObjects.Array.data[4]
       value: 
       objectReference: {fileID: 0}
     - target: {fileID: 5019942434850239748, guid: de00ae07b8cf922479031c620b23c0ab,

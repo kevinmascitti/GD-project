@@ -1817,7 +1817,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 256639306}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: bb8c7d45b741c46758132c81c00177c8, type: 3}
   m_Name: 
@@ -11882,7 +11882,7 @@ PrefabInstance:
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Target
       value: 
-      objectReference: {fileID: 1852968840}
+      objectReference: {fileID: 0}
     - target: {fileID: 1678440833142985084, guid: 9e1e15e828a2e2142bc1cd160e81f104,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
@@ -12127,7 +12127,7 @@ PrefabInstance:
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Target
       value: 
-      objectReference: {fileID: 1852968840}
+      objectReference: {fileID: 0}
     - target: {fileID: 8110691031838785014, guid: 9e1e15e828a2e2142bc1cd160e81f104,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_Target
@@ -12158,7 +12158,8 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_TargetAssemblyTypeName
       value: UnityEngine.GameObject, UnityEngine
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 1858364674195596557, guid: 9e1e15e828a2e2142bc1cd160e81f104, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
@@ -12169,18 +12170,6 @@ RectTransform:
     type: 3}
   m_PrefabInstance: {fileID: 1852968837}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1852968840 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 1858364674195596557, guid: 9e1e15e828a2e2142bc1cd160e81f104,
-    type: 3}
-  m_PrefabInstance: {fileID: 1852968837}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 61de8415985c9dd4cad3ea6ca193474d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!4 &1863060189 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6023582318722180298, guid: a629d78297fc1a84fa173b1a061b3e09,

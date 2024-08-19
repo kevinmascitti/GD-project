@@ -14,6 +14,9 @@ public class MenuManager : MonoBehaviour
 
     private void Start() {
         PlayerCharacter.OnGameOver += ActivateGameOverMenu;
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
+        _isMenuActive = false;
     }
 
     private void OnDestroy()
@@ -52,6 +55,8 @@ public class MenuManager : MonoBehaviour
         _inGameMenu.SetActive(true);
         Time.timeScale = 0f;
         _isMenuActive = true;
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
     }
 
     public void DeactivateInGameMenu()
@@ -63,6 +68,8 @@ public class MenuManager : MonoBehaviour
         }
         _inGameMenu.SetActive(false);
         _isMenuActive = false;
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
     }
 
 }
