@@ -96,7 +96,10 @@ public class Spawner : MonoBehaviour
                 {
                     if (grandchild.CompareTag("Exit"))
                     {
-                        grandchild.gameObject.SetActive(true);
+                        //grandchild.gameObject.SetActive(true);
+                        Animator exitAnimator = grandchild.gameObject.GetComponent<Animator>();
+                        if(exitAnimator)
+                            exitAnimator.SetBool("open", false);
                         found = true;
                     }
                 }
@@ -121,7 +124,7 @@ public class Spawner : MonoBehaviour
         //         animator.SetBool("open", true);
         //     }
         // }
-        
+
         foreach (Transform child in args.room.transform.Find("EnvAssets").transform)
         {
             bool found = false;
@@ -129,7 +132,12 @@ public class Spawner : MonoBehaviour
             {
                 if (grandchild.CompareTag("Exit"))
                 {
-                    grandchild.gameObject.SetActive(false);
+                    //grandchild.gameObject.SetActive(false);
+                    Debug.Log("Trigger uscita");
+                    Animator exitAnimator = grandchild.gameObject.GetComponent<Animator>();
+                    if(exitAnimator)
+                        Debug.Log("Open animation");
+                        exitAnimator.SetBool("open", true);
                     found = true;
                 }
             }
