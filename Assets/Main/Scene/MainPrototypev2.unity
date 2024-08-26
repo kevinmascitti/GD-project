@@ -4045,6 +4045,12 @@ PrefabInstance:
       propertyPath: cheatManager
       value: 
       objectReference: {fileID: 343207756}
+    - target: {fileID: 3305752133941219901, guid: 8b59635cd0adb41f1ba8fbc68f23c4c3,
+        type: 3}
+      propertyPath: HitEffectPrefab
+      value: 
+      objectReference: {fileID: 1250507045210962, guid: 119d81fc3b9d22d41b977a26e4d00382,
+        type: 3}
     - target: {fileID: 3436087847710924267, guid: 8b59635cd0adb41f1ba8fbc68f23c4c3,
         type: 3}
       propertyPath: m_LocalRotation.y
