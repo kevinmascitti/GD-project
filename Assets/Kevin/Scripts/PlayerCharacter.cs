@@ -13,8 +13,8 @@ public class PlayerCharacter : Character
     public float def_HP = 100;
     public float MAX_STAMINA = 100;
     public float def_increase_STAMINA = 5;
-    public int MAX_LIFE = 4;
-    public int def_life = 4;
+    public int MAX_LIFE = 2;
+    public int def_life = 2;
     [NonSerialized] public bool isInputEnabled = false;
     public bool isInvincible; // player invincibile quando riceve danno
     public Slider sliderHP;
@@ -82,7 +82,7 @@ public class PlayerCharacter : Character
         Grabbable.OnUse += StartMovingDownArm;
 
         ComboCounter.OnCounterIncreased += IncreaseStamina;
-        EntertainmentBar.OnZeroedEnterteinmentBar += RequestNewLevel;
+        EntertainmentBar.OnZeroedEnterteinmentBar += DecreaseExtraLife;
 
         RemoteController.OnControllerAbility += EmptyStamina;
 
@@ -109,7 +109,7 @@ public class PlayerCharacter : Character
         Grabbable.OnUse -= StartMovingDownArm;
 
         ComboCounter.OnCounterIncreased -= IncreaseStamina;
-        EntertainmentBar.OnZeroedEnterteinmentBar -= RequestNewLevel;
+        EntertainmentBar.OnZeroedEnterteinmentBar -= DecreaseExtraLife;
 
         RemoteController.OnControllerAbility -= EmptyStamina;
 
@@ -241,7 +241,7 @@ public class PlayerCharacter : Character
     public void UpdateHP(float newHP)
     {
         currentHP = newHP;
-        if (currentHP <= 0)
+        if (currentHP <= 12)
         {
             currentHP = 0;
             Die();
@@ -365,13 +365,20 @@ public class PlayerCharacter : Character
         isInputEnabled = true;
     }
 
-    private void RequestNewLevel(object sender, EventArgs args)
+    private void RequestNewLevel()
     {
         // OnEndRoom?.Invoke(this, new RoomArgs(currentRoom));
         OnEndLevel?.Invoke(this, new RoomManagerArgs(currentLevel, currentRoom));
         isInputEnabled = false;
         isInvincible = true;
         OnRequestLevel?.Invoke(this, currentLevel);
+    }
+
+    private void DecreaseExtraLife(object sender, EventArgs args)
+    {
+        UpdateExtraLife(currentExtraLife - 1);
+        if(currentExtraLife >= 0)
+            RequestNewLevel();
     }
 
     public void GameOver()
@@ -459,6 +466,8 @@ public class PlayerCharacter : Character
                     heartList[i].SetActive(false);
             }
         }
+        else if (UIExtraLife && extraLife < 0)
+            Die();
     }
 
     public void SetFirstLevelAndRoom(object sender, LevelManagerArgs args)

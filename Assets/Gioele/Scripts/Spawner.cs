@@ -19,6 +19,7 @@ public class Spawner : MonoBehaviour
     [SerializeField] public int spawnCount = 0;
     [SerializeField] public int spawnLimit;
     [SerializeField] public bool isdeterministic;
+    [SerializeField] public GameObject exit;
     private Transform roomTransform;
 
     void Awake()
@@ -88,7 +89,7 @@ public class Spawner : MonoBehaviour
         //     }
         // }
 
-        if(args.room.prevRoom)
+        /*if(args.room.prevRoom)
             foreach (Transform child in args.room.prevRoom.transform.Find("EnvAssets").transform)
             {
                 bool found = false;
@@ -96,12 +97,18 @@ public class Spawner : MonoBehaviour
                 {
                     if (grandchild.CompareTag("Exit"))
                     {
-                        grandchild.gameObject.SetActive(true);
+                        //grandchild.gameObject.SetActive(true);
+                        Animator exitAnimator = grandchild.gameObject.GetComponent<Animator>();
+                        if(exitAnimator)
+                            exitAnimator.SetBool("open", false);
                         found = true;
                     }
                 }
                 if (found) break;
-            }
+            }*/
+        Animator exitAnimator = exit.GetComponent<Animator>();
+        if(exitAnimator)
+            exitAnimator.SetBool("open", false);
     }
     
     public void OpenExit(object sender, RoomArgs args)
@@ -121,20 +128,29 @@ public class Spawner : MonoBehaviour
         //         animator.SetBool("open", true);
         //     }
         // }
-        
-        foreach (Transform child in args.room.transform.Find("EnvAssets").transform)
+
+        /*foreach (Transform child in args.room.transform.Find("EnvAssets").transform)
         {
             bool found = false;
             foreach (Transform grandchild in child)
             {
                 if (grandchild.CompareTag("Exit"))
                 {
-                    grandchild.gameObject.SetActive(false);
+                    //grandchild.gameObject.SetActive(false);
+                    Debug.Log("Trigger uscita su " + grandchild.gameObject.name);
+                    Animator exitAnimator = grandchild.gameObject.GetComponent<Animator>();
+                    if(exitAnimator)
+                        exitAnimator.SetBool("open", true);
                     found = true;
                 }
             }
             if (found) break;
-        }
+        }*/
+
+        Animator exitAnimator = exit.GetComponent<Animator>();
+        if(exitAnimator)
+            exitAnimator.SetBool("open", true);
+
     }
 
     public void StartSpawn()
