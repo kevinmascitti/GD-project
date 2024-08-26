@@ -65,6 +65,7 @@ public class RoomManager : MonoBehaviour
         LevelManager.OnStartRoom += ClosePrevWalls;
         PlayerCharacter.OnNextRoom += OpenNextWalls;
         PlayerCharacter.OnStartLevel += ChangeBackground;
+        Room.OnLevelCompleted += MarkLevel;
         
         OnInitializedLevel?.Invoke(this, EventArgs.Empty);
     }
@@ -75,6 +76,7 @@ public class RoomManager : MonoBehaviour
         LevelManager.OnStartRoom -= ClosePrevWalls;
         PlayerCharacter.OnNextRoom -= OpenNextWalls;
         PlayerCharacter.OnStartLevel -= ChangeBackground;
+        Room.OnLevelCompleted -= MarkLevel;
     }
 
     public void OpenNextWalls(object sender, RoomArgs args)
@@ -112,6 +114,14 @@ public class RoomManager : MonoBehaviour
                     layerNumber++;
                 }
             }
+        }
+    }
+
+    private void MarkLevel(object sender, RoomManager args)
+    {
+        if (args == this)
+        {
+            isCompleted = true;
         }
     }
 }

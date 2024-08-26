@@ -26,7 +26,7 @@ public abstract class Character : MonoBehaviour
         }
 
         isTakingDamage = true;
-        if (currentHP <= 0)
+        if ((!isPlayer && currentHP <= 0) || (isPlayer && currentHP <= 12))
             Die();
     }
 
