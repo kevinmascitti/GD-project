@@ -280,6 +280,7 @@ public class PlayerCharacter : Character
 
     public override void Die()
     {
+        UpdateExtraLife(currentExtraLife - 1);
         // OnEndRoom?.Invoke(this, new RoomArgs(currentRoom));
         OnEndLevel?.Invoke(this, new RoomManagerArgs(currentLevel, currentRoom));
 
@@ -349,7 +350,6 @@ public class PlayerCharacter : Character
         {
             UpdateHP(MAX_HP);
             UpdateStamina(0);
-            UpdateExtraLife(currentExtraLife - 1);
             GetComponent<Animator>().SetBool("die",false);
         }
 
@@ -466,8 +466,6 @@ public class PlayerCharacter : Character
                     heartList[i].SetActive(false);
             }
         }
-        else if (UIExtraLife && extraLife < 0)
-            Die();
     }
 
     public void SetFirstLevelAndRoom(object sender, LevelManagerArgs args)

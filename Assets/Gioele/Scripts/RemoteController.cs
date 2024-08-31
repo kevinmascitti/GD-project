@@ -591,7 +591,7 @@ public class RemoteController : MonoBehaviour
     IEnumerator ShowUIButtons()
     {
         Vector3 startPosition = standardUIPosition;
-        Vector3 endPosition = startPosition + new Vector3(200, 250, 0);
+        Vector3 endPosition = startPosition + new Vector3(230, 430, 0);
         float elapsedTime = 0f;
 
         while (elapsedTime < 0.1f)
