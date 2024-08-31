@@ -41,7 +41,6 @@ public class Room : MonoBehaviour
         {
             spawner.SetEnable(true);
             arrow.SetActive(false);
-            arrow.GetComponentInChildren<Blink>().blinking=false;
         }
     }
 
