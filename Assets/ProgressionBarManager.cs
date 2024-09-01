@@ -31,7 +31,7 @@ public class ProgressionBarManager : MonoBehaviour
     {
         if (args != null && args.level)
         {
-            Debug.Log("i valori di spawn point ed exit point sono"+spawnPoint+exitPoint);
+    
             spawnPoint = args.level.inizio.position;
             exitPoint = args.level.fine.position;
             fill.fillAmount = 0.0f;
@@ -59,7 +59,7 @@ public class ProgressionBarManager : MonoBehaviour
             statusBar.sprite = rewind;
         }
         fill.fillAmount = currlvlprogression;
-        Debug.Log(currlvlprogression);
+   
     }
     void OnDestroy()
     {
