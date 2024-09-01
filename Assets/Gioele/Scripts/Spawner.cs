@@ -21,6 +21,8 @@ public class Spawner : MonoBehaviour
     [SerializeField] public bool isdeterministic;
     [SerializeField] public GameObject exit;
     private Transform roomTransform;
+    private int var = 1;
+    private float maxPlane = 0;
 
     void Awake()
     {
@@ -40,6 +42,36 @@ public class Spawner : MonoBehaviour
         Room.OnEndRoom += OpenExit;
         LevelManager.OnStartRoom += CloseExit;
         PlayerCharacter.OnStartRoom += CloseExit;
+    }
+    private float FindMaxValueOnAxis(Mesh mesh, char axis)
+    {
+        // Ottieni i vertici della mesh
+        Vector3[] vertices = mesh.vertices;
+        
+        // Inizializza maxValue con un valore minimo
+        float maxValue = float.MinValue;
+
+        // Loop attraverso tutti i vertici per trovare il valore massimo lungo l'asse specificato
+        foreach (Vector3 vertex in vertices)
+        {
+            switch (axis)
+            {
+                case 'x':
+                    if (vertex.x > maxValue) maxValue = vertex.x;
+                    break;
+                case 'y':
+                    if (vertex.y > maxValue) maxValue = vertex.y;
+                    break;
+                case 'z':
+                    if (vertex.z > maxValue) maxValue = vertex.z;
+                    break;
+                default:
+                    Debug.LogError("Asse non valido specificato. Usa 'x', 'y' o 'z'.");
+                    break;
+            }
+        }
+        
+        return maxValue;
     }
 
     private void OnDestroy()
@@ -230,6 +262,14 @@ public class Spawner : MonoBehaviour
                     //inserito una y =10 in modo che in nemico cada dal cielo 
                     // Aggiunta la posizione del piano per mantenere il punto random nel contesto del piano e non fuori
                     Vector3 spawnPosition = plane.transform.position + randomPosition;
+                    if (spawnPosition.x >= GameObject.FindGameObjectWithTag("Player").transform.position.x)
+                    {
+                        spawnPosition.x = Random.Range(planeRenderer.bounds.min.x,GameObject.FindGameObjectWithTag("Player").transform.position.x);
+                        Debug.Log("min piano:"+planeRenderer.bounds.min.x);
+                        spawnPosition.z = spawnPosition.z + var;
+                        var = -var;
+                    }
+
                     spawnCount++;
                     // oggetto istanziato su un punto random del piano
                     if (selectedObject.GetComponent<EnemyAI>()!=null)
@@ -299,6 +339,13 @@ public class Spawner : MonoBehaviour
                     //inserito una y =10 in modo che in nemico cada dal cielo 
                     // Aggiunta la posizione del piano per mantenere il punto random nel contesto del piano e non fuori
                     Vector3 spawnPosition = plane.transform.position + randomPosition;
+                    if (spawnPosition.x >= GameObject.FindGameObjectWithTag("Player").transform.position.x)
+                    {
+                        spawnPosition.x = Random.Range(planeRenderer.bounds.min.x,GameObject.FindGameObjectWithTag("Player").transform.position.x);
+                        Debug.Log("min piano:"+planeRenderer.bounds.min.x);
+                        spawnPosition.z = spawnPosition.z + var;
+                        var = -var;
+                    }
                     spawnCount++;
                     // oggetto istanziato su un punto random del piano
                     if (selectedObject.GetComponent<EnemyAI>()!=null)
