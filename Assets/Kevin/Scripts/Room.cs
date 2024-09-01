@@ -22,6 +22,7 @@ public class Room : MonoBehaviour
     [SerializeField] private bool isBossRoom = false;
     public GameObject arrow;
     public static EventHandler<RoomArgs> OnEndRoom;
+    public static EventHandler<RoomManager> OnLevelCompleted;
 
     public void Awake()
     {
@@ -40,7 +41,6 @@ public class Room : MonoBehaviour
         {
             spawner.SetEnable(true);
             arrow.SetActive(false);
-            arrow.GetComponentInChildren<Blink>().blinking=false;
         }
     }
 
@@ -62,6 +62,10 @@ public class Room : MonoBehaviour
             if (!spawner.canSpawn && killedEnemies == spawner.spawnLimit)
             {
                 // GameObject.FindGameObjectWithTag("Spawner").GetComponent<Spawner>().OpenExit();
+                if (nextRoom.level != level)
+                {
+                    OnLevelCompleted?.Invoke(this, level);
+                }
                 spawner.SetEnable(false);
                 room.spawner.spawnCount = 0;
                 isLocked = false;
