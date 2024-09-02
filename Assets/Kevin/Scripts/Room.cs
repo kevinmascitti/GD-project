@@ -59,7 +59,7 @@ public class Room : MonoBehaviour
         if (room == this)
         {
             killedEnemies++;
-            if (!spawner.canSpawn && killedEnemies == spawner.spawnLimit)
+            if (killedEnemies == spawner.spawnLimit)
             {
                 // GameObject.FindGameObjectWithTag("Spawner").GetComponent<Spawner>().OpenExit();
                 if (nextRoom.level != level)
