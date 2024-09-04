@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18386978, g: 0.2290168, b: 0.30311278, a: 1}
+  m_IndirectSpecularColor: {r: 0.18386954, g: 0.22901642, b: 0.30311203, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -10126,6 +10126,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: 'GameHUD '
       objectReference: {fileID: 0}
+    - target: {fileID: 3491881508618128520, guid: 03552866a0cad59479b1468956722dfe,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3845083103078029471, guid: 03552866a0cad59479b1468956722dfe,
         type: 3}
       propertyPath: m_AnchoredPosition.x
@@ -13950,8 +13955,19 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
       value: Play
       objectReference: {fileID: 0}
+    - target: {fileID: 6974188208848994629, guid: 090d12b552e7c52439372693ece0bbf7,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -80.86243
+      objectReference: {fileID: 0}
+    - target: {fileID: 6974188208848994629, guid: 090d12b552e7c52439372693ece0bbf7,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -0.32006836
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
-    m_RemovedGameObjects: []
+    m_RemovedGameObjects:
+    - {fileID: 2430713475914562255, guid: 090d12b552e7c52439372693ece0bbf7, type: 3}
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 090d12b552e7c52439372693ece0bbf7, type: 3}
