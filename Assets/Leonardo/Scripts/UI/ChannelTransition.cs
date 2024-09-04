@@ -12,6 +12,7 @@ public class ChannelTransition : MonoBehaviour
     [Range(0.25f, 1.5f)] public float transitionTime = 1.0f;
 
     [SerializeField] private AudioSource musicSource;
+    [SerializeField] private AudioClip channelTransitionClip;
     private AudioSource audioSource;
 
     void Start()
@@ -23,14 +24,15 @@ public class ChannelTransition : MonoBehaviour
 
     public void StartTransition(object sender, EventArgs args)
     {
-        Debug.Log("ChannelTransition StartTransition");
+        // Debug.Log("ChannelTransition StartTransition");
         StartCoroutine(Transition());
     }
 
     public IEnumerator Transition()
     {
-        Debug.Log("ChannelTransition Transition");
+        // Debug.Log("ChannelTransition Transition");
         musicSource.Stop();
+        audioSource.clip = channelTransitionClip;
         audioSource.Play();
         channelTransitionImage.gameObject.SetActive(true);
         channelTransitionVideo.Play();
