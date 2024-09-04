@@ -47,6 +47,8 @@ public class MenuManager : MonoBehaviour
 
     private void ActivateGameOverMenu(object sender, EventArgs e)
     {
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
         _GameOverMenu.SetActive(true);
     }
 
