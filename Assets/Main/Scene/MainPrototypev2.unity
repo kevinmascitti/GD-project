@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18386978, g: 0.2290168, b: 0.30311278, a: 1}
+  m_IndirectSpecularColor: {r: 0.18386948, g: 0.22901604, b: 0.30311152, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -3094,6 +3094,18 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 1469753543}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &617418943 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3107839934390833248, guid: 03552866a0cad59479b1468956722dfe,
+    type: 3}
+  m_PrefabInstance: {fileID: 1499688991}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &625901103 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 116150232245027426, guid: b1084cf71d686f14d9bea381e725541f,
@@ -3588,6 +3600,62 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 706465041}
   m_CullTransparentMesh: 1
+--- !u!1 &721728570 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5657267675461776501, guid: 03552866a0cad59479b1468956722dfe,
+    type: 3}
+  m_PrefabInstance: {fileID: 1499688991}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &721728572
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 721728570}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8164d87bfaf92448d9ed48cf3f1c35fb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  fill: {fileID: 617418943}
+  gradient:
+    serializedVersion: 2
+    key0: {r: 1, g: 1, b: 1, a: 1}
+    key1: {r: 1, g: 1, b: 1, a: 1}
+    key2: {r: 0, g: 0, b: 0, a: 0}
+    key3: {r: 0, g: 0, b: 0, a: 0}
+    key4: {r: 0, g: 0, b: 0, a: 0}
+    key5: {r: 0, g: 0, b: 0, a: 0}
+    key6: {r: 0, g: 0, b: 0, a: 0}
+    key7: {r: 0, g: 0, b: 0, a: 0}
+    ctime0: 0
+    ctime1: 65535
+    ctime2: 0
+    ctime3: 0
+    ctime4: 0
+    ctime5: 0
+    ctime6: 0
+    ctime7: 0
+    atime0: 0
+    atime1: 65535
+    atime2: 0
+    atime3: 0
+    atime4: 0
+    atime5: 0
+    atime6: 0
+    atime7: 0
+    m_Mode: 0
+    m_ColorSpace: -1
+    m_NumColorKeys: 2
+    m_NumAlphaKeys: 2
+  maxEntertainmentValue: 100
+  decreaseSpeed: 10
+  IncreaseSpeed: 10
+  comboCounter: {fileID: 2060429405}
+  CheatManager: {fileID: 343207756}
+  currEntertainmentValue: 100
+  cheatManager: {fileID: 343207756}
 --- !u!1 &728306897
 GameObject:
   m_ObjectHideFlags: 0
@@ -10824,6 +10892,10 @@ PrefabInstance:
         type: 3}
       insertIndex: -1
       addedObject: {fileID: 1968017552}
+    - targetCorrespondingSourceObject: {fileID: 5657267675461776501, guid: 03552866a0cad59479b1468956722dfe,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 721728572}
   m_SourcePrefab: {fileID: 100100000, guid: 03552866a0cad59479b1468956722dfe, type: 3}
 --- !u!1 &1499688992 stripped
 GameObject:
