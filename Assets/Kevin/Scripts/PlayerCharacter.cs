@@ -86,6 +86,8 @@ public class PlayerCharacter : Character
 
         RemoteController.OnControllerAbility += EmptyStamina;
 
+        Room.OnLevelCompleted += ResetHP;
+
         Boss.OnBossDeath += UnlockRoom;
         Boss.OnBossDeath += UnlockButton;
         PlayerDamageReceived.OnDamageReceivedFinish += PlayerSetInvincibleFalse;
@@ -112,6 +114,8 @@ public class PlayerCharacter : Character
         EntertainmentBar.OnZeroedEnterteinmentBar -= DecreaseExtraLife;
 
         RemoteController.OnControllerAbility -= EmptyStamina;
+
+        Room.OnLevelCompleted -= ResetHP;
 
         Boss.OnBossDeath -= UnlockRoom;
         Boss.OnBossDeath -= UnlockButton;
@@ -610,7 +614,11 @@ public class PlayerCharacter : Character
     {
         // TO DO: unlock button
     }
-    
+
+    private void ResetHP(object sender, RoomManager args)
+    {
+        UpdateHP(MAX_HP);
+    }
 }
 
 public class RoomArgs : EventArgs
