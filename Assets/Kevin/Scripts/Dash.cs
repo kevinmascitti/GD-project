@@ -11,6 +11,10 @@ public class Dash : MonoBehaviour
     [SerializeField] private float damage = 1;
     [SerializeField] private GameObject VFX;
 
+    [Header("Sound")]
+    [SerializeField] private AudioClip[] dashClips;
+    [SerializeField] private AudioSource dashAudioSource;
+
     public static EventHandler<EnemyCollisionArgs> OnAttackLended;
     public static EventHandler<float> OnCheckedDash;
 
@@ -64,6 +68,8 @@ public class Dash : MonoBehaviour
 
     IEnumerator DashNow(float distanceVar)
     {
+        dashAudioSource.clip = dashClips[UnityEngine.Random.Range(0, dashClips.Length)];
+        dashAudioSource.Play();
         GetComponent<PlayerCharacter>().isInvincible = true;
         yield return new WaitForSeconds(dashPreparationTime);
         float elapsedTime = 0f;
