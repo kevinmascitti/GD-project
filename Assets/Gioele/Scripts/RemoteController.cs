@@ -35,6 +35,11 @@ public class RemoteController : MonoBehaviour
     [SerializeField] private LayerMask layerLaserMask;
     [SerializeField] private float laserDamage = 0.1f;
     [SerializeField] public Transform spawnPoint;
+    [Header("Suono del laser")]
+    [SerializeField] private AudioSource remoteAudioSource;
+    [SerializeField] private AudioClip laserSound;
+    [SerializeField] private AudioClip crashTVSound;
+    [SerializeField] private AudioClip stopTimeSound;
     
     // tutti i timer sono attivi non devono ricaricarsi
     private bool RechargeButtonChPlusEnabled = false;
@@ -216,6 +221,8 @@ public class RemoteController : MonoBehaviour
     {
         if (!RechargeButtonVolumeMinusEnabled && UnlockVolumeMinus)
         {
+            remoteAudioSource.clip = crashTVSound;
+            remoteAudioSource.Play();
             RechargeButtonVolumeMinusEnabled = true;
             // blocco dall’alto che li “schiaccia” o appiattisce
             GameObject duplicatedObject = Instantiate(squashAndStress, spawnPoint.position, Quaternion.identity);
@@ -248,6 +255,8 @@ public class RemoteController : MonoBehaviour
         {
             RechargeButtonLaserEnabled = true;
             GetComponent<LineRenderer>().enabled = true;
+            remoteAudioSource.clip = laserSound;
+            remoteAudioSource.Play();
             // raggio laser
             if (Physics.Raycast(playerTransform.position, transform.forward))
             {
@@ -402,6 +411,8 @@ public class RemoteController : MonoBehaviour
     {
         if (!RechargeButtonPauseEnabled && UnlockPause)
         {
+            remoteAudioSource.clip = stopTimeSound;
+            remoteAudioSource.Play();
             RechargeButtonPauseEnabled = true;
             // Ottieni il numero di layer dall'indice o dal nome
             int layer = LayerMask.NameToLayer(layerName);
