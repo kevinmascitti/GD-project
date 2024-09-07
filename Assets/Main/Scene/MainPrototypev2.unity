@@ -4452,9 +4452,20 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4758515125926589319, guid: 8b59635cd0adb41f1ba8fbc68f23c4c3,
         type: 3}
+      propertyPath: isAttacking
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4758515125926589319, guid: 8b59635cd0adb41f1ba8fbc68f23c4c3,
+        type: 3}
       propertyPath: cheatManager
       value: 
       objectReference: {fileID: 343207756}
+    - target: {fileID: 4758515125926589319, guid: 8b59635cd0adb41f1ba8fbc68f23c4c3,
+        type: 3}
+      propertyPath: HitEffectPrefab
+      value: 
+      objectReference: {fileID: 1250507045210962, guid: 119d81fc3b9d22d41b977a26e4d00382,
+        type: 3}
     - target: {fileID: 4786466054160126041, guid: 8b59635cd0adb41f1ba8fbc68f23c4c3,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -4527,9 +4538,20 @@ PrefabInstance:
       objectReference: {fileID: 1383009235}
     - target: {fileID: 6003294177262467841, guid: 8b59635cd0adb41f1ba8fbc68f23c4c3,
         type: 3}
+      propertyPath: enemyHit
+      value: 
+      objectReference: {fileID: 342677471}
+    - target: {fileID: 6003294177262467841, guid: 8b59635cd0adb41f1ba8fbc68f23c4c3,
+        type: 3}
       propertyPath: cheatManager
       value: 
       objectReference: {fileID: 343207756}
+    - target: {fileID: 6003294177262467841, guid: 8b59635cd0adb41f1ba8fbc68f23c4c3,
+        type: 3}
+      propertyPath: HitEffectPrefab
+      value: 
+      objectReference: {fileID: 1250507045210962, guid: 119d81fc3b9d22d41b977a26e4d00382,
+        type: 3}
     - target: {fileID: 6429222574528750147, guid: 8b59635cd0adb41f1ba8fbc68f23c4c3,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -4762,10 +4784,16 @@ PrefabInstance:
       objectReference: {fileID: 1383009235}
     - target: {fileID: 9201287873940550012, guid: 8b59635cd0adb41f1ba8fbc68f23c4c3,
         type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9201287873940550012, guid: 8b59635cd0adb41f1ba8fbc68f23c4c3,
+        type: 3}
       propertyPath: cheatManager
       value: 
       objectReference: {fileID: 343207756}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 9201287873940550012, guid: 8b59635cd0adb41f1ba8fbc68f23c4c3, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects:
     - targetCorrespondingSourceObject: {fileID: 6766841142205317997, guid: 8b59635cd0adb41f1ba8fbc68f23c4c3,

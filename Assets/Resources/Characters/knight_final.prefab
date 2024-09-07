@@ -436,7 +436,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7c491ad9ca6bd0a40a1c05604fbf205a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentHP: 3
+  currentHP: 9
   isPlayer: 0
   atk: 2
   damageReducer: 1
@@ -523,7 +523,7 @@ AudioSource:
     type: 2}
   m_audioClip: {fileID: 8300000, guid: 32f942c21dd640648b5504c69a77098a, type: 3}
   m_PlayOnAwake: 1
-  m_Volume: 0.25
+  m_Volume: 0
   m_Pitch: 1
   Loop: 1
   Mute: 0
