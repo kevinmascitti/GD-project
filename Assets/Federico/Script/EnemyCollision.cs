@@ -85,8 +85,8 @@ public class EnemyCollision : MonoBehaviour
             
             oggetto.isAttacking = false;
 //            Debug.Log("OnTriggerEnter called with: " + other.name + " FROM "+ this);
-            Vector3 effectPosition = other.transform.position + new Vector3(0, +1.5f, 0);
-            hitEffectPrefabTemp = GameObject.Instantiate(HitEffectPrefab, effectPosition, Quaternion.identity);
+            Vector3 effectPosition = player.transform.position + player.transform.forward + player.transform.up*0.7f;
+            hitEffectPrefabTemp = GameObject.Instantiate(HitEffectPrefab, effectPosition, player.transform.rotation);
             StartCoroutine(KillHitEffect(hitEffectPrefabTemp));
             Debug.Log("Enemy Hit");
             OnAttackLended?.Invoke(this, new EnemyCollisionArgs(comboValue));
@@ -107,7 +107,7 @@ public class EnemyCollision : MonoBehaviour
 
     IEnumerator KillHitEffect(GameObject hitEffect)
     {
-        yield return new WaitForSeconds(0.2f);
+        yield return new WaitForSeconds(0.4f);
         GameObject.Destroy(hitEffect);
     }
 }
