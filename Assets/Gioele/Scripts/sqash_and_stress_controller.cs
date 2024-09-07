@@ -11,7 +11,7 @@ public class sqash_and_stress_controller : MonoBehaviour
     private float t = 0;
     public Color red=Color.red;
     public Color green=Color.green;
-    public Renderer renderer;
+    //public Renderer renderer;
     private static readonly int Color1 = Shader.PropertyToID("_Color");
 
     void Start()
@@ -39,9 +39,9 @@ public class sqash_and_stress_controller : MonoBehaviour
 
     private void Update()
     {
-        t +=  Time.deltaTime;
-        Color c=Color.Lerp(green, red, t);
-        renderer.material.SetColor(Color1,c);
+        //t +=  Time.deltaTime;
+        //Color c=Color.Lerp(green, red, t);
+        //renderer.material.SetColor(Color1,c);
         // Ottieni le informazioni sullo stato corrente del layer 0 dell'animator
         AnimatorStateInfo stateInfo = GetComponent<Animator>().GetCurrentAnimatorStateInfo(0);
         // Verifica se l'animazione corrente è prossima alla fine

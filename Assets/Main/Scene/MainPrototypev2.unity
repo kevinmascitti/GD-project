@@ -4234,13 +4234,33 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1404841620339578643, guid: 8b59635cd0adb41f1ba8fbc68f23c4c3,
         type: 3}
+      propertyPath: m_LocalScale.x
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 1404841620339578643, guid: 8b59635cd0adb41f1ba8fbc68f23c4c3,
+        type: 3}
+      propertyPath: m_LocalScale.y
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 1404841620339578643, guid: 8b59635cd0adb41f1ba8fbc68f23c4c3,
+        type: 3}
+      propertyPath: m_LocalScale.z
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 1404841620339578643, guid: 8b59635cd0adb41f1ba8fbc68f23c4c3,
+        type: 3}
       propertyPath: m_LocalPosition.x
-      value: -2.77
+      value: 0.08
       objectReference: {fileID: 0}
     - target: {fileID: 1404841620339578643, guid: 8b59635cd0adb41f1ba8fbc68f23c4c3,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 1.35
+      value: 3.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1404841620339578643, guid: 8b59635cd0adb41f1ba8fbc68f23c4c3,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 2.44
       objectReference: {fileID: 0}
     - target: {fileID: 1436573637885352423, guid: 8b59635cd0adb41f1ba8fbc68f23c4c3,
         type: 3}
@@ -4332,7 +4352,7 @@ PrefabInstance:
         type: 3}
       propertyPath: squashAndStress
       value: 
-      objectReference: {fileID: 1027246523902153772, guid: 4f85c48fc42a3f44887bd2fb2f098df8,
+      objectReference: {fileID: 3475804128005596735, guid: adf8d4f76e00da441902c2a96ea9617d,
         type: 3}
     - target: {fileID: 2227164382493448751, guid: 8b59635cd0adb41f1ba8fbc68f23c4c3,
         type: 3}
