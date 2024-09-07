@@ -530,7 +530,7 @@ MonoBehaviour:
   transitionDuration: 0.5
   distanceTrigger: 4
   grabEulerRotation: {x: 180, y: 0, z: 90}
-  throwForce: 20
+  throwForce: 60
   rotationSpeed: 500
   hasToBeThrown: 1
   atk: 10
