@@ -366,6 +366,7 @@ MonoBehaviour:
   isPlayer: 0
   atk: 5
   damageReducer: 1
+  currentRoom: {fileID: 0}
   agent: {fileID: 4709013081580493079, guid: ad9f4c9032e2f32419f565b38ae08fb6, type: 3}
   Player: {fileID: 0}
   ground:
@@ -377,7 +378,7 @@ MonoBehaviour:
   walkPoint: {x: 0, y: 0, z: 0}
   walkPointSet: 0
   walkPointRange: 7
-  timeBetweenAttacks: 3
+  timeBetweenAttacks: 4
   projectile: {fileID: 2868518990019339048, guid: f1d7bdf9be3cde74aad04d3735805190,
     type: 3}
   projectileSpeed: 0.5

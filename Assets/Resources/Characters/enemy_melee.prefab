@@ -141,7 +141,7 @@ MonoBehaviour:
   walkPointSet: 0
   walkPointRange: 1
   alreadyAttacked: 0
-  damage: 5
+  damage: 2
   sightRange: 0.8
   attackRange: 1.1
   playerInSightRange: 0

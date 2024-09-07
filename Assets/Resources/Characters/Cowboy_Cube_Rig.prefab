@@ -452,7 +452,7 @@ MonoBehaviour:
   walkPoint: {x: 0, y: 0, z: 0}
   walkPointSet: 0
   walkPointRange: 7
-  timeBetweenAttacks: 3
+  timeBetweenAttacks: 4
   projectile: {fileID: 862695047321393832, guid: f722f05d07330644d91c75efb46a6d37,
     type: 3}
   projectileSpeed: 0.5
