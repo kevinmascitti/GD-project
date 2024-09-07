@@ -82,7 +82,7 @@ public class ComboCharacterWithDamage : MonoBehaviour
                 
                 if (meleeStateMachine == null)
                 {
-                    Debug.LogError("StateMachine component not found!");
+                    //Debug.LogError("StateMachine component not found!");
                     return;
                 }
                 if( meleeStateMachine.CurrentState.GetType() == typeof(IdleCombatState))
@@ -105,7 +105,7 @@ public class ComboCharacterWithDamage : MonoBehaviour
 
      void LaunchFirstAttack()
      {
-         Debug.Log("ho lanciato il primo attacco");
+        //Debug.Log("ho lanciato il primo attacco");
         isAttacking = true;
         Vector3 contactPoint = handBone.transform.position;
         GetComponent<Animator>().SetBool("InvalidateMoving", true);
@@ -126,7 +126,7 @@ public class ComboCharacterWithDamage : MonoBehaviour
     }
     IEnumerator KillHitEffect()
     {
-        Debug.Log("Started Coroutine KillhitEffect  at timestamp : " + Time.time);
+        //Debug.Log("Started Coroutine KillhitEffect  at timestamp : " + Time.time);
         yield return new WaitForSeconds(0.1f);
 
         GameObject.Destroy(hitEffectPrefabTemp);
