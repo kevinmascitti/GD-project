@@ -80,7 +80,7 @@ public class SimpleThirdPersonController : MonoBehaviour
             }
         }
 
-        Debug.Log("Avendo abilitato i cheat ora puoi attraversare il muro");
+        // Debug.Log("Avendo abilitato i cheat ora puoi attraversare il muro");
         return true;
     }
 

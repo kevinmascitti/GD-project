@@ -80,7 +80,7 @@ public class EnemyCollision : MonoBehaviour
         //enemy!=null && anim.GetFloat("Weapon.Active")>0.0
         if (enemy != null && oggetto!=null && oggetto.isAttacking)
         {
-            if(!enemyHit.isPlaying)
+            if(enemyHit != null && !enemyHit.isPlaying)
                 enemyHit.Play();
             
             oggetto.isAttacking = false;
