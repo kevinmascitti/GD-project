@@ -260,6 +260,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5866666021909216657, guid: 3196cd01639cdeb4f8ea8a14b20cb10b,
         type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5866666021909216657, guid: 3196cd01639cdeb4f8ea8a14b20cb10b,
+        type: 3}
       propertyPath: m_Controller
       value: 
       objectReference: {fileID: 9100000, guid: e54116de80931a64d9f7d9df5a0f3fd5, type: 2}
@@ -411,7 +416,7 @@ NavMeshAgent:
   m_GameObject: {fileID: 5146220857360413407}
   m_Enabled: 1
   m_AgentTypeID: 0
-  m_Radius: 1
+  m_Radius: 0.74
   m_Speed: 3.5
   m_Acceleration: 8
   avoidancePriority: 50
@@ -420,7 +425,7 @@ NavMeshAgent:
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 1
   m_AutoRepath: 1
-  m_Height: 3.6
+  m_Height: 2.31
   m_BaseOffset: 0
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
@@ -436,7 +441,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7c491ad9ca6bd0a40a1c05604fbf205a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentHP: 9
+  currentHP: 3
   isPlayer: 0
   atk: 2
   damageReducer: 1

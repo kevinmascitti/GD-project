@@ -101,12 +101,13 @@ public class ComboCharacterWithDamage : MonoBehaviour
                 meleeStateMachine.SetNextState(new KickState());
             }
         }
+
+        
     }
 
      void LaunchFirstAttack()
      {
         //Debug.Log("ho lanciato il primo attacco");
-        isAttacking = true;
         Vector3 contactPoint = handBone.transform.position;
         GetComponent<Animator>().SetBool("InvalidateMoving", true);
       //  controls.Disable();

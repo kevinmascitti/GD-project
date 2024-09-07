@@ -11,7 +11,7 @@ public class EnemyCollision : MonoBehaviour
     public GameObject HitEffectPrefab;
     public ComboCharacterWithDamage oggetto;
     private bool canCollide = true;
-    private float collisionCooldown = 0.1f; // Cooldown di 0.1 secondi
+    private float collisionCooldown = 0.2f; // Cooldown di 0.1 secondi
     public CheatCode cheatManager;
     public static EventHandler<EnemyCollisionArgs> OnAttackLended;
 
@@ -63,7 +63,8 @@ public class EnemyCollision : MonoBehaviour
     // }
     public void OnTriggerEnter(Collider other)
     {
-        
+        if (other.gameObject.GetComponent<Enemy>() == null)
+            return;
         
         if (!canCollide) 
         {
@@ -84,7 +85,7 @@ public class EnemyCollision : MonoBehaviour
                 enemyHit.Play();
             
             oggetto.isAttacking = false;
-//            Debug.Log("OnTriggerEnter called with: " + other.name + " FROM "+ this);
+            // Debug.Log("OnTriggerEnter called with: " + other.name + " FROM "+ this);
             Vector3 effectPosition = player.transform.position + player.transform.forward + player.transform.up*0.7f;
             hitEffectPrefabTemp = GameObject.Instantiate(HitEffectPrefab, effectPosition, player.transform.rotation);
             StartCoroutine(KillHitEffect(hitEffectPrefabTemp));
