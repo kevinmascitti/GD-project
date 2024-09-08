@@ -58,16 +58,16 @@ public class Room : MonoBehaviour
     {
         if (room == this)
         {
-            if (nextRoom == null)
-            {
-                Debug.Log("END OF THE GAME!");
-                EndOfShowTransition.onGameEnd?.Invoke(this, EventArgs.Empty);
-                StartCoroutine(EndOfGameTimer());
-                return;
-            }
             killedEnemies++;
             if (killedEnemies >= spawner.spawnLimit)
             {
+                if (nextRoom == null)
+                {
+                    Debug.Log("END OF THE GAME!");
+                    EndOfShowTransition.onGameEnd?.Invoke(this, EventArgs.Empty);
+                    StartCoroutine(EndOfGameTimer());
+                    return;
+                }
                 // GameObject.FindGameObjectWithTag("Spawner").GetComponent<Spawner>().OpenExit();
                 if (nextRoom.level != level)
                 {
