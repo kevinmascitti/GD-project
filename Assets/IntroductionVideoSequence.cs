@@ -34,7 +34,7 @@ public class IntroductionVideoSequence : MonoBehaviour
 
     IEnumerator Timer()
     {
-        yield return new WaitForSeconds(.1f);
+        yield return new WaitForSeconds(3);
         videoIsReady = true;
     }
 }
