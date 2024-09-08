@@ -489,19 +489,19 @@ PrefabInstance:
         type: 3}
       propertyPath: selectedImage
       value: 
-      objectReference: {fileID: 21300000, guid: 39221abeb81b8a247b98be9392b0e14d,
+      objectReference: {fileID: 21300000, guid: d19f90a3ea6c3d8479ebfc82dda89802,
         type: 3}
     - target: {fileID: 7371976948307130938, guid: 81f75069ece87504d99a07554917ac7e,
         type: 3}
       propertyPath: unselectedImage
       value: 
-      objectReference: {fileID: 21300000, guid: 3b377ea9e1b175c43bb8370a754ed74f,
+      objectReference: {fileID: 21300000, guid: 398af2ba4c6082b42bb3307226a0c0cf,
         type: 3}
     - target: {fileID: 7646115832360510743, guid: 81f75069ece87504d99a07554917ac7e,
         type: 3}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: 21300000, guid: 3b377ea9e1b175c43bb8370a754ed74f,
+      objectReference: {fileID: 21300000, guid: 398af2ba4c6082b42bb3307226a0c0cf,
         type: 3}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

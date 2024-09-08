@@ -22,7 +22,7 @@ public class MainMenu : MonoBehaviour
         Cursor.visible = false;
         //transitionCanvas.GetComponent<LevelLoader>().LoadNextLevel(SceneManager.GetActiveScene().buildIndex - 1);
         StopAllCoroutines();
-        SceneManager.LoadScene(1, LoadSceneMode.Single);
+        SceneManager.LoadScene(2, LoadSceneMode.Single);
         OnNewGame?.Invoke(this, EventArgs.Empty);
     }
 
