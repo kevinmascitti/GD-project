@@ -89,6 +89,6 @@ public class Room : MonoBehaviour
         yield return new WaitForSeconds(1);
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
-        SceneManager.LoadScene(0);
+        SceneManager.LoadScene(2);
     }
 }
