@@ -63,6 +63,16 @@ PrefabInstance:
       propertyPath: m_Name
       value: coltello_animato
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: fafd47993a4d02d47a1dacbaf04c67c9,
+        type: 3}
+      propertyPath: m_Layer
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: fafd47993a4d02d47a1dacbaf04c67c9,
+        type: 3}
+      propertyPath: m_TagString
+      value: enemy
+      objectReference: {fileID: 0}
     - target: {fileID: 5866666021909216657, guid: fafd47993a4d02d47a1dacbaf04c67c9,
         type: 3}
       propertyPath: m_Controller
@@ -99,7 +109,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ebec769a74128934aa7c2e3eac0c4ed0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damage: 3
+  damage: 2
   destroyTime: 5
   speed: 0.5
 --- !u!65 &8166381115638123801

@@ -364,7 +364,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   currentHP: 2
   isPlayer: 0
-  atk: 5
+  atk: 2
   damageReducer: 1
   currentRoom: {fileID: 0}
   agent: {fileID: 4709013081580493079, guid: ad9f4c9032e2f32419f565b38ae08fb6, type: 3}
