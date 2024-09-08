@@ -19,13 +19,14 @@ public class PlayerSound : MonoBehaviour
 
     public void PlayHitSound(object sender, System.EventArgs e)
     {
-        hitAudioSource.clip = hitSounds[Random.Range(0, hitSounds.Length)];
-        hitAudioSource.Play();
+        // if (!hitAudioSource.isPlaying)
+        //     hitAudioSource.clip = hitSounds[Random.Range(0, hitSounds.Length)];
+        //     hitAudioSource.Play();
     }
 
     public void StopHitSound(object sender, System.EventArgs e)
     {
-        hitAudioSource.Stop();
+        //hitAudioSource.Stop();
     }
 
     void OnDestroy()

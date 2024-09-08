@@ -328,9 +328,11 @@ public class PlayerCharacter : Character
     {
         if (isInvincible) return;
         
-        audioSource.Stop();
-        audioSource.clip = hitClip;
-        audioSource.Play();
+        // play hit sound
+        if (!audioSource.isPlaying) {
+            audioSource.clip = hitClip;
+            audioSource.Play();
+        }
         base.TakeDamage(damage);
         UpdateHPUI(currentHP);
     }
