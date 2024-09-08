@@ -208,14 +208,14 @@ public class PlayerCharacter : Character
 
 
             // LANCIO OGGETTO
-            if (Input.GetKeyDown(KeyCode.G) && grabbableItem && grabbedItem == null &&
+            if (Input.GetKeyDown(KeyCode.LeftAlt) && grabbableItem && grabbedItem == null &&
                 grabbableItem.GetState() == GrabbableState.GRABBABLE)
             {
                 grabbedItem = grabbableItem;
                 grabbedItem.Grab();
                 OnGrabbed?.Invoke(this, new GrabbableArgs(grabbedItem));
             }
-            else if (Input.GetKeyDown(KeyCode.G) && grabbedItem && grabbedItem.GetState() == GrabbableState.GRABBED)
+            else if (Input.GetKeyDown(KeyCode.LeftAlt) && grabbedItem && grabbedItem.GetState() == GrabbableState.GRABBED)
             {
                 if (grabbedItem.GetThrowState())
                 {
@@ -346,7 +346,7 @@ public class PlayerCharacter : Character
     
     private void PlayerSetInvincibleFalse(object sender, EventArgs e)
     {
-        Debug.Log("il player non è più invincibile");
+        // Debug.Log("il player non è più invincibile");
         isInvincible = false;
     }
 
