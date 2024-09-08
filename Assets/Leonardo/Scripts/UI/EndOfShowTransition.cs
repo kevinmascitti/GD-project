@@ -34,9 +34,11 @@ public class EndOfShowTransition : MonoBehaviour
         audioSource.clip = EndOfShowClip;
         audioSource.Play();
         EndOfShowImage.gameObject.SetActive(true);
+        EndOfShowVideo.gameObject.SetActive(true);
         EndOfShowVideo.Play();
         yield return new WaitForSeconds(transitionTime);
         EndOfShowVideo.Stop();
+        EndOfShowVideo.gameObject.SetActive(true);
         EndOfShowImage.gameObject.SetActive(false);
         audioSource.Stop(); 
         musicSource.Play();
