@@ -1494,7 +1494,7 @@ MonoBehaviour:
   enabledButtons: {fileID: 0}
   moltiplicatoreCombo: 1
   moltiplicatoreDanniNemici: 1
-  laser: {fileID: 3561294763413955962}
+  laserPrefab: {fileID: 0}
   distance: 5
   laserFirePoint: {fileID: 2643373115103596328}
   squashAndStress: {fileID: 7690298394563716150, guid: 2c775fc7e31f65a48a54d331e4068eb1,

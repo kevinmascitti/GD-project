@@ -158,6 +158,7 @@ public class Grabbable : MonoBehaviour
         GetComponent<Flicker>().StopFlick();
 
         transform.SetParent(player.GetComponent<PlayerCharacter>().grabbingHand.transform);
+        transform.localScale *= 0.5f;
         
         StartCoroutine(MoveAndRotateToTarget());
         OnGrab?.Invoke(this, new GrabbableArgs(this));
@@ -183,6 +184,7 @@ public class Grabbable : MonoBehaviour
     public void Throw()
     {
         state = GrabbableState.THROWN;
+        transform.localScale *= 2f;
         StartCoroutine(MoveGrabbable());
         StartCoroutine(SpinContinuously());
         transform.SetParent(null);

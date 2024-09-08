@@ -14,6 +14,8 @@ public class RemoteController : MonoBehaviour
     private Vector3 originalScale;
     private bool isUIVisible = false;
     private bool isStaminaFull = false;
+
+    private GameObject tempLaser;
     // private bool isButtonAnimationOn = false;
     // private Vector3 scala;
     // private float rescalefactor = 1;
@@ -24,7 +26,7 @@ public class RemoteController : MonoBehaviour
     [SerializeField] private GameObject enabledButtons;
     [SerializeField] private float moltiplicatoreCombo = 1f;
     [SerializeField] private float moltiplicatoreDanniNemici = 1f;
-    [SerializeField] private LineRenderer laser;
+    [SerializeField] private GameObject laserPrefab;
     [SerializeField] private float distance = 5f;
     [SerializeField] private Transform laserFirePoint;
     private Transform playerTransform;
@@ -40,6 +42,7 @@ public class RemoteController : MonoBehaviour
     [SerializeField] private AudioClip laserSound;
     [SerializeField] private AudioClip crashTVSound;
     [SerializeField] private AudioClip stopTimeSound;
+
     
     // tutti i timer sono attivi non devono ricaricarsi
     private bool RechargeButtonChPlusEnabled = false;
@@ -254,7 +257,8 @@ public class RemoteController : MonoBehaviour
         if (!RechargeButtonLaserEnabled && UnlockLaser)
         {
             RechargeButtonLaserEnabled = true;
-            GetComponent<LineRenderer>().enabled = true;
+            tempLaser = Instantiate(laserPrefab, laserFirePoint.position, laserFirePoint.rotation);
+            tempLaser.transform.parent = playerTransform;
             remoteAudioSource.clip = laserSound;
             remoteAudioSource.Play();
             // raggio laser
@@ -274,8 +278,7 @@ public class RemoteController : MonoBehaviour
     }
     public void StopLaser()
     {
-        // stop raggio laser
-        GetComponent<LineRenderer>().enabled = false;
+        Destroy(tempLaser);
     }
 
     void DetectHit()
@@ -603,7 +606,7 @@ public class RemoteController : MonoBehaviour
         //     }
         // }
 
-        if (laser.enabled)
+        if (tempLaser != null)
         {
             DetectHit();
         }
