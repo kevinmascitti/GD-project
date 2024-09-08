@@ -99,7 +99,7 @@ public class EntertainmentBar : MonoBehaviour
 
         if (currEntertainmentValue > maxEntertainmentValue)
             currEntertainmentValue = maxEntertainmentValue;
-        Debug.Log("ho chiamato l'update dell'entertainment bar a seguito di un attacco");
+        // Debug.Log("ho chiamato l'update dell'entertainment bar a seguito di un attacco");
         UpdateFillAmount();
     }
 

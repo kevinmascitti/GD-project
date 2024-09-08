@@ -340,7 +340,7 @@ public class PlayerCharacter : Character
     // FINESTRA DI INVINCIBILITA DEL GIOCATORE 
     private void PlayerSetInvincibleTrue(object sender, EventArgs e)
     {
-        Debug.Log("il player è ora invincibile");
+        // Debug.Log("il player è ora invincibile");
         isInvincible = true;
     }
     
@@ -449,7 +449,7 @@ public class PlayerCharacter : Character
         */
        if (HpBar)
        {
-            Debug.Log("barra della saluta aggiornata a seguito della ricezione del danno");
+           // Debug.Log("barra della saluta aggiornata a seguito della ricezione del danno");
            HpBar.fillAmount = HP/MAX_HP;
        }
     }

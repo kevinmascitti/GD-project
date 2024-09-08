@@ -67,7 +67,7 @@ public class AntiOverlap : MonoBehaviour
                 RaycastHit[] hits = Physics.RaycastAll(ray, detectionRadius, enemyLayer);
                 if(hits.Length!=0)
                 {
-                        Debug.Log("sei stato colpito dal nemico ho lanciato l'evento");
+                        // Debug.Log("sei stato colpito dal nemico ho lanciato l'evento");
                         PlayerDamageReceived.TriggerDamageReceived();
                     
                 }
