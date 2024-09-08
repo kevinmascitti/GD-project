@@ -1481,17 +1481,22 @@ PrefabInstance:
     - target: {fileID: 6468252781121534242, guid: 487b0de3aa24823469c4ac8d0ba20af5,
         type: 3}
       propertyPath: thresholdList.Array.data[2]
-      value: 20
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 6468252781121534242, guid: 487b0de3aa24823469c4ac8d0ba20af5,
+        type: 3}
+      propertyPath: thresholdList.Array.data[3]
+      value: 18
       objectReference: {fileID: 0}
     - target: {fileID: 6468252781121534242, guid: 487b0de3aa24823469c4ac8d0ba20af5,
         type: 3}
       propertyPath: thresholdList.Array.data[4]
-      value: 35
+      value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 6468252781121534242, guid: 487b0de3aa24823469c4ac8d0ba20af5,
         type: 3}
       propertyPath: thresholdList.Array.data[5]
-      value: 50
+      value: 25
       objectReference: {fileID: 0}
     - target: {fileID: 6468252781121534242, guid: 487b0de3aa24823469c4ac8d0ba20af5,
         type: 3}
@@ -1511,12 +1516,12 @@ PrefabInstance:
     - target: {fileID: 6468252781121534242, guid: 487b0de3aa24823469c4ac8d0ba20af5,
         type: 3}
       propertyPath: popupNamesList.Array.data[3]
-      value: Wow
+      value: Great
       objectReference: {fileID: 0}
     - target: {fileID: 6468252781121534242, guid: 487b0de3aa24823469c4ac8d0ba20af5,
         type: 3}
       propertyPath: popupNamesList.Array.data[4]
-      value: Great
+      value: Wow
       objectReference: {fileID: 0}
     - target: {fileID: 6468252781121534242, guid: 487b0de3aa24823469c4ac8d0ba20af5,
         type: 3}
@@ -6523,7 +6528,7 @@ PrefabInstance:
     - target: {fileID: 3812463333637228162, guid: de00ae07b8cf922479031c620b23c0ab,
         type: 3}
       propertyPath: spawnLimit
-      value: 7
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3812463333637228162, guid: de00ae07b8cf922479031c620b23c0ab,
         type: 3}
@@ -8363,7 +8368,7 @@ PrefabInstance:
     - target: {fileID: 3812463333637228162, guid: de00ae07b8cf922479031c620b23c0ab,
         type: 3}
       propertyPath: spawnLimit
-      value: 9
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3812463333637228162, guid: de00ae07b8cf922479031c620b23c0ab,
         type: 3}
@@ -8596,7 +8601,7 @@ PrefabInstance:
     - target: {fileID: 3812463333637228162, guid: de00ae07b8cf922479031c620b23c0ab,
         type: 3}
       propertyPath: spawnLimit
-      value: 8
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3812463333637228162, guid: de00ae07b8cf922479031c620b23c0ab,
         type: 3}
@@ -11625,12 +11630,12 @@ PrefabInstance:
     - target: {fileID: 4768165336241745697, guid: 03552866a0cad59479b1468956722dfe,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: -19.5
+      value: -17.400024
       objectReference: {fileID: 0}
     - target: {fileID: 4768165336241745697, guid: 03552866a0cad59479b1468956722dfe,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -4.700012
+      value: -4
       objectReference: {fileID: 0}
     - target: {fileID: 4917933223307876155, guid: 03552866a0cad59479b1468956722dfe,
         type: 3}
@@ -11640,7 +11645,7 @@ PrefabInstance:
     - target: {fileID: 4959628359026752101, guid: 03552866a0cad59479b1468956722dfe,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: -39.399933
+      value: -37.099915
       objectReference: {fileID: 0}
     - target: {fileID: 5290115767448246118, guid: 03552866a0cad59479b1468956722dfe,
         type: 3}
@@ -11710,7 +11715,7 @@ PrefabInstance:
     - target: {fileID: 6824649424139914079, guid: 03552866a0cad59479b1468956722dfe,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 209.4
+      value: 211.7
       objectReference: {fileID: 0}
     - target: {fileID: 7230435065483203281, guid: 03552866a0cad59479b1468956722dfe,
         type: 3}
@@ -11745,12 +11750,12 @@ PrefabInstance:
     - target: {fileID: 8298110135388946164, guid: 03552866a0cad59479b1468956722dfe,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: -19.5
+      value: -17.400024
       objectReference: {fileID: 0}
     - target: {fileID: 8298110135388946164, guid: 03552866a0cad59479b1468956722dfe,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -4.700012
+      value: -4
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects:
@@ -12611,7 +12616,7 @@ PrefabInstance:
     - target: {fileID: 3812463333637228162, guid: de00ae07b8cf922479031c620b23c0ab,
         type: 3}
       propertyPath: spawnLimit
-      value: 6
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3812463333637228162, guid: de00ae07b8cf922479031c620b23c0ab,
         type: 3}
@@ -15592,7 +15597,7 @@ AudioSource:
     type: 2}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 0
-  m_Volume: 0.3
+  m_Volume: 0.2
   m_Pitch: 1
   Loop: 0
   Mute: 0

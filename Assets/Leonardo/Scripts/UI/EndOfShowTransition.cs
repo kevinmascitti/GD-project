@@ -39,18 +39,20 @@ public class EndOfShowTransition : MonoBehaviour
     public IEnumerator Transition()
     {
         // Debug.Log("EndOfShow Transition");
-        musicSource.Stop();
-        audioSource.clip = EndOfShowClip;
-        audioSource.Play();
-        EndOfShowImage.gameObject.SetActive(true);
-        EndOfShowVideo.gameObject.SetActive(true);
-        EndOfShowVideo.Play();
-        yield return new WaitForSeconds(transitionTime);
-        EndOfShowVideo.Stop();
-        EndOfShowVideo.gameObject.SetActive(false);
-        EndOfShowImage.gameObject.SetActive(false);
-        audioSource.Stop(); 
-        //musicSource.Play();
+        if(!EndOfShowVideo.isPlaying) {
+            musicSource.Stop();
+            audioSource.clip = EndOfShowClip;
+            audioSource.Play();
+            EndOfShowImage.gameObject.SetActive(true);
+            EndOfShowVideo.gameObject.SetActive(true);
+            EndOfShowVideo.Play();
+            yield return new WaitForSeconds(transitionTime);
+            EndOfShowVideo.Stop();
+            EndOfShowVideo.gameObject.SetActive(false);
+            EndOfShowImage.gameObject.SetActive(false);
+            audioSource.Stop(); 
+            //musicSource.Play();
+        }
     }
     public void OnDestroy()
     {
