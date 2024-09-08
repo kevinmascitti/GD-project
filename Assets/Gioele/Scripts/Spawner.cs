@@ -256,19 +256,30 @@ public class Spawner : MonoBehaviour
                     Vector3 planeSize = planeRenderer.bounds.size;
 
                     //posizione casuale all'interno delle dimensioni del piano
-                    Vector3 randomPosition = new Vector3(Random.Range(-planeSize.x / 2f, planeSize.x / 2f),
-                        5f + addedEight,
-                        Random.Range(-planeSize.z / 2f, planeSize.z / 2f));
-                    //inserito una y =10 in modo che in nemico cada dal cielo 
-                    // Aggiunta la posizione del piano per mantenere il punto random nel contesto del piano e non fuori
+
+                    Vector3 playerPos = GameObject.FindGameObjectWithTag("Player").transform.position;
+
+                    Vector3 randomPosition = new Vector3(   Random.Range(-planeSize.x / 2f, planeSize.x / 2f),
+                                                            5f + addedEight,
+                                                            Random.Range(-planeSize.z / 2f, planeSize.z / 2f)
+                                                        );
+
+                    // //inserito una y =10 in modo che in nemico cada dal cielo 
+                    // // Aggiunta la posizione del piano per mantenere il punto random nel contesto del piano e non fuori
+                    
                     Vector3 spawnPosition = plane.transform.position + randomPosition;
-                    if (spawnPosition.x >= GameObject.FindGameObjectWithTag("Player").transform.position.x)
-                    {
-                        spawnPosition.x = Random.Range(planeRenderer.bounds.min.x,GameObject.FindGameObjectWithTag("Player").transform.position.x);
-                        Debug.Log("min piano:"+planeRenderer.bounds.min.x);
-                        spawnPosition.z = spawnPosition.z + var;
-                        var = -var;
-                    }
+                    float xPos = Random.Range(Math.Max(planeRenderer.bounds.min.x, playerPos.x - 60), playerPos.x - 2);
+                    spawnPosition.x = xPos;
+
+                    Debug.DrawLine(playerPos, playerPos-Vector3.right*60, Color.red, 10f);
+
+                    // if (spawnPosition.x >= GameObject.FindGameObjectWithTag("Player").transform.position.x)
+                    // {
+                    //     spawnPosition.x = Random.Range(planeRenderer.bounds.min.x,GameObject.FindGameObjectWithTag("Player").transform.position.x);
+                    //     Debug.Log("min piano:"+planeRenderer.bounds.min.x);
+                    //     spawnPosition.z = spawnPosition.z + var;
+                    //     var = -var;
+                    // }
 
                     spawnCount++;
                     // oggetto istanziato su un punto random del piano
