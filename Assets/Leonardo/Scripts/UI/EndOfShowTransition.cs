@@ -15,15 +15,24 @@ public class EndOfShowTransition : MonoBehaviour
     [SerializeField] private AudioClip EndOfShowClip;
     private AudioSource audioSource;
 
+    public static EventHandler onGameEnd;
+
     void Start()
     {
         audioSource = GetComponent<AudioSource>();
         Room.OnLevelCompleted += StartTransition;
+        onGameEnd += StartFinalTransition;
     }
 
     public void StartTransition(object sender, RoomManager args)
     {
         // Debug.Log("EndOfShow StartTransition");
+        StartCoroutine(Transition());
+    }
+
+    public void StartFinalTransition(object sender, EventArgs args)
+    {
+        // Debug.Log("EndOfShow StartFinalTransition");
         StartCoroutine(Transition());
     }
 
@@ -38,10 +47,10 @@ public class EndOfShowTransition : MonoBehaviour
         EndOfShowVideo.Play();
         yield return new WaitForSeconds(transitionTime);
         EndOfShowVideo.Stop();
-        EndOfShowVideo.gameObject.SetActive(true);
+        EndOfShowVideo.gameObject.SetActive(false);
         EndOfShowImage.gameObject.SetActive(false);
         audioSource.Stop(); 
-        musicSource.Play();
+        //musicSource.Play();
     }
     public void OnDestroy()
     {

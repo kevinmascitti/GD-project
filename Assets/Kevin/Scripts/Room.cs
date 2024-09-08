@@ -58,14 +58,21 @@ public class Room : MonoBehaviour
     {
         if (room == this)
         {
+            if (nextRoom == null)
+            {
+                Debug.Log("END OF THE GAME!");
+                EndOfShowTransition.onGameEnd?.Invoke(this, EventArgs.Empty);
+                StartCoroutine(EndOfGameTimer());
+                return;
+            }
             killedEnemies++;
-            if (killedEnemies == spawner.spawnLimit)
+            if (killedEnemies >= spawner.spawnLimit)
             {
                 // GameObject.FindGameObjectWithTag("Spawner").GetComponent<Spawner>().OpenExit();
                 if (nextRoom.level != level)
                 {
                     OnLevelCompleted?.Invoke(this, level);
-                }
+                } 
                 spawner.SetEnable(false);
                 room.spawner.spawnCount = 0;
                 isLocked = false;
@@ -76,4 +83,12 @@ public class Room : MonoBehaviour
         }
     }
 
+    IEnumerator EndOfGameTimer() 
+    {
+        ChannelTransition ct = new ChannelTransition();
+        yield return new WaitForSeconds(1);
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
+        SceneManager.LoadScene(0);
+    }
 }

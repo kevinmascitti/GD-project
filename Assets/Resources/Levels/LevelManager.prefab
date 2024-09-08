@@ -264,6 +264,7 @@ MonoBehaviour:
   spawnCount: 0
   spawnLimit: 7
   isdeterministic: 0
+  exit: {fileID: 0}
 --- !u!1 &91842162819155929
 GameObject:
   m_ObjectHideFlags: 0
@@ -2296,6 +2297,7 @@ MonoBehaviour:
   spawnCount: 0
   spawnLimit: 7
   isdeterministic: 0
+  exit: {fileID: 0}
 --- !u!1 &884054259952090487
 GameObject:
   m_ObjectHideFlags: 0
@@ -6709,6 +6711,7 @@ MonoBehaviour:
   spawnCount: 0
   spawnLimit: 3
   isdeterministic: 0
+  exit: {fileID: 0}
 --- !u!1 &2773622830303239542
 GameObject:
   m_ObjectHideFlags: 0
@@ -8014,6 +8017,7 @@ MonoBehaviour:
   spawnCount: 0
   spawnLimit: 7
   isdeterministic: 0
+  exit: {fileID: 0}
 --- !u!1 &3529382102118290518
 GameObject:
   m_ObjectHideFlags: 0
@@ -12536,6 +12540,7 @@ MonoBehaviour:
   spawnCount: 0
   spawnLimit: 7
   isdeterministic: 0
+  exit: {fileID: 0}
 --- !u!1 &5877986624334481853
 GameObject:
   m_ObjectHideFlags: 0
@@ -14504,6 +14509,7 @@ MonoBehaviour:
   spawnCount: 0
   spawnLimit: 7
   isdeterministic: 0
+  exit: {fileID: 0}
 --- !u!1 &6952207763567380223
 GameObject:
   m_ObjectHideFlags: 0

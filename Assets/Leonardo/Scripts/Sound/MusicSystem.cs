@@ -30,16 +30,19 @@ public class MusicSystem : MonoBehaviour
             {
                 audioSource.clip = musicClips[0];
                 currentLevelIndex = 0;
+                // if(!audioSource.isPlaying) audioSource.Play();
             }
             else if (player.currentLevel.gameObject.name == "Level2" && currentLevelIndex != 1)
             {
                 audioSource.clip = musicClips[1];
                 currentLevelIndex = 1;
+                // if(!audioSource.isPlaying) audioSource.Play();
             } 
             else if (player.currentLevel.gameObject.name == "Level3" && currentLevelIndex != 2)
             {
                 audioSource.clip = musicClips[2];
                 currentLevelIndex = 2;
+                // if(!audioSource.isPlaying) audioSource.Play();
             }
         }
         else {
