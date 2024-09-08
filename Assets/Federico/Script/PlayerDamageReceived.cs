@@ -34,7 +34,7 @@ public class PlayerDamageReceived : MonoBehaviour
         {
           
             // Debug.Log("coroutine chiamata");
-            player.GetComponent<PlayerCharacter>().TakeDamage(5);
+            player.GetComponent<PlayerCharacter>().TakeDamage(1);
             StartCoroutine(DisappearAndReappear());
         }
         else
