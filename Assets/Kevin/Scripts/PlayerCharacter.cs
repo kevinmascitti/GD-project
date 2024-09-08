@@ -385,6 +385,9 @@ public class PlayerCharacter : Character
         UpdateExtraLife(currentExtraLife - 1);
         if(currentExtraLife >= 0)
             RequestNewLevel();
+        else {
+            GameOver();
+        }
     }
 
     public void GameOver()
