@@ -523,20 +523,34 @@ public class RemoteController : MonoBehaviour
 
         if (Input.GetKey(KeyCode.LeftControl) && isStaminaFull)
         {
-            if (Input.GetKeyDown(KeyCode.I))
+            // laser
+            if (Input.GetKeyDown(KeyCode.X))
             {
                 playerTransform.GetComponent<PlayerCharacter>().UpdateStamina(0);
                 StartLaser();
                 OnControllerAbility?.Invoke(this, EventArgs.Empty);
                 isStaminaFull = false;
             }
-            else if (Input.GetKeyDown(KeyCode.H))
+            // pause 
+            else if (Input.GetKeyDown(KeyCode.Z))
             {
                 playerTransform.GetComponent<PlayerCharacter>().UpdateStamina(0);
                 StartPause("Enemy");
                 OnControllerAbility?.Invoke(this, EventArgs.Empty);
                 isStaminaFull = false;
             }
+            // TV crash
+            else if (Input.GetKeyDown(KeyCode.C))
+            {
+                playerTransform.GetComponent<PlayerCharacter>().UpdateStamina(0);
+                StartVolumeMinus();
+                OnControllerAbility?.Invoke(this, EventArgs.Empty);
+                isStaminaFull = false;
+            }
+
+
+            // NOT USED
+            // ch -
             else if (Input.GetKeyDown(KeyCode.J))
             {
                 playerTransform.GetComponent<PlayerCharacter>().UpdateStamina(0);
@@ -544,6 +558,7 @@ public class RemoteController : MonoBehaviour
                 OnControllerAbility?.Invoke(this, EventArgs.Empty);
                 isStaminaFull = false;
             }
+            // vol +
             else if (Input.GetKeyDown(KeyCode.P))
             {
                 playerTransform.GetComponent<PlayerCharacter>().UpdateStamina(0);
@@ -551,6 +566,7 @@ public class RemoteController : MonoBehaviour
                 OnControllerAbility?.Invoke(this, EventArgs.Empty);
                 isStaminaFull = false;
             }
+            // ch +
             else if (Input.GetKeyDown(KeyCode.L))
             {
                 playerTransform.GetComponent<PlayerCharacter>().UpdateStamina(0);
@@ -558,13 +574,7 @@ public class RemoteController : MonoBehaviour
                 OnControllerAbility?.Invoke(this, EventArgs.Empty);
                 isStaminaFull = false;
             }
-            else if (Input.GetKeyDown(KeyCode.M))
-            {
-                playerTransform.GetComponent<PlayerCharacter>().UpdateStamina(0);
-                StartVolumeMinus();
-                OnControllerAbility?.Invoke(this, EventArgs.Empty);
-                isStaminaFull = false;
-            }
+            
         }
 
         // if (isButtonAnimationOn)
