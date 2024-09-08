@@ -8,7 +8,7 @@ public class InGameMenu : MonoBehaviour
     public void GoToMainMenu()
     {
         Time.timeScale = 1f;
-        UnityEngine.SceneManagement.SceneManager.LoadScene(0);
+        UnityEngine.SceneManagement.SceneManager.LoadScene(1);
     }
 
     public void QuitGame()
@@ -18,6 +18,6 @@ public class InGameMenu : MonoBehaviour
     
     public void RestartScene() { 
         Time.timeScale = 1f;
-        UnityEngine.SceneManagement.SceneManager.LoadScene(1);
+        UnityEngine.SceneManagement.SceneManager.LoadScene(2);
     }
 }

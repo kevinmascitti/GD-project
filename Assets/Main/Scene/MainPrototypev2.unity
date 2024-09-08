@@ -3695,7 +3695,7 @@ MonoBehaviour:
     m_NumColorKeys: 2
     m_NumAlphaKeys: 2
   maxEntertainmentValue: 100
-  decreaseSpeed: 7.5
+  decreaseSpeed: 6.5
   IncreaseSpeed: 10
   comboCounter: {fileID: 2060429405}
   CheatManager: {fileID: 343207756}
@@ -4726,6 +4726,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Player
+      objectReference: {fileID: 0}
+    - target: {fileID: 3561294763413955962, guid: 8b59635cd0adb41f1ba8fbc68f23c4c3,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3561294763413955962, guid: 8b59635cd0adb41f1ba8fbc68f23c4c3,
         type: 3}
