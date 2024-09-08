@@ -1453,6 +1453,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: ComboCounter
       objectReference: {fileID: 0}
+    - target: {fileID: 6201562856487515731, guid: 487b0de3aa24823469c4ac8d0ba20af5,
+        type: 3}
+      propertyPath: Interval
+      value: 6
+      objectReference: {fileID: 0}
     - target: {fileID: 6468252781121534242, guid: 487b0de3aa24823469c4ac8d0ba20af5,
         type: 3}
       propertyPath: player
@@ -1461,7 +1466,62 @@ PrefabInstance:
     - target: {fileID: 6468252781121534242, guid: 487b0de3aa24823469c4ac8d0ba20af5,
         type: 3}
       propertyPath: m_Enabled
-      value: 0
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6468252781121534242, guid: 487b0de3aa24823469c4ac8d0ba20af5,
+        type: 3}
+      propertyPath: popupSpeed
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 6468252781121534242, guid: 487b0de3aa24823469c4ac8d0ba20af5,
+        type: 3}
+      propertyPath: thresholdList.Array.data[1]
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 6468252781121534242, guid: 487b0de3aa24823469c4ac8d0ba20af5,
+        type: 3}
+      propertyPath: thresholdList.Array.data[2]
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 6468252781121534242, guid: 487b0de3aa24823469c4ac8d0ba20af5,
+        type: 3}
+      propertyPath: thresholdList.Array.data[4]
+      value: 35
+      objectReference: {fileID: 0}
+    - target: {fileID: 6468252781121534242, guid: 487b0de3aa24823469c4ac8d0ba20af5,
+        type: 3}
+      propertyPath: thresholdList.Array.data[5]
+      value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 6468252781121534242, guid: 487b0de3aa24823469c4ac8d0ba20af5,
+        type: 3}
+      propertyPath: popupNamesList.Array.data[0]
+      value: Wow
+      objectReference: {fileID: 0}
+    - target: {fileID: 6468252781121534242, guid: 487b0de3aa24823469c4ac8d0ba20af5,
+        type: 3}
+      propertyPath: popupNamesList.Array.data[1]
+      value: Wow
+      objectReference: {fileID: 0}
+    - target: {fileID: 6468252781121534242, guid: 487b0de3aa24823469c4ac8d0ba20af5,
+        type: 3}
+      propertyPath: popupNamesList.Array.data[2]
+      value: Great
+      objectReference: {fileID: 0}
+    - target: {fileID: 6468252781121534242, guid: 487b0de3aa24823469c4ac8d0ba20af5,
+        type: 3}
+      propertyPath: popupNamesList.Array.data[3]
+      value: Wow
+      objectReference: {fileID: 0}
+    - target: {fileID: 6468252781121534242, guid: 487b0de3aa24823469c4ac8d0ba20af5,
+        type: 3}
+      propertyPath: popupNamesList.Array.data[4]
+      value: Great
+      objectReference: {fileID: 0}
+    - target: {fileID: 6468252781121534242, guid: 487b0de3aa24823469c4ac8d0ba20af5,
+        type: 3}
+      propertyPath: popupNamesList.Array.data[5]
+      value: Great
       objectReference: {fileID: 0}
     - target: {fileID: 6468252781121534242, guid: 487b0de3aa24823469c4ac8d0ba20af5,
         type: 3}
