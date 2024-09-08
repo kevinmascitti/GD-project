@@ -13,7 +13,7 @@ public class PlayerCollision : MonoBehaviour
         
         if (enemy != null )
         {
-            Debug.Log("il nemico ti ha colpito bro");
+            // Debug.Log("il nemico ti ha colpito bro");
         }
     }
 }

@@ -63,17 +63,20 @@ public class CheatCode : MonoBehaviour
         {
             cheat = !cheat;
             Debug.Log("Trucchi Attivati");
+            buffer = "";
             
         }
         else if (buffer.EndsWith("FAST"))
         {
             goFast = !goFast;
             Debug.Log("Rapidità Attivata");
+            buffer = "";
         }
         else if (buffer.EndsWith("ENT"))
         {
             entCheat = !entCheat;
             Debug.Log("Trucco barra d'intrattenimento attivato");
+            buffer = "";
         }
         
     }

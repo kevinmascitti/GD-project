@@ -23,7 +23,7 @@ public class sqash_and_stress_controller : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
-        Debug.Log("ciao muori");
+        // Debug.Log("ciao muori");
         // Check if the collided object's layer is "Enemy"
         if (String.Compare(other.gameObject.tag, "enemy", StringComparison.Ordinal)==0 || String.Compare(other.gameObject.tag, "EnemyObj", StringComparison.Ordinal)==0)
         {

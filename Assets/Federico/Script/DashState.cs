@@ -9,7 +9,7 @@ public class DashState : MeleeBaseState
       base.OnEnter(_stateMachine);
       duration = 0.7f;
       animator.SetTrigger("Dash");
-      Debug.Log("Player Dashed, congratulations!");
+      // Debug.Log("Player Dashed, congratulations!");
    }
 
    public override void OnUpdate()

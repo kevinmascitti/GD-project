@@ -41,7 +41,7 @@ public class ComboCounter : MonoBehaviour
         comboTimer.Begin();
         counter += args.comboValue;
         OnCounterIncreased?.Invoke(this, counter);
-        Debug.Log("Combo counter is " + counter);
+        // Debug.Log("Combo counter is " + counter);
     }
 
     private void ElapsedTimer()

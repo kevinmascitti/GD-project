@@ -19,7 +19,7 @@ public class AudioOptionsManager : MonoBehaviour
         firstPlayInt = PlayerPrefs.GetInt(FirstPlay);
 
         if (firstPlayInt == 0) {
-            Debug.Log("First play");
+            // Debug.Log("First play");
             generalFloat = 0.5f;
             soundEffectsFloat = 0.75f;
             musicFloat = 0.75f;
@@ -34,7 +34,7 @@ public class AudioOptionsManager : MonoBehaviour
             PlayerPrefs.SetInt(FirstPlay, -1);
         }
         else {
-            Debug.Log("Not first play");
+            // Debug.Log("Not first play");
 
             generalFloat = PlayerPrefs.GetFloat(GeneralPref);
             generalSlider.value = generalFloat;

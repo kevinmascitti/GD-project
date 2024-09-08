@@ -228,7 +228,7 @@ public class RemoteController : MonoBehaviour
             GameObject duplicatedObject = Instantiate(squashAndStress, spawnPoint.position, Quaternion.identity);
             duplicatedObject.transform.parent = null;
             // Attiva l'oggetto duplicato
-            Debug.Log("ciao");
+            // Debug.Log("ciao");
             StartTimer(timerDuration, StopVolumeMinus);
             StartTimer(2*timerDuration,RechargeVolumeMinus);
         }
