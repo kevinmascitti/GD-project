@@ -421,9 +421,10 @@ public class PlayerCharacter : Character
                 // VFX o animazione cambio livello
                 currentRoom.spawner.SetEnable(false);
                 currentRoom.spawner.spawnCount = 0;
-                gameObject.transform.position = currentRoom.nextRoom.spawnPoint;
-                camera.transform.position = currentRoom.nextRoom.cameraPosition;
-                currentRoom = currentRoom.nextRoom;
+
+                RequestNewLevel();
+                gameObject.transform.position = currentRoom.spawnPoint;
+                camera.transform.position = currentRoom.cameraPosition;
                 currentLevel = currentRoom.level;
                 
                 OnStartLevel?.Invoke(this, new RoomManagerArgs(currentLevel, currentRoom));
@@ -432,11 +433,11 @@ public class PlayerCharacter : Character
                 GetComponent<Rigidbody>().isKinematic = false;
             }
             
-            if (currentRoom.level != currentLevel)
-            {
-                currentLevel = currentRoom.level;
-                OnEndLevel?.Invoke(this, new RoomManagerArgs(currentLevel, currentRoom));
-            }
+            // if (currentRoom.level != currentLevel)
+            // {
+            //     currentLevel = currentRoom.level;
+            //     OnEndLevel?.Invoke(this, new RoomManagerArgs(currentLevel, currentRoom));
+            // }
         }
         else if (collision.gameObject.layer == LayerMask.NameToLayer("DeathGround"))
         {

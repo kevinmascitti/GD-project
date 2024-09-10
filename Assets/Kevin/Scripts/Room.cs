@@ -24,11 +24,14 @@ public class Room : MonoBehaviour
     public static EventHandler<RoomArgs> OnEndRoom;
     public static EventHandler<RoomManager> OnLevelCompleted;
 
+    private static List<RoomManager> levelsCompleted;
+
     public void Awake()
     {
         ID = Int32.Parse(gameObject.name.Substring("Room".Length));
         spawner = gameObject.transform.Find("spawner").GetComponent<Spawner>();
         spawner.enabled = false;
+        levelsCompleted = new List<RoomManager>();
         
         PlayerCharacter.OnStartRoom += EnableRoom;
         LevelManager.OnStartRoom += EnableRoom;
@@ -61,18 +64,22 @@ public class Room : MonoBehaviour
             killedEnemies++;
             if (killedEnemies >= spawner.spawnLimit)
             {
-                if (nextRoom == null)
-                {
-                    Debug.Log("END OF THE GAME!");
-                    EndOfShowTransition.onGameEnd?.Invoke(this, EventArgs.Empty);
-                    StartCoroutine(EndOfGameTimer());
-                    return;
-                }
                 // GameObject.FindGameObjectWithTag("Spawner").GetComponent<Spawner>().OpenExit();
-                if (nextRoom.level != level)
+                if (nextRoom == null || nextRoom.level != level)
                 {
+                    levelsCompleted.Add(level);
+                    if (levelsCompleted.Count >= 3)
+                    {
+                        Debug.Log("END OF THE GAME!");
+                        if (EndOfShowTransition.onGameEnd != null)
+                            EndOfShowTransition.onGameEnd?.Invoke(this, EventArgs.Empty);
+                        else 
+                            Debug.LogError("EndOfShowTransition is null");
+                        StartCoroutine(EndOfGameTimer());
+                        return;
+                    } 
                     OnLevelCompleted?.Invoke(this, level);
-                } 
+                }
                 spawner.SetEnable(false);
                 room.spawner.spawnCount = 0;
                 isLocked = false;

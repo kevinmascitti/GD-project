@@ -5374,7 +5374,7 @@ PrefabInstance:
     - target: {fileID: 3812463333637228162, guid: de00ae07b8cf922479031c620b23c0ab,
         type: 3}
       propertyPath: spawnLimit
-      value: 4
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 3812463333637228162, guid: de00ae07b8cf922479031c620b23c0ab,
         type: 3}
@@ -7463,7 +7463,7 @@ PrefabInstance:
     - target: {fileID: 3812463333637228162, guid: de00ae07b8cf922479031c620b23c0ab,
         type: 3}
       propertyPath: spawnLimit
-      value: 9
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 3812463333637228162, guid: de00ae07b8cf922479031c620b23c0ab,
         type: 3}
@@ -8467,7 +8467,7 @@ PrefabInstance:
     - target: {fileID: 3812463333637228162, guid: de00ae07b8cf922479031c620b23c0ab,
         type: 3}
       propertyPath: spawnTime
-      value: 3
+      value: 2.5
       objectReference: {fileID: 0}
     - target: {fileID: 3812463333637228162, guid: de00ae07b8cf922479031c620b23c0ab,
         type: 3}
@@ -9008,7 +9008,7 @@ PrefabInstance:
     - target: {fileID: 3812463333637228162, guid: de00ae07b8cf922479031c620b23c0ab,
         type: 3}
       propertyPath: spawnLimit
-      value: 4
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 3812463333637228162, guid: de00ae07b8cf922479031c620b23c0ab,
         type: 3}
@@ -12630,7 +12630,12 @@ PrefabInstance:
     - target: {fileID: 3812463333637228162, guid: de00ae07b8cf922479031c620b23c0ab,
         type: 3}
       propertyPath: spawnLimit
-      value: 4
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3812463333637228162, guid: de00ae07b8cf922479031c620b23c0ab,
+        type: 3}
+      propertyPath: isdeterministic
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3812463333637228162, guid: de00ae07b8cf922479031c620b23c0ab,
         type: 3}
@@ -14812,7 +14817,7 @@ PrefabInstance:
     - target: {fileID: 3812463333637228162, guid: de00ae07b8cf922479031c620b23c0ab,
         type: 3}
       propertyPath: spawnLimit
-      value: 5
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 5019942434850239748, guid: de00ae07b8cf922479031c620b23c0ab,
         type: 3}
@@ -15933,7 +15938,7 @@ PrefabInstance:
     - target: {fileID: 3812463333637228162, guid: de00ae07b8cf922479031c620b23c0ab,
         type: 3}
       propertyPath: spawnLimit
-      value: 5
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 3812463333637228162, guid: de00ae07b8cf922479031c620b23c0ab,
         type: 3}
@@ -16125,7 +16130,7 @@ PrefabInstance:
     - target: {fileID: 3812463333637228162, guid: de00ae07b8cf922479031c620b23c0ab,
         type: 3}
       propertyPath: spawnLimit
-      value: 7
+      value: 9
       objectReference: {fileID: 0}
     - target: {fileID: 3812463333637228162, guid: de00ae07b8cf922479031c620b23c0ab,
         type: 3}

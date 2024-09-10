@@ -31,13 +31,13 @@ public class LevelManager : MonoBehaviour
         
         // TO DO: MISCHIARE LIVELLI con una funzione?
 
-        for(int i = 0; i < levels.Count-1; i++)
+        for(int i = 0; i < levels.Count; i++)
         {
             if (i == 0)
             {
                 firstLevel = levels[0]; 
             }
-            levels[i].GetComponent<RoomManager>().nextLevel = levels[i + 1].GetComponent<RoomManager>();
+            levels[i].GetComponent<RoomManager>().nextLevel = levels[(i + 1)%levels.Count].GetComponent<RoomManager>();
         }
         
         RoomManager.OnInitializedLevel += LinkLevels;
@@ -64,11 +64,11 @@ public class LevelManager : MonoBehaviour
             OnInitializedLevels?.Invoke(this, new LevelManagerArgs(levels, firstLevel));
             player.transform.position = firstLevel.firstRoom.spawnPoint;
             camera.transform.position = firstLevel.firstRoom.cameraPosition;
-            for (int i = 0; i < initializedLevels - 1; i++)
+            for (int i = 0; i < initializedLevels; i++)
             {
-                levels[i].lastRoom.nextRoom = levels[i + 1].firstRoom;
-                levels[i + 1].firstRoom.prevRoom = levels[i].lastRoom;
-            }
+                levels[i].lastRoom.nextRoom = levels[(i + 1)%levels.Count].firstRoom;
+                levels[(i + 1)%levels.Count].firstRoom.prevRoom = levels[i].lastRoom;
+            }   
             firstLevel.firstRoom.ClearEnterLayer();
             levels[levels.Count-1].rooms[levels[levels.Count-1].rooms.Count-1].ClearExitLayer();
         }
